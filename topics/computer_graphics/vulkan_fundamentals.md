@@ -13,7 +13,7 @@
 
 Vulkan is a C API for computer graphics. It's heavily typed (each enum is separate, and returned handles are opaque 64-bit handles so they are typed on 64-bit). Most functions take big structures as parameters instead of basic types. 
 
-First, create a `VkInstance` (Vulkan instances don't know about each other) and specify simple information (layers, extensions...). Use it to examine available GPUs,  with `VkEnumeratePhysicalDevices()` and check their properties (`vkGetPhysicalDeviceProperties()`) and features (`vkGetPhysicalDeviceFeatures()`). Then, take one `VkPhysicalDevice` and use it for creating a `VkDevice` (handle for the GPU you'll use). Note: A `VkInstance` can have many `VkPhysicalDevices`, which in turn can have many `VkDevices`.
+First, create a `VkInstance` (Vulkan instances don't know about each other) and specify simple information (layers, extensions...). Use it to examine available GPUs,  with `VkEnumeratePhysicalDevices()` and check their properties (`vkGetPhysicalDeviceProperties()`) and features (`vkGetPhysicalDeviceFeatures()`). Then, take one `VkPhysicalDevice` and use it for creating a `VkDevice` (handle for the GPU you'll use). Note: A `VkInstance` can have many `VkPhysicalDevices`, while each one can have many `VkDevices`.
 
 ### Images and buffers
 
@@ -33,8 +33,29 @@ When calling `vkAllocateMemory()` we specify how much memory to allocate, and wh
 
 ### Binding memory
 
+Each `VkBuffer` or `VkImage`, depending on its properties (tiling mode, usage flags...) will report their memory requirements via `vkGetBufferMemoryRequirements` or `vkGetImageMemoryRequirements`. The reported size accounts for padding for alignment between mips, hidden meta-data, etc. The requirements also include a bitmask of the memory types that are compatible with this resouce. Once you have the right memory type, size, and alignment, you can bind it with `vkBindBufferMemory` or `vkBindImageMemory`. This bind is **immutable** and must happen before you start using this resource.
+
+### Command buffers and submissions
+
+Commands are explicitly recorded to a `VkCommandBuffer`, which is then submitted to a `VkQueue` via `vkQueueSubmit()`. These commands will be executed in turn (though Vulkan has very specific ordering guarantees, mostrly about what work can overlap rather than wholesale rearrangement). 
+
+A `VkCommandBuffer` is allocated from a `VkCommandPool`. This allows better threading behaviour since command buffers and command pools must be externally synchronised. You can have a pool per thread and allocate (`vkAllocateCommandBuffers()`) or free (`vkFreeCommandBuffers()`) command buffers without heavy locking.
+
+A `VkQueue` makes work serialised to be passed to the GPU. A `VkPhysicalDevice` can report a number of queue __families__ with different capabilities (graphics, compute...). When you create your device you ask for a certain number of queues from each family, and then you can enumerate them from the device after creation with `vkGetDeviceQueue()`. When using multiple queues, they must be synchronised against each other since they can run out of order or in parallel. Be aware that some implementations might require you to use a separate queue for swapchain presentation (most won't).
+
+### Shaders and pipeline state objects
 
 
+
+### Binding model
+
+### Synchronisation
+
+### Render passes
+
+### Backbuffers and presentation
+
+### Pseudocode example
 
 
 
