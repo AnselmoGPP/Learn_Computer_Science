@@ -1,0 +1,37 @@
+
+## Execution model
+
+Vulkan exposes one or more **devices**, each of which exposes one or more **queues** (which may process work asynchronously to one another). Each queue belongs to a **family** of queues. Each family supports one or more types of functionality and may contain multiple queues with similar characteristics. Queues within a single family are compatible with one another, and work produced for a family of queues can be executed on any queue within that family. Types of functionality that queues support: graphics, compute, video decode, video encode, protected memory management, sparse memory management, and transfer.
+
+Device memory is explicitly managed by the application. Each device advertise one or more heaps, representing different area of memory, which are either device-local or host-local. A heap is always visible to the device, but may or may not be visible by the host.
+
+### Queue operation
+
+Vulkan queues provide an interface to the execution engines of a device. Command buffers, containing commands for these execution engines, are submitted to a queue for execution. Once submitted, command buffers will begin and complete execution without further application intervention. Work is submitted to queues using commands (e.g. `vkQueueSubmit`) that can take a list of semaphores upon which to wait before work begins and a list of semaphores to signal onece work has completed. Queue submission commands return control to the application once queue operations have been submitted (they don't wait for completion).
+
+There are no implicit ordering constraints between queue operations on different queues, or between queues and the host, so these may operate in any order with respect to each other. Explicit ordering constraints between different queues or the host can be expressed with semaphores and fences.
+
+Command buffer submissions to a single queue respect submission order and other implicit ordering guarantees. However, some types of batches and queue submissions against a single queue (e.g. sparse memory binding) have no implicit ordering constraints. Additional explicit ordering constraints between queue submissions and individual batches acan be expressed with semaphores and fences.
+
+Before a fence or semaphore is signaled, it's guaranteed that any previously submitted queue operations have completed execution, that memory writes from those queue operations are available to future queue operations, and that previous writes that are available are also visible to subsequent commands.
+
+Command buffer boundaries between command buffers (of the same or different batches or submissions), primary or secondary or both, don't introduce any additional ordering constraints. Explicit ordering ocnstraints can be expressed with explicit synchronization primitives.
+
+There are a few implicit ordering guarantees between commands within a command buffer, but only covering a subset of execution. Additional explicit ordering constraints can be expressed with the various explicit synchronization primitives.
+
+Commands recorded in command buffers can perform actions, set state that persist across commands, synchronize other commands, or indirectly launch other commands, with some commands fulfilling several of these roles.
+
+Synchronization commands introduce explicit execution and memory dependencies between two sets of action commands, where the second set of commands depends on the first one. This enforces both that the execution of certain pipeline stages in the second set occurs after the execution of certain stages in the first set, and that the effects of memory accesses performed by certain pipeline stages occur in order and are visible to each other. Otherwise, action commands may overlap execution or execute out of order, and may not see the side effects of each other's memory accesses.
+
+## Object model
+
+Vulkan represents devices, queues, and other entities as Vulkan objects, which are referred to by handles. All objects created or allocated from a `VkDevice` are private and must not be used on other devices. Two classes of handles:
+- **Dispatchable:** Pointer to an opaque type. Each dispatchable object must have a unique handle value during its lifetime.
+- **Non-dispatchable:** It's a 64-bit integer whose meaning is implementation-dependent. If the `privateData` feature is enabled for a `VkDevice`, each non-dispatchable object must have a handle value unique among objects created on that device. Otherwise, it may enconde information directly in the handle rather than acting as a reference to an underlying object, and thus may not have a unique handle value. If handle values are not unique, then destroying one such handle must not cause other identical handles to become invalid.
+
+### Object lifetime
+
+Obj
+
+
+
