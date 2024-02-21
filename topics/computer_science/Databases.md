@@ -1,6 +1,6 @@
 # Databases
 
-<br>![databases image](https://raw.githubusercontent.com/AnselmoGPP/Learn-Computer-Science/master/resources/databases.jpg)
+<br>![databases image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/databases.jpg)
 
 ## Table of Contents
 + [Databases](#databases) (-> work in progress)

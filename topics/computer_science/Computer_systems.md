@@ -1,6 +1,6 @@
 # Computer systems
 
-<br>![computer systems image](https://raw.githubusercontent.com/AnselmoGPP/Learn-Computer-Science/master/resources/computer_systems.jpg)
+<br>![computer systems image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/computer_systems.jpg)
 
 ## Table of Contents
 + [Useful links](#useful-links)

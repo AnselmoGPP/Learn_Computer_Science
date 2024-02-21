@@ -1,6 +1,6 @@
 # Information retrieval
 
-<br>![miscellany image](https://raw.githubusercontent.com/AnselmoGPP/Learn-Computer-Science/master/resources/miscellany.jpg)
+<br>![miscellany image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/miscellany.jpg)
 
 ## Table of Contents
 + [Boolean retrieval](#boolean-retrieval)

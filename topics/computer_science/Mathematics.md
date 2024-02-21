@@ -1,6 +1,6 @@
 # Mathematics
 
-<br>![maths image](https://raw.githubusercontent.com/AnselmoGPP/Learn-Computer-Science/master/resources/maths.jpg)
+<br>![maths image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/maths.jpg)
 
 ## Table of Contents
 + [Useful links](#useful-links)

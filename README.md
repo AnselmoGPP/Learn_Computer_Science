@@ -1,6 +1,6 @@
 # Learn Computer Science (and more)
 
-<br>![computer science image](https://raw.githubusercontent.com/AnselmoGPP/Learn-Computer-Science/master/resources/computer_science.jpg)
+<br>![computer science image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/computer_science.jpg)
 
 Teach yourself Computer Science for free (equivalent to a Bachelor Degree in CS) and other related topics.
 
@@ -17,14 +17,14 @@ Teach yourself Computer Science for free (equivalent to a Bachelor Degree in CS)
 
 ### Major in CS
 
-- [**Mathematics:**](https://github.com/AnselmoGPP/Learn-Computer-Science/blob/master/topics/computer_science/Mathematics.md) Algebra, Calculus, Discrete mathematics, Statistics.
-- [**Programming:**](https://github.com/AnselmoGPP/Learn-Computer-Science/blob/master/topics/computer_science/Programming.md) Programming, data structures, algorithms.
-- [**Computer systems:**](https://github.com/AnselmoGPP/Learn-Computer-Science/blob/master/topics/computer_science/Computer_systems.md) Computer systems, Operating systems.
-- [**Networking:**](https://github.com/AnselmoGPP/Learn-Computer-Science/blob/master/topics/computer_science/networking/Networking.md) Communications, Networking, Data security.
-- [**Databases**](https://github.com/AnselmoGPP/Learn-Computer-Science/blob/master/topics/computer_science/Databases.md)
-- [**Web programming**](https://github.com/AnselmoGPP/Learn-Computer-Science/blob/master/topics/computer_science/Web_programming.md)
-- [**Software engineering**](https://github.com/AnselmoGPP/Learn-Computer-Science/blob/master/topics/computer_science/Software_engineering.md)
-- [**Others:**](https://github.com/AnselmoGPP/Learn-Computer-Science/blob/master/topics/computer_science/others/Others.md) Programming languages, Information retrieval, Mobile applications, Computer graphics, Artificial intelligence, Data mining and machine learning.
+- [**Mathematics:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_science/Mathematics.md) Algebra, Calculus, Discrete mathematics, Statistics.
+- [**Programming:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_science/Programming.md) Programming, data structures, algorithms.
+- [**Computer systems:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_science/Computer_systems.md) Computer systems, Operating systems.
+- [**Networking:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_science/networking/Networking.md) Communications, Networking, Data security.
+- [**Databases**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_science/Databases.md)
+- [**Web programming**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_science/Web_programming.md)
+- [**Software engineering**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_science/Software_engineering.md)
+- [**Others:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_science/others/Others.md) Programming languages, Information retrieval, Mobile applications, Computer graphics, Artificial intelligence, Data mining and machine learning.
 
 ### Minor in Economics
 
@@ -52,11 +52,11 @@ int main(int argc, char* argv[])
 ## Learn Computer graphics
 
 - [**Computer graphics**]()
-- [**Vulkan API overview**](https://github.com/AnselmoGPP/Learn-Computer-Science/blob/master/topics/computer_graphics/Vulkan_fundamentals.txt")
+- [**Vulkan API overview**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_graphics/Vulkan_fundamentals.txt")
 
 ## Recommended readings
 
-[**Recommended readings:**](https://github.com/AnselmoGPP/Learn-Computer-Science/blob/master/topics/readings.md) for:
+[**Recommended readings:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/readings.md) for:
 - C++
 - Good coding
 - Design patterns
