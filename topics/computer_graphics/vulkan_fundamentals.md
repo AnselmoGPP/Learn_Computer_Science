@@ -181,11 +181,11 @@ void doRendering()
 
   VkCommandPool commandPool;
   VkCommandPoolCreateInfo commandPoolCreateInfo = { ... };
-  **vkCreateCommandPool**(dev, &commandPoolCreateInfo, NULL, &commandPool);
+  <b>vkCreateCommandPool</b>(dev, &commandPoolCreateInfo, NULL, &commandPool);
 
   VkCommandBuffer cmd;
   VkCommandBufferAllocateInfo commandAllocInfo = { ... };
-  **vkAllocateCommandBuffers**(dev, &commandAllocInfo, &cmd);
+  <b>vkAllocateCommandBuffers</b>(dev, &commandAllocInfo, &cmd);
 
   // Rendering:
   vkBeginCommandBuffer(cmd, &cmdBeginInfo);
@@ -193,15 +193,15 @@ void doRendering()
   vkCmdBindPipeline(cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
   vkCmdBindDescriptorSets(cmd, VK_PIPELINE_BIND_POINTS_GRAPHICS, descriptorSetLayout, 1, &descriptorSet, 0, NULL);
   vkCmdSetViewport(cmd, 1, &viewport);
-  **vkCmdDraw**(cmd, 3, 1, 0, 0);
+  <b>vkCmdDraw</b>(cmd, 3, 1, 0, 0);
   vkCmdEndRenderPass(cmd);
   vkEndCommandBuffer(cmd);
 
   VkSubmitInfo submitInfo = { ... };
-  **vkQueueSubmit**(queue, 1, &submitInfo, NULL);
+  <b>vkQueueSubmit</b>(queue, 1, &submitInfo, NULL);
 
   VkPresentInfoKHR presentInfo = { ... };
-  **vkQueuePresentKHR**(queue, &presentInfo);
+  <b>vkQueuePresentKHR</b>(queue, &presentInfo);
 }
 ```
 
