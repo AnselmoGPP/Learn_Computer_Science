@@ -93,7 +93,7 @@ Create a `VkSurfaceKHR` from whatever native windowing information is needed (Vu
 
 ### Basic pseudocode example
 
-```
+<pre>
 #include <vulkan/vulkan.h>
 
 void doRendering()
@@ -203,7 +203,7 @@ void doRendering()
   VkPresentInfoKHR presentInfo = { ... };
   <b>vkQueuePresentKHR</b>(queue, &presentInfo);
 }
-```
+</pre>
 
 ## Vulkan fundamentals
 
