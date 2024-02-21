@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 ## Learn Computer graphics
 
 - [**Computer graphics**]()
-- [**Vulkan API fundamentals**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_graphics/Vulkan_fundamentals.md)
+- [**Vulkan API fundamentals**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_graphics/vulkan_fundamentals.md)
 
 ## Recommended readings
 
