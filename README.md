@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
 
 ## Recommended readings
 
-[**Recommended readings:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/readings.md) for:
+[**Recommended readings:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/readings.md)
 - C++
 - Good coding
 - Design patterns

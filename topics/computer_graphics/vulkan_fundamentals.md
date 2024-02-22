@@ -80,43 +80,6 @@ Shaders get data from:
   - Textures (`VkImage`, `VkImageView`, `VkDeviceMemory`, `VkSampler`)
 - Input attachments (input from a previous subpass)
 
-### Glossary:
-
-- **Window object** (such as `GLFWwindow*`). The window is not created by Vulkan, but by our native windowing system (we can use the OS API or a library like GLFW).
-
-- **Vulkan instance** (`VkInstance`): Stores the state of the application (includes extensions and validation layers).
-
-- **Surface** (`VkSurfaceKHR`): Abstract type of surface to present rendered images to. Interface for interacting with the window system.
-
-- **Physical device** (`VkPhysicalDevice`): Choose a GPU with Vulkan support and use it for creating a logical device.
-
-- **Logical device** (`VkDevice`): Abstraction of the physical device with some of its features such as:
-
-  - **Queues** (`VkQueue`): The Vulkan commands to execute are submitted to a queue. There're different queue families, each one with different queue types (for graphics commands, for presenting images to the screen, etc.).
-
-  - **Swap chain** (`VkSwapchainKHR`): Collection of render targets. Each one has a swapChainImage (`VkImage`), swapChainImageView (`VkImageView`) and swapChainFramebuffer (`VkFramebuffer`). Each render target has one swapChainFramebuffer per render pass, and references all the attachments in their render pass.
-
-- **Render pass** (`VkRenderPass`): It describes a set of subpasses and their corresponding attachments (images). It describes the images that will be used during rendering and the operations performed during rendering. Each subpass represents the attachments used in the fragment shader. We can have multiple render passes where each one renders to some images that are used as input attachments by the next render pass (we have to include them as a descriptor to be able to access them from the fragment shader). Similarly, subsequent subpasses take inputs from previous subpasses. The final attachment is one image from the swap chain (render to screen). We have to create the attachments (images) of our render passes. For each render pass we also have to create a framebuffer (used during command buffer creation), which contains all the images in a render pass. Given some geometry, its graphics pipeline will determine to which framebuffer, render pass, and subpass it is rendered. Attachment types:
-
-  - Input attachments: Input images
-  - Color attachments: Output images
-  - Depth/stencil attachment: Stores depth/stencil information
-  - Resolve attachment: Used for resolving multisampled color images (MSAA).
-
-- Fragment shader's access to images:
-
-  - Pixel access: Subsequent subpasses take inputs from previous subpasses. In the fragment shader, these inputs just provide access to the exact same pixel location from the previous subpass.
-  - Image access: If we use different render passes where each one renders to an off-screen framebuffer (render to a texture) which is used as input by the next render pass, we get access to the entire rendered image.
-
-- **Command-pool** (`VkCommandPool`): Record all the operations (drawing commands suitable for the graphics queue family) you want to perform here. Later, execute these commands by submitting them to one of the device queues (graphics, presentation, …) (after recording them in a `command buffer`).
-
-
-
-
-
-
-
-
 
 ## Basics
 
@@ -308,6 +271,7 @@ void doRendering()
 }
 </pre>
 
+
 ## Fundamentals
 
 ### Execution model
@@ -343,6 +307,86 @@ Vulkan represents devices, queues, and other entities as Vulkan objects, which a
 #### Object lifetime
 
 Obj
+
+
+
+
+## Glossary
+
+### Glossary:
+
+- **Window object** (such as `GLFWwindow*`). The window is not created by Vulkan, but by our native windowing system (we can use the OS API or a library like GLFW).
+
+- **Vulkan instance** (`VkInstance`): Stores the state of the application (includes extensions and validation layers).
+
+- **Surface** (`VkSurfaceKHR`): Abstract type of surface to present rendered images to. Interface for interacting with the window system.
+
+- **Physical device** (`VkPhysicalDevice`): Choose a GPU with Vulkan support and use it for creating a logical device.
+
+- **Logical device** (`VkDevice`): Abstraction of the physical device with some of its features such as:
+
+  - **Queues** (`VkQueue`): The Vulkan commands to execute are submitted to a queue. There're different queue families, each one with different queue types (for graphics commands, for presenting images to the screen, etc.).
+
+  - **Swap chain** (`VkSwapchainKHR`): Collection of render targets. Each one has a swapChainImage (`VkImage`), swapChainImageView (`VkImageView`) and swapChainFramebuffer (`VkFramebuffer`). Each render target has one swapChainFramebuffer per render pass, and references all the attachments in their render pass.
+
+- **Render pass** (`VkRenderPass`): It describes a set of subpasses and their corresponding attachments (images). It describes the images that will be used during rendering and the operations performed during rendering. Each subpass represents the attachments used in the fragment shader. We can have multiple render passes where each one renders to some images that are used as input attachments by the next render pass (we have to include them as a descriptor to be able to access them from the fragment shader). Similarly, subsequent subpasses take inputs from previous subpasses. The final attachment is one image from the swap chain (render to screen). We have to create the attachments (images) of our render passes. For each render pass we also have to create a framebuffer (used during command buffer creation), which contains all the images in a render pass. Given some geometry, its graphics pipeline will determine to which framebuffer, render pass, and subpass it is rendered. Attachment types:
+
+  - Input attachments: Input images
+  - Color attachments: Output images
+  - Depth/stencil attachment: Stores depth/stencil information
+  - Resolve attachment: Used for resolving multisampled color images (MSAA).
+
+- Fragment shader's access to images:
+
+  - Pixel access: Subsequent subpasses take inputs from previous subpasses. In the fragment shader, these inputs just provide access to the exact same pixel location from the previous subpass.
+  - Image access: If we use different render passes where each one renders to an off-screen framebuffer (render to a texture) which is used as input by the next render pass, we get access to the entire rendered image.
+
+- **Command-pool** (`VkCommandPool`): Record all the operations (drawing commands suitable for the graphics queue family) you want to perform here. Later, execute these commands by submitting them to one of the device queues (graphics, presentation, …) (after recording them in a `command buffer`).
+
+- **descriptorSetLayout (`VkDescriporSetLayout`): 
+
+- **Graphics pipeline:**
+  - **pipelineLayout** (`VkPipelineLayout`): Specify a number of layouts. Used for creating the pipeline.
+  - **graphicsPipeline** (`VkPipeline`): Configure different operations that take vertices and textures of your meshes to pixels:
+    - Shader: Types, SPIR-V code, format of the vertex data passed to vertex shader.
+    - Primitive type (triangles, lines, points).
+    - Viewport state: Region of framebuffer where to render, and scissors rectangle.
+    - Rasterizer: Cull mode, line thickness, polygon fill mode, depth bias...
+    - Multisampling: Enable sample shading, number of samples...
+    - Depth and stencil testing: Enable depth testing...
+    - Color blending: Enable blending, color components, implement alpha blending, global settings...
+    - Dynamic states: Specify some states you want to be able to change dynamically (i.e., without recreating the whole graphics pipeline) (viewport, line width...).
+    - Render pass: Specify render pass and subpass.
+    - Reference another pipeline, if it exists.
+
+- **Texture:** Stores textures and mipmaps (`VkImage`, `VkImageView`, `VkDeviceMemory`). The texture image view is used in a descriptor.
+
+- **Texture sampler** (`VkSampler`): Applies filtering and transformations to images (texels interpolation, addressing mode, anisotropic filtering, texels coordinate system, mipmaps, texels comparisons…). Shaders can access an image resource through a sampler object. Used in a descriptor.
+
+- **Vertex buffer** (`VkBuffer`, `VkDeviceMemory`)
+
+- **Index buffer** (`VkBuffer`, `VkDeviceMemory`)
+
+- **Uniform buffers** (`VkBuffer`, `VkDeviceMemory`): One per swap chain image. Empty when just created. Used in a descriptor.
+
+- **Descriptor pool** (`VkDescriptorPool`): Specify the total number of descriptors of each type in our app, and maximum number of descriptor sets. One pool per swap chain image per thread.
+
+- **Descriptor set** (`VkDescriptorSet`): One per swap chain image. Set of descriptors (pointer to a resource accessible for a shader): UBO, sampler, etc. Each descriptor set requires:
+
+  - **Decriptor set layout:** Where to create our descriptor set on.
+  - **Descriptor pool:** Stores the descriptors it will use.
+  - **Uniform buffer:** If some descriptor is a uniform buffer.
+  - **Texture sampler & Texture image view:** If some descriptor is a texture sampler.
+
+- **Command buffer** (`VkCommandBuffer`): ONe pepr swap chain image. Requires:
+  - Command pool: From where to take the commands.
+  - Rendering data: Render pass, swap chain framebuffer, render area, depth range...
+  - Drawing commands for each model: graphics pipeline, vertex buffer, index buffer, descriptor sets, draw command.
+
+- **Synchronisation objects (`VkSemaphore` & `VkFence`): Fences can be used in our code.
+  - An image can be acquired for rendering
+  - Rendering finished and presentation can happen
+  - A swap cahin image is not being used by any frame in flight
 
 
 ## Links

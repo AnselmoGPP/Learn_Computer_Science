@@ -1,6 +1,6 @@
 # Recommended readings
 
-<br>![flow image](https://raw.githubusercontent.com/AnselmoGPP/Learn-Computer-Science/master/resources/flow.jpg)
+<br>![flow image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/flow.jpg)
 
 ## Table of Contents
 + [Recommended readings](#recommended-readings)
