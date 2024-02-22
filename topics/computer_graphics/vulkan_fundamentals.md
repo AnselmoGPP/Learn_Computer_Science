@@ -48,7 +48,13 @@ Create the **descriptor set**. Each descriptor is a handle/pointer into a resour
 - Create `VkDescriptorPool` (it specifies the total number of descriptors in a single thread).
 - Create `VkDescriptorSet` (set of descriptors. One per swapchain image).
 
-Save the drawing command for your object in the **command buffer**.
+Save the drawing command for your object in the **command buffer**. 
+
+### Drawing:
+
+Drawing commands (`vkCmdDraw()`) are explicitly recorded to a `VkCommandBuffer` (which is allocated from a `VkCommandPool`). This requires binding some elements: render pass, subpass, vertex buffer, index buffer, descriptor sets.
+
+To render to one of the swapchain images we call `vkAcquireNextImageKHR()` to get the index of the next image in the chain. Then, we submit our `VkCommandBuffer` to the `VkQueue` (via `vkQueueSubmit()`), which passes the commands to the GPU and executes them. Then, we call `vkQueuePresentKHR()` to present the rendered image to the display.
 
 ### Others:
 
@@ -105,6 +111,8 @@ Available memory is exposed via `vkGetPhysicalDeviceMemoryProperties()`, which r
 
 When calling `vkAllocateMemory()` we specify how much memory to allocate, and what memory type we want from which heap (e.g. images for rendering may prefer device local memory for optimal use, while staging resources need host visible memory). Host visible memory can be mapped for update with `vkMapMemory()` (returns a pointer) and `vkUnMapMemory()`. All these maps (pointers to memory) are persistent, and it's legal to have memory mapped while in use by the GPU as long as you synchronise.
 
+Note: To allocate data that must be GPU visible only, we first create a CPU and GPU visible buffer (staging buffer) where we store our data (vertex data, indices...) from the CPU. Then, we make the GPU copy this data to a GPU visible only buffer and delete the staging buffer.
+
 ### Binding memory
 
 Each `VkBuffer` or `VkImage`, depending on its properties (tiling mode, usage flags...) will report their memory requirements via `vkGetBufferMemoryRequirements` or `vkGetImageMemoryRequirements`. The reported size accounts for padding for alignment between mips, hidden meta-data, etc. The requirements also include a bitmask of the memory types that are compatible with this resouce. Once you have the right memory type, size, and alignment, you can bind it with `vkBindBufferMemory` or `vkBindImageMemory`. This bind is **immutable** and must happen before you start using this resource.
@@ -125,7 +133,7 @@ A `VkShaderModule` is created from a SPIR-V module, which can contain several en
 
 ### Binding model
 
-The base binding unit is a **descriptor** (opaque representation that stores 'one bind'). This can be an image, sampler, uniform/constant buffer, etc. It can be arrayed (you have an array of images that can be different sizes, etc. as long as they are all 2D floating point images). Descriptors aren't bound individually, but in blocks in a `VkDescriptorSet``. The types of individual bindings contained in a `VkDescriptorSet` are described in a `VkDescriptorSetLayout`. Imagine `VkDescriptorSetLayout` as a C struct type describing some opaque type members, the `VkDescriptorSet` as a specific instance of that type, and each member inside as a binding that can be updated with any resource you want. You allocate a `VkDescriptorSet` with a given layout from a `VkDescriptorPool` (used to allocate descriptors on different threads more efficiently by having a pool per thread).
+The base binding unit is a **descriptor** (opaque representation that stores 'one bind'). This can be an image, sampler, uniform/constant buffer, etc. It can be arrayed (you have an array of images that can be different sizes, etc. as long as they are all 2D floating point images). Descriptors aren't bound individually, but in blocks in a `VkDescriptorSet`. The types of individual bindings contained in a `VkDescriptorSet` are described in a `VkDescriptorSetLayout`. Imagine `VkDescriptorSetLayout` as a C struct type describing some opaque type members, the `VkDescriptorSet` as a specific instance of that type, and each member inside as a binding that can be updated with any resource you want. You allocate a `VkDescriptorSet` with a given layout from a `VkDescriptorPool` (used to allocate descriptors on different threads more efficiently by having a pool per thread).
 
 You can update a descriptor set directly to put specific values in the bindings (descriptors). When creating a pipeline, we specify n `VkDescriptorSetLayouts` for use in a `VkPipelineLayout`. Then, when binding, we have to bind matching `VkDescriptorSets` of those layouts. The sets can update and be bound at different frequencies, which allows grouping all resources by frequency of update. Imagine the pipeline as a function that takes some number of structs as arguments, so when you create a pipeline you declare the type (`VkDescriptorSetLayouts`) of each parameters, and when binding the pipeline you pass specific instances (arguments) of those types (`VkDescriptorSets`).
 
