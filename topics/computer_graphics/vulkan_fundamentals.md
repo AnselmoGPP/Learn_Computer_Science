@@ -22,7 +22,6 @@ Choose a **physical device** (`VkPhysicalDevice`) and create a **logical device*
 - **Swap chain** (`VkSwapchainKHR`). It is a collection of render targets that ensures that we don’t render an image directly on the image in the screen. For each swap chain image we need to create the following: `VkImage`, `VkImageView`, `VkFramebuffer` (this one, later). But the `VkDeviceMemory` is already created inside the swap chain implicitly.
 
 Typically, image objects involve 3 elements: 
-    VkFramebuffer: References image views (as attachments) that are to be used for color, depth and stencil targets. It is used as an attachment for some subpass.
 - `VkImage`: Image object.
 - `VkImageView`: Image handler. It references a part of the image to be used (subset of its pixels). Required for being able to access it.
 - `VkDeviceMemory`: Handle to a device memory object.
@@ -104,7 +103,7 @@ Shaders get data from:
   - Depth/stencil attachment: Stores depth/stencil information
   - Resolve attachment: Used for resolving multisampled color images (MSAA).
 
-Fragment shader access to images:
+- Fragment shader's access to images:
 
   - Pixel access: Subsequent subpasses take inputs from previous subpasses. In the fragment shader, these inputs just provide access to the exact same pixel location from the previous subpass.
   - Image access: If we use different render passes where each one renders to an off-screen framebuffer (render to a texture) which is used as input by the next render pass, we get access to the entire rendered image.
@@ -273,11 +272,11 @@ void doRendering()
   VkMemoryAllocateInfo memAllocInfo = { ... };
   <b>vkAllocateMemory</b>(dev, &memAllocInfo, NULL, &memory);
 
-  <b>vkBindBufferMemory**(dev, buffer, memory, 0);
+  <b>vkBindBufferMemory</b>(dev, buffer, memory, 0);
 
   void *data = NULL;
   vkMapMemory(dev, memory, 0, VK_WHOLE_SIZE, 0, &data);
-  // < fill data pointer with some transformation data
+  // < __fill data pointer with some transformation data__
   vkUnmapMemory(dev, memory);
 
   VkWriteDescriptorSet descriptorWrite = { ... };
