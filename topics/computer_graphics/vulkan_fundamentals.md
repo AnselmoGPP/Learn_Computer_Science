@@ -3,13 +3,13 @@
 <br>![computer graphics image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/computer_graphics.jpg)
 
 ## Table of Contents
-+ [Basic process](#basic-process)
-+ [Overview](#overview)
-+ [Fundamentals](#vulkan-fundamentals)
++ [Quick overview](#quick-overview)
++ [Basics](#basics)
++ [Fundamentals](#fundamentals)
 + [Links](#links)
 
 
-## Basic process
+## Quick overview
 
 ### Rendering environment:
 
@@ -17,7 +17,7 @@ Create a **window** (e.g. `GLFWwindow`) and a **Vulkan instance** (`VkInstance`)
 
 Choose a **physical device** (`VkPhysicalDevice`) and create a **logical device** from it (`VkDevice`). The device has to support:
 
-- **Queues** (`VkQueue*`). Most operations are (asynchronously) executed by submitting them to a queue. We will select the queues that support the commands we want to use (**graphics** and **presentations** to window surface).
+- **Queues** (`VkQueue`). Most operations are (asynchronously) executed by submitting them to a queue. We will select the queues that support the commands we want to use (**graphics** and **presentations** to window surface).
 
 - **Swap chain** (`VkSwapchainKHR`). It is a collection of render targets that ensures that we don’t render an image directly on the image in the screen. For each swap chain image we need to create the following: `VkImage`, `VkImageView`, `VkFramebuffer` (this one, later). But the `VkDeviceMemory` is already created inside the swap chain implicitly.
 
@@ -33,7 +33,7 @@ Create the swap chain’s **framebuffers** (`VkFramebuffer`), one per swap chain
 
 Create a **command-pool** (`VkCommandPool`). It contains all the commands that we want to use in a single thread. Record the operations you want to perform here, and execute them in the render loop by packing them in a **command buffer** (`VkCommandBuffer`) and submitting it to a queue (graphics, presentation).
 
-### Rendered objects:
+### Object to render:
 
 Create **shaders** (`VkShaderModule`) and load **textures** (`VkImage`, `VkImageView`, `VkDeviceMemory`, `VkSampler`). A `VkSampler` is a wrapper around a textures that applies filtering and transformations, and shaders access image resources through sampler objects.
 
@@ -51,9 +51,9 @@ Create the **descriptor set**. Each descriptor is a handle/pointer into a resour
 
 Save the drawing command for your object in the **command buffer**.
 
-### Render loop:
+### Others:
 
-Synchronize things using synchronization objects: **Semaphores** (wait inside Vulkan), **fences** (wait in our own code), **barriers** (synchronize GPU operations) and *external synchronization** (this is up to us).
+Synchronize things using synchronization objects: **Semaphores** (wait inside Vulkan), **fences** (wait in our own code), **barriers** (synchronize GPU operations) and **external synchronization** (this is up to us).
 
 - Image available (`VkSemaphore`)
 - Render finished (`VkSemaphore`)
@@ -72,49 +72,54 @@ Optional: For real time rendering, run a render loop.
 
 Optional: For better performance, run a parallel thread for loading/unloading resources (meshes, textures, shaders).
 
-### Glossary:
-
-
-IN CONSTRUCTION ----------
-
-During rendering for drawing commands we bind descriptor sets, vertex buffers, and framebuffer.
-
 Shaders get data from:
 
-    Vertex buffer (VkBuffer, VkDeviceMemory)
-    Index buffer (VkBuffer, VkDeviceMemory)
-    Descriptor set (VkDescriptorSet)
-        Uniform buffers (VkBuffer, VkDeviceMemory)
-        Textures (VkImage, VkImageView, VkDeviceMemory, VkSampler)
-    Input from a previous subpass
+- Vertex buffer (`VkBuffer`, `VkDeviceMemory`)
+- Index buffer (`VkBuffer`, `VkDeviceMemory`)
+- Descriptor set (`VkDescriptorSet`)
+  - Uniform buffers (`VkBuffer`, `VkDeviceMemory`)
+  - Textures (`VkImage`, `VkImageView`, `VkDeviceMemory`, `VkSampler`)
+- Input attachments (input from a previous subpass)
+
+### Glossary:
+
+- **Window object** (such as `GLFWwindow*`). The window is not created by Vulkan, but by our native windowing system (we can use the OS API or a library like GLFW).
+
+- **Vulkan instance** (`VkInstance`): Stores the state of the application (includes extensions and validation layers).
+
+- **Surface** (`VkSurfaceKHR`): Abstract type of surface to present rendered images to. Interface for interacting with the window system.
+
+- **Physical device** (`VkPhysicalDevice`): Choose a GPU with Vulkan support and use it for creating a logical device.
+
+- **Logical device** (`VkDevice`): Abstraction of the physical device with some of its features such as:
+
+  - **Queues** (`VkQueue`): The Vulkan commands to execute are submitted to a queue. There're different queue families, each one with different queue types (for graphics commands, for presenting images to the screen, etc.).
+
+  - **Swap chain** (`VkSwapchainKHR`): Collection of render targets. Each one has a swapChainImage (`VkImage`), swapChainImageView (`VkImageView`) and swapChainFramebuffer (`VkFramebuffer`). Each render target has one swapChainFramebuffer per render pass, and references all the attachments in their render pass.
+
+- **Render pass** (`VkRenderPass`): It describes a set of subpasses and their corresponding attachments (images). It describes the images that will be used during rendering and the operations performed during rendering. Each subpass represents the attachments used in the fragment shader. We can have multiple render passes where each one renders to some images that are used as input attachments by the next render pass (we have to include them as a descriptor to be able to access them from the fragment shader). Similarly, subsequent subpasses take inputs from previous subpasses. The final attachment is one image from the swap chain (render to screen). We have to create the attachments (images) of our render passes. For each render pass we also have to create a framebuffer (used during command buffer creation), which contains all the images in a render pass. Given some geometry, its graphics pipeline will determine to which framebuffer, render pass, and subpass it is rendered. Attachment types:
+
+  - Input attachments: Input images
+  - Color attachments: Output images
+  - Depth/stencil attachment: Stores depth/stencil information
+  - Resolve attachment: Used for resolving multisampled color images (MSAA).
+
+Fragment shader access to images:
+
+  - Pixel access: Subsequent subpasses take inputs from previous subpasses. In the fragment shader, these inputs just provide access to the exact same pixel location from the previous subpass.
+  - Image access: If we use different render passes where each one renders to an off-screen framebuffer (render to a texture) which is used as input by the next render pass, we get access to the entire rendered image.
+
+- **Command-pool** (`VkCommandPool`): Record all the operations (drawing commands suitable for the graphics queue family) you want to perform here. Later, execute these commands by submitting them to one of the device queues (graphics, presentation, …) (after recording them in a `command buffer`).
 
 
-The rendering action may involve different passes in a specific order, depending on how we want to render (e.g. first pass: render 3D objects in an image. Second pass: use that image to apply some post-processing effects to it). This order of execution is described by creating one or more **render passes** (`VkRenderPass`) (they describe the type of images used during rendering and how to use and treat them), each one containing one or more subpasses (they represent subsequent rendering operations) that reference one or more attachments. Types of attachments:
-
-- **Input attachments:** Input images.
-- **Color attachments:** Output images.
-- **Depth/stencil attachment:** Stores depth/stencil information.
-- **Resolve attachment:** Used for resolving multisampled color images (MSAA).
-
-For each attachment we have to create: `VkImage`, `VkImageView`, `VkDeviceMemory` (as many as MSAA images, except for the image where they are resolved).
-
-Create swap chain’s **framebuffers** (`VkFramebuffer`), one per swap chain image. Each framebuffer requires the `VkRenderPasses` and all the `VkImageViews` from its attachments. The final attachment (where the final image is rendered) is the corresponding swap chain’s `VkImageView`.
-
-To draw to an image (`VkImage`) acquired from the swap chain, we have to wrap it into a `VkImageView` (references a part of the image to be used) to be able to access it, and then wrap it into a `VkFramebuffer` (references all the image views that are to be used for color, depth and stencil targets), which will be used as an attachment for some subpass.
-
-Render pass overview: A render pass describes a set of subpasses and their corresponding attachments (images). It describes the images that will be used during rendering and the general rendering process. Each subpass can process depth, msaa, and final color. We can have multiple render passes where each one renders to some images that are used as input attachments by the next render pass (we have to include it as a descriptor to be able to access it from the fragment shader). The final attachment is one image from the swap chain (render to screen). We have to create the attachments of our render passes (images). For each render pass we also have to create a framebuffer (used during command buffer creation), which contains all the images in a render pass. Given some geometry, its graphics pipeline will determine to which framebuffer it is rendered.
-
-    Pixel access: Subsequent subpasses take inputs from previous subpasses. In the fragment shader, these inputs just provides access to the exact same pixel location from the previous subpass.
-    Image access: If we use different render passes where each one renders to an off-screen framebuffer (render to a texture) which is used as input by the next render pass, we get access to the entire rendered image.
-
-----------
 
 
 
 
 
 
-## Overview
+
+## Basics
 
 ### Starting
 
@@ -304,7 +309,7 @@ void doRendering()
 }
 </pre>
 
-## Vulkan fundamentals
+## Fundamentals
 
 ### Execution model
 
