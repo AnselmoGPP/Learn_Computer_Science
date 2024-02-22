@@ -3,13 +3,112 @@
 <br>![computer graphics image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/computer_graphics.jpg)
 
 ## Table of Contents
-+ [Introduction](#introduction)
++ [Basic process](#basic-process)
 + [Overview](#overview)
 + [Fundamentals](#vulkan-fundamentals)
 + [Links](#links)
 
 
-## Introduction
+## Basic process
+
+### Rendering environment:
+
+Create a **window** (e.g. `GLFWwindow`) and a **Vulkan instance** (`VkInstance`). Create an abstraction of the window: **surface** (`VkSurfaceKHR`). To use validation layers, create a **debugMessenger** (`VkDebugUtilsMessengerEXT`) and a **callback** (outputs validation layers information). 
+
+Choose a **physical device** (`VkPhysicalDevice`) and create a **logical device** from it (`VkDevice`). The device has to support:
+
+- **Queues** (`VkQueue*`). Most operations are (asynchronously) executed by submitting them to a queue. We will select the queues that support the commands we want to use (**graphics** and **presentations** to window surface).
+
+- **Swap chain** (`VkSwapchainKHR`). It is a collection of render targets that ensures that we don’t render an image directly on the image in the screen. For each swap chain image we need to create the following: `VkImage`, `VkImageView`, `VkFramebuffer` (this one, later). But the `VkDeviceMemory` is already created inside the swap chain implicitly.
+
+Typically, image objects involve 3 elements: 
+    VkFramebuffer: References image views (as attachments) that are to be used for color, depth and stencil targets. It is used as an attachment for some subpass.
+- `VkImage`: Image object.
+- `VkImageView`: Image handler. It references a part of the image to be used (subset of its pixels). Required for being able to access it.
+- `VkDeviceMemory`: Handle to a device memory object.
+
+After creating `VkQueue`and a `VkSwapchainKHR`, we create one or more **render passes** (`VkRenderPass`), each one containing one or more subpasses. This describes the order of execution during rendering, and the images (**attachments**) used (each one needs a `VkImage`, `VkImageView`, and `VkDeviceMemory`).
+
+Create the swap chain’s **framebuffers** (`VkFramebuffer`), one per swap chain image. Each framebuffer references all the `VkRenderPasses` and their attachments (`VkImageViews`). The final attachment (where the final image is rendered) is the corresponding swap chain’s `VkImageView`.
+
+Create a **command-pool** (`VkCommandPool`). It contains all the commands that we want to use in a single thread. Record the operations you want to perform here, and execute them in the render loop by packing them in a **command buffer** (`VkCommandBuffer`) and submitting it to a queue (graphics, presentation).
+
+### Rendered objects:
+
+Create **shaders** (`VkShaderModule`) and load **textures** (`VkImage`, `VkImageView`, `VkDeviceMemory`, `VkSampler`). A `VkSampler` is a wrapper around a textures that applies filtering and transformations, and shaders access image resources through sampler objects.
+
+Create a `VkDescriptorSetLayout` (blueprint for descriptor sets creation). 
+
+Create the **graphics pipeline** (`VkPipeline`), which describes all the operations for transforming our vertices and textures into pixels (vertex data, shaders, primitive type, viewport, rasterizer, multisampling, depth buffer, stencil buffer, color blending, dynamic states, descriptor set layout, ...).
+
+Create buffers for the **vertex** data and the **indices** (each one requires a `VkBuffer` and `VkDeviceMemory`).
+
+Create the **descriptor set**. Each descriptor is a handle/pointer into a resource (UBO, sampler, ...) the shader has access to. Steps:
+
+- Create **descriptors** (`VkBuffer` + `VkDeviceMemory`).
+- Create `VkDescriptorPool` (it specifies the total number of descriptors in a single thread).
+- Create `VkDescriptorSet` (set of descriptors. One per swapchain image).
+
+Save the drawing command for your object in the **command buffer**.
+
+### Render loop:
+
+Synchronize things using synchronization objects: **Semaphores** (wait inside Vulkan), **fences** (wait in our own code), **barriers** (synchronize GPU operations) and *external synchronization** (this is up to us).
+
+- Image available (`VkSemaphore`)
+- Render finished (`VkSemaphore`)
+- Frames in flight (`VkFence`)
+- Images in flight (`VkFence`)
+
+Optional: For real time rendering, run a render loop.
+
+- Check for events
+- Wait (frames in flight) for command buffer to execute
+- Acquire image from swap chain
+- If that image is used, wait (images in flight) until not used
+- User updates: Check for events, update descriptor sets data, etc.
+- Command buffer: Update (if necessary) and submit
+- Presentation of image to swap chain
+
+Optional: For better performance, run a parallel thread for loading/unloading resources (meshes, textures, shaders).
+
+### Glossary:
+
+
+IN CONSTRUCTION ----------
+
+During rendering for drawing commands we bind descriptor sets, vertex buffers, and framebuffer.
+
+Shaders get data from:
+
+    Vertex buffer (VkBuffer, VkDeviceMemory)
+    Index buffer (VkBuffer, VkDeviceMemory)
+    Descriptor set (VkDescriptorSet)
+        Uniform buffers (VkBuffer, VkDeviceMemory)
+        Textures (VkImage, VkImageView, VkDeviceMemory, VkSampler)
+    Input from a previous subpass
+
+
+The rendering action may involve different passes in a specific order, depending on how we want to render (e.g. first pass: render 3D objects in an image. Second pass: use that image to apply some post-processing effects to it). This order of execution is described by creating one or more **render passes** (`VkRenderPass`) (they describe the type of images used during rendering and how to use and treat them), each one containing one or more subpasses (they represent subsequent rendering operations) that reference one or more attachments. Types of attachments:
+
+- **Input attachments:** Input images.
+- **Color attachments:** Output images.
+- **Depth/stencil attachment:** Stores depth/stencil information.
+- **Resolve attachment:** Used for resolving multisampled color images (MSAA).
+
+For each attachment we have to create: `VkImage`, `VkImageView`, `VkDeviceMemory` (as many as MSAA images, except for the image where they are resolved).
+
+Create swap chain’s **framebuffers** (`VkFramebuffer`), one per swap chain image. Each framebuffer requires the `VkRenderPasses` and all the `VkImageViews` from its attachments. The final attachment (where the final image is rendered) is the corresponding swap chain’s `VkImageView`.
+
+To draw to an image (`VkImage`) acquired from the swap chain, we have to wrap it into a `VkImageView` (references a part of the image to be used) to be able to access it, and then wrap it into a `VkFramebuffer` (references all the image views that are to be used for color, depth and stencil targets), which will be used as an attachment for some subpass.
+
+Render pass overview: A render pass describes a set of subpasses and their corresponding attachments (images). It describes the images that will be used during rendering and the general rendering process. Each subpass can process depth, msaa, and final color. We can have multiple render passes where each one renders to some images that are used as input attachments by the next render pass (we have to include it as a descriptor to be able to access it from the fragment shader). The final attachment is one image from the swap chain (render to screen). We have to create the attachments of our render passes (images). For each render pass we also have to create a framebuffer (used during command buffer creation), which contains all the images in a render pass. Given some geometry, its graphics pipeline will determine to which framebuffer it is rendered.
+
+    Pixel access: Subsequent subpasses take inputs from previous subpasses. In the fragment shader, these inputs just provides access to the exact same pixel location from the previous subpass.
+    Image access: If we use different render passes where each one renders to an off-screen framebuffer (render to a texture) which is used as input by the next render pass, we get access to the entire rendered image.
+
+----------
+
 
 
 
@@ -19,7 +118,7 @@
 
 ### Starting
 
-Vulkan is a C API for computer graphics. It's heavily typed (each enum is separate, and returned handles are opaque 64-bit handles so they are typed on 64-bit). Most functions take big structures as parameters instead of basic types. 
+Vulkan is a C API for computer graphics and computing. It's heavily typed (each enum is separate, and returned handles are opaque 64-bit handles so they are typed on 64-bit). Most functions take big structures as parameters instead of basic types. 
 
 First, create a `VkInstance` (Vulkan instances don't know about each other) and specify simple information (layers, extensions...). Use it to examine available GPUs,  with `VkEnumeratePhysicalDevices()` and check their properties (`vkGetPhysicalDeviceProperties()`) and features (`vkGetPhysicalDeviceFeatures()`). Then, take one `VkPhysicalDevice` and use it for creating a `VkDevice` (handle for the GPU you'll use). Note: A `VkInstance` can have many `VkPhysicalDevices`, while each one can have many `VkDevices`.
 
@@ -98,78 +197,78 @@ Create a `VkSurfaceKHR` from whatever native windowing information is needed (Vu
 
 void doRendering()
 {
-  const char *extensionNames[] = { "VK_KHR_surface", "VK_KHR_win32_surface" };
-  VkInstanceCreateInfo instanceCreateInfo = { ..., extensionNames };
   VkInstance inst;
-  **vkCreateInstance**(&instanceCreateInfo, NULL, &inst);
+  const char extensionNames[] = { "VK_KHR_surface", "VK_KHR_win32_surface" };
+  VkInstanceCreateInfo instanceCreateInfo = { ..., extensionNames };
+  <b>vkCreateInstance</b>(&instanceCreateInfo, NULL, &inst);
 
+  VkDevice dev;
   VkPhysicalDevice phys[4];
   vkEnumeratePhysicalDevices(inst, 4, phys);
   vkDeviceCreateInfo deviceCreateInfo = { ... };
-  VkDevice dev;
-  **vkCreateDevice**(phys[0}, &deviceCreateInfo, NULL, &dev);
+  <b>vkCreateDevice</b>(phys[0}, &deviceCreateInfo, NULL, &dev);
 
-  VkWin32SurfaceCreateInfoKHR surfaceCreateInfo = { ... };
   VkSurfaceKHR surf;
-  **vkCreateWin32SurfaceKHR**(inst, &surfaceCreateInfo, NULL, &surf);
+  VkWin32SurfaceCreateInfoKHR surfaceCreateInfo = { ... };
+  <b>vkCreateWin32SurfaceKHR</b>(inst, &surfaceCreateInfo, NULL, &surf);
   
-  VkSwapchainCreateInfoKHR swapCreateInfo = { ... };
   VkSwapchainKHR swap;
-  **vkCreateSwapchainKHR**(dev, &swapCreateInfo, NULL, &swap);
+  VkSwapchainCreateInfoKHR swapCreateInfo = { ... };
+  <b>vkCreateSwapchainKHR</b>(dev, &swapCreateInfo, NULL, &swap);
 
   VkImage image[4];
-  **vkGetSwapchainImagesKHR**(dev, swap, 4, images);
+  <b>vkGetSwapchainImagesKHR</b>(dev, swap, 4, images);
 
   uint32_t currentSwapImage;
-  **vkAcquireNextImageKHR**(dev, swap, UINT64_MAX, presentCompleteSemaphore, NULL, &currentSwapImage);
+  <b>vkAcquireNextImageKHR</b>(dev, swap, UINT64_MAX, presentCompleteSemaphore, NULL, &currentSwapImage);
   
   VkImageView backbufferView;
-  **vkCreateImageView**(dev, &backbufferViewCreateInfo, NULL, &backbufferView);
+  <b>vkCreateImageView</b>(dev, &backbufferViewCreateInfo, NULL, &backbufferView);
   
   VkQueue queue;
-  **vkGetDeviceQueue**(dev, 0, 0, &queue);
+  <b>vkGetDeviceQueue</b>(dev, 0, 0, &queue);
 
   VkRenderPass renderpass;
   VkRenderPassCreateInfo renderpassCreateInfo = { ... };
-  **VkCreateRenderPass**(dev, &renderpassCreateInfo, NULL, &renderpass);
+  <b>VkCreateRenderPass</b>(dev, &renderpassCreateInfo, NULL, &renderpass);
 
   VkFramebuffer framebuffer;
   VkFramebufferCreateInfo framebufferCreateInfo = { ... };
-  **vkCreateFramebuffer(dev, &framebufferCreateInfo, NULL, &framebuffer);
+  <b>vkCreateFramebuffer</b>(dev, &framebufferCreateInfo, NULL, &framebuffer);
 
   VkDescriptorSetLayout descriptorSetLayout;
   VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = { ... };
-  **vkCreateDescriptorSetLayout**(dev, &descriptorSetLayoutCreateInfo, NULL, &descriptorSetLayout);
+  <b>vkCreateDescriptorSetLayout</b>(dev, &descriptorSetLayoutCreateInfo, NULL, &descriptorSetLayout);
 
   VkPipelineLayout pipeLayout;
   VkPipelineCreateInfo pipeLayoutCreateInfo = { ... };
-  **vkCreatePipelineLayout**(dev, &pipeLayoutCreateInfo, NULL, &pipeLayout);
+  <b>vkCreatePipelineLayout</b>(dev, &pipeLayoutCreateInfo, NULL, &pipeLayout);
 
   VkShaderModule vertModule, fragModule;
-  **vkCreateShaderModule**(dev, &vertModuleInfoWithSPIRV, NULL, &vertModule);
-  **vkCreateShaderModule**(dev, &fragModuleInfoWithSPIRV, NULL, &fragModule);
+  <b>vkCreateShaderModule</b>(dev, &vertModuleInfoWithSPIRV, NULL, &vertModule);
+  <b>vkCreateShaderModule</b>(dev, &fragModuleInfoWithSPIRV, NULL, &fragModule);
 
   VkPipeline pipeline;
   VkGraphicsPipelineCreateInfo pipeCreateInfo = { ... };
-  **vkCreateGraphicsPipelines**(dev, NULL, 1, &pipeCreateInfo, NULL, &pipeline);
+  <b>vkCreateGraphicsPipelines</b>(dev, NULL, 1, &pipeCreateInfo, NULL, &pipeline);
 
   VkDescriptorPool, descriptorPool;
   VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = { ... };
-  **ckCreateDescriptorPool**(dev, &descriptorPoolCreateInfo, NULL, &descriptorPool);
+  <b>ckCreateDescriptorPool</b>(dev, &descriptorPoolCreateInfo, NULL, &descriptorPool);
 
   VkDescriptorSet descriptorSet;
   VkDescriptorSetAllocateInfo descriptorAllocInfo = { ... };
-  **vkAllocateDescriptorSets**(dev, &descriptorAllocInfo, &descriptorSet);
+  <b>vkAllocateDescriptorSets</b>(dev, &descriptorAllocInfo, &descriptorSet);
 
   VkBuffer buffer;
   VkBufferCreateInfo bufferCreateInfo = { ... };
-  **vkCreateBuffer**(dev, &bufferCreateInfo, NULL, &buffer);
+  <b>vkCreateBuffer</b>(dev, &bufferCreateInfo, NULL, &buffer);
 
   VkDeviceMemory memory;
   VkMemoryAllocateInfo memAllocInfo = { ... };
-  **vkAllocateMemory**(dev, &memAllocInfo, NULL, &memory);
+  <b>vkAllocateMemory</b>(dev, &memAllocInfo, NULL, &memory);
 
-  **vkBindBufferMemory**(dev, buffer, memory, 0);
+  <b>vkBindBufferMemory**(dev, buffer, memory, 0);
 
   void *data = NULL;
   vkMapMemory(dev, memory, 0, VK_WHOLE_SIZE, 0, &data);
@@ -189,12 +288,12 @@ void doRendering()
 
   // Rendering:
   vkBeginCommandBuffer(cmd, &cmdBeginInfo);
-  vkCmdBeginRenderPass(cmd, &renderpassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
-  vkCmdBindPipeline(cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
-  vkCmdBindDescriptorSets(cmd, VK_PIPELINE_BIND_POINTS_GRAPHICS, descriptorSetLayout, 1, &descriptorSet, 0, NULL);
-  vkCmdSetViewport(cmd, 1, &viewport);
-  <b>vkCmdDraw</b>(cmd, 3, 1, 0, 0);
-  vkCmdEndRenderPass(cmd);
+    vkCmdBeginRenderPass(cmd, &renderpassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
+      vkCmdBindPipeline(cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
+      vkCmdBindDescriptorSets(cmd, VK_PIPELINE_BIND_POINTS_GRAPHICS, descriptorSetLayout, 1, &descriptorSet, 0, NULL);
+      vkCmdSetViewport(cmd, 1, &viewport);
+      <b>vkCmdDraw</b>(cmd, 3, 1, 0, 0);
+    vkCmdEndRenderPass(cmd);
   vkEndCommandBuffer(cmd);
 
   VkSubmitInfo submitInfo = { ... };
