@@ -75,7 +75,7 @@ Chapters and sections:
 
 ...
 
-[**Information retrieval (synthesis)**](https://github.com/AnselmoGPP/Learn-Computer-Science/blob/master/topics/computer_science/others/information_retrieval.md)
+[**Information retrieval (synthesis)**](https://github.com/AnselmoGPP/Learn-Computer-Science/master/topics/computer_science/others/information_retrieval.md)
 
 ## Mobile applications
 
