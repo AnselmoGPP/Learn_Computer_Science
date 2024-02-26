@@ -72,6 +72,7 @@ Chapters and sections:
   - 3 Dictionaries and tolerant retrieval
   - 4 Index construction
   - 5 Index compression
+  - 6 Scoring, term weighting & the vector space model
 
 ...
 
