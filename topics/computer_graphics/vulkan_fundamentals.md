@@ -94,7 +94,7 @@ Shaders get data from:
 
 ### Starting
 
-Vulkan is a C API for computer graphics and computing. It's heavily typed (each enum is separate, and returned handles are opaque 64-bit handles so they are typed on 64-bit). Most functions take big structures as parameters instead of basic types. 
+Vulkan is a C API for computer graphics and computing on GPUs. It's heavily typed (each enum is separate, and returned handles are opaque 64-bit handles so they are typed on 64-bit). Most functions take big structures as parameters instead of basic types. 
 
 First, create a `VkInstance` (Vulkan instances don't know about each other) and specify simple information (layers, extensions...). Use it to examine available GPUs,  with `VkEnumeratePhysicalDevices()` and check their properties (`vkGetPhysicalDeviceProperties()`) and features (`vkGetPhysicalDeviceFeatures()`). Then, take one `VkPhysicalDevice` and use it for creating a `VkDevice` (handle for the GPU you'll use). Note: A `VkInstance` can have many `VkPhysicalDevices`, while each one can have many `VkDevices`.
 
@@ -328,6 +328,18 @@ Treat the GPU as a separate thread of execution conceptually. Treat memory you a
 
 The GPU executes a lot of different stages and threads, so it needs a much more explicit synchronization. 
 
+Synchronization tools:
+
+- [**`VkMemoryBarrier`**](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryBarrier.html): For a single queue. Before doing operation A (read) from pipeline stage X, operation B (write) from pipeline stage Y must have completed.
+- [**`VkSemaphore`**](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSemaphore.html): Block all execution on queue A until all operations on queue B finish (e.g. finish all rendering on graphics queue before sending framebuffer to presentation queue). Submitted to the queue with `VkSubmitInfo`.
+- [**`VkBufferMemoryBarrier`**](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferMemoryBarrier.html): For multiple queues.
+- [**`VkImageMemoryBarrier`**](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageMemoryBarrier.html): For multiple queues.
+- [**`vkCmdPipelineBarrier`**](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPipelineBarrier.html) (execution barrier): Enforce an ordering between commands submitted to a command buffer (e.g. execute compute command before draw command). Instructions submitted prior to the execution barrier occur before instructions submitted after. Usually submitted together with a `VkMemoryBarrier` (as an argument).
+- [**`VkSubpassDependency`**](): Memory barrier used by subpasses. It ensures that all relevant memory modified prior to the start of the pass is visible.
+- [**Wait command**]() (GPU to CPU): It waits until the queue you submitted the commands to is idle. Not recommended: waiting for a queue to be idle means you cannot submit more work to that queue in the meantime.
+- [**Fence**]() (GPU to CPU): It can be submitted along with a command buffer in `VkQueueSubmit()`. Later, this fence will be signaled on the CPU in a way that is visible and waitable via `vkWaitForFences`.
+- [**Event**](): It's like a more fine grained pipeline barrier. It's splitted in 2 parts: one emits a signal, the other waits for it.
+
 ### Submitting to a single queue (`MemoryBarrier`)
 
 **Barrier:** Given a pipeline stage and all the types of memory we care about, make sure we're finished with those writes before accessing this type of memory at these other stages.
@@ -338,7 +350,7 @@ vk::MemoryBarrier barrier { B, A };   // { Src, Dst }
 command_buffer.pipelineBarrier( Y, X, 1, &barrier );   // (Src, Dst, barriersCount, barriers)
 </pre>
 
-This means that before trying to do operation A from stage X, operation B from stage Y must have completed.
+This means that, before trying to do operation A from pipeline stage X, operation B from pipeline stage Y must have completed.
 
 <pre>
 vk::MemoryBarrier barrier {
@@ -372,15 +384,15 @@ As we've seen, memory barriers (`MemoryBarrier`) are configured across 2 orthogo
 
 Commands submitted to a command buffer can be executed in any order. To enforce an ordering between them, we need an **execution barrier** (`vkCmdPipelineBarrier`). It specifies that instructions submitted prior to the execution barrier occur before instructions submitted after. Example: to sequence the compute command after the draw command, we can invoke the `vkCmdPipelineBarrier` with the source stage mask set to `VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT` and the destination stage mask set to `VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT` and no memory barriers at all.
 
-The barrier is just another command passed down the queue. If we submit only a **memory barrier**, a command submitted earlier may slip past the memory barrier, or viceversa. Therefore, we need to submit together both the **memory barrier** and execution barrier. The API considered this and allows memory barriers to be passed as arguments to the pipeline barrier (i.e., execution barrier). However, there a few use case where we want to submit a pipeline barrier whithout memory barriers: when we submit a command that simply reads a resource that must later be modified (WAR: Write-After-Read).
+The barrier is just another command passed down the queue. If we submit only a **memory barrier**, a command submitted earlier may slip past the memory barrier, or viceversa. Therefore, we need to submit together both the **memory barrier** and execution barrier. The API considered this and allows memory barriers to be passed as arguments to the pipeline barrier. However, there a few use case where we want to submit a pipeline barrier whithout memory barriers: when we submit a command that simply reads a resource that must later be modified (WAR: Write-After-Read).
 
 ### Render passes & Subpasses
 
-Consider a sequence of 3 draw call for drawing 3 transparent objects that overlap one another. We need here a back-to-front drawing (Painter's algorithm) with blending. We can guarantee that the draw calls will execute in the same submission order by injecting a memory barrier between each draw call. But there's another way.
+Consider a sequence of 3 draw calls for drawing 3 transparent objects that overlap one another. We need here a back-to-front drawing (Painter's algorithm) with blending. We can guarantee that the draw calls will execute in the same submission order by injecting a memory barrier between each draw call. But there's another way.
 
-At the start of every subpass and render pass there's an image barrier that ensures that all relevant memory modified prior to the start of the pass is visible. Once entering the pass, the draws sequence is guaranteed not to violate pipeline order. Then, the render pass executes the store command on its render targets, discards temporary buffers/memory, and prepares framebuffers for the next render pass.
+At the start of every subpass and render pass there's an image barrier that ensures that all relevant memory modified prior to the start of the pass is visible. Once entering the pass, the draws sequence is guaranteed not to violate the render-pipeline order. Then, the render pass executes the store command on its render targets, discards temporary buffers/memory, and prepares framebuffers for the next render pass.
 
-`VkSubpassDependency` is, in fact, are memory barriers, but with better syntaxis for applications that use multiple render targets. You can pass some [flag bits](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDependencyFlagBits.html): 
+`VkSubpassDependency` is, in fact, a memory barrier, but with better syntaxis for applications that use multiple render targets. You can pass some [flag bits](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDependencyFlagBits.html): 
 
 - `VK_DEPENDENCY_BY_REGION_BIT`: Often, we issue draw calls and don't want to violate pipeline order (e.g. when blending), but a full barrier per pipeline stage of the entire framebuffer is too much. This flag allows modern GPU architectures that do tiled-rendering optimize this process (useful when the usage of the framebuffer is localized), preventing most intermediate render-targets to be fully synchronized and flushed for each draw.
 
