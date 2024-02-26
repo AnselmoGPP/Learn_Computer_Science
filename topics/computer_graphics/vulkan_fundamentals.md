@@ -335,10 +335,10 @@ Synchronization tools:
 - [**`VkBufferMemoryBarrier`**](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferMemoryBarrier.html): For multiple queues.
 - [**`VkImageMemoryBarrier`**](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageMemoryBarrier.html): For multiple queues.
 - [**`vkCmdPipelineBarrier`**](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPipelineBarrier.html) (execution barrier): Enforce an ordering between commands submitted to a command buffer (e.g. execute compute command before draw command). Instructions submitted prior to the execution barrier occur before instructions submitted after. Usually submitted together with a `VkMemoryBarrier` (as an argument).
-- [**`VkSubpassDependency`**](): Memory barrier used by subpasses. It ensures that all relevant memory modified prior to the start of the pass is visible.
-- [**Wait command**]() (GPU to CPU): It waits until the queue you submitted the commands to is idle. Not recommended: waiting for a queue to be idle means you cannot submit more work to that queue in the meantime.
-- [**Fence**]() (GPU to CPU): It can be submitted along with a command buffer in `VkQueueSubmit()`. Later, this fence will be signaled on the CPU in a way that is visible and waitable via `vkWaitForFences`.
-- [**Event**](): It's like a more fine grained pipeline barrier. It's splitted in 2 parts: one emits a signal, the other waits for it.
+- [**`VkSubpassDependency`**](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassDependency.html): Memory barrier used by subpasses. It ensures that all relevant memory modified prior to the start of the pass is visible.
+- [**vkCmdWaitEvents**](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWaitEvents.html) (GPU to CPU): It waits until the queue you submitted the commands to is idle. Not recommended: waiting for a queue to be idle means you cannot submit more work to that queue in the meantime.
+- [**VkFence**](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFence.html) (GPU to CPU): It can be submitted along with a command buffer in `VkQueueSubmit()`. Later, this fence will be signaled on the CPU in a way that is visible and waitable via `vkWaitForFences`.
+- [**VkEvent**](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkEvent.html): It's like a more fine grained pipeline barrier. It's splitted in 2 parts: one emits a signal, the other waits for it.
 
 ### Submitting to a single queue (`MemoryBarrier`)
 
