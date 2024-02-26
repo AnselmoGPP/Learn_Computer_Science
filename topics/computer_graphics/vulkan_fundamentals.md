@@ -324,11 +324,11 @@ Obj
 
 ## Synchronization
 
-Treat the GPU as a separate thread of execution conceptually. Treat memory you allocate as shared. Don't free or write to that memory it's being used. Imagine the GPU as a fat thread that shares memory with you (in fact, consider the various graphics, transfer, and compute queues as separate "threads" within the GPU). You can use **fences** to know exactly when a particular command you issued to the GPU has finished, or **semaphores** if you have different GPU commands that depend on each other. You can articulate some dependencies with render subpasses. Use **barriers** for controlling access to memory when they change ownership, layouts, or visibility.
+Treat the GPU as a separate thread of execution conceptually. Treat memory you allocate as shared. Don't free or write to that memory when it's being used. Imagine the GPU as a fat thread that shares memory with you (in fact, consider the various graphics, transfer, and compute queues as separate "threads" within the GPU). You can use **fences** to know exactly when a particular command you issued to the GPU has finished, or **semaphores** if you have different GPU commands that depend on each other. You can articulate some dependencies with render subpasses. Use **barriers** for controlling access to memory when they change ownership, layouts, or visibility.
 
 The GPU executes a lot of different stages and threads, so it needs a much more explicit synchronization. 
 
-### Submitting to a single queue
+### Submitting to a single queue (`MemoryBarrier`)
 
 **Barrier:** Given a pipeline stage and all the types of memory we care about, make sure we're finished with those writes before accessing this type of memory at these other stages.
 
@@ -354,29 +354,29 @@ command_buffer.pipelineBarrier(
 };
 </pre>
 
-This means that, before trying to read vertex attribute memory (`eVertexAttributeRead`) from the vertex input stage of the pipeline (`eVertexInput`), make sure that writes to transferred memory (`eTransferWrite`) from the transfer stage (`eTransfer`) have completed.
+This means that, before trying to read vertex attribute memory (`eVertexAttributeRead`) from the vertex input stage of the pipeline (`eVertexInput`), make sure that writes to transferred memory (`eTransferWrite`) from the transfer stage (`eTransfer`) have completed. So, `MemoryBarriers` have 2 dimensions: pipeline masks ([`vk::PipelineStageFlagBits`](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineStageFlagBits.html)) and access masks ([`vk::AccessFlagBits`](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccessFlagBits.html)).
 
 This barrier applies to submissions that occur on the same queue. So, this applies to all commands submitted prior to the same command buffer, and all commands submitted in a different buffer earlier on the same queue.
 
-### Multiple queue submission
+### Multiple queue submission (`VkSemaphore`, `VkBufferMemoryBarrier`, `VkImageMemoryBarrier`)
 
-GPUs have multiple queues (graphics, compute, transfer...), and 0 or more queues of each type. Submitting to multiple queues means dealing with parallel submission. There're two ways of synchronizing work between queues:
+GPUs have multiple queue types (graphics, compute, transfer...), and 0 or more queues of each type. Submitting to multiple queues means dealing with parallel submission. There're two ways of synchronizing work between queues:
 
-- `VkSemaphore`: Semaphores to be signaled are submitted one queue at submission time, and sempahores are submitted to a different queue to be waited on (also at submission time). It blocks all execution on the seconds queue until all operations of the first queue finish. This can be useful for finishing all rendering on a graphics queue before attempting to send the framebuffer to the presentation queue.
+- `VkSemaphore`: Semaphores to be signaled are submitted to one queue at submission time, and semaphores are submitted to a different queue to be waited on (also at submission time). It blocks all execution on the second queue until all operations on the first queue finish. This can be useful for finishing all rendering on a graphics queue before attempting to send the framebuffer to the presentation queue.
 
 - `VkBufferMemoryBarrier` & `VkImageMemoryBarrier`: Both encode the source and destination queue families. Example 1: transfer job to submit buffers or images to the GPU that get consumed later by the graphics queue. Example 2: Interdependencies between the graphics queue and the compute queue or vice-versa. They can be used in a single queue since they let you encode a barrier on a sub-region of either the buffer or image, or an image format transition in addition to everything else in the case of an image barrier. When used to describe a queue transfer however, these barriers need to be submitted to both queues with the source and destination queue reversed. Depending on the queue they are submitted to, the barriers define a release or consume dependency between the queues. When these barriers are used to describe a queue ownership transfer, when a __release__ is defined, `dstStageMask` is ignored (after all, commands submitted afterwards in the same queue don't care about the barrier). Similarly, the `srcStageMask` is ignored in the consume operation on the other side for an analogous reason.
 
-### Memory vs Execution barrier.
+### Memory vs Execution barrier (`vkCmdPipelineBarrier`)
 
-As we've seen, memory barriers are configured across two orthogonal dimensions: pipeline masks, and access masks. So, prior to certain types of memory access from certain stages, we require that certain types of memory writes from certain stages were made visible or flushed.
+As we've seen, memory barriers (`MemoryBarrier`) are configured across 2 orthogonal dimensions: pipeline masks (`vk::PipelineStageFlagBits`) and access masks (`vk::AccessFlagBits`). So, prior to certain types of memory access from certain stages, we require that certain types of memory writes from certain stages were made visible or flushed.
 
-Commands submitted to a command buffer can be executed in any order. To enforce an ordering between them, we need an **execution barrier**. It specifies that instructions submitted prior to the execution barrier occur before instructions submitted after. Example: to sequence the compute command after the draw command, we can invoke the `vkCmdPipelineBarrier` with the source stage mask set to `VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT` and the destination stage mask set to `VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT` and no memory barriers at all.
+Commands submitted to a command buffer can be executed in any order. To enforce an ordering between them, we need an **execution barrier** (`vkCmdPipelineBarrier`). It specifies that instructions submitted prior to the execution barrier occur before instructions submitted after. Example: to sequence the compute command after the draw command, we can invoke the `vkCmdPipelineBarrier` with the source stage mask set to `VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT` and the destination stage mask set to `VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT` and no memory barriers at all.
 
 The barrier is just another command passed down the queue. If we submit only a **memory barrier**, a command submitted earlier may slip past the memory barrier, or viceversa. Therefore, we need to submit together both the **memory barrier** and execution barrier. The API considered this and allows memory barriers to be passed as arguments to the pipeline barrier (i.e., execution barrier). However, there a few use case where we want to submit a pipeline barrier whithout memory barriers: when we submit a command that simply reads a resource that must later be modified (WAR: Write-After-Read).
 
 ### Render passes & Subpasses
 
-Consider a sequence of 3 draw call for drawing 3  transparent objects that overlap one another. We need here a back-to-front drawing (Painter's algorithm) with blending. We can guarantee that the draw calls will execute in the same submission order by injecting a memory barrier between each draw call. But there's another way.
+Consider a sequence of 3 draw call for drawing 3 transparent objects that overlap one another. We need here a back-to-front drawing (Painter's algorithm) with blending. We can guarantee that the draw calls will execute in the same submission order by injecting a memory barrier between each draw call. But there's another way.
 
 At the start of every subpass and render pass there's an image barrier that ensures that all relevant memory modified prior to the start of the pass is visible. Once entering the pass, the draws sequence is guaranteed not to violate pipeline order. Then, the render pass executes the store command on its render targets, discards temporary buffers/memory, and prepares framebuffers for the next render pass.
 
@@ -399,6 +399,7 @@ This was described previously when describing a memory dependency across differe
 **Events** are like a pipeline barrier splitted in two parts: one emits a signal, the other waits for the signal with the appropriate masks to indicate which pipeline stages need to flush what memory. Example: we want to submit commands A, B, and C, where C is dependent on A; and A and B were recorded on a separate thread into a secondary command buffer. We can synchronize A and C by inserting a pipeline barrier between B and C to flush the memory written by A. But, if B also writes memory in this pipeline stage, you'll end up waiting longer to flush more than you might have otherwise. You like recording A/B and C independently on 2 separate threads on the host CPU, but you don't like that the barrier between B and C synchronizes too much. Alternatively, putting a barrier between A and B may prevent parallelism between A and B since they don't technically have any hard dependency between them. The solution is the `VkEvent` which is more granular. The thread recording A and B can insert an event signal using `vkCmdEventSignal` between A and B, while the thread recording C can insert a `vkCmdEventWaits` just before C.
 
 Events are powerful, but it's recommended first leveraging the render pass and subpass abstractions first, since they map well to hardware. Additionally, fine grained events can occasionally perform worse than a single barrier, so consider a simpler architecture at first. 
+
 
 ## Particularities
 
@@ -488,5 +489,7 @@ Events are powerful, but it's recommended first leveraging the render pass and s
 - [Vulkan specification](https://docs.vulkan.org/spec/latest/chapters/introduction.html)
 - [Vulkan.org](https://www.vulkan.org/)
 - [Vulkan in 30 minutes](https://renderdoc.org/vulkan-in-30-minutes.html)
-- [Vulkan synchronisation 1](https://www.jeremyong.com/vulkan/graphics/rendering/2018/11/22/vulkan-synchronization-primer/)
-- [Vulkan synchronization 2](https://themaister.net/blog/2019/08/14/yet-another-blog-explaining-vulkan-synchronization/)
+- [Vulkan synchronisation primer](https://www.jeremyong.com/vulkan/graphics/rendering/2018/11/22/vulkan-synchronization-primer/)
+- [Yet another blog explaining Vulkan synchronization](https://themaister.net/blog/2019/08/14/yet-another-blog-explaining-vulkan-synchronization/)
+- [Khronos - Understanding Vulkan synchronization](https://www.khronos.org/blog/understanding-vulkan-synchronization)
+- [AMD - Vulkan barriers explained](https://gpuopen.com/learn/vulkan-barriers-explained/)
