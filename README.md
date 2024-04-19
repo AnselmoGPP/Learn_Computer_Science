@@ -10,6 +10,7 @@ Teach yourself Computer Science for free (equivalent to a Bachelor Degree in CS)
     + [Minor in Economics](#minor-in-economics)
 + [Learn C++](#learn-cpp)
 + [Learn Computer graphics](#learn-computer-graphics)
++ [Learn Machine learning](#learn-machine-learning)
 + [Recommended readings](#recommended-readings)
 + [Links](#links)
 
@@ -53,6 +54,10 @@ int main(int argc, char* argv[])
 
 - [**Computer graphics**]()
 - [**Vulkan API fundamentals**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_graphics/vulkan_fundamentals.md)
+
+## Learn Machine learning
+
+- [**Machine learning**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/machine_learning.md)
 
 ## Recommended readings
 

@@ -12,7 +12,7 @@ Resources:
 
 - Peter L. Dordal (2020), _**An introduction to Computer Networks, 2nd**_. Loyola University. Chicago. Retrieved from [here](http://intronetworks.cs.luc.edu/current/html/index.html)
 - Tanenbaum, A.S., Wetherall, D.J. (2011). _**Computer Networks, 5th**_. Pearson Education. New York. Retrieved from [here](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjFzM-z4J2EAxU_UKQEHe6ZDFEQFnoECA4QAQ&url=https%3A%2F%2Fcsc-knu.github.io%2Fsys-prog%2Fbooks%2FAndrew%2520S.%2520Tanenbaum%2520-%2520Computer%2520Networks.pdf&usg=AOvVaw0vGkjKgLWR8UnoBocnjazL&opi=89978449)
-- Network direction (2023) _**Network fundamentals**_ (playlist). YouTube. Retrieved from [here](https://www.youtube.com/playlist?list=PLDQaRcbiSnqF5U8ffMgZzS7fq1rHUI3Q8)
+- Network direction (2023) _**Network fundamentals**_ (playlist). YouTube. Retrieved from [here](https://www.youtube.com/playlist?list=PLDQaRcbiSnqF5U8ffMgZzS7fq1rHUI3Q8). Synthesized [here](https://github.com/AnselmoGPP/Learn-Computer-Science/blob/master/topics/computer_science/networking/network_fundamentals.md).
 
 Chapters and sections:
 
@@ -160,7 +160,7 @@ Chapters and sections:
       - 22.1 - 22.4 (optional: 22.2.2)
       - Optional: 22.5 - 22.12
   
-[Communications and Networking (synthesis)](https://github.com/AnselmoGPP/Learn-Computer-Science/blob/master/topics/computer_science/networking/1_Communications_and_networking.md)
+[Communications and Networking (synthesis)](https://github.com/AnselmoGPP/Learn-Computer-Science/blob/master/topics/computer_science/networking/1_communications_and_networking.md)
 
 ## Advanced networking and Data security
 

@@ -73,8 +73,11 @@ Chapters and sections:
   - 4 Index construction
   - 5 Index compression
   - 6 Scoring, term weighting & the vector space model
-
-...
+  - 7 Computing Scores in a Complete Search System
+  - 8 Evaluation in information retrieval
+  - 19 Web Search Basics
+  - 20 Web crawling and Indexes
+  - 21 Link Analysis
 
 [**Information retrieval (synthesis)**](https://github.com/AnselmoGPP/Learn-Computer-Science/master/topics/computer_science/others/information_retrieval.md)
 
