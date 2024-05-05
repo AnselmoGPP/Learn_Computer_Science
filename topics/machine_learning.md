@@ -1,3 +1,11 @@
+# Machine learning
+
+## Table of Contents
++ [Introduction](#introduction)
++ [Applied math](#applied-math)
+    + [Linear algebra](#linear-algebra)
+
+
 ## Introduction
 
 Abstrac and formal problems, easily described by formal and mathematical rules, are usually difficult for human beings to solve, but straightforward for computers. However, intuitive problems, difficult to describe formally, are easy for humans to solve, but difficult for computers because it's difficult to articulate them formally. A solution to intuitive problems is to allow computers to learn from experience and understand the world in terms of a hierarchy of concepts, with each concept defined in terms of its relation to simpler concepts. This allows the computer to learn complicated concepts by building them out of simpler ones (**deep learning**). By gathering knowledge from experience, we avoid the need for human operators to formally specify all of the knowledge that the computer needs. Human's life require an immense amount of amount of knowledge about the world, which is subjective and intuitive, and therefore difficult to articulate formally. Computers need to capture this same knowledge in order to behave intelligently.
@@ -27,7 +35,7 @@ AI:[ML:[RL:[DL:[...], ...], ...], ...]
 
 ### Linear algebra
 
-- **Scalar:** Single number. 
+**Scalar:** Single number. 
 
 **Vector:** It's an array of numbers (represented as a column enclosed in brackets), each one identified with one index. We can consider it a point in space (each element is the coordinate along a different axis). It's a matrix with one column.
 - **Set** of elements x<sub>1</sub>, x<sub>3</sub> and x<sub>6</sub> = S = {1,3,6} = x<sub>S</sub>. 
@@ -44,12 +52,11 @@ AI:[ML:[RL:[DL:[...], ...], ...], ...]
 - A + B = C (A<sub>i,j</sub> + B<sub>i,j</sub> = C<sub>i,j</sub>) (A and B must have same shape)
 - A * a (multiply/add scalar a to each element in the matrix)
 - **Broadcasting:** Implicit copy of a vector to many locations. A + v = C (add vector v to each row) (A<sub>i,j</sub> + v<sub>j</sub> = C<sub>i,j</sub>)
-- Product of 2 matrices: A<sub>mxn</sub> * B<sub>nxp</sub> = C<sub>mxp</sub> (AB = C) (C<sub>mxp</sub> = &Sigma(k)(A<sub>i,k</sub> * B<sub>k,j</sub>))
+- Product of 2 matrices: A<sub>mxn</sub> * B<sub>nxp</sub> = C<sub>mxp</sub> (AB = C) (C<sub>mxp</sub> = &Sigma;(k)(A<sub>i,k</sub> * B<sub>k,j</sub>))
 - Element-wise (or Hadamard) product of 2 matrices: A · B = matrix containing the product of the individual elements)
 **Dot product** (A, B) = compute C<sub>i,j</sub> as the dot product between row i of A and column j of B
 
-**Tensor:** Array with more than 2 axes.
-- A<sub>i,j,k</sub> = element at position (i,j,k)
+**Tensor:** Array with more than 2 axes (A<sub>i,j,k</sub> = element at position (i,j,k)).
 
 Matrix product operations properties:
 - Distributive: A(B + C) = AB + AC
@@ -70,9 +77,9 @@ Use example: Solve **Ax = b** for x (assuming A<sup>-1</sup> exists)
 
 The inverse of A may not exist (the equation above must have exactly 1 solution for every value of b). It should not be used in practice for most software applications. A<sup>-1</sup> can only be represented with limited precision on a digital computer, so algorithms that use b can get more accurate estimates of x.
 
-**Linear combination:** Operation that takes a set of vectors, multiplies each one by a corresponding scalar coefficient, and adds the results (&Sigma(i)(c<sub>i</sub>v<sup>(i)</sup>)).
+**Linear combination:** Operation that takes a set of vectors, multiplies each one by a corresponding scalar coefficient, and adds the results (&Sigma;(i)(c<sub>i</sub>v<sup>(i)</sup>)).
 
-Ac = &Sigma(i)(x<sub>i</sub>A<sub>:,i</sub>)
+Ac = &Sigma;(i)(c<sub>i</sub>A<sub>:,i</sub>)
 
 **Span:** Set of all vectors obtainable by linear combination of the original vectors. 
 
@@ -87,8 +94,8 @@ In order for a matrix to have an inverse it has to be **square** (m=n) and all t
 It's also possible to define an inverse that is multiplied on the right (AA<sup>-1</sup> = I). For square matrices, the left and right inverse are equal.
 
 **Norm:** Function used for measuring the size of a vector (distance from origin to x).
-- **L<sup>2</sup>** (Euclidean norm) (||x||<sub>p</sub> = (&Sigma;<sub>i</sub>|x<sub>i</sub>|<sup>p</sup>)<sup>1/p</sup>): It measures the Euclidean distance. It's more convenient to use the squared L<sup>2</sup> (which is = x<sup>T</sup>x), since it has simpler derivatives and less computation. However, it increases very slowly near the origin.
-- **L<sup>1</sup> (||x||<sub>1</sub> = &Sigma;(i)|x<sub>i</sub>|):** It grows at the same rate in all locations while still being simple enough. This is used when the differences between zero and nonzero elements is important (when x moves away from 0 by a, L<sup>1</sup> norm increases by a).
+- **L<sup>2</sup>** (||x||<sub>p</sub> = (&Sigma;<sub>i</sub>|x<sub>i</sub>|<sup>p</sup>)<sup>1/p</sup>) (Euclidean norm): It measures the Euclidean distance. It's more convenient to use the squared L<sup>2</sup> (which is = x<sup>T</sup>x), since it has simpler derivatives and less computation. However, it increases very slowly near the origin.
+- **L<sup>1</sup>** (||x||<sub>1</sub> = &Sigma;<sub>i</sub>|x<sub>i</sub>|): It grows at the same rate in all locations while still being simple enough. This is used when the differences between zero and nonzero elements is important (when x moves away from 0 by a, L<sup>1</sup> norm increases by a).
 
 
 
