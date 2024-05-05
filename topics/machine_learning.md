@@ -52,7 +52,7 @@ AI:[ML:[RL:[DL:[...], ...], ...], ...]
 - A + B = C (A<sub>i,j</sub> + B<sub>i,j</sub> = C<sub>i,j</sub>) (A and B must have same shape)
 - A * a (multiply/add scalar a to each element in the matrix)
 - **Broadcasting:** Implicit copy of a vector to many locations. A + v = C (add vector v to each row) (A<sub>i,j</sub> + v<sub>j</sub> = C<sub>i,j</sub>)
-- Product of 2 matrices: A<sub>mxn</sub> * B<sub>nxp</sub> = C<sub>mxp</sub> (AB = C) (C<sub>mxp</sub> = &Sigma;(k)(A<sub>i,k</sub> * B<sub>k,j</sub>))
+- Product of 2 matrices: A<sub>mxn</sub> * B<sub>nxp</sub> = C<sub>mxp</sub> (AB = C) (C<sub>mxp</sub> = &Sigma;<sub>k</sub>(A<sub>i,k</sub> * B<sub>k,j</sub>))
 - Element-wise (or Hadamard) product of 2 matrices: A · B = matrix containing the product of the individual elements)
 **Dot product** (A, B) = compute C<sub>i,j</sub> as the dot product between row i of A and column j of B
 
@@ -77,9 +77,9 @@ Use example: Solve **Ax = b** for x (assuming A<sup>-1</sup> exists)
 
 The inverse of A may not exist (the equation above must have exactly 1 solution for every value of b). It should not be used in practice for most software applications. A<sup>-1</sup> can only be represented with limited precision on a digital computer, so algorithms that use b can get more accurate estimates of x.
 
-**Linear combination:** Operation that takes a set of vectors, multiplies each one by a corresponding scalar coefficient, and adds the results (&Sigma;(i)(c<sub>i</sub>v<sup>(i)</sup>)).
+**Linear combination:** Operation that takes a set of vectors, multiplies each one by a corresponding scalar coefficient, and adds the results (&Sigma;<sub>i</sub>(c<sub>i</sub>v<sup>(i)</sup>)).
 
-Ac = &Sigma;(i)(c<sub>i</sub>A<sub>:,i</sub>)
+Ac = &Sigma;<sub>i</sub>(c<sub>i</sub>A<sub>:,i</sub>)
 
 **Span:** Set of all vectors obtainable by linear combination of the original vectors. 
 
