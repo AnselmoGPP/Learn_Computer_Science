@@ -27,15 +27,71 @@ AI:[ML:[RL:[DL:[...], ...], ...], ...]
 
 ### Linear algebra
 
-**Scalar:** It's a single number. 
-**Vector:** It's an array of numbers (represented as a column enclosed in brackets), each one identified with one index. We can consider it a point in space (each element is the coordinate along a different axis). 
+- **Scalar:** Single number. 
+
+**Vector:** It's an array of numbers (represented as a column enclosed in brackets), each one identified with one index. We can consider it a point in space (each element is the coordinate along a different axis). It's a matrix with one column.
 - **Set** of elements x<sub>1</sub>, x<sub>3</sub> and x<sub>6</sub> = S = {1,3,6} = x<sub>S</sub>. 
-**Complement** of a set. Examples: x<sub>-2</sub> = vector x without element 2.  x<sub>-S</sub> = vector x without set S. 
-A **matrix** is a 2D array of numbers, each one identified 2 indices (height/row m, width/column n)
+- **Complement** of a set. Examples: x<sub>-2</sub> = vector x without element 2.  x<sub>-S</sub> = vector x without set S.
+- **Dot product** (xy) = x<sup>T</sup> * y
+
+**Matrix: ** It's a 2D array of numbers, each one identified 2 indices (height/row m, width/column n)
 - A<sub>i,j</sub> = element at position (i,j) | A<sub>m,n</sub> = bottom right entry
 - A<sub>i,:</sub> = all numbers with vertical coordinate i (use : to refer to all elements in that line)
+- A<sup>T</sup> = Transpose of A = Mirror image of A across the **main diagonal** (from upper left corner to lower right).
+  - (A<sup>T</sup>)<sub>i,j</sub> = A<sub>j,i</sub>
+  - Transpose of a vector = matrix with one row
+  - Transpose of a scalar = that same scalar
+- A + B = C (A<sub>i,j</sub> + B<sub>i,j</sub> = C<sub>i,j</sub>) (A and B must have same shape)
+- A * a (multiply/add scalar a to each element in the matrix)
+- **Broadcasting:** Implicit copy of a vector to many locations. A + v = C (add vector v to each row) (A<sub>i,j</sub> + v<sub>j</sub> = C<sub>i,j</sub>)
+- Product of 2 matrices: A<sub>mxn</sub> * B<sub>nxp</sub> = C<sub>mxp</sub> (AB = C) (C<sub>mxp</sub> = &Sigma(k)(A<sub>i,k</sub> * B<sub>k,j</sub>))
+- Element-wise (or Hadamard) product of 2 matrices: A · B = matrix containing the product of the individual elements)
+**Dot product** (A, B) = compute C<sub>i,j</sub> as the dot product between row i of A and column j of B
+
 **Tensor:** Array with more than 2 axes.
 - A<sub>i,j,k</sub> = element at position (i,j,k)
+
+Matrix product operations properties:
+- Distributive: A(B + C) = AB + AC
+- Associative: A(BC) = (AB)C
+- Not commutative: AB $NotEqual; BA (but dot product of 2 vectors is commutative: x<sup>T</sup> y = y<sup>T</sup> x)
+- Transpose of a matrix product: (AB)<sup>T</sup> = A<sup>T</sup> B<sup>T</sup>
+- And more...
+
+**Identity matrix (I<sub>n</sub>):** Matrix that doesn't change any vector when both are multiplied (I<sub>n</sub> x = x). All the elements along the main diagonal are 1, while the others are zero.
+
+**Inverse matrix (A<sup>-1</sup>):** Matrix that results in the identity when multiplied with the original (A<sup>-1</sup> A = I<sub>n</sub>). 
+
+Use example: Solve **Ax = b** for x (assuming A<sup>-1</sup> exists)
+1. Ax = b
+2. A<sup>-1</sup>Ax = A<sup>-1</sup>b
+3. I<sub>n</sub>x = A<sup>-1</sup>b
+4. x = A<sup>-1</sup>b 
+
+The inverse of A may not exist (the equation above must have exactly 1 solution for every value of b). It should not be used in practice for most software applications. A<sup>-1</sup> can only be represented with limited precision on a digital computer, so algorithms that use b can get more accurate estimates of x.
+
+**Linear combination:** Operation that takes a set of vectors, multiplies each one by a corresponding scalar coefficient, and adds the results (&Sigma(i)(c<sub>i</sub>v<sup>(i)</sup>)).
+
+Ac = &Sigma(i)(x<sub>i</sub>A<sub>:,i</sub>)
+
+**Span:** Set of all vectors obtainable by linear combination of the original vectors. 
+
+Determining whether the system **Ax = b** has a solution amount to testing wheter b is in the span of the columns of A (this span is called column space, or range of A). In order for that system to have solution for all values of b &isin; R<sup>m</sup> we require the column space of A to be all of R<sup>m</sup> (otherwise, any excluded point is a value of b that may have no solution). This means that A must have at leas m columns (n &#8925; m); otherwise, the dimensionality of the column space would be lest than m. Example: 
+
+**Linear independence:** A set of vectors are linearly independent if no vector in the set is a linear combination of the other vectors. Adding a vector that is a linear combination of the others doesn't add any points to the set's span. For the column space of a matrix to encompass all of R<sup>m</sup>, the matrix must contain at least one set of m linearly independent columns. In order for a matrix to have an inverse we also need to ensure that Ax=b has at most one solution for each value of b, which requires the matrix to have at most m columns (otherwise, there's more than one way of parametrizing each solution). Thus, the matrix must be square (m=n) and all its columns must be linearly independent (**singular matrix**).
+
+In order for a matrix to have an inverse it has to be **square** (m=n) and all the columns must be linearly independent. If the matrix is not square or if it's singular, it can still be inverted, but not through the method of matrix inversion. 
+
+**Singular matrix:** Square matrix with linearly dependent columns. 
+
+It's also possible to define an inverse that is multiplied on the right (AA<sup>-1</sup> = I). For square matrices, the left and right inverse are equal.
+
+**Norm:** Function used for measuring the size of a vector (distance from origin to x).
+- **L<sup>2</sup>** (Euclidean norm) (||x||<sub>p</sub> = (&Sigma;<sub>i</sub>|x<sub>i</sub>|<sup>p</sup>)<sup>1/p</sup>): It measures the Euclidean distance. It's more convenient to use the squared L<sup>2</sup> (which is = x<sup>T</sup>x), since it has simpler derivatives and less computation. However, it increases very slowly near the origin.
+- **L<sup>1</sup> (||x||<sub>1</sub> = &Sigma;(i)|x<sub>i</sub>|):** It grows at the same rate in all locations while still being simple enough. This is used when the differences between zero and nonzero elements is important (when x moves away from 0 by a, L<sup>1</sup> norm increases by a).
+
+
+
 
 
 

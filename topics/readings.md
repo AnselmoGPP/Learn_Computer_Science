@@ -60,9 +60,16 @@
   - Linux Dummies 9th
   - Linux from scratch
 
-- **Others**
-  - The not so short introduction to LaTeX 2
-  - ProGit
-  - Mastering CMake
+- **CMake**
+  - [**CMake documentation**](https://cmake.org/documentation)
+  - [**Mastering CMake**](https://cmake.org/cmake/help/book/mastering-cmake/#mastering-cmake)
+  - [**Professional CMake: A practical guide](https://crascit.com/professional-cmake/)
+  - [**An introduction to modern CMake](https://cliutils.gitlab.io/modern-cmake/)
+  - [**More modern CMake**](https://hsf-training.github.io/hsf-training-cmake-webpage/aio/index.html)
+  - [**Effective modern CMake**](https://gist.github.com/mbinna/c61dbb39bca0e4fb7d1f73b0d66a4fd1)
   - [The hitchhiker's guide to Cmake](https://cgold.readthedocs.io/en/latest/index.html)
+
+- **Others**
+  - [ProGit 2](https://github.com/progit/progit2?tab=readme-ov-file)
+  - The not so short introduction to LaTeX 2
   - Ian Goodfellow, Yoshua Bengio, Aaron Courville (2016) _**Deep learning**_. MIT Press.
