@@ -1,12 +1,13 @@
 # Machine learning 2
 
 ## Table of Contents
-+ [Introduction](#Introduction)
-+ [Linear regression (one variable)](#linear-regression-(one-variable))
-+ [Linear regression (multiple variables)](#linear-regression-(multiple-variables))
++ [Introduction](#introduction)
++ [Linear regression (one variable)](#linear-regression-one-variable)
++ [Linear regression (multiple variables)](#linear-regression-multiple-variables)
 + [Polynomial regression](#polynomial-regression)
 + [Logistic regression](#logistic-regression)
 + [Regularization](#regularization)
++ [Neural networks](#neural-networks)
 + [Advices](#advices)
 + [Support vector machines](#support-vector-machines)
 + [Unsupervised learning](#unsupervised-learning)
@@ -77,18 +78,19 @@ Note 2: Instead of 3D charts we can use contour plot/figures. They draw sets of 
 **Gradient descent (GD):** Algorithm for minimizing the cost funcion J. Used all over the place in machine learning (not only linear regression). We start with some parameters (&theta;<sub>0</sub>, &theta;<sub>1</sub>...) and keep changing their values to reduce J until we hopefully end up at a minimum. These changes are toward points that go downwards in J.
 
 - **Batch GD:** Each step of GD uses all the training examples (other types may use a subset of training examples).
-for(until convergence) {  &theta<sub>j</sub> = &theta<sub>j</sub> - &alpha;(&delta;J(&theta;<sub>0</sub>,&theta;<sub>1</sub>)/&delta;&theta;<sub>j</sub>)  }
+
+for(until convergence) {  &theta;<sub>j</sub> = &theta;<sub>j</sub> - &alpha;(&delta;J(&theta;<sub>0</sub>,&theta;<sub>1</sub>)/&delta;&theta;<sub>j</sub>)  }
 
 - &alpha;: Learning rate. It controls how big a step we take downhill. If &alpha; is too small, GD can be slow. If &alpha; is too large, GD can overshoot the minimum (fail to converge, or even diverge). GD can converge to a local minimum even if &alpha; is kept fixed (as we approach to a local minimum, GD automatically takes smaller steps) so there's no need to decrease &alpha; over time.
 - &delta;J(&theta;<sub>0</sub>,&theta;<sub>1</sub>)/&delta;&theta;<sub>j</sub>: Partial derivative (it represents the slope of J graph for component &theta;<sub>j</sub>). We look for a derivative = 0 or close.
 - d: Non-partial derivative symbol.
 
-We compute the algorithm simultaneouly for every &theta;<sub>j</sub> (i.e. for each &theta; parameter) in order to update every &theta. Then we compute y again with the new values for &theta; (iteration). And so on.
+We compute the algorithm simultaneouly for every &theta;<sub>j</sub> (i.e. for each &theta; parameter) in order to update every &theta;. Then we compute y again with the new values for &theta; (iteration). And so on.
 
 Compute partial derivatives:
-&delta;J(&theta;<sub>0</sub>,&theta;<sub>1</sub>) / &delta;&theta;<sub>j</sub> = (&delta;/&delta;&theta;<sub>j</sub>)(1/2m) &sum<sup>m</sup><sub>i=1</sub>(&theta;<sub>1</sub>x<sup>(i)</sup><sub>1</sub> + &theta;<sub>0</sub>x<sup>(i)</sup><sub>0</sub> - y<sup>(i)</sup>)<sup>2</sup>
-- &delta;J(&theta;<sub>0</sub>,&theta;<sub>1</sub>) / &delta;&theta;<sub>0</sub> = (1/m) &sum<sup>m</sup><sub>i=1</sub>(h<sub>&theta;</sub>(x<sup>(i)</sup>) - y<sup>(i)</sup>)   (x<sub>0</sub>=1)
-- &delta;J(&theta;<sub>0</sub>,&theta;<sub>1</sub>) / &delta;&theta;<sub>1</sub> = (1/m) &sum<sup>m</sup><sub>i=1</sub>(h<sub>&theta;</sub>(x<sup>(i)</sup>) - y<sup>(i)</sup>)   (x<sub>0</sub>=1) · x<sup>(i)</sup><sub>1</sub>
+&delta;J(&theta;<sub>0</sub>,&theta;<sub>1</sub>) / &delta;&theta;<sub>j</sub> = (&delta;/&delta;&theta;<sub>j</sub>)(1/2m) &sum;<sup>m</sup><sub>i=1</sub>(&theta;<sub>1</sub>x<sup>(i)</sup><sub>1</sub> + &theta;<sub>0</sub>x<sup>(i)</sup><sub>0</sub> - y<sup>(i)</sup>)<sup>2</sup>
+- &delta;J(&theta;<sub>0</sub>,&theta;<sub>1</sub>) / &delta;&theta;<sub>0</sub> = (1/m) &sum;<sup>m</sup><sub>i=1</sub>(h<sub>&theta;</sub>(x<sup>(i)</sup>) - y<sup>(i)</sup>)   (x<sub>0</sub>=1)
+- &delta;J(&theta;<sub>0</sub>,&theta;<sub>1</sub>) / &delta;&theta;<sub>1</sub> = (1/m) &sum;<sup>m</sup><sub>i=1</sub>(h<sub>&theta;</sub>(x<sup>(i)</sup>) - y<sup>(i)</sup>)   (x<sub>0</sub>=1) · x<sup>(i)</sup><sub>1</sub>
 
 Now we can introduce both derivatives in our algorithm and use it to minimize J. Cost function of linear regression is a convex function, and doesn't have local optima except for the one global optimum.
 
@@ -128,15 +130,16 @@ for(until convergence) {  &theta;<sub>j</sub> = &theta;<sub>j</sub> - &alpha (1/
 **Normalization:**
 
 - **Feature scaling:**
-When using multiple features, if we make them have similar scale (similar ranges of values), then GD can converge faster. Otherwise, our contour plot may have sharp shapes that make GD longer to calculate the minimum. Make every feature into approximately a range of -1&se;x<sub>i</sub>&se;1 (x<sub>0</sub> is already in range since it's = 1). Divide by the range of x<sub>i</sub> (s<sub>i</sub>=max-min) (alternatively, by the Standard Deviation). Range values of [0, 3] or [-2, 0.5] are acceptable, but ranges [-100, 100] or [-0.0001, 0.0001] are poorly scaled.
+When using multiple features, if we make them have similar scale (similar ranges of values), then GD can converge faster. Otherwise, our contour plot may have sharp shapes that make GD longer to calculate the minimum. Make every feature into approximately a range of -1&le;x<sub>i</sub>&le;1 (x<sub>0</sub> is already in range since it's = 1). Divide by the range of x<sub>i</sub> (s<sub>i</sub>=max-min) (alternatively, by the Standard Deviation). Range values of [0, 3] or [-2, 0.5] are acceptable, but ranges [-100, 100] or [-0.0001, 0.0001] are poorly scaled.
 
 - **Mean normalization:**
 Used with feature scaling. Make features have approximetely zero mean by replacing x<sub>i</sub> with x<sub>i</sub>-&mu;<sub>i</sub> (don't apply to x<sub>0</sub>=1) (&mu;: mean of x<sub>i</sub> in the training set). It makes GD converge faster.
 Combine mean normalization and feature scaling:  x<sub>i</sub> = (x<sub>i</sub>-&mu;<sub>i</sub>)/s<sub>i</sub>
 To make predictions, we must first normalize x using the mean and standard deviation previously applied to the training set.
 
-- **Learning rate (&alpha):**
-Two ways of selecting an &alpha that makes GD work correctly; (debugging):
+- **Learning rate (&alpha;):**
+
+Two ways of selecting an &alpha; that makes GD work correctly; (debugging):
   - Plot J(&theta;) against the number of iterations. J should decrease with each iteration. The number of iterations till convergence (flat line) vary much among applications. If J increases or goes up and down, you should use a smaller &alpha;. A small &alpha; should decrease J on every iteration, but if it's too small, gradient descent can be slow to converge. Check different values of &alpha; to get good plot (recommendation: try values on a log-scale at about 3 times the previous value: 0.1, 0.03, 0.01, 0.003, 0.001).
   - Use an algorithm that tells if gradient descent has converged (example: declare convergence if J decreases by less than &epsilon; in one iteration). However, choosing &epsilon; is pretty difficult, so using plot may be preferable.
 
@@ -144,15 +147,15 @@ Two ways of selecting an &alpha that makes GD work correctly; (debugging):
 Sometimes we can combine some features to create a new feature (example: "terrain width" and "terrain depth" may be combined into "terrain area"), reducing the total amount of features.
 
 
-## Polinomial regression
+## Polynomial regression
 
 We may decide that a quadratic/cubic/etc. polynomial model fits better the data (rather than a linear one). 
 
-h<sub>&theta;</sub>(x) = &theta<sub>0</sub> + &theta<sub>1</sub>x + &theta<sub>2</sub>x<sup>2</sup> + ... + &theta<sub>n</sub>x<sup>n</sup>
+h<sub>&theta;</sub>(x) = &theta;<sub>0</sub> + &theta;<sub>1</sub>x + &theta;<sub>2</sub>x<sup>2</sup> + ... + &theta;<sub>n</sub>x<sup>n</sup>
 
 We can fit this model into our data introducing simple modifications to our multivariant linear regression algorithm. Example: if we have one feature (house size) for the price of houses, we can create 2 additional features:
 
-h<sub>&theta;</sub>(x) = &theta<sub>0</sub> + &theta<sub>1</sub>x + &theta<sub>2</sub>x<sup>2</sup> + &theta<sub>3</sub>x<sup>3</sup>   where x<sub>1</sub>=size, x<sub>2</sub>=size<sup>2</sup>, x<sub>3</sub>=size<sup>3</sup>
+h<sub>&theta;</sub>(x) = &theta;<sub>0</sub> + &theta;<sub>1</sub>x + &theta;<sub>2</sub>x<sup>2</sup> + &theta;<sub>3</sub>x<sup>3</sup>   where x<sub>1</sub>=size, x<sub>2</sub>=size<sup>2</sup>, x<sub>3</sub>=size<sup>3</sup>
 
 Even though we have polynomial terms, we are still solving a linear regression optimization problem. The polynomial terms have turned into features we can use for linear regression.
 
@@ -171,7 +174,7 @@ Code instruction: pinv(X'*X)*X'*y
 
 Using NE we don't need iterating, choosing &alpha, or feature scaling. However, it's slow if n is very large, and we need to compute (X<sup>T</sup>·X)<sup>-1</sup> (the cost of inverting is about the cube of the dimension of the matrix). NE es acceptable for about n&le;10.000. 
 
-Using GD, we need to iterate ad choose &alpha, but it works well even when n is large. GD is good for n&ge;100.000.
+Using GD, we need to iterate ad choose &alpha;, but it works well even when n is large. GD is good for n&ge;100.000.
 
 If (X<sup>T</sup>·X) is not invertible (singular, degenerate) we can calculate the **pseudo-inverse** (instead of the normal inverse) which always get an inverse. It works well, but it's not clear that it would give you a very good hypothesis. The reasons why (X<sup>T</sup>·X) may not be invertible are:
 - Reduntant features (linearly dependent). Example: if x<sub>1</sub>=size in feet<sup>2</sup>, and x<sub>2</sub>=size in m<sup>2</sup>, then x<sub>1</sub>=10.8x<sub>2</sub>
@@ -181,6 +184,8 @@ If (X<sup>T</sup>·X) is not invertible (singular, degenerate) we can calculate 
 ## Logistic regression
 
 ## Regularization
+
+## Neural networks
 
 ## Advices
 
