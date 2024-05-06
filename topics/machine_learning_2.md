@@ -4,6 +4,7 @@
 + [Introduction](#Introduction)
 + [Linear regression (one variable)](#linear-regression-(one-variable))
 + [Linear regression (multiple variables)](#linear-regression-(multiple-variables))
++ [Polynomial regression](#polynomial-regression)
 + [Logistic regression](#logistic-regression)
 + [Regularization](#regularization)
 + [Advices](#advices)
@@ -102,15 +103,12 @@ We can take into account more than one variable/feature (x<sub>1</sub>=size, x<s
 - x<sup>(i)</sup>: Vector containing all the features in the i<sup>th</sup> training example.
 - x<sup>(i)</sup><sub>j</sub>: Value of feature j in x<sup>(i)</sup>.
 
-**Hypothesis:**  h<sub>&theta;</sub>(x) = &theta;<sub>0</sub>x<sub>0</sub> + &theta;<sub>1</sub>x<sub>1</sub> + &theta;<sub>2</sub>x<sub>2</sub> + &theta;<sub>3</sub>x<sub>3</sub> + &theta;<sub>4</sub>x<sub>4</sub>
-- x<sub>0</sub>=1
+**Hypothesis:**  h<sub>&theta;</sub>(x) = &theta;<sub>0</sub>x<sub>0</sub> + &theta;<sub>1</sub>x<sub>1</sub> + &theta;<sub>2</sub>x<sub>2</sub> + &theta;<sub>3</sub>x<sub>3</sub> + &theta;<sub>4</sub>x<sub>4</sub>          (x<sub>0</sub>=1)
 
 Now we have 2 vectors: 
-                  |x<sub>0</sub>|                       |&theta;<sub>0</sub>|
-                  |x<sub>1</sub>|                       |&theta;<sub>1</sub>|
-x<sup>(i)</sup> = |x<sub>2</sub>|     x<sup>(i)</sup> = |&theta;<sub>2</sub>|     
-                  |     ...     |                       |       ...       |
-                  |x<sub>n</sub>|                       |&theta;<sub>n</sub>|
+
+x<sup>(i)</sup><sub>nx1</sub> = [ x<sub>0</sub>, x<sub>1</sub>, x<sub>2</sub>,... x<sub>n</sub> ]  (column vector)
+&theta;<sub>nx1</sub> = [ &theta;<sub>0</sub>, &theta;<sub>1</sub>, &theta;<sub>2</sub>,... &theta;<sub>n</sub> ]  (column vector)
 
 h<sub>&theta;</sub>(x<sup>(i)</sup>) = &theta;<sup>T</sup>·x<sup>(i)</sup>
 
@@ -130,9 +128,54 @@ for(until convergence) {  &theta;<sub>j</sub> = &theta;<sub>j</sub> - &alpha (1/
 **Normalization:**
 
 - **Feature scaling:**
+When using multiple features, if we make them have similar scale (similar ranges of values), then GD can converge faster. Otherwise, our contour plot may have sharp shapes that make GD longer to calculate the minimum. Make every feature into approximately a range of -1&se;x<sub>i</sub>&se;1 (x<sub>0</sub> is already in range since it's = 1). Divide by the range of x<sub>i</sub> (s<sub>i</sub>=max-min) (alternatively, by the Standard Deviation). Range values of [0, 3] or [-2, 0.5] are acceptable, but ranges [-100, 100] or [-0.0001, 0.0001] are poorly scaled.
+
 - **Mean normalization:**
+Used with feature scaling. Make features have approximetely zero mean by replacing x<sub>i</sub> with x<sub>i</sub>-&mu;<sub>i</sub> (don't apply to x<sub>0</sub>=1) (&mu;: mean of x<sub>i</sub> in the training set). It makes GD converge faster.
+Combine mean normalization and feature scaling:  x<sub>i</sub> = (x<sub>i</sub>-&mu;<sub>i</sub>)/s<sub>i</sub>
+To make predictions, we must first normalize x using the mean and standard deviation previously applied to the training set.
+
 - **Learning rate (&alpha):**
+Two ways of selecting an &alpha that makes GD work correctly; (debugging):
+  - Plot J(&theta;) against the number of iterations. J should decrease with each iteration. The number of iterations till convergence (flat line) vary much among applications. If J increases or goes up and down, you should use a smaller &alpha;. A small &alpha; should decrease J on every iteration, but if it's too small, gradient descent can be slow to converge. Check different values of &alpha; to get good plot (recommendation: try values on a log-scale at about 3 times the previous value: 0.1, 0.03, 0.01, 0.003, 0.001).
+  - Use an algorithm that tells if gradient descent has converged (example: declare convergence if J decreases by less than &epsilon; in one iteration). However, choosing &epsilon; is pretty difficult, so using plot may be preferable.
+
 - **Feature edition:**
+Sometimes we can combine some features to create a new feature (example: "terrain width" and "terrain depth" may be combined into "terrain area"), reducing the total amount of features.
+
+
+## Polinomial regression
+
+We may decide that a quadratic/cubic/etc. polynomial model fits better the data (rather than a linear one). 
+
+h<sub>&theta;</sub>(x) = &theta<sub>0</sub> + &theta<sub>1</sub>x + &theta<sub>2</sub>x<sup>2</sup> + ... + &theta<sub>n</sub>x<sup>n</sup>
+
+We can fit this model into our data introducing simple modifications to our multivariant linear regression algorithm. Example: if we have one feature (house size) for the price of houses, we can create 2 additional features:
+
+h<sub>&theta;</sub>(x) = &theta<sub>0</sub> + &theta<sub>1</sub>x + &theta<sub>2</sub>x<sup>2</sup> + &theta<sub>3</sub>x<sup>3</sup>   where x<sub>1</sub>=size, x<sub>2</sub>=size<sup>2</sup>, x<sub>3</sub>=size<sup>3</sup>
+
+Even though we have polynomial terms, we are still solving a linear regression optimization problem. The polynomial terms have turned into features we can use for linear regression.
+
+Feature scaling becomes increasingly important because these features take very different ranges of values.
+
+There exists many other choices of features (example: h<sub>&theta;</sub>(x) = &theta<sub>0</sub> + &theta<sub>1</sub>(size) + &theta<sub>2</sub>(&radic;size))
+
+**Normal equation (NE):** 
+
+Method for solving &theta; analytically in linear regression problems. Cost function J is a function of vector &theta;. If we take the partial derivative of J with respect to every parameter of &theta; and set these derivatives to 0, we obtain the values of &theta; to minimize J. 
+
+Consider m=4 (examples) and n=4 (features). We create 2 matrices (X<sub>mx(n+1)</sub>, y<sub>mx1</sub>). To obtain the value of &theta; that minimizes J just compute:
+
+&theta; = (X<sup>T</sup>X + &lambda;Z)<sup>-1</sup> X<sup>T</sup>·y
+Code instruction: pinv(X'*X)*X'*y
+
+Using NE we don't need iterating, choosing &alpha, or feature scaling. However, it's slow if n is very large, and we need to compute (X<sup>T</sup>·X)<sup>-1</sup> (the cost of inverting is about the cube of the dimension of the matrix). NE es acceptable for about n&le;10.000. 
+
+Using GD, we need to iterate ad choose &alpha, but it works well even when n is large. GD is good for n&ge;100.000.
+
+If (X<sup>T</sup>·X) is not invertible (singular, degenerate) we can calculate the **pseudo-inverse** (instead of the normal inverse) which always get an inverse. It works well, but it's not clear that it would give you a very good hypothesis. The reasons why (X<sup>T</sup>·X) may not be invertible are:
+- Reduntant features (linearly dependent). Example: if x<sub>1</sub>=size in feet<sup>2</sup>, and x<sub>2</sub>=size in m<sup>2</sup>, then x<sub>1</sub>=10.8x<sub>2</sub>
+- Fewer examples than features (m&le;n). Delete some features or use Regularization.
 
 
 ## Logistic regression
