@@ -19,17 +19,23 @@
 
 ## Introduction
 
-**Machine learning:** Field of study that gives computers the ability to learn without being explicitly programmed. A computer program learns from experience E with respect to some task T and some performance measure P, if T, as measured by P improves with E. if the measured P improves with E.
- 
-Main machine learning algorithms:
+**Mathematical model:** Simplified conceptual reconstruction of a more complex reality. It takes patterns from real-world scenarios and use them for rebuilding it. Then, we can use the model for making predictions. 
 
-- **Supervised learning:** Most common. We teach the computer by giving the algorithm a data set (training set) in which the "right answers" are given. A learning algorithm can deal with an infinite number of features/attributes with which make predictions. To deal with this infinite amount without running out of memory we use an algorithm called Support Vector Machine. Two types of problems: 
+**Artificial Intelligence (AI):** Subdiscipline from computer science that want to create machines that can **imitate** intelligent behaviors. Examples: robotics, NLP, voice, vision...
+  - **Weak:** It can do a very limited number of tasks.
+  - **Strong:** It applies to a wide variety of tasks and domains.
+
+**Machine learning (ML):** Field of AI that study that gives computers the ability to learn without being explicitly programmed. A computer program learns from experience E with respect to some task T and some performance measure P, if T, as measured by P improves with E. if the measured P improves with E. Main machine learning algorithms: Supervised, Unsupervised, Reinforced.
+
+- **Supervised learning:** Most common. We teach the computer by giving the algorithm a data set (training set) in which the "right answers" are given, so it can learn the relation between them. A learning algorithm can deal with an infinite number of features/attributes with which make predictions. To deal with this infinite amount without running out of memory we use an algorithm called Support Vector Machine. Two types of problems: 
   - **Regression problem:** Predicts continuous valued output.
   - **Classification problem:** Predicts discrete valued output.
-- **Unsupervised learning** (or clustering)
-We don't give the right answer to the algorithm, it learns by itself. Used to organize large computer clusters. 
+- **Unsupervised learning** (or clustering): We don't give the right answer to the algorithm, it learns by itself. Used to organize large computer clusters. The conceptual structures it learns are called latent spaces, which allows to learn if something is similar to another thing (like 2 words) and operate mathematically with concepts.
 - **Reinforcement learning**
 - **Recommender systems**
+
+There are different techniques in ML: Decision trees, Regression models, Classification models, Clusterization, Neural networks, etc.
+- **Neural networks:** They learn basic concepts at the beginning (screw, wheel, mirror...), and build on them to learn about more complex concepts (car, truck...). The more layers it has, the more abstract knowledge it can get.
 
 **Training set:** Portion of a **data set** used to fit (train) a model for prediction or classification of values that are known in the training set, but unknown in other (future) data. Example:
 - Training set of housing prices (we want to predict prices):

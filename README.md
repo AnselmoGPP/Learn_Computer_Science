@@ -8,9 +8,10 @@ Teach yourself Computer Science for free (equivalent to a Bachelor Degree in CS)
 + [Learn Computer Science](#learn-computer-science)
     + [Major in CS](#major-in-cs)
     + [Minor in Economics](#minor-in-economics)
-+ [Learn C++](#learn-cpp)
-+ [Learn Computer graphics](#learn-computer-graphics)
-+ [Learn Machine learning](#learn-machine-learning)
++ [C++ language](#cpp-language)
++ [Computer graphics](#computer-graphics)
++ [Machine learning](#machine-learning)
++ [Cybersecurity](#cybersecurity)
 + [Recommended readings](#recommended-readings)
 + [Links](#links)
 
@@ -41,7 +42,7 @@ Teach yourself Computer Science for free (equivalent to a Bachelor Degree in CS)
   - **Personal finance**
   - **Entrepreneurship**
 
-## Learn Cpp
+## Cpp language
 
 ```
 int main(int argc, char* argv[])
@@ -50,14 +51,18 @@ int main(int argc, char* argv[])
 }
 ```
 
-## Learn Computer graphics
+## Computer graphics
 
 - [**Computer graphics**]()
 - [**Vulkan API fundamentals**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_graphics/vulkan_fundamentals.md)
 
-## Learn Machine learning
+## Machine learning
 
 - [**Machine learning**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/machine_learning.md)
+
+## Cybersecurity
+
+- [**Cybersecurity**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/cybersecurity.md)
 
 ## Recommended readings
 
