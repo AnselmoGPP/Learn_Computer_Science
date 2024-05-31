@@ -80,13 +80,10 @@ More terminology: [**National Institute of Standards and Technology glossary**](
 **Computer virus**: Malicious code written to interfere with computer operations an cause damage to data and software.
 
 **Malware**: Software designed to harm devices or networks. Examples:
-- Brain virus (1986): Created to track illegal copies of medical software and prevent pirated licenses. The infected floppy disk infected the computer, and this computer would infect any floppy disk introduced in it. The virus spread globally within a couple of months. It slowed down productivity and impacted business operations.
-- Morris worm (1988): Created to assess the size of Internet. It crawled the web and installed itself onto computers. However, it continued to re-install itself in already compromised computers until they ran out of memory and crashed. It infected 6000 computers (10% of Internet). This caused the stablishment of CERTs (Computer Emergency Response Teams).
-- LoveLetter (2000): Created to steal internet login credentials. It was an email with an attachment called "Love letter for you" which, once opened, scanned the user's address book and sent itself to each person in the list. It infected 45 million computers (estimating 10 billion dollars in damages). This is the firs example of social engineering.
-- Equifax breach (2017): Attackers infiltrated the credit reporting agency Equifax, causing one of the largest known data breaches of sensitive information (143 million customer records stolen, affecting about 40% of all americans). The records included PII information. Equifax had several vulnerabilities that the attackers exploited. Equifax paid over 575 million dollars in complaints and fines.
-
-**Social engineering**: Manipulation technique that exploits human error to gain private information, access, or valuables.
-- **Phishing**: Use of digital communications to trick people into revealing sensitive data or deploying malicious software.
+- __Brain virus__ (1986): Created to track illegal copies of medical software and prevent pirated licenses. The infected floppy disk infected the computer, and this computer would infect any floppy disk introduced in it. The virus spread globally within a couple of months. It slowed down productivity and impacted business operations.
+- __Morris worm__ (1988): Created to assess the size of Internet. It crawled the web and installed itself onto computers. However, it continued to re-install itself in already compromised computers until they ran out of memory and crashed. It infected 6000 computers (10% of Internet). This caused the stablishment of CERTs (Computer Emergency Response Teams).
+- __LoveLetter__ (2000): Created to steal internet login credentials. It was an email with an attachment called "Love letter for you" which, once opened, scanned the user's address book and sent itself to each person in the list. It infected 45 million computers (estimating 10 billion dollars in damages). This is the firs example of social engineering.
+- __Equifax breach__ (2017): Attackers infiltrated the credit reporting agency Equifax, causing one of the largest known data breaches of sensitive information (143 million customer records stolen, affecting about 40% of all americans). The records included PII information. Equifax had several vulnerabilities that the attackers exploited. Equifax paid over 575 million dollars in complaints and fines.
 
 **Common attacks**:
 
@@ -117,7 +114,7 @@ More terminology: [**National Institute of Standards and Technology glossary**](
 
 - **Cryptographic attack**: It affects secure forms of communicaton between a sender and intended recipient. Some types are: birthday, collision, downgrade, etc.
 
-- **Web vulnerability**: Unique flaw in a web application that a threat actor could exploit to allow unauthorized access, data theft, and malware deployment. stay up-to-date on the most critical risks to web applications with [Open Web Application Security Project (OWASP) Top 10](https://owasp.org/www-project-top-ten/).
+- **Web vulnerability**: Unique flaw in a web application that a threat actor could exploit to allow unauthorized access, data theft, and malware deployment. Stay up-to-date on the most critical risks to web applications with [Open Web Application Security Project (OWASP) Top 10](https://owasp.org/www-project-top-ten/).
 
 - **Penetration testing** (pen testing): Act of participating in a simulated attack that helps identify vulnerabilities in systems, networks, websites, applications, and processes. It's a thorough risk assessment that can evaluate and identify external and internal threats as well as weaknesses.
 
@@ -182,27 +179,31 @@ Social engineering attacks fall under the Security and risk management domain. P
 
 **Security Orchestration, Automation, and Response (SOAR)**: Collection of applications, tools, and workflows that use automation to respond to security events. Used for threat monitoring and automate repetitive tasks generated by tools such as a **SIEM** or **MDR** (Managed Detection and Response). Example: if a user attempts to log into their computer too many times with the wrong password, a SOAR would automatically block their account to stop a possible intrusion.
 
-*Log**: Record of events that occur within an organization's system (like employees signing into their computers or accessing web-based services). It helps identify vulnerabilities and potential security breaches. Common log sources: 
+**Log**: Record of events that occur within an organization's system (like employees signing into their computers or accessing web-based services). It helps identify vulnerabilities and potential security breaches. Common log sources: 
 - __Firewall logs__: Record of attempted or established connections for incoming traffic from Internet. It includes outbound requests to Internet from within the network.
 - __Network logs__: Record of all computers and devices that enter and leave the network, and all connections between devices and services on the network.
 - __Server logs__: Record of events (login, password, username requests...) related to services (websites, emails, file shares...).
 
 **Security Information and Event Management (SIEM) tools**: Application that collects and analyzes log data to monitor critical activities in an organization. Organizations must configure and customize it to adapt to their unique needs. As cybersecurity evolves, SIEM tools may become more cloud based (cloud-hosted or cloud-native), may adapt to new theat actor tactics and techniques (IoT interconnecting too many devices, new AI/ML threats...), and may increase automation and perform more actions without human intervention (SOAR).
+
 SIEM tools types:
 - __Self-hosted__: Managed by the organization. Ideal for physically controlling confidential data.
 - __Cloud-hosted__: Provides availability, flexibility, and scalability.
 - __Hybrid__: Leverages benefits of cloud while controlling confidential data.
+
 SIEM tools main features:
 - Provides real-time visibility, event monitoring and analysis, and automated alerts.
 - Stores all log data in a centralized location. 
 - Can create customizable dashboards, which show security information in an easy to understand format (charts, graphs, tables...).
 - Provides customizable metrics.
+
 Most common SIEM tools:
 - **Splunk Enterprise**: Self-hosted data analysis tool for retaining, analyzing, and searching an organization's log data to provide security information and alerts in real-time..
 - **Splunk cloud**: Cloud-hosted tool for collecting, searching, and monitoring log data.
 - **Google's Chronicle**: Cloud-native tool that stores security data for search and analysis.
 
 **Playbook**: Manual that provides details about any operational action, including incident response, security or compliance reviews, access management, and many other organizational tasks that require a documented process from beginning to end. It varies between organizations. It guides analysts in how to handle a security incident (open attack, privacy incident, data leak, DDoS, service alert...) before, during, and after it occurred. Sometimes, it may need to be updated. Threat identification and mitigation must be urgent, efficient, and accurate. There're different playbooks (incident response, vulnerability response, security alerts, team-specific, product-specific...).
+
 - **Incident response playbook**: Used to identify an attack, contain the damage, and correct the effects of a security breach. Phases:
   - __Preparation__: Organizations mitigate likelihood, risk, and impact of a security incident by documenting procedures, establishing staffing plans, and educating users.
   - __Detection and analysis of events__: Use appropriate tools and strategies for this.
@@ -210,6 +211,7 @@ Most common SIEM tools:
   - __Eradication and recovery__: Remove the incident's artifacts so the organization can return to normal operations (IT restoration).
   - __Post incident activity__: Document the incident, inform organizational leadership, apply learned lessons, etc.
   - __Coordination__: Report incidents and share information.
+
 There are different types of Incident response playbooks, depending on the attack (ransomware, malware, DDoS...). Playbooks are generally used alongside SIEM and SOAR tools (unusual user behavior is flagged by a SIEM tool > playbook tells analysts how to address the issue). Example case:
 1. A SIEM alert signals a potential malware attack
 2. Assess the alert (determine if the alert is valid)
@@ -362,7 +364,7 @@ The devices connected in a network can communicate to each other, over network c
 - **LAN** (Local Area Network): It spans a small area (office building, school, home...). A LAN can connect to the internet.
 - **WAN** (Wide Area Network): It spans a large geographical area (city, state, country...). Internet can be considered a big WAM.
 
-**Internet Service Provider (ISP)**: IT provideS internet connectivity via telephone lines or coaxial cables.
+**Internet Service Provider (ISP)**: IT provides internet connectivity via telephone lines or coaxial cables.
 
 **Network devices**: Specialized vehicles that manage what is being sent and received over the network. Other devices (computers, phones...) connect to the network via network devices. Hubs and switches both direct traffic on a local network. 
 
@@ -426,6 +428,8 @@ If bandwidth or speed are irregular, it may indicate an attack.
 
 **Network protocol**: Set of standards used for routing and addressing data packets as they travel between devices on a network.
 
+<br>![models image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/network_models.png)
+
 **TCP/IP model** (Transmission Control Protocol / Internet Protocol): It's the standard model for network communication, based on the TCP/IP protocols suite. It's a framework for visualizing how data is organized and transmitted accross the network. It has 4 layers:
 
 - **Network access layer** (or Data link layer): It deals with the creation of data packets and transmission across a network. It corresponds to the physical hardware for network transmission (hubs, modems, cables, wiring...). The Address Resolution Protocol (ARP) is needed for mapping IP addresses to MAC addresses (used to identify hosts on the same physical network) for local network communication.
@@ -446,10 +450,6 @@ If bandwidth or speed are irregular, it may indicate an attack.
 
 **Port**: Software-based location in the OS of a network device that organizes the sending and receiving of data between devices on a network. When data packets are sent and received across a network, they are assigned a port. Ports divide network traffic into segments based on the service they will perform between two devices. The computers sending and receiving these data segments know how to prioritize and process these segments based on their port number. Port numbers allow computers to split the network traffic and prioritize the operations they will perform with the data. Some common ports are: 25 (e-mail), 443 (secure internet communications), 20 (large file transfers).
 
-
-
-
-<br>![models image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/network_models.png)
 
 
 
