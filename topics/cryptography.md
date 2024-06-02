@@ -1,6 +1,6 @@
-# Cybersecurity
+# Cryptography
 
-<br>![cybersecurity image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/miscellany.jpg)
+<br>![cryptography image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/miscellany.jpg)
 
 ## Table of Contents
 + [Foundations](#foundations)
@@ -436,9 +436,17 @@ If bandwidth or speed are irregular, it may indicate an attack.
 
 - **Network access layer** (or Data link layer): It deals with the creation of data packets and transmission across a network. It corresponds to the physical hardware for network transmission (hubs, modems, cables, wiring...). The Address Resolution Protocol (ARP) is needed for mapping IP addresses to MAC addresses (used to identify hosts on the same physical network) for local network communication.
 
-- **Internet layer** (or Network layer): It's responsible for ensuring delivery to the destination host (potentially residing on a different network). It ensures IP addresses are attached to data packets to indicate the location of the sender and receiver. It also determines which protocol is responsible for delivering the data packets and ensures the delivery to the destination host. Some common protocols are: IP (Internet Protocol), ICMP (Internet Control Message Protocol)...
+- **Internet layer** (or Network layer): It's responsible for ensuring delivery to the destination host (potentially residing on a different network). It ensures IP addresses are attached to data packets to indicate the location of the sender and receiver. It also determines which protocol is responsible for delivering the data packets and ensures the delivery to the destination host. Some common protocols are:
 
-- **Transport layer**: Responsible for delivering data between two systems or networks. It includes protocols to control the flow of traffic across a network (which permit or deny communication with other devices), and information about the connection status. Used for error control (ensure data is flowing smoothly). Main communication protocols used: TCP (Transmission Control Protocol) and UDP (User Datagram Protocol).
+  - **Internet Protocol** (IP): Set of standards that allow communication between two networks (then, TCP/UDP delivers the data packets to the corresponding service). The IP address works like an address for each private network.
+
+  - **Internet Control Message Protocol (ICMP)**: It shares error and status information of data packets (dropped/disappeared/redirected packets, connectivity issues,...). Useful for detecting and solving network errors. 
+
+- **Transport layer**: Responsible for delivering data between two systems or networks. It includes protocols to control the flow of traffic across a network (which permit or deny communication with other devices), and information about the connection status. Used for error control (ensure data is flowing smoothly).
+
+  - **TCP** (Transmission Control Protocol): Internet communication protocol that allows two devices to form a connection and stream data. It ensures data is reliably transmitted to the destination service (it retransmits any data that is lost or corrupt). The packet's TCP header includes the destination port number. Packets are referred to as IP packets.
+
+  - **UDP** (User Datagram Protocol): Connectionless protocol that does not establish a connection between devices before transmissions. Used by applications that are not concerned with the reliability of the transmission. Data sent over UDP is not tracked as extensively as over TCP. Used mostly for real-time performance sensitive applications like video streaming. Packets are referred as datagrams.
 
 - **Application layer**: Responsible for making network requests or responding to requests. It defines which internet services and applications any user can access. Protocols here determine how data packets will interact with receiving devices. It relies on underlying layers to transfer the data across the network. Operations in this layer include file transfers and email services. Some common protocols: HTTP (Hypertext transfer protocol), SMTP (Simple mail transfer protocol), SSH (Secure shell), FTP (File transfer protocol), DNS (Domain name system).
 
@@ -498,53 +506,17 @@ Network layer **addresses**:
 
 ### Network operations
 
-**Network protocols**: Set of rules used by two or more devices on a network to describe the order of delivery and the structure of the data. They serve as instructions that come with the information in the data packet that tell the receiving device what to do with the data. They're like a common language that allows devices all across the world to communicate with and understand each other. Some protocols have vulnerabilities that malicious actors exploit (example: somebody may use DNS protocol for diverting traffic from a legitimate website to a malicious one). Types of network protocols: communication, management, security. Examples:
-
-7. **Application layer**: HTTP, HTTPS, SMTP, DNS... 
-6. **Presentation layer**: -
-5. **Session layer**: -
-4. **Transport layer**: TCP, UDP...
-3. **Network layer**: -
-2. **Data link layer**: NCP, HDLC, SDLC...
-1. **Physical layer**: -
-
-- Network access layer: ARP...
-- Internet layer: IP, ICMP...
-- Transport layer: TCP, UDP...
-- Application layer: DNS, HTTP, HTTPS, SNMP, SMTP, SFTP, SSH, FTP... 
-
-**IP** (Internet Protocol): Set of standards that allow communication between two networks (then, TCP/UDP delivers the data packets to the corresponding service). The IP address works like an address for each private network.
-
-**ARP** (Address Resolution Protocol): Used to determine MAC address of the next router or device on the path.
 
 
-Example: To access a webpage we may use these protocols:
 
-- DNS: Used for getting the IP address of the website.
-- TCP: Used for performing a handshake between you and server, requesting data, and receiving packets to see the webpage.
-- ARP: Used for packets to be able to move between network devices (like routers). 
-- HTTPS: Used for having secure communication between you and server.
 
-**Communication protocols**: They govern the exchange of information in network transmission. They dictate how the data is transmitted between devices and the timing of the communication. They include methods to recover data lost in transit. Examples:
 
-- **TCP** (Transmission Control Protocol): Internet communication protocol that allows two devices to form a connection and stream data (note: it's not limited to 2 devices: it connects 2 endpoints, but the underlying network infrastructure can handle routing data packets across multiple devices). It ensures data is reliably transmitted to the destination service (it retransmits any data that is lost or corrupt). The packet's TCP header includes the destination port number. Packets are referred to as IP packets. It uses a 3-way handshake process (for verifying both devices before allowing communication): a device sends a SYN (synchronization) request to server, the server responds with a SYN/ACK packet to acknowledge the request, the device sends an ACK packet, and TCP connection is established.
 
-- **UDP** (User Datagram Protocol): Connectionless protocol that does not establish a connection between devices before transmissions, making it less reliable than TCP (data sent over UDP is not tracked as extensively as over TCP). Used in applications that need transmissions to get quickly to destination, and not concerned with transmission's reliability (such as real-time performance sensitive applications like video streaming or sending DNS requests to local DNS servers). Packets are referred as datagrams.
 
-- **HTTP** (Hypertext Transfer Protocol): It provides a method of communication between clients and website servers. It uses port 80. It's considered insecure, so it is being replaced on most websites by HTTPS that uses encryption from SSL/TLS for communication.
 
-- **DNS** (Domain Name System): It translates internet domain names into IP addresses. When a client computer wants to access a website domain using an internet browser, a query is sent to a dedicated DNS server (domain name and web address) that returns the IP address of the website. This IP address is used as destination address of your packets. It usually use port 53, but large replies may switch to using TCP.
 
-**Management Protocols**: Used for monitoring and managing activity on a network. They include protocols for error reporting and optimizing performance on the network. Examples:
 
-- **SNMP** (Simple Network Management Protocol): Used for monitoring and managing devices on a network. It can reset a password on a network device or change its baseline configuration, and send requests to network devices for a report on how much of the network’s bandwidth is being used up.
 
-- **ICMP** (Internet Control Message Protocol): Used by devices to tell each other about status and data transmission errors across the network (dropped/disappeared/redirected packets, connectivity issues,...). A receiving device can send a report to the sending device about the data transmission. It helps to detect and solve network errors. Usually used as a quick way to troubleshoot network connectivity and latency by issuing the <c>ping</c> command on Linux OS.
 
-**Security Protocols**: They ensure that data is sent and received securely across a network. They use encryption algorithms to protect data in transit. Examples:
 
-- **HTTPS** (HyperText Transfer Protocol Secure): It provides a secure method of communication between clients and website servers. It applies SSL/TLS (Secure Sockets Layer and Transport Layer Security) encryption to all transmissions, so malicious actors cannot read it. It uses port 443
 
-- **SFTP** (Secure File Transfer Protocol): Used to transfer files from one device to another over a network. It uses SSH (Secure Shell), usually by TCP port 22. SSH uses AES (Advanced Encryption Standard) and other encryption types to ensure that unintended recipients cannot intercept the transmissions. It's often used with cloud storage (every time a user uploads or downloads a file from cloud storage, the file is transferred using the SFTP).
-
-Note: The encryption protocols mentioned don't conceal the source or destination IP address of network traffic.
