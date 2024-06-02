@@ -428,7 +428,7 @@ If bandwidth or speed are irregular, it may indicate an attack.
 
 **Network protocol**: Set of standards used for routing and addressing data packets as they travel between devices on a network.
 
-**Port**: Software-based location in the OS of a network device that organizes the sending and receiving of data between devices on a network. When data packets are sent and received across a network, they are assigned a port. Ports divide network traffic into segments based on the service they will perform between two devices. The computers sending and receiving these data segments know how to prioritize and process these segments based on their port number. Port numbers allow computers to split the network traffic and prioritize the operations they will perform with the data. Some common ports are: 25 (e-mail), 443 (secure internet communications), 20 (large file transfers).
+**Port**: Software-based location in the OS of a network device that organizes the sending and receiving of data between devices on a network. When data packets are sent and received across a network, they are assigned a port. Ports divide network traffic into segments based on the service they will perform between two devices. Network devices use port numbers to determine what to do with the packet's data. Computers use them to know how to prioritize and process these segments. Firewalls can filter out unwanted traffic based on port numbers (example: an organization may configure a firewall to only allow access to TCP port 995 (POP3) by IP addresses belonging to the organization). Some common ports are: 25 (e-mail), 443 (secure internet communications), 20 (large file transfers).
 
 <br>![models image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/network_models.png)
 
@@ -458,13 +458,15 @@ If bandwidth or speed are irregular, it may indicate an attack.
 
 1. **Physical layer**: It corresponds to the physical hardware involved in network transmission. It includes hubs, modems, and cables and wiring that connect. To travel across an ethernet or coaxial cable, a data packet needs to be translated into a stream of 0s and 1s. Then, when this stream is received, it's passed on to higher levels of the OSI model.
 
-Network layer **addresses**:
+Network layer **addresses**: Each device on a network have 3 addresses that identify it on the network: public IP, private IP, and MAC address.
 
-- **IP address**: Unique string of characters that identifies a location of a device on the internet. Each device has a unique IP address. Two types: IPv4 and IPv6 (bigger size than IPv4). IP addresses can be:
-  - **Public**: Provided by your ISP. Each device of your LAN have the same one. 
-  - **Private**: Only seen by other devices on the same LAN. Used by them to communicate to each other.
+- **IP address**: Unique string of characters that identifies a location of a device on the internet. Each device has a unique IP address. Two types: IPv4 and IPv6 (bigger size than IPv4). IP addresses can be public or private (each one contained in specific value ranges).
 
-- **MAC address**: Unique alphanumeric identifier assigned to each physical device on a network. When a switch receives a data packet, it reads the MAC address of the destination device and maps it to a port. It keeps this information in a MAC address table that the switch uses to direct data packets to the appropriate device.
+  - **Public**: Assigned by your ISP and IANA. Each device of your LAN have the same one. Unique address in global internet. It costs to lease a public IP address. 
+
+  - **Private**: Assigned by the router. Unique only within the private network. Only seen by other devices on the same LAN, which use it to communicate to each other. No cost associated.
+
+- **MAC address**: Unique alphanumeric identifier assigned to each physical device on a network. It's permanent (unmutable) because it is unique to its network interface card. It's used to communicate with devices within the same network. When a switch receives a data packet, it reads the MAC address of the destination device and maps it to a port. It keeps this information in a MAC address table that the switch uses to direct data packets to the appropriate device.
 
 **IPv4 packet**: It's made of 2 parts:
 
@@ -498,25 +500,26 @@ Network layer **addresses**:
 
 ### Network operations
 
-**Network protocols**: Set of rules used by two or more devices on a network to describe the order of delivery and the structure of the data. They serve as instructions that come with the information in the data packet that tell the receiving device what to do with the data. They're like a common language that allows devices all across the world to communicate with and understand each other. Some protocols have vulnerabilities that malicious actors exploit (example: somebody may use DNS protocol for diverting traffic from a legitimate website to a malicious one). Types of network protocols: communication, management, security. Examples:
+#### Protocols
+
+**Network protocols**: Set of rules used by two or more devices on a network to describe the order of delivery and the structure of the data. They serve as instructions that come with the information in the data packet that tell the receiving device what to do with the data. They're like a common language that allows devices all across the world to communicate with and understand each other. Some protocols have vulnerabilities that malicious actors exploit (example: somebody may use DNS protocol for diverting traffic from a legitimate website to a malicious one). Protocols from the Application layer (layer 7) are assigned **port numbers** by the IANA (Internet Assigned Numbers Authority). There're 3 types of network protocols: Communication, Management, Security.
+
+OSI model:
 
 7. **Application layer**: HTTP, HTTPS, SMTP, DNS... 
 6. **Presentation layer**: -
 5. **Session layer**: -
 4. **Transport layer**: TCP, UDP...
 3. **Network layer**: -
-2. **Data link layer**: NCP, HDLC, SDLC...
+2. **Data link layer**: NCP, HDLC, SDLC, ARP...
 1. **Physical layer**: -
 
+TCP/IP model:
+
 - Network access layer: ARP...
-- Internet layer: IP, ICMP...
-- Transport layer: TCP, UDP...
-- Application layer: DNS, HTTP, HTTPS, SNMP, SMTP, SFTP, SSH, FTP... 
-
-**IP** (Internet Protocol): Set of standards that allow communication between two networks (then, TCP/UDP delivers the data packets to the corresponding service). The IP address works like an address for each private network.
-
-**ARP** (Address Resolution Protocol): Used to determine MAC address of the next router or device on the path.
-
+- Internet layer: IP, ICMP, NAT...
+- Transport layer: TCP, UDP, NAT...
+- Application layer: DNS, HTTP, HTTPS, SNMP, SMTP, SFTP, FTP, SSH, DHCP, SSH, Telnet, POP, IMAP... 
 
 Example: To access a webpage we may use these protocols:
 
@@ -531,15 +534,33 @@ Example: To access a webpage we may use these protocols:
 
 - **UDP** (User Datagram Protocol): Connectionless protocol that does not establish a connection between devices before transmissions, making it less reliable than TCP (data sent over UDP is not tracked as extensively as over TCP). Used in applications that need transmissions to get quickly to destination, and not concerned with transmission's reliability (such as real-time performance sensitive applications like video streaming or sending DNS requests to local DNS servers). Packets are referred as datagrams.
 
+- **IP** (Internet Protocol): Set of standards that allow communication between two networks (then, TCP/UDP delivers the data packets to the corresponding service). The IP address works like an address for each private network.
+
 - **HTTP** (Hypertext Transfer Protocol): It provides a method of communication between clients and website servers. It uses port 80. It's considered insecure, so it is being replaced on most websites by HTTPS that uses encryption from SSL/TLS for communication.
 
 - **DNS** (Domain Name System): It translates internet domain names into IP addresses. When a client computer wants to access a website domain using an internet browser, a query is sent to a dedicated DNS server (domain name and web address) that returns the IP address of the website. This IP address is used as destination address of your packets. It usually use port 53, but large replies may switch to using TCP.
+
+- **ARP** (Address Resolution Protocol): Used to determine MAC address of the next router or device on the path. It translates the IP addresses that are found in data packets into the MAC address of the hardware device. Each device on the network performs ARP and keeps track of matching IP and MAC addresses in an ARP cache. No port assigned (since it's not an application layer protocol).
+
+- **Telnet** (TCP port 23): Used to connect with a remote system. It sends all information in clear text. It uses command line prompts to control another device similar to SSH, but Telnet is not as secure as SSH. It can be used to connect to local or remote devices. 
+
+- **SSH** (Secure Shell) (TCP port 22): It's used to create a secure connection with a remote system. It provides an alternative for secure authentication and encrypted communication. It replaces less secure protocols (like Telnet).
+
+- **POP** (Post office protocol): Used to manage and retrieve email from a mail server. Many organizations have a dedicated mail server on the network that handles incoming and outgoing mail for users on the network. User devices will send requests to the remote mail server and download email messages locally. When using POP, mail has to finish downloading on a local device before it can be read. After downloading, the mail may or may not be deleted from the mail server, so it does not guarantee that a user can sync the same email across multiple devices.
+  
+  - **POP3** (unencrypted: TCP/UDP port 110) (encrypted: SSL/TLS over TCP/UDP port 995): Most commonly used version of POP.
+
+- **IMAP** (Internet Message Access Protocol) (unencrypted: TCP port 143) (encrypted: SSL/TLS over TCP port 993): Used for incoming email. It downloads the headers of emails and the message content. The content also remains on the email server, which allows users to access their email from multiple devices. IMAP allows users to partially read email before it is finished downloading. Since the mail is kept on the mail server, it allows a user to sync emails across multiple devices.
+
+- **SMTP** (Simple Mail Transfer Protocol) (unencrypted: TCP/UDP port 25) (encrypted: TCP/UDP port 587 using TLS): Used to transmit and route email from the sender to the recipient’s address. It works with MTA (Message Transfer Agent) software, which searches DNS servers to resolve email addresses to IP addresses, to ensure emails reach their intended destination. The TCP port 25 is often used by high-volume spam. It helps to filter out spam by regulating how many emails a source can send at a time.
 
 **Management Protocols**: Used for monitoring and managing activity on a network. They include protocols for error reporting and optimizing performance on the network. Examples:
 
 - **SNMP** (Simple Network Management Protocol): Used for monitoring and managing devices on a network. It can reset a password on a network device or change its baseline configuration, and send requests to network devices for a report on how much of the network’s bandwidth is being used up.
 
-- **ICMP** (Internet Control Message Protocol): Used by devices to tell each other about status and data transmission errors across the network (dropped/disappeared/redirected packets, connectivity issues,...). A receiving device can send a report to the sending device about the data transmission. It helps to detect and solve network errors. Usually used as a quick way to troubleshoot network connectivity and latency by issuing the <c>ping</c> command on Linux OS.
+- **ICMP** (Internet Control Message Protocol): Used by devices to tell each other about status and data transmission errors across the network (dropped/disappeared/redirected packets, connectivity issues,...). A receiving device can send a report to the sending device about the data transmission. It helps to detect and solve network errors. Usually used as a quick way to troubleshoot network connectivity and latency by issuing the `ping` command on Linux OS.
+
+- **DHCP** (Dynamic Host Configuration Protocol) (server: UDP port 67) (client: UDP port 68): Used on a network to configure devices. It works with the router to assign a unique IP address to each device and provide the addresses of the appropriate DNS server and default gateway for each device.
 
 **Security Protocols**: They ensure that data is sent and received securely across a network. They use encryption algorithms to protect data in transit. Examples:
 
@@ -548,3 +569,32 @@ Example: To access a webpage we may use these protocols:
 - **SFTP** (Secure File Transfer Protocol): Used to transfer files from one device to another over a network. It uses SSH (Secure Shell), usually by TCP port 22. SSH uses AES (Advanced Encryption Standard) and other encryption types to ensure that unintended recipients cannot intercept the transmissions. It's often used with cloud storage (every time a user uploads or downloads a file from cloud storage, the file is transferred using the SFTP).
 
 Note: The encryption protocols mentioned don't conceal the source or destination IP address of network traffic.
+
+**NAT** (Network Address Translation): Each device in your LAN have a private IP address that they use to communicate directly with each other. For communications with the public internet, the router can replace in outgoing messages the private source IP address with its public IP address (representing all devices on the LAN to the public) and perform the reverse operation for responses. This process generally requires a router or firewall to be configured to perform NAT. In the TCP/IP model, NAT process is a part of layer 2 (internet layer) and layer 3 (transport layer).
+
+#### Wi-Fi
+
+Around 2000, technologies were developed to send and receive data over radio. Today, users access wireless internet through computers (laptops, smart phones, tablets, desktops). Smart devices (thermostats, door locks, security cameras...) also use wireless internet to communicate with each other and with services on the internet.
+
+**IEEE** (Institute of Electrical and Electronics Engineers): Organization that maintains Wi-Fi standards.
+
+**IEEE 802.11 (Wi-Fi)**: Set of standards that define communications for wireless LANs. Wi-Fi protocols have improved over the years and now provide the same level of security and reliability as wired connections. Wi-Fi name is a marketing term commissioned by Wi-Fi Alliance (former WECA).
+
+**Wireless security protocols**:
+
+- **WEP** (Wired Equivalent Privacy) (1999): Oldest wireless security protocol. Designed to provide the same privacy level on wireless network connections as wired ones. It's largely out of use today. However, it had some flaws, including how encryption was used (WEP encryption can be potentially broken, so it's considered a high-risk security protocol).
+
+- **WPA** (Wi-Fi Protected Access) (2003): Replacement for WEP that improves it and addresses some security issues it had by using TKIP (Temporal Key Integrity Protocol). WPA encryption algorithm uses larger secret keys than WEPs. WPA includes a message integrity check (including a message authentication tag with each transmission) which prevents a malicious actor from altering the transmission or resending at another time (the attack will be identified and the transmission rejected). It has backwards compatibility with older hardware. However, WPA still has vulnerabilities: A key reinstallation attack (KRACK) can be used to decrypt transmissions. Also, if an attacker inserts himself in the WPA authentication handshake process, he can inserts a new encryption key (instead of the dynamic one assigned by WPA), and by setting the new key to all zeros it's as if the transmission is not encrypted at all.
+
+- **WPA2** (2004): It improves upon WPA by using the AES (Advanced Encryption Standard) and CCMP (Counter Mode Cipher Block Chain Message Authentication Code Protocol), which improves upon TKIP by providing encapsulation and ensuring message authentication and integrity. It's considered the security standard for all Wi-Fi transmissions today. However, it's vulnerable to KRACK attacks. It has 2 modes:
+
+  - **WPA2 Personal mode**: Best for home networks. It's easy to implement, and has a faster setup than the Enteprise mode. The global passphrase needs to be applied to each individual computer and access point in a network (ideal for home networks, but unmanageable for organizations).
+
+  - **WPA2 Enterprise mode**: Best for business applications. It provides the necessary security a business. It has a more complicated setup, but offers centralized and individualized control over the Wi-Fi access to a business network. Network administrators can grant or remove user access to a network at any time. Users never have access to encryption keys (preventing potential attackers from recovering network keys on individual computers).
+
+- **WPA3** (2018): It addresses the authentication handshake vulnerability to KRACK attacks. It also uses SAE (Simultaneous Authentication of Equals), a password-authenticated, cipher-key-sharing agreement (preventing attackers from downloading data from wireless network connections to their systems to attempt to decode it). It also increases encryption to make passwords more secure by using 128-bit encryption (WPA3-Enterprise mode offers optional 192-bit encryption).
+
+
+
+
+
