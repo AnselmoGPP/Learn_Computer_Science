@@ -536,11 +536,11 @@ Example: To access a webpage we may use these protocols:
 
 - **IP** (Internet Protocol): Set of standards that allow communication between two networks (then, TCP/UDP delivers the data packets to the corresponding service). The IP address works like an address for each private network.
 
-- **HTTP** (Hypertext Transfer Protocol): It provides a method of communication between clients and website servers. It uses port 80. It's considered insecure, so it is being replaced on most websites by HTTPS that uses encryption from SSL/TLS for communication.
+- **HTTP** (Hypertext Transfer Protocol): It provides a method of communication between clients (browser) and web servers. It uses port 80. It's considered insecure, so it is being replaced on most websites by HTTPS that uses encryption from SSL/TLS for communication.
 
 - **DNS** (Domain Name System): It translates internet domain names into IP addresses. When a client computer wants to access a website domain using an internet browser, a query is sent to a dedicated DNS server (domain name and web address) that returns the IP address of the website. This IP address is used as destination address of your packets. It usually use port 53, but large replies may switch to using TCP.
 
-- **ARP** (Address Resolution Protocol): Used to determine MAC address of the next router or device on the path. It translates the IP addresses that are found in data packets into the MAC address of the hardware device. Each device on the network performs ARP and keeps track of matching IP and MAC addresses in an ARP cache. No port assigned (since it's not an application layer protocol).
+- **ARP** (Address Resolution Protocol): Used to determine MAC address of the next router or device on the path. It translates the IP address found in data packets into the MAC address of the hardware device. Each device on the network performs ARP and keeps track of matching IP and MAC addresses in an ARP cache. No port assigned (since it's not an application layer protocol).
 
 - **Telnet** (TCP port 23): Used to connect with a remote system. It sends all information in clear text. It uses command line prompts to control another device similar to SSH, but Telnet is not as secure as SSH. It can be used to connect to local or remote devices. 
 
@@ -554,7 +554,7 @@ Example: To access a webpage we may use these protocols:
 
 - **SMTP** (Simple Mail Transfer Protocol) (unencrypted: TCP/UDP port 25) (encrypted: TCP/UDP port 587 using TLS): Used to transmit and route email from the sender to the recipient’s address. It works with MTA (Message Transfer Agent) software, which searches DNS servers to resolve email addresses to IP addresses, to ensure emails reach their intended destination. The TCP port 25 is often used by high-volume spam. It helps to filter out spam by regulating how many emails a source can send at a time.
 
-**Management Protocols**: Used for monitoring and managing activity on a network. They include protocols for error reporting and optimizing performance on the network. Examples:
+**Management Protocols**: Used for monitoring and managing activity on a network. They include protocols for error reporting and optimizing performance on the network. Used to troubleshoot network issues. Examples:
 
 - **SNMP** (Simple Network Management Protocol): Used for monitoring and managing devices on a network. It can reset a password on a network device or change its baseline configuration, and send requests to network devices for a report on how much of the network’s bandwidth is being used up.
 
@@ -562,11 +562,15 @@ Example: To access a webpage we may use these protocols:
 
 - **DHCP** (Dynamic Host Configuration Protocol) (server: UDP port 67) (client: UDP port 68): Used on a network to configure devices. It works with the router to assign a unique IP address to each device and provide the addresses of the appropriate DNS server and default gateway for each device.
 
-**Security Protocols**: They ensure that data is sent and received securely across a network. They use encryption algorithms to protect data in transit. Examples:
+**Security Protocols**: They ensure that data is sent and received securely across a network by using encryption algorithms to protect data in transit. Examples:
 
 - **HTTPS** (HyperText Transfer Protocol Secure): It provides a secure method of communication between clients and website servers. It applies SSL/TLS (Secure Sockets Layer and Transport Layer Security) encryption to all transmissions, so malicious actors cannot read it. It uses port 443
 
 - **SFTP** (Secure File Transfer Protocol): Used to transfer files from one device to another over a network. It uses SSH (Secure Shell), usually by TCP port 22. SSH uses AES (Advanced Encryption Standard) and other encryption types to ensure that unintended recipients cannot intercept the transmissions. It's often used with cloud storage (every time a user uploads or downloads a file from cloud storage, the file is transferred using the SFTP).
+
+- **SSL/TLS**
+
+- **IPSec**
 
 Note: The encryption protocols mentioned don't conceal the source or destination IP address of network traffic.
 
@@ -592,7 +596,123 @@ Around 2000, technologies were developed to send and receive data over radio. To
 
   - **WPA2 Enterprise mode**: Best for business applications. It provides the necessary security a business. It has a more complicated setup, but offers centralized and individualized control over the Wi-Fi access to a business network. Network administrators can grant or remove user access to a network at any time. Users never have access to encryption keys (preventing potential attackers from recovering network keys on individual computers).
 
-- **WPA3** (2018): It addresses the authentication handshake vulnerability to KRACK attacks. It also uses SAE (Simultaneous Authentication of Equals), a password-authenticated, cipher-key-sharing agreement (preventing attackers from downloading data from wireless network connections to their systems to attempt to decode it). It also increases encryption to make passwords more secure by using 128-bit encryption (WPA3-Enterprise mode offers optional 192-bit encryption).
+- **WPA3** (2018): It addresses the authentication handshake vulnerability to KRACK attacks. It also uses SAE (Simultaneous Authentication of Equals), a password-authenticated, cipher-key-sharing agreement (preventing attackers from downloading data from wireless network connections to their systems to attempt to decode it). It also increases encryption to make passwords more secure by using 128-bit encryption (WPA3-Enterprise mode offers optional 192-bit encryption). It has 2 modes: Personal and Enterprise.
+
+#### Firewalls
+
+**Firewall**: Network security device (hardware or NVA) that monitors (inspect and filter) traffic to and from your network. It either allows traffic or it blocks it based on a defined set of security rules. It can use **port filtering** (block or allow certain port numbers to limit unwanted communication). Example: allow communications on port 443 for HTTPS or port 25 for email and block everything else. The firewall settings will be determined by the organization's security policy. Some types of firewalls are:
+
+- **Hardware firewall**: It's the most basic way to defend against threats to a network. It inspects each data packet before it's allowed to enter the network.
+
+- **Software firewall: It performs the same functions as a hardware firewall, but it's not a physical device. It's a software installed on a computer or server. If installed on a computer, it will analyze all the traffic received by that computer. If installed on a server, it will protect all the devices connected to the server. It's typically less expensive than a physical device, and occupies no space, but adds some processing overhead to the individual devices.
+
+- **Cloud-based firewall**: Cloud service providers offer firewalls as a service (FaaS) for organizations. It's a software firewall hosted by a cloud service provider. Organizations can configure its rules on the cloud service provider's interface, and the firewall will perform security operations on all incoming traffic before
+it reaches the organization’s onsite network. It also protect any assets or processes that an organization might be using in the cloud.
+
+Depending how firewalls operate, they can be **stateful** or **stateless**:
+
+- **Stateful**: It keeps track of information passing through it and proactively filters out threats. A stateful firewall analyzes network traffic for characteristics and
+behavior that appear suspicious and stops them from entering the network. It only requires a rule in one direction because it uses a "state table" to track connections, so it can match return traffic to an existing session 
+
+- **Stateless**: It only operates based on predefined rules and doesn't keep track of information from data packets. These preconfigured rules are set by the firewall administrator, and tell the device what to accept and reject. It doesn't store analyzed information, nor discover suspicious trends like a stateful firewall does. It's considered less secure than stateful firewalls. It requires rules to be configured in two directions.
+
+**NGFW** (Next Generation Firewall): It provides even more security than a stateful firewall. It provides stateful inspection of incoming and outgoing traffic and performs more in-depth security functions (see list below). Some NGFWs connect to cloud-based threat intelligence services so they can quickly update to protect against emerging cyber threats.
+
+- __Deep packet inspection__: Kind of packet sniffing that examines data packets and takes actions if threats exist.
+- __Intrusion prevention__: It detects security threats and notify firewall administrators.
+- __Application layer inspection__: It can inspect traffic at the application layer (TCP/IP model) and are typically application aware. NGFWs can block or allow traffic based on the application (Unlike traditional firewalls that only block traffic based on IP address and ports).
+- Some NGFWs have additional features like: Malware Sandboxing, Network Anti-Virus, and URL and DNS Filtering. 
+
+#### VPNs
+
+When you connect to the internet, your ISP receives your network's requests and forwards it to the correct destination server. But your request includes private information, so if the traffic gets intercepted, someone could potentially connect your internet activity with your physical location and your personal information (including bank accounts and credit card numbers). Moreover, the MAC and IP address of the destination device is contained in the header and footer of a data packet, which shows the IP and virtual location of your private network. You can encrypt a data packet to protect your information, but routers won't be able to read the IP and MAC address to know where to send it. Encapsulation solves this by encrypting your data packet and encapsulating it in another data packet that the router can read.
+
+**Encapsulation**: Protect data by wrapping it in other data packets. 
+
+**VPN**: Network security service that encrypts your data packets and encapsulates them in other data packets. This way, your data is encrypted (unreadable while in transit) and your public IP address is changed (your virtual location is hidden so you can keep your data private when using public networks like the internet). It also uses an encrypted tunnel between your device and the VPN server. 
+
+Note: most websites today use HTTPS (it encrypts data being transferred between your device and the website), which makes it harder to intercept personal information even if internet traffic can be seen. A VPN encrypts all your internet traffic protects your privacy even more.
+
+VPNs allow your data to be sent across a public network while remaining anonymous. Many organizations use VPNs to help protect communications from users’ devices to corporate resources. Individuals use VPNs to increase personal privacy. A reputable VPN also minimizes its own access to user internet activity by using strong encryption and other security measures. Organizations are increasingly using a combination of VPN and SD-WAN capabilities to secure their networks.
+
+**SD-WAN** (Software-Defined Wide Area Network): Virtual WAN service that allows organizations to securely connect users to applications across multiple locations and over large geographical distances.
+
+VPNs provide a server that acts as a gateway between a computer and the internet. It creates a path similar to a virtual tunnel that hides the computer’s IP address and encrypts the data in transit to the internet. The main purpose of a VPN is to create a secure connection between a computer and a network. Additionally, a VPN allows trusted connections to be established on non-trusted networks. VPN protocols determine how the secure network tunnel is formed. Different VPN providers provide different VPN protocols.
+
+Two types of VPNs are:
+
+- **Remote access VPN**: Used by individual users to establish a connection between a personal device and a VPN server (client-server connection). It encrypts data sent or received through a personal device. The connection between the user and the remote access VPN is established through the internet.
+
+- **Site-to-site VPN**: Used by enterprises (particularly, by those with many offices across the globe) to extend their network to other networks and locations. It commonly use the IPSec protocol to create an encrypted tunnel between the primary network and the remote network. Disadvantage: it may be complex to configure and manage.
+
+**Endpoint**: Any device connected to a network (computer, mobile device, server...).
+
+**VPN protocol**: Similar to a network protocol. It’s a set of rules or instructions that will determine how data moves between endpoints. It's used to encrypt traffic over a secure network tunnel. VNP providers offer a variety of options for VPN protocols. Choosing one of them depend on many factors (connection speeds, compatibility with netro). Two of them are:
+
+- **IPSec VPN**: Used by most VPN providers to encrypt and authenticate data packets. Since it's one of the earlier VPN protocols, many operating systems support IPSec from VPN providers. It's older and more complex than WireGuard.
+
+- **WireGuard**: It has high-speed and advanced encryption. Designed to be simple to set up and maintain. Is can be used for both site-to-site connection and client-server connections. Its download speed is enhanced by using fewer lines of code. It's open source, which makes it easier for users to deploy and debug. Useful for processes that require faster download speeds (streaming video, downloading large files...).
+IPSec VPN
+
+#### Security zones
+
+**Subnetting**: Subdivision of a network into logical groups called subnets (it's like a network inside a network). It divides up a network address range into smaller subnets within the network. They form based on the IP addresses and network mask of the devices on the network. It creates a network of devices to function as their own network. This makes the network more efficient and can be used to create security zones. If devices on the same subnet communicate with each other, the switch changes the transmissions to stay on the same subnet, improving comunication's speed and efficiency (due to a more efficient use of network bandwidth). Creating subnets doesn't require requesting another network IP address from your ISP. Subnetting is one component of creating isolated subnetworks through physical isolation, routing configuration, and firewalls.
+
+**Security zone**: It's a segment of a network that protects the internal network from the internet. It acts like a barrier to internal networks, maintains privacy within corporate groups, and prevents issues from spreading to the whole network.
+
+**Network segmentation**: Security technique that divides the network into segments, each one with its own access permissions and security rules. Security zones control who can access different segments of a network. Example: in a hotel, an unsecured guest Wi-Fi network is kept separate from another encrypted network used by the staff.
+
+**Subnets** (or subnetworks): An organization's network can be divided into subnetworks to maintain privacy for each department. Example: at university, there may be a faculty subnet and a students subnet. If the student's subnet is contaminated, network administrator can isolate it and keep the rest of the network free from contamination.
+
+An organization's network has 2 types of security zones:
+
+- **Uncontrolled zone**: Network outside of the organization's control (like the internet).
+
+- **Controlled zone**: Subnet that protects the internal network from the uncontrolled zone. This zone has several types of networks in different layers:
+
+  - **DMZ** (Demilitarized zone): Outer layer zone. Public-facing services that can access the internet (web servers, proxy servers that host websites for the public, DNS servers that provide IP addresses for internet users, email and file servers that handle external communications, etc.). It acts as a network perimeter to the internal network. Ideally, it's situated between two firewalls (one filtering traffic outside the DMZ, and one filtering traffic entering the internal network).
+
+  - **Internal network**: Inner layer zone. It contains private servers and data that the organization neess to protect.
+
+    - **Restricted zone**: It it exists, it's contained in the Internal network. It protects highly confidential information that is only accessible to employees with certain privileges. It's protected with a firewall between the internal network and the restricted zone.
+
+This way, attacks penetrating the DMZ cannot spread to the internal network, and attacks penetrating the internal network cannot access the restricted zone. A security team may regulate access control policies on these firewalls, and control traffic reaching the DMZ and internal network by restricting IPs and ports (example: only HTTPS traffic may be allowed to access web servers in the DMZ). 
+
+Method of assigning subnet masks to IP addresses to create a subnet:
+
+**Classfull addressing**: Used in the 1980s as a system of grouping IP addresses into classes (Class A to Class E). Each class included a limited number of IP addresses, which were depleted as the number of devices connecting to the internet outgrew the classful range in the 1990s.
+
+**CIDR** (Classless Inter-Domain Routing): Replacement for classful addressing. Classless addressing expanded the number of available IPv4 addresses. It allows to segment classful networks into smaller chunks. CIDR IP addresses are formatted like IPv4 addresses, but they include a slash (`/`) followed by a number at the end of the address (IP network prefix) (examples: 198.51.100.0 is an IPv4 address. 198.51.100.0/24 is a CIDR IP address). CIDR address encompasses all IP addresses between 198.51.100.0 and 198.51.100.255. The CIDR addressing system reduces the number of entries in routing tables and provides more available IP addresses within networks.
+
+**IPAddressGuide**: Online tool for converting CIDR to IPv4 addresses and vice versa.
+
+#### Proxy servers
+
+**Proxy server**: Used to secure internal networks. It's a dedicated server that fulfills the requests of its clients by forwarding them to other servers. It sits between the internet and the rest of the network (NAT serves as a barrier). It's a public IP address that is different from the rest of the private network, which hides the private network's IP address from malicious actors on the internet and adds a layer of security.
+
+It fulfills the request of a client by forwarding them on to other servers. When a request to connect to the network comes in from the internet, the proxy server will determine if the connection request is safe. It uses temporary memory to store data that's regularly requested by external servers, so it doesn't have to fetch data from the organization's internal servers every time (which enhances security). Example: When a client receives an HTTPS response, they will notice a distorted IP address or no IP address rather than the real IP address of the organization's web server.
+
+Some proxy servers can be configured with rules, like a firewall (example: block user's access to unsafe websites).
+
+Some types of proxy servers supporting network security are:
+
+- **Forward proxy server**: It regulates and restricts internal clients when they access resources external to the network. It hides a user's IP address and approve all outgoing requests. In an organization, a forward proxy server receives outgoing traffic from an employee, approves it, and forwards it on to the destination on the internet.
+
+- **Reverse proxy server**: It regulates and restricts external systems when they access to services on the internal network. It accepts traffic from external parties, approves it, and forwards it to the internal servers. This protects internal web servers containing confidential data from exposing their IP address to external parties. 
+
+- **Email proxy server**: It filters spam email by verifying whether a sender's address was forged. This the risk of phishing attacks that impersonate people known to
+the organization.
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -11,7 +11,9 @@ Teach yourself Computer Science for free (equivalent to a Bachelor Degree in CS)
 + [C++ language](#cpp-language)
 + [Computer graphics](#computer-graphics)
 + [Machine learning](#machine-learning)
-+ [Cybersecurity](#cybersecurity)
++ [Security](#security)
+    + Cybersecurity
+    + Cryptography
 + [Recommended readings](#recommended-readings)
 + [Links](#links)
 
@@ -60,9 +62,10 @@ int main(int argc, char* argv[])
 
 - [**Machine learning**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/machine_learning.md)
 
-## Cybersecurity
+## Security
 
 - [**Cybersecurity**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/cybersecurity.md)
+- [**Cryptography**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/cryptography.md)
 
 ## Recommended readings
 
