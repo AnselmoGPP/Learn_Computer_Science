@@ -4,8 +4,25 @@
 
 ## Table of Contents
 + [Foundations](#foundations)
+    + [Terminology](#terminology)
+    + [Attacks](#attacks)
+    + [Domains](#domains)
+    + [Ethics](#ethics)
+    + [Tools](#tools)
+    + [Portfolio](#portfolio)
 + [Managing security risks](#managing-security-risks)
+    + [Introduction](#introduction)
+    + [Frameworks and controls](#frameworks-and-controls)
 + [Network security](#network-security)
+    + [Network architecture](#network-architecture)
+    + [Network operations](#network-operations)
+        + [Protocols](#protocols)
+        + [Wi-Fi](#wi-fi)
+        + [Firewalls](#firewalls)
+        + [VPNs](#vpns)
+        + [Security zones](#security-zones)
+        + [Proxy servers](#proxy-servers)
+    + [Network intrusions](#network-intrusions)
 
 
 ## Foundations
@@ -703,7 +720,7 @@ Some types of proxy servers supporting network security are:
 - **Email proxy server**: It filters spam email by verifying whether a sender's address was forged. This the risk of phishing attacks that impersonate people known to
 the organization.
 
-
+### Network intrusions
 
 
 
