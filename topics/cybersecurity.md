@@ -691,7 +691,7 @@ An organization's network has 2 types of security zones:
 
   - **Internal network**: Inner layer zone. It contains private servers and data that the organization neess to protect.
 
-    - **Restricted zone**: It it exists, it's contained in the Internal network. It protects highly confidential information that is only accessible to employees with certain privileges. It's protected with a firewall between the internal network and the restricted zone.
+    - **Restricted zone**: If it exists, it's contained in the Internal network. It protects highly confidential information that is only accessible to employees with certain privileges. It's protected with a firewall between the internal network and the restricted zone.
 
 This way, attacks penetrating the DMZ cannot spread to the internal network, and attacks penetrating the internal network cannot access the restricted zone. A security team may regulate access control policies on these firewalls, and control traffic reaching the DMZ and internal network by restricting IPs and ports (example: only HTTPS traffic may be allowed to access web servers in the DMZ). 
 
@@ -721,6 +721,47 @@ Some types of proxy servers supporting network security are:
 the organization.
 
 ### Network intrusions
+
+#### xxx
+
+Common network intrusion attacks:
+
+- __Infiltration__: Malware, Spoofing, Packet sniffing...
+- __Operations disruption__: Packet flooding...
+
+Attacks can harm an organization by:
+
+- Leaking valuable or confidential information
+- Damaging an organization's reputation
+- Impacting customer retention
+- Costing money and time
+
+Example: In 2014, some hackers attacked the Amerincan home-improvement chain Home Depot and infected their servers with malware. By the time network adminstrators shut down the attack, they had already debit and credit card information for over 56 million customers.
+
+**Network interception attackS**: 
+
+- **Packet sniffing**: It intercepts network traffic and steals valuable information or interfers with the transmission in some way (altering the message, inserting malicious code...). This can be done with hardware or software tools.
+- **On-path attacks**
+- **replay attacks**
+
+**Backdoor attacks**: It works around the security measures by finding a weakness. It may be left intentionally by programmers or system and network adminstrators in order to help programmers conduct troubleshooting or administrative tasks. But it can also be installed by attackers after compromising an organization to ensure persistent access. Once inside, the hacker can cause extensive damage (install malware, DoS attack, steal information, change security settings...).
+
+  - **DoS attack** (Denial of Service): It targets a network or server and floods it with network traffic.
+
+Network attacks may have great negative consequences in an organization: Financial, Reputation, and Public safety.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
