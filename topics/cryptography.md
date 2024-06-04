@@ -23,7 +23,7 @@ Cryptography is everywhere: passwords, password hashing, secure internet credit-
 
 **Modular arithmetic**:
 
-- $x = x' mod N if and only if N divides x-x'$   (i.e. x and x' have the same remainder when divided by N) (i.e. n divides x-x')
+- $x = x' mod N$ if and only if N divides $x-x'$   (i.e. x and x' have the same remainder when divided by N) (i.e. n divides x-x')
 - $[x mod N]$ = Remainder when x is divided by N
   - i.e. the unique value $x'\in{0, ..., N-1}$ such that $x = x' mod N$
 
