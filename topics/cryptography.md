@@ -44,7 +44,7 @@ Example:
 Example (The shift cipher):
 
 - M = {strings over lowercase English alphabet}
-- Gen: choose uniform k\in{0, ..., 25}
+- Gen: choose uniform k \in {0, ..., 25}
 - Enc<sub>k</sub>(m<sub>1</sub>...m<sub>t</sub>): output c<sub>1</sub>...c<sub>t</sub>, where c<sub>i</sub> := [m<sub>i</sub> + k mod 26]
 - Dec<sub>k</sub>(c<sub>1</sub>...c<sub>t</sub>): output m<sub>1</sub>...m<sub>t</sub>, where m<sub>i</sub> := [c<sub>i</sub> - k mod 26]
 
