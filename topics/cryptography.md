@@ -48,7 +48,7 @@ Example (The shift cipher):
 - Enc<sub>k</sub>(m<sub>1</sub>...m<sub>t</sub>): output c<sub>1</sub>...c<sub>t</sub>, where c<sub>i</sub> := [m<sub>i</sub> + k mod 26]
 - Dec<sub>k</sub>(c<sub>1</sub>...c<sub>t</sub>): output m<sub>1</sub>...m<sub>t</sub>, where m<sub>i</sub> := [c<sub>i</sub> - k mod 26]
 
-Given k \in {0, 1, ... 25} and m = plaintext, we encript m by shifting every letter of the plain text by k positions (with wraparound). Decryption just does the reverse. This way, if we use key c (=2), "helloworld" becomes "jgnnqyqtnf".
+Given $k \in {0, 1, ... 25}$ and m = plaintext, we encript m by shifting every letter of the plain text by k positions (with wraparound). Decryption just does the reverse. This way, if we use key c (=2), "helloworld" becomes "jgnnqyqtnf".
 
 
 
