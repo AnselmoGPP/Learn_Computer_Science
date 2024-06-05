@@ -37,8 +37,8 @@ Example:
 
 - **m**: Message from message space M
 - **Gen** (key-generation algorithm): Generates k randomly
-- **Enc** (encryption algorithm): Takes m and k, and outputs ciphertext **c** (c&larr;$Enc_{k}(m)$)   (&larr; denotes assignment of randomized value)
-- **Dec** (decryption algorithm): Takes k and c, and outputs m (m := $Dec_{k}(c)$)   (:= denotes assignment of deterministic value)
+- **Enc** (encryption algorithm): Takes m and k, and outputs ciphertext **c** ($`c&larr;Enc_{k}(m)`$)   (&larr; denotes assignment of randomized value)
+- **Dec** (decryption algorithm): Takes k and c, and outputs m ($`m := Dec_{k}(c)`$)   (:= denotes assignment of deterministic value)
 - For all $m \in M$ and k output by Gen, $Dec_{k}(Enc_{k}(m)) = m$
 
 Example (The shift cipher):
