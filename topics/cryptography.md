@@ -46,7 +46,7 @@ Example (The shift cipher):
 - M = {strings over lowercase English alphabet}
 - $Gen$: choose uniform $k \in {0, ..., 25}$
 - $Enc_{k}(m_{1}...m_{t})$: output $c_{1}...c_{t}$, where $c_{i} := [m_{i} + k\mod 26]$
-- $Dec_{k}(c_{1}...c_{t})&: output $m_{1}...m_{t}$, where $m_{i} := [c_{i} - k\mod 26]$
+- $Dec_{k}(c_{1}...c_{t})$: output $m_{1}...m_{t}$, where $m_{i} := [c_{i} - k\mod 26]$
 
 Given $k \in {0, 1, ... 25}$ and m = plaintext, we encript m by shifting every letter of the plain text by k positions (with wraparound). Decryption just does the reverse. This way, if we use key c (=2), "helloworld" becomes "jgnnqyqtnf".
 
