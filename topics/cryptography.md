@@ -15,11 +15,7 @@
 
 ## Classical Cryptography
 
-Cryptography is everywhere: passwords, password hashing, secure internet credit-card transactions, encrypted Wi-Fi, disk encryption, digitally signed software updates, bitcoin, etc.
-
-**Historical cryptography** (until 1970s): Art of writing and solving codes. It focused exclusively on ensuring secret communication between two parties sharing secret information in advance (key, or "codes").
-
-**Modern cryptography**: Science about design, analysis, and implementation of mathematical techniques for securing information, systems, and computation against adversarial attack. Unlike old cryptography, modern cryptography has formal definitions. To get a formal definition of a scheme, we have to define "security", make some asumptions (we assume some problems cannot be solved efficiently), and prove thats our scheme satisfies our "security" definition under these assumptions (security proof, instead of design-break-patch cycle). Still, it's partly an art (there is room for creativity): new definitions, new schemes, new proof of security, or validating assumptions and designing new primitives to satisfy them. Proof of security is a guarantee of security only for a security definition and a set of assumptions (if it's broken, then the definition doesn't correspond to reality or assumption is invalid).
+### Preliminaries
 
 **Modular arithmetic**:
 
@@ -33,57 +29,11 @@ Example:
 - $25 \neq [35\mod 10]$
 - $5 = [35\mod 10]$
 
-**Private-key cryptography** (AKA secret-key/shared-key/symmetric-key cryptography): Alice and Bob want to share secret information. Both have a shared secret key in advance. The sender encrypts a message/plaintext using the key, generating a ciphertext that is sent over a public communication channel. The receiver decrypts that ciphertext using the key to recover the original message. This is also commonly used for ensuring secrecy for a single user communicating with himself over time. This encryption scheme is defined by:
-
-- **m**: Message from message space M (i.e. subset of M).
-- **Gen** (key-generation algorithm): Generates k randomly (k belongs to K space).
-- **Enc** (encryption algorithm): Takes m and k, and outputs ciphertext **c** ($`c&larr;Enc_{k}(m)`$)   (&larr; denotes output of randomized value, which can be different when running Enc differet times with same input k and m).
-- **Dec** (decryption algorithm): Takes k and c, and outputs m ($`m:=Dec_{k}(c)`$)   (:= denotes assignment of deterministic value) (m belongs to M space).
-- For all $m \in M$ and k output by Gen, $Dec_{k}(Enc_{k}(m)) = m$
-
-**The shift cipher**: Given $k \in \{0, 1, ... 25\}$ and m = plaintext, we encript m by shifting every letter of the plain text by k positions (with wraparound). Number of possible keys = 26. Decryption just does the reverse. This way, if we use key c (=2), "helloworld" becomes "jgnnqyqtnf". This is not a secure encryption since there're only 26 possible keys.
-
-- M = {strings over lowercase English alphabet}
-- $Gen$: choose uniform $k \in \{0, ..., 25\}$
-- $Enc_{k}(m_{1}...m_{t})$: output $c_{1}...c_{t}$, where $c_{i} := [m_{i} + k\mod 26]$
-- $Dec_{k}(c_{1}...c_{t})$: output $m_{1}...m_{t}$, where $m_{i} := [c_{i} - k\mod 26]$
-
-**Sufficient key space principle**: The key space (K) should be large enough to prevent brute-force, exhaustive-search attacks. However, this doesn't guarantee that our encryption scheme is secure.
-
-**Kerckhoffs's principle**: The encryption scheme (algorithm) is not secret. The key is the only secret, which must be chosen at random and kept secret. This way, it's easier to keep/change the secret key than the secret algorithm. Also, allowing the encryption scheme to be public, it's easier to develop standardized encryption schemes (for everyone to use it), to deploy and adopt it, and to receive public scrutiny (thereby increasing our confidence in it).
-
-**The Vigenère cipher**: The key is now a string, not just a character. Encrypt by shifting each character in the plaintext by the amount dictated by the next character of the key (wrap around in the key as needed). Decryption reverses the process. Number of possible keys (assuming keys are 14-character strings) = 26<sup>14</sup> &asymp; 2<sup>66</sup>. The key space is big enough to rule out brute-force attacks. However, this cipher is still not secure: if we assume the key has 14 characters, we realize that every 14th character is encrypted using the same shift, so looking at every 14th character is almost like looking a shift cipher encryption. According to letter frequencies table, the most common english letter is e (12.7%), so let's look for the most common character appearing at every 14th position (&alpha;). Most likely, &alpha; correspond to e, so the first key character is &alpha-e. Now, repeat for all other positions. This attack works with long ciphertexts, though other different attacks are possible.
-
-**Variant Vigenére cipher**: The key is a string of bytes. The plaintext is a string of ASCII characters. To encrypt, XOR each character (byte-wise) in the plaintext with the next character of the key (wrap around in the key as needed). Decryption just reverses the process. The following code encrypts this:
-
-```
-#include <stdio.h>#define KEY_LENGTH 2 // Can be anything from 1 to 13
-
-main() {  
- unsigned char ch;  
- FILE *fpIn, *fpOut;  
- int i;  unsigned char key[KEY_LENGTH] = {0x00, 0x00};		// set keys here
-
- fpIn = fopen("ptext.txt", "r");  
- fpOut = fopen("ctext.txt", "w");
- i=0;  
- while (fscanf(fpIn, "%c", &ch) != EOF)	// avoid encrypting newline characters (though real-world implementations encrypt it too)
-  if (ch!='\n') {      
-   fprintf(fpOut, "%02X", ch ^ key[i % KEY_LENGTH]); // ^ is logical XOR          
-   i++;
-  }      
- 
- fclose(fpIn);  
- fclose(fpOut);  
- return;
-} 
-```
-
 **Numeric bases**:  
 
 - **Binary** (base 2): Bit. Range [0, 1]
 - **Decimal** (base 10): Range [0, 9]
-- **Hexadecimal** (base 16): It's convenient because there's one to one correspondence between the 16 hex digits and the 16 sequences of 4 bits (half byte, nibble). Usually represented with prefix 0x. Ranges [0, 9] and [A, F]. 
+- **Hexadecimal** (base 16): It's convenient because there's one to one correspondence between the 16 hex digits and the 16 possible sequences of 4 bits (half byte, nibble). Usually represented with prefix 0x. Ranges [0, 9] &cup; [A, F]. 
 
 **Base conversions**:
 
@@ -96,9 +46,79 @@ main() {
 How to store an hex value to a file? Two options: 
 
 - Native hex: Use the bits it represents, though you get an unprintable character.
-- Text: Use ASCII characters, though is will take more bytes (one byte per digit instead of half).
+- Text: Use ASCII characters, though it will take more bytes (one byte per digit instead of half).
 
 **ASCII**: Usual representation of characters (1 char = 1 byte = 2 hex digits). Example: 'F' = 0100 0110 = 0x46.
+
+**Probability**:
+
+**Event**: Particular occurrence in some experiment (Pr[E] = probability of even E).
+
+**Conditional probability**: Probability that one event (A) occurs, assuming some other event (B) occurred (Pr[A|B] = Pr[A and B] / Pr[B]).
+
+**Random variable**: Variable that takes on values (discrete or not) with certain probabilities. Its probability distribution specifies the probabilities with which the variable takes on each possible value.
+
+**Independent random variables**: Two random values X, Y are independent if for all x, y: Pr[X=x | Y=y] = Pr[X=x] (i.e. the fact that Y takes any value is irrelevant for determining the probability with which X takes on a particular value.
+
+**Law of total probability**: If we have a set of events {E<sub>1</sub>, ..., E<sub>n</sub>} which are a partition of all possibilities (i.e. both E<sub>i</sub> and E<sub>j</sub> cannot occur simultaneously) (i.e. E<sub>i</sub> and E<sub>j</sub> are pairwise impossible), then for any A:  $Pr[A] = &sum;<sub>i</sub>Pr[A and E<sub>i</sub>] = &sum;<sub>i</sub>Pr[A|E<sub>i</sub>]·Pr[E<sub>i</sub>]$
+
+**Bayes theorem**: It's a way of switching the order of 2 events in a conditional probability statement. It says:  Pr[A|B] = Pr[B|A]·Pr[A]/Pr[B]
+
+### Classical Cryptography
+
+Cryptography is everywhere: passwords, password hashing, secure internet credit-card transactions, encrypted Wi-Fi, disk encryption, digitally signed software updates, bitcoin, etc.
+
+**Historical cryptography** (until 1970s): Art of writing and solving codes. It focused exclusively on ensuring secret communication between two parties sharing secret information in advance (key, or "codes").
+
+**Modern cryptography**: Science about design, analysis, and implementation of mathematical techniques for securing information, systems, and computation against adversarial attack. Unlike old cryptography, modern cryptography has formal definitions. To get a formal definition of a scheme, we have to define "security", make some asumptions (we assume some problems cannot be solved efficiently), and prove that our scheme satisfies our "security" definition under these assumptions (security proof, instead of design-break-patch cycle). Still, it's partly an art (there is room for creativity): new definitions, new schemes, new proof of security, or validating assumptions and designing new primitives to satisfy them. Proof of security is a guarantee of security only for a security definition and a set of assumptions (if it's broken, then the definition doesn't correspond to reality or assumption is invalid).
+
+**Private-key cryptography** (AKA secret-key/shared-key/symmetric-key cryptography): Alice and Bob want to share secret information. Both have a shared secret key in advance. The sender encrypts a message/plaintext using the key, generating a ciphertext that is sent over a public communication channel. The receiver decrypts that ciphertext using the key to recover the original message. This is also commonly used for ensuring secrecy for a single user communicating with himself over time. This encryption scheme is defined by:
+
+- **m**: Message from message space M (i.e. subset of M).
+- **Gen** (key-generation algorithm): Generates k randomly (k belongs to K space).
+- **Enc** (encryption algorithm): Takes m and k, and outputs ciphertext **c** ($`c&larr;Enc_{k}(m)`$)   (&larr; denotes output of randomized value, which can be different when running Enc differet times with same input k and m).
+- **Dec** (decryption algorithm): Takes k and c, and outputs m ($`m:=Dec_{k}(c)`$)   (:= denotes assignment of deterministic value).
+- For all $m \in M$ and k output by Gen, $Dec_{k}(Enc_{k}(m)) = m$
+
+**The shift cipher**: Given $k \in \{0, 1, ... 25\}$ and m = plaintext, we encript m by shifting every letter of the plain text by k positions (with wrap around). Number of possible keys = 26. Decryption just does the reverse. This way, if we use key c (c=2), "helloworld" becomes "jgnnqyqtnf". This is not a secure encryption since there're only 26 possible keys.
+
+- M = {strings over lowercase English alphabet}
+- $Gen$: choose uniform $k \in \{0, ..., 25\}$
+- $Enc_{k}(m_{1}...m_{t})$: output $c_{1}...c_{t}$, where $c_{i} := [m_{i} + k\mod 26]$
+- $Dec_{k}(c_{1}...c_{t})$: output $m_{1}...m_{t}$, where $m_{i} := [c_{i} - k\mod 26]$
+
+**Sufficient key space principle**: The key space (K) should be large enough to prevent brute-force, exhaustive-search attacks. However, this doesn't guarantee that our encryption scheme is secure.
+
+**Kerckhoffs's principle**: The encryption scheme (algorithm) is not secret. The key is the only secret, which must be chosen at random and kept secret. This way, it's easier to keep/change the secret key than the secret algorithm. Also, allowing the encryption scheme to be public, it's easier to develop standardized encryption schemes (for everyone to use it), to deploy and adopt it, and to receive public scrutiny (thereby increasing our confidence in it).
+
+**The Vigenère cipher**: The key is now a string, not just a character. Encrypt by shifting each character in the plaintext by the amount dictated by the next character of the key (wrap around in the key as needed). Decryption reverses the process. Number of possible keys (assuming keys are 14-character strings) = 26<sup>14</sup> &asymp; 2<sup>66</sup>. The key space is big enough to rule out brute-force attacks. However, this cipher is still not secure: if we assume the key has 14 characters, we realize that every 14th character is encrypted using the same shift, so looking at every 14th character is almost like looking a shift cipher encryption. According to letter frequencies table, the most common english letter is e (12.7%), so let's look for the most common character appearing at every 14th position (&alpha;). Most likely, &alpha; correspond to e, so the first key character is &alpha-e. Now, repeat for all other positions. This attack works with long ciphertexts, though other different attacks are possible.
+
+**Variant Vigenére cipher**: The key is a string of bytes. The plaintext is a string of ASCII characters. Easier to implement. To encrypt, XOR (byte-wise) each character in the plaintext with the next character of the key (wrap around in the key as needed) (message XOR key). Decryption just reverses the process (ciphertext XOR key). Encryption implementation:
+
+```
+#include <stdio.h>
+#define KEY_LENGTH 2
+
+main() {  
+ unsigned char ch;  
+ FILE *message, *ciphert;  
+ int i;
+ unsigned char key[KEY_LENGTH] = {0x00, 0x00};		// set keys here
+
+ message = fopen("message.txt", "r");			// take message from file
+ ciphert = fopen("ciphert.txt", "w");
+ i=0;  
+ while (fscanf(message, "%c", &ch) != EOF)
+  if (ch!='\n') {					// newlines should be encrypted but we avoid it here
+   fprintf(ciphert, "%02X", ch ^ key[i % KEY_LENGTH]);	// Apply XOR (^) to each character and save to file
+   i++;
+  }      
+ 
+ fclose(message);  
+ fclose(ciphert);  
+ return;
+} 
+```
 
 **Threat model**: What (real-world) capabilities the attacker is assumed to have. Threat model types:
 
@@ -111,19 +131,7 @@ How to store an hex value to a file? Two options:
 
 **Secure encryption** (informal definition for ciphertext-only attack, one ciphertext): An encryption scheme is secure if, regardless of any prior information the attacker has about the plaintext, the ciphertext leaks no additional information about the plaintext. In other words, it's secure as long as seeing the ciphertext doesn't make it easier for the attacker to guess a character of the plaintext. (ciphertext-only attack, one ciphertext)
 
-### Probability
-
-**Event**: Particular occurrence in some experiment (Pr[E] = probability of even E).
-
-**Conditional probability**: Probability that one event (A) occurs, assuming some other event (B) occurred (Pr[A|B] = Pr[A and B] / Pr[B]).
-
-**Random variable**: Variable that takes on values (discrete or not) with certain probabilities. Its probability distribution specifies the probabilities with which the variable takes on each possible value.
-
-- Two random values X, Y are independent if for all x, y: Pr[X=x | Y=y] = Pr[X=x] (i.e. the fact that Y takes any value is irrelevant for determining the probability with which X takes on a particular value.
-
-**Law of total probability**: If we have a set of events {E<sub>1</sub>, ..., E<sub>n</sub>} which are a partition of all possibilities (i.e. both E<sub>i</sub> and E<sub>j</sub> cannot occur simultaneously) (i.e. E<sub>i</sub> and E<sub>j</sub> are pairwise impossible), then for any A:  Pr[A] = &sum;<sub>i</sub>Pr[A and E<sub>i</sub>] = &sum;<sub>i</sub>Pr[A|E<sub>i</sub>]·Pr[E<sub>i</sub>]
-
-Probability distribution:
+**Probability distribution**:
 
 - ***M***: Likelihood of different messages being sent by the parties, given the attacker's prior knowledge. Example: "read me" has prob. 0.7 while "don't read" has 0.3.
 
@@ -149,8 +157,6 @@ Example 2:
   - Either M='a' and K=1, or M='z' and K=2
   - Pr[C='ecv']  =  Pr[M='cat']·Pr[C='ecv'|M='cat'] + Pr[M='dog']·Pr[C='ecv'|M='dog']  =  0.5·1/26 + 0.5·0  =  1/52
 
-**Bayes theorem**: It's a way of switching the order of 2 events in a conditional probability statement. It says:  Pr[A|B] = Pr[B|A]·Pr[A]/Pr[B]
-
 **Secure encryption** (formal definition for ciphertext-only attack, one ciphertext): Encryption scheme (Gen, Enc, Dec) with message space M and ciphertext space C is perfectly secret if for every distribution over M, every m &isin; M, and every c &isin; C with Pr[C=c]>0, it holds that Pr[M=m|C=c] = Pr[M=m]
 
 - Example 1:
@@ -168,21 +174,21 @@ Example 2:
 **One-time pad cipher** (~1917): This scheme achieves perfect secrecy. The message, key, and ciphertext, have the same number of bits.
   - M = {0,1}<sup>n</sup>  (set of all binary strings of length n)
   - Gen: choose a uniform key k &isin; {0,1}<sup>n</sup>
-  - Enc<sub>k</sup>(m) = k &oplus; m   (bit-wise XOR)
-  - Dec<sub>k</sup>(c) = k &oplus; c
+  - Enc<sub>k</sub>(m) = k &oplus; m   (bit-wise XOR)
+  - Dec<sub>k</sub>(c) = k &oplus; c
   - Correctness:  Dec<sub>k</sub>(Enc<sub>k</sub>(m))  =  k &oplus; (k &oplus; m)  =  (k &oplus; k) &oplus; m  =  m
   - Perfect secrecy:  Pr[M=m|C=c]  =  Pr[C=c|M=m]·Pr[M=m]/Pr[C=c]  =  Pr[K=m&oplus;c]·Pr[M=m] / 2<sup>-n</sup>  =  2<sup>-n</sup>·Pr[M=m] / 2<sup>-n</sup>  =  Pr[M=m]
     - Pr[C=c]  =  &sum;<sub>m'</sub>Pr[C=c|M=m']·Pr[M=m']  =  &sum;<sub>m'</sub>Pr[K=m'&oplus;c]·Pr[M=m']  =  &sum;<sub>m'</sub>2<sup>-n</sup>·Pr[M=m']  =  2<sup>-n</sup>
 
 **One-time pad implementation**: Plaintext (ASCII), key/ciphertext (hex digits written in ASCII) 
-```
+```c
 
 ```
 
 **Random number generation**: A computer is a deterministic device that cannot generate random values. Nevertheless, we can get random numbers by continually collecting a "pool" of high-entropy (i.e., unpredictable) data taken from external inputs (random events like keystrokes, mouse movements, network access delays...) or hardware random-number generation (Intel chips...). Then, when we need random bits, we process this data to generate an independent, uniform sequence of bits (it may get blocked if there's insufficient entropy available). The OS handles all this. Random bits can be access at /dev/random (Unix), or using crypto libraries.
 
 Random key generation implementation:
-```
+```c
 #include <stdio.h>
 #define LEN 12
 
@@ -211,8 +217,8 @@ int main() {
  return 0;
 }
 ```
-Encryption (message XOR key) implementation:
-```
+Encryption (message XOR key) and decryption (ciphertex XOR key) (commented) implementation:
+```c
 #include <stdio.h>
 #define LEN 12
 
@@ -242,10 +248,7 @@ int main() {
  fclose(cfile);
 }
 ```
-Decryption (ciphertex XOR key) implementation:
-```
 
-```
 
 
 
