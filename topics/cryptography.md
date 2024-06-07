@@ -95,7 +95,7 @@ Cryptography is everywhere: passwords, password hashing, secure internet credit-
 
 **Variant Vigenére cipher**: The key is a string of bytes. The plaintext is a string of ASCII characters. Easier to implement. To encrypt, XOR (byte-wise) each character in the plaintext with the next character of the key (wrap around in the key as needed) (message XOR key). Decryption just reverses the process (ciphertext XOR key). Encryption implementation:
 
-```
+```c
 #include <stdio.h>
 #define KEY_LENGTH 2
 
