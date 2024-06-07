@@ -60,7 +60,7 @@ How to store an hex value to a file? Two options:
 
 **Independent random variables**: Two random values X, Y are independent if for all x, y: Pr[X=x | Y=y] = Pr[X=x] (i.e. the fact that Y takes any value is irrelevant for determining the probability with which X takes on a particular value.
 
-**Law of total probability**: If we have a set of events {E<sub>1</sub>, ..., E<sub>n</sub>} which are a partition of all possibilities (i.e. both E<sub>i</sub> and E<sub>j</sub> cannot occur simultaneously) (i.e. E<sub>i</sub> and E<sub>j</sub> are pairwise impossible), then for any A:  '$Pr[A] = &sum;<sub>i</sub>Pr[A and E<sub>i</sub>] = &sum;<sub>i</sub>Pr[A|E<sub>i</sub>]·Pr[E<sub>i</sub>]'$
+**Law of total probability**: If we have a set of events {E<sub>1</sub>, ..., E<sub>n</sub>} which are a partition of all possibilities (i.e. both E<sub>i</sub> and E<sub>j</sub> cannot occur simultaneously) (i.e. E<sub>i</sub> and E<sub>j</sub> are pairwise impossible), then for any A:  $`Pr[A] = &sum;<sub>i</sub>Pr[A and E<sub>i</sub>] = &sum;<sub>i</sub>Pr[A|E<sub>i</sub>]·Pr[E<sub>i</sub>]`$
 
 **Bayes theorem**: It's a way of switching the order of 2 events in a conditional probability statement. It says:  Pr[A|B] = Pr[B|A]·Pr[A]/Pr[B]
 
