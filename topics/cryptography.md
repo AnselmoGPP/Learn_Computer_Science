@@ -59,23 +59,23 @@ Example:
 ```
 #include <stdio.h>#define KEY_LENGTH 2 // Can be anything from 1 to 13
 
-main(){  
-  unsigned char ch;  
-  FILE *fpIn, *fpOut;  
-  int i;  unsigned char key[KEY_LENGTH] = {0x00, 0x00};		// set keys here
+main() {  
+ unsigned char ch;  
+ FILE *fpIn, *fpOut;  
+ int i;  unsigned char key[KEY_LENGTH] = {0x00, 0x00};		// set keys here
 
-  fpIn = fopen("ptext.txt", "r");  
-  fpOut = fopen("ctext.txt", "w");
-  i=0;  
-  while (fscanf(fpIn, "%c", &ch) != EOF)	// avoid encrypting newline characters (though real-world implementations encrypt it too)
-   if (ch!='\n') {      
-     fprintf(fpOut, "%02X", ch ^ key[i % KEY_LENGTH]); // ^ is logical XOR          
-     i++;
-   }      
+ fpIn = fopen("ptext.txt", "r");  
+ fpOut = fopen("ctext.txt", "w");
+ i=0;  
+ while (fscanf(fpIn, "%c", &ch) != EOF)	// avoid encrypting newline characters (though real-world implementations encrypt it too)
+  if (ch!='\n') {      
+   fprintf(fpOut, "%02X", ch ^ key[i % KEY_LENGTH]); // ^ is logical XOR          
+   i++;
+  }      
  
-  fclose(fpIn);  
-  fclose(fpOut);  
-  return;
+ fclose(fpIn);  
+ fclose(fpOut);  
+ return;
 } 
 ```
 
@@ -186,8 +186,7 @@ Random key generation implementation:
 #include <stdio.h>
 #define LEN 12
 
-int main()
-{
+int main() {
  FILE *randfile, *outfile;
  int i;
  unsigned char next;
@@ -217,8 +216,7 @@ Encryption (message XOR key) implementation:
 #include <stdio.h>
 #define LEN 12
 
-int main()
-{
+int main() {
  FILE *keyfile, *pfile, *cfile;
  int i;
  unsigned char ch1, ch2;
