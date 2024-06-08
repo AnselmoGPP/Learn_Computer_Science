@@ -146,7 +146,7 @@ main() {
 Assumption: Random variables *M* and *K* are independent. The message that a party sends doesn't depend on the key used to encrypt that message.
 
 Example 1:
-- For all  $k \in \{0, ..., 25\},  Pr[K=k]  =  $1/26$
+- For all  $k \in \{0, ..., 25\},  Pr[K=k]  =  1/26$
 - Say  Pr[M='a'] = 0.7,  Pr[M='z'] = 0.3
 - What is Pr[C='c']?
   - Either M='a' and K=1, or M='z' and K=2
