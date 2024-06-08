@@ -163,14 +163,16 @@ Example 2:
 
 - Example 1:
   - Shift cipher
-  - Pr[M='cat'] = 0.5,  Pr[M='dog'] = 0.5
-  - Take m='dog' and c='ecv'
-  - $Pr[M='dog'|C='ecv'] = 0$  ($\neq Pr[M='dog']$)
+  - $Pr[M='cat'] = 0.5,  Pr[M='dog'] = 0.5$
+  - Take $m='dog'$ and $c='ecv'$
+  - $Pr[M='dog'|C='ecv'] = 0$
+    - $0 \neq Pr[M='dog']$
 
 - Example 2:
   - Shift cipher
   - $Pr[M='hi'] = 0.3,  Pr[M='no'] = 0.2,  Pr[M='in'] = 0.5$
-  - $Pr[M='hi'|C='xy']  =  Pr[C='xy'|M='hi']·Pr[M='hi']/Pr[C='xy']  =  (1/26)·0.3/(1/52)  =  0.6$  ($\neq Pr[M='hi']$, so shift cipher is not completely secret) 
+  - $Pr[M='hi'|C='xy']  =  Pr[C='xy'|M='hi']·Pr[M='hi']/Pr[C='xy']  =  (1/26)·0.3/(1/52)  =  0.6$
+    - $0.6 \neq Pr[M='hi']$, so shift cipher is not completely secret 
     - $Pr[C='xy']  =  Pr[C='xy'|M='hi']·0.3 + Pr[C='xy'|M='no']·0.2 + Pr[C='xy'|M='in']·0.5  =  (1/26)·0.3 + (1/26)·0.2 + 0·0.5  =  1/52$
 
 **One-time pad cipher** (~1917): This scheme achieves perfect secrecy. The message, key, and ciphertext, have the same number of bits.
