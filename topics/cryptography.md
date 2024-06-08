@@ -147,10 +147,10 @@ Assumption: Random variables *M* and *K* are independent. The message that a par
 
 Example 1:
 - For all  $k \in \{0, ..., 25\},  Pr[K=k]  =  1/26$
-- Say  Pr[M='a'] = 0.7,  Pr[M='z'] = 0.3
-- What is Pr[C='c']?
-  - Either M='a' and K=1, or M='z' and K=2
-  - Pr[C='b']  =  Pr[M='a']·Pr[K=1] + Pr[M='z']·Pr[K=2]  =  0.7·(1/26) + 0.3·(1/26)  = 1/26
+- Say  $Pr[M='a'] = 0.7,  Pr[M='z'] = 0.3$
+- What is $Pr[C='c']$?
+  - Either $M='a'$ and $K=1$, or $M='z'$ and $K=2$
+  - $Pr[C='b']  =  Pr[M='a']·Pr[K=1] + Pr[M='z']·Pr[K=2]  =  0.7·(1/26) + 0.3·(1/26)  = 1/26$
 
 Example 2:
 - Consider the shift cipher (shift of 2 characters)
