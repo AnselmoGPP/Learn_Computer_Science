@@ -74,7 +74,7 @@ Cryptography is everywhere: passwords, password hashing, secure internet credit-
 
 **Historical cryptography** (until 1970s): Art of writing and solving codes. It focused exclusively on ensuring secret communication between two parties sharing secret information in advance (key, or "codes").
 
-**Modern cryptography**: Science about design, analysis, and implementation of mathematical techniques for securing information, systems, and computation against adversarial attack. Unlike old cryptography, modern cryptography has formal definitions. To get a formal definition of a scheme, we have to define "security", make some asumptions (we assume some problems cannot be solved efficiently), and prove that our scheme satisfies our "security" definition under these assumptions (security proof, instead of design-break-patch cycle). Still, it's partly an art (there is room for creativity): new definitions, new schemes, new proof of security, or validating assumptions and designing new primitives to satisfy them. Proof of security is a guarantee of security only for a security definition and a set of assumptions (if it's broken, then the definition doesn't correspond to reality or assumption is invalid).
+**Modern cryptography**: Science about design, analysis, and implementation of mathematical techniques for securing information, systems, and computation against adversarial attack. Unlike old cryptography, modern cryptography has formal definitions. To get a formal definition of a scheme, we have to define "security", make some asumptions (we assume some problems cannot be solved efficiently), and prove that our scheme satisfies our "security" definition under these assumptions (security proof, instead of design-break-patch cycle). Still, it's partly an art (there is room for creativity): new definitions, new schemes, new proof of security, or validating assumptions and designing new primitives to satisfy them. Proof of security is a guarantee of security only for a security definition and a set of assumptions (if it's broken, then the security definition doesn't correspond to reality or assumption is invalid).
 
 **Private-key cryptography** (AKA secret-key/shared-key/symmetric-key cryptography): Alice and Bob want to share secret information. Both have a shared secret key in advance. The sender encrypts a message/plaintext using the key, generating a ciphertext that is sent over a public communication channel. The receiver decrypts that ciphertext using the key to recover the original message. This is also commonly used for ensuring secrecy for a single user communicating with himself over time. This encryption scheme is defined by:
 
@@ -95,7 +95,7 @@ Cryptography is everywhere: passwords, password hashing, secure internet credit-
 
 **Kerckhoffs's principle**: The encryption scheme (algorithm) is not secret. The key is the only secret, which must be chosen at random and kept secret. This way, it's easier to keep/change the secret key than the secret algorithm. Also, allowing the encryption scheme to be public, it's easier to develop standardized encryption schemes (for everyone to use it), to deploy and adopt it, and to receive public scrutiny (thereby increasing our confidence in it).
 
-**The Vigenère cipher**: The key is now a string, not just a character. Encrypt by shifting each character in the plaintext by the amount dictated by the next character of the key (wrap around in the key as needed). Decryption reverses the process. Number of possible keys (assuming keys are 14-character strings) = 26<sup>14</sup> &asymp; 2<sup>66</sup>. The key space is big enough to rule out brute-force attacks. However, this cipher is still not secure: if we assume the key has 14 characters, we realize that every 14th character is encrypted using the same shift, so looking at every 14th character is almost like looking a shift cipher encryption. According to letter frequencies table, the most common english letter is e (12.7%), so let's look for the most common character appearing at every 14th position (&alpha;). Most likely, &alpha; correspond to e, so the first key character is &alpha-e. Now, repeat for all other positions. This attack works with long ciphertexts, though other different attacks are possible.
+**The Vigenère cipher**: The key is now a string, not just a character. Encrypt by shifting each character in the plaintext by the amount dictated by the next character of the key (wrap around in the key as needed). Decryption reverses the process. Number of possible keys (assuming keys are 14-character strings) = 26<sup>14</sup> &asymp; 2<sup>66</sup>. The key space is big enough to rule out brute-force attacks. However, this cipher is still not secure: if we assume the key has 14 characters, we realize that every 14th character is encrypted using the same shift, so looking at every 14th character is almost like looking a shift cipher encryption. According to letter frequencies table, the most common english letter is e (12.7%), so let's look for the most common character appearing at every 14th position (&alpha;). Most likely, &alpha; correspond to e, so the first key character is &alpha-e. Now, repeat for all other positions. This attack works with long ciphertexts, though other different attacks are possible. This cipher is perfectly secret if the length of the key is equal to the length of the messages in M.
 
 **Variant Vigenére cipher**: The key is a string of bytes. The plaintext is a string of ASCII characters. Easier to implement. To encrypt, XOR (byte-wise) each character in the plaintext with the next character of the key (wrap around in the key as needed) (message XOR key). Decryption just reverses the process (ciphertext XOR key). Encryption implementation:
 
@@ -124,17 +124,6 @@ main() {
 } 
 ```
 
-**Threat model**: What (real-world) capabilities the attacker is assumed to have. Threat model types:
-
-- __Ciphertext-only attack__: Attacker has a ciphertext. Most basic.
-- __Known-plaintext attack__: Attacker has a ciphertext, and a plaintext with its ciphertext. Stronger.
-- __Chosen-plaintext attack__: Attacker has a ciphertext, and he can obtain a ciphertext corresponding to a plaintext of the attacker's choice. Even more stronger.
-- __Chosen-ciphertext attack__: Attacker has chosen-plaintext capabilities and is able to decrypt certain texts of the attacker's choice. Strongest.
-
-**Security guarantee/goal**: What we want to prevent the attacker from doing.
-
-**Secure encryption** (informal definition for ciphertext-only attack, one ciphertext): An encryption scheme is secure if, regardless of any prior information the attacker has about the plaintext, the ciphertext leaks no additional information about the plaintext. In other words, it's secure as long as seeing the ciphertext doesn't make it easier for the attacker to guess a character of the plaintext.
-
 **Probability distribution**:
 
 - ***M***: Likelihood of different messages being sent by the parties, given the attacker's prior knowledge. Example: "read me" has prob. 0.7 while "don't read" has 0.3.
@@ -156,7 +145,19 @@ Example 2 (Shift cipher):
 - Say  $Pr[M='cat'] = 0.5$,  $Pr[M='dog'] = 0.5$
 - $Pr[C='ecv']  =  Pr[M='cat']·Pr[C='ecv'|M='cat'] + Pr[M='dog']·Pr[C='ecv'|M='dog']  =  0.5·1/26 + 0.5·0  =  1/52$
 
-**Secure encryption** (formal definition for ciphertext-only attack, one ciphertext): Encryption scheme (Gen, Enc, Dec) with message space M and ciphertext space C is perfectly secret if for every distribution over M, every m &isin; M, and every c &isin; C with Pr[C=c]>0, it holds that Pr[M=m|C=c] = Pr[M=m]
+**Threat model**: What (real-world) capabilities the attacker is assumed to have. Threat model types:
+
+- __Ciphertext-only attack__: Attacker has a ciphertext. Most basic.
+- __Known-plaintext attack__: Attacker has a ciphertext, and a plaintext with its ciphertext. Stronger.
+- __Chosen-plaintext attack__: Attacker has a ciphertext, and he can obtain a ciphertext corresponding to a plaintext of the attacker's choice. Even more stronger.
+- __Chosen-ciphertext attack__: Attacker has chosen-plaintext capabilities and is able to decrypt certain texts of the attacker's choice. Strongest.
+
+**Security guarantee/goal**: What we want to prevent the attacker from doing.
+
+**Perfect secrecy** (secure encryption) definition (for ciphertext-only attack, one ciphertext):
+
+- __Informal definition__: An encryption scheme is secure if, regardless of any prior information the attacker has about the plaintext, the ciphertext leaks no additional information about the plaintext. In other words, it's secure as long as seeing the ciphertext doesn't make it easier for the attacker to guess a character of the plaintext.
+- __Formal definition__: Encryption scheme (Gen, Enc, Dec) with message space M and ciphertext space C is perfectly secret if for every distribution over M, every m &isin; M, and every c &isin; C with $Pr[C=c]>0$, it holds that $Pr[M=m|C=c] = Pr[M=m]$
 
 - Example 1 (Shift cipher):
   - $Pr[M='cat'] = 0.5,  Pr[M='dog'] = 0.5$
@@ -165,9 +166,9 @@ Example 2 (Shift cipher):
 
 - Example 2 (Shift cipher):
   - $Pr[M='hi'] = 0.3,  Pr[M='no'] = 0.2,  Pr[M='in'] = 0.5$
-  - $Pr[M='hi'|C='xy']  =  Pr[C='xy'|M='hi']·Pr[M='hi']/Pr[C='xy']  =  (1/26)·0.3/(1/52)  =  0.6$
+  - $Pr[M='hi'|C='xy']  =  Pr[C='xy'|M='hi']·Pr[M='hi']/Pr[C='xy']  =  (1/26)·0.3/(1/52)  =  0.6$   (Bayes theorem applied)
     - $0.6 \neq Pr[M='hi']$, so shift cipher is not completely secret 
-    - $Pr[C='xy']  =  Pr[C='xy'|M='hi']·0.3 + Pr[C='xy'|M='no']·0.2 + Pr[C='xy'|M='in']·0.5  =  (1/26)·0.3 + (1/26)·0.2 + 0·0.5  =  1/52$
+    - $Pr[C='xy']  =  0.3·Pr[C='xy'|M='hi'] + 0.2·Pr[C='xy'|M='no'] + 0.5·Pr[C='xy'|M='in']  =  0.3·(1/26) + 0.2·(1/26) + 0.5·0  =  1/52$
 
 **One-time pad cipher** (~1917): This scheme achieves perfect secrecy. The message, key, and ciphertext, have the same number of bits.
   - M = {0,1}<sup>n</sup>  (set of all binary strings of length n)
@@ -175,17 +176,15 @@ Example 2 (Shift cipher):
   - Enc<sub>k</sub>(m) = k &oplus; m   (bit-wise XOR)
   - Dec<sub>k</sub>(c) = k &oplus; c
   - Correctness:  Dec<sub>k</sub>(Enc<sub>k</sub>(m))  =  k &oplus; (k &oplus; m)  =  (k &oplus; k) &oplus; m  =  m
-  - Perfect secrecy:  Pr[M=m|C=c]  =  Pr[C=c|M=m]·Pr[M=m]/Pr[C=c]  =  Pr[K=m&oplus;c]·Pr[M=m] / 2<sup>-n</sup>  =  2<sup>-n</sup>·Pr[M=m] / 2<sup>-n</sup>  =  Pr[M=m]
+  - Perfect secrecy (Bayes theorem applied):  Pr[M=m|C=c]  =  Pr[C=c|M=m]·Pr[M=m]/Pr[C=c]  =  Pr[K=m&oplus;c]·Pr[M=m] / 2<sup>-n</sup>  =  2<sup>-n</sup>·Pr[M=m] / 2<sup>-n</sup>  =  Pr[M=m]
     - Pr[C=c]  =  &sum;<sub>m'</sub>Pr[C=c|M=m']·Pr[M=m']  =  &sum;<sub>m'</sub>Pr[K=m'&oplus;c]·Pr[M=m']  =  &sum;<sub>m'</sub>2<sup>-n</sup>·Pr[M=m']  =  2<sup>-n</sup>
-
-**One-time pad implementation**: Plaintext (ASCII), key/ciphertext (hex digits written in ASCII) 
-```c
-
-```
 
 **Random number generation**: A computer is a deterministic device that cannot generate random values. Nevertheless, we can get random numbers by continually collecting a "pool" of high-entropy (i.e., unpredictable) data taken from external inputs (random events like keystrokes, mouse movements, network access delays...) or hardware random-number generation (Intel chips...). Then, when we need random bits, we process this data to generate an independent, uniform sequence of bits (it may get blocked if there's insufficient entropy available). The OS handles all this. Random bits can be access at /dev/random (Unix), or using crypto libraries.
 
-Random key generation implementation:
+**One-time pad implementation**: Plaintext (ASCII), key/ciphertext (hex digits written in ASCII):
+
+- __Random key generation__ implementation:
+
 ```c
 #include <stdio.h>
 #define LEN 12
@@ -215,7 +214,9 @@ int main() {
  return 0;
 }
 ```
-Encryption (message XOR key) and decryption (ciphertex XOR key) (commented) implementation:
+
+- __Encryption__ (key XOR message) and __decryption__ (key XOR ciphertex) (commented) implementation:
+
 ```c
 #include <stdio.h>
 #define LEN 12
@@ -248,20 +249,12 @@ int main() {
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Modern Cryptography
+
+
+
+
+
 ## Private-Key Encryption
 ## Message Authentication Codes
 ## Number Theory
