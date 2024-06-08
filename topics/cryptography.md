@@ -60,7 +60,7 @@ How to store an hex value to a file? Two options:
 
 **Independent random variables**: Two random values X, Y are independent if for all x, y: Pr[X=x | Y=y] = Pr[X=x] (i.e. the fact that Y takes any value is irrelevant for determining the probability with which X takes on a particular value.
 
-**Law of total probability**: If we have a set of events $\{E_1, ..., E_n\}$ which are a partition of all possibilities (i.e. both $E_i$ and $E_j$ cannot occur simultaneously) (i.e. $E_i$ and $E_j$ are pairwise impossible), then for any A:  
+**Law of total probability**: If we have a set of events {$E_1, ..., E_n$} which are a partition of all possibilities (i.e. both $E_i$ and $E_j$ cannot occur simultaneously) (i.e. $E_i$ and $E_j$ are pairwise impossible), then for any A:  
 
 $$Pr[A] = \sum_{i=0}^n Pr[A \land E_i] = \sum_{i=0}^nPr[A|E_i]·Pr[E_i]$$
 
