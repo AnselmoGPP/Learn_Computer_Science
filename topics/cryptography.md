@@ -157,6 +157,7 @@ Example 2 (Shift cipher):
 **Perfect secrecy** (secure encryption) definition (for ciphertext-only attack, one ciphertext):
 
 - __Informal definition__: An encryption scheme is secure if, regardless of any prior information the attacker has about the plaintext, the ciphertext leaks no additional information about the plaintext. In other words, it's secure as long as seeing the ciphertext doesn't make it easier for the attacker to guess a character of the plaintext.
+
 - __Formal definition__: Encryption scheme (Gen, Enc, Dec) with message space M and ciphertext space C is perfectly secret if for every distribution over M, every m &isin; M, and every c &isin; C with $Pr[C=c]>0$, it holds that $Pr[M=m|C=c] = Pr[M=m]$
 
 - Example 1 (Shift cipher):
@@ -170,7 +171,7 @@ Example 2 (Shift cipher):
     - $0.6 \neq Pr[M='hi']$, so shift cipher is not completely secret 
     - (LTP applied) $Pr[C='xy']  =  0.3·Pr[C='xy'|M='hi'] + 0.2·Pr[C='xy'|M='no'] + 0.5·Pr[C='xy'|M='in']  =  0.3·(1/26) + 0.2·(1/26) + 0.5·0  =  1/52$
 
-**One-time pad cipher** (~1917): This scheme achieves perfect secrecy. The message, key, and ciphertext, have the same number of bits.
+**One-time pad cipher** (~1917): This scheme achieves perfect secrecy. The message, key, and ciphertext, have the same number of bits. Used in the red phone DC-Moscow (1980's).
   - M = {0,1}<sup>n</sup>  (set of all binary strings of length n)
   - Gen: choose a uniform key k &isin; {0,1}<sup>n</sup>
   - Enc<sub>k</sub>(m) = k &oplus; m   (bit-wise XOR)
@@ -251,7 +252,15 @@ int main() {
 
 ## Modern Cryptography
 
+### One-time pad limitations
 
+The **One-time pad** scheme is not used very often nowadays because of several limitations:
+
+- The key is as long as the message.
+- Parties must share keys of length equal to the length of all mmessage they might ever send.
+- Only completely secure if each key is used to encrypt a single message.
+
+If the same key is used twice (c<sub>1</sub> = K &oplus; m<sub>1</sub>, c<sub>2</sub> = K &oplus; m<sub>2</sub>), the attacker can make a certain computation (c<sub>1</sub> &oplus; c<sub>2</sub> = (k &oplus; m<sub>1</sub>) &oplus; (k &oplus; m<sub>2</sub>) = m<sub>1</sub> &oplus; m<sub>2</sub>) that leaks information about m<sub>1</sub> and m<sub>2</sub>.
 
 
 
