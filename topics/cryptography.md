@@ -60,11 +60,11 @@ How to store an hex value to a file? Two options:
 
 **Independent random variables**: Two random values X, Y are independent if for all x, y: Pr[X=x | Y=y] = Pr[X=x] (i.e. the fact that Y takes any value is irrelevant for determining the probability with which X takes on a particular value.
 
-**Law of total probability**: If we have a set of events $\{E_1, ..., E_n\}$ which are a partition of all possibilities (i.e. both $E_i$ and $E_j$ cannot occur simultaneously) (i.e. $E_i$ and $E_j$ are pairwise impossible), then for any A:  
+**Law of total probability** (LTP): If we have a set of events $\{E_1, ..., E_n\}$ which are a partition of all possibilities (i.e. both $E_i$ and $E_j$ cannot occur simultaneously) (i.e. $E_i$ and $E_j$ are pairwise impossible), then for any A:  
 
 $$Pr[A] = \sum_{i=0}^n Pr[A \land E_i] = \sum_{i=0}^nPr[A|E_i]·Pr[E_i]$$
 
-**Bayes theorem**: It's a way of switching the order of 2 events in a conditional probability statement. It says:  
+**Bayes theorem** (BT): It's a way of switching the order of 2 events in a conditional probability statement. It says:  
 
 $$Pr[A|B] = Pr[B|A]·Pr[A]/Pr[B]$$
 
@@ -143,7 +143,7 @@ Example 1 (Shift cipher):
 
 Example 2 (Shift cipher):
 - Say  $Pr[M='cat'] = 0.5$,  $Pr[M='dog'] = 0.5$
-- $Pr[C='ecv']  =  Pr[M='cat']·Pr[C='ecv'|M='cat'] + Pr[M='dog']·Pr[C='ecv'|M='dog']  =  0.5·1/26 + 0.5·0  =  1/52$
+- (LTP applied) $Pr[C='ecv']  =  Pr[M='cat']·Pr[C='ecv'|M='cat'] + Pr[M='dog']·Pr[C='ecv'|M='dog']  =  0.5·1/26 + 0.5·0  =  1/52$
 
 **Threat model**: What (real-world) capabilities the attacker is assumed to have. Threat model types:
 
@@ -166,9 +166,9 @@ Example 2 (Shift cipher):
 
 - Example 2 (Shift cipher):
   - $Pr[M='hi'] = 0.3,  Pr[M='no'] = 0.2,  Pr[M='in'] = 0.5$
-  - $Pr[M='hi'|C='xy']  =  Pr[C='xy'|M='hi']·Pr[M='hi']/Pr[C='xy']  =  (1/26)·0.3/(1/52)  =  0.6$   (Bayes theorem applied)
+  - (BT applied) $Pr[M='hi'|C='xy']  =  Pr[C='xy'|M='hi']·Pr[M='hi']/Pr[C='xy']  =  (1/26)·0.3/(1/52)  =  0.6$
     - $0.6 \neq Pr[M='hi']$, so shift cipher is not completely secret 
-    - $Pr[C='xy']  =  0.3·Pr[C='xy'|M='hi'] + 0.2·Pr[C='xy'|M='no'] + 0.5·Pr[C='xy'|M='in']  =  0.3·(1/26) + 0.2·(1/26) + 0.5·0  =  1/52$
+    - (LTP applied) $Pr[C='xy']  =  0.3·Pr[C='xy'|M='hi'] + 0.2·Pr[C='xy'|M='no'] + 0.5·Pr[C='xy'|M='in']  =  0.3·(1/26) + 0.2·(1/26) + 0.5·0  =  1/52$
 
 **One-time pad cipher** (~1917): This scheme achieves perfect secrecy. The message, key, and ciphertext, have the same number of bits.
   - M = {0,1}<sup>n</sup>  (set of all binary strings of length n)
@@ -176,8 +176,8 @@ Example 2 (Shift cipher):
   - Enc<sub>k</sub>(m) = k &oplus; m   (bit-wise XOR)
   - Dec<sub>k</sub>(c) = k &oplus; c
   - Correctness:  Dec<sub>k</sub>(Enc<sub>k</sub>(m))  =  k &oplus; (k &oplus; m)  =  (k &oplus; k) &oplus; m  =  m
-  - Perfect secrecy (Bayes theorem applied):  Pr[M=m|C=c]  =  Pr[C=c|M=m]·Pr[M=m]/Pr[C=c]  =  Pr[K=m&oplus;c]·Pr[M=m] / 2<sup>-n</sup>  =  2<sup>-n</sup>·Pr[M=m] / 2<sup>-n</sup>  =  Pr[M=m]
-    - Pr[C=c]  =  &sum;<sub>m'</sub>Pr[C=c|M=m']·Pr[M=m']  =  &sum;<sub>m'</sub>Pr[K=m'&oplus;c]·Pr[M=m']  =  &sum;<sub>m'</sub>2<sup>-n</sup>·Pr[M=m']  =  2<sup>-n</sup>
+  - Perfect secrecy (BT applied):  Pr[M=m|C=c]  =  Pr[C=c|M=m]·Pr[M=m]/Pr[C=c]  =  Pr[K=m&oplus;c]·Pr[M=m] / 2<sup>-n</sup>  =  2<sup>-n</sup>·Pr[M=m] / 2<sup>-n</sup>  =  Pr[M=m]
+    - (LTP applied) Pr[C=c]  =  &sum;<sub>m'</sub>Pr[C=c|M=m']·Pr[M=m']  =  &sum;<sub>m'</sub>Pr[K=m'&oplus;c]·Pr[M=m']  =  &sum;<sub>m'</sub>2<sup>-n</sup>·Pr[M=m']  =  2<sup>-n</sup>
 
 **Random number generation**: A computer is a deterministic device that cannot generate random values. Nevertheless, we can get random numbers by continually collecting a "pool" of high-entropy (i.e., unpredictable) data taken from external inputs (random events like keystrokes, mouse movements, network access delays...) or hardware random-number generation (Intel chips...). Then, when we need random bits, we process this data to generate an independent, uniform sequence of bits (it may get blocked if there's insufficient entropy available). The OS handles all this. Random bits can be access at /dev/random (Unix), or using crypto libraries.
 
