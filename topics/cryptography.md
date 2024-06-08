@@ -62,7 +62,7 @@ How to store an hex value to a file? Two options:
 
 **Law of total probability**: If we have a set of events ${E_1, ..., E_n}$ which are a partition of all possibilities (i.e. both $E_i$ and $E_j$ cannot occur simultaneously) (i.e. $E_i$ and $E_j$ are pairwise impossible), then for any A:  
 
-$Pr[A] = \sum_{i=0}^n Pr[A \land E_i] = \sum_{i=0}^nPr[A|E_i]·Pr[E_i]$
+$$Pr[A] = \sum_{i=0}^n Pr[A \land E_i] = \sum_{i=0}^nPr[A|E_i]·Pr[E_i]$$
 
 **Bayes theorem**: It's a way of switching the order of 2 events in a conditional probability statement. It says:  
 
