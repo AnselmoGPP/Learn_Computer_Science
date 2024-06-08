@@ -145,31 +145,25 @@ main() {
 
 Assumption: Random variables *M* and *K* are independent. The message that a party sends doesn't depend on the key used to encrypt that message.
 
-Example 1:
+Example 1 (Shift cipher):
 - For all  $k \in \{0, ..., 25\},  Pr[K=k]  =  1/26$
 - Say  $Pr[M='a'] = 0.7,  Pr[M='z'] = 0.3$
-- What is $Pr[C='c']$?
-  - Either $M='a'$ and $K=1$, or $M='z'$ and $K=2$
+- What is $Pr[C='b']$?
+  - Two possibilities: either $M='a'$ and $K=1$, or $M='z'$ and $K=2$
   - $Pr[C='b']  =  Pr[M='a']·Pr[K=1] + Pr[M='z']·Pr[K=2]  =  0.7·(1/26) + 0.3·(1/26)  = 1/26$
 
-Example 2:
-- Consider the shift cipher (shift of 2 characters)
+Example 2 (Shift cipher):
 - Say  $Pr[M='cat'] = 0.5$,  $Pr[M='dog'] = 0.5$
-- What is $Pr[C='ecv']$?
-  - Either $M='a'$ and $K=1$, or $M='z'$ and $K=2$
-  - $Pr[C='ecv']  =  Pr[M='cat']·Pr[C='ecv'|M='cat'] + Pr[M='dog']·Pr[C='ecv'|M='dog']  =  0.5·1/26 + 0.5·0  =  1/52$
+- $Pr[C='ecv']  =  Pr[M='cat']·Pr[C='ecv'|M='cat'] + Pr[M='dog']·Pr[C='ecv'|M='dog']  =  0.5·1/26 + 0.5·0  =  1/52$
 
 **Secure encryption** (formal definition for ciphertext-only attack, one ciphertext): Encryption scheme (Gen, Enc, Dec) with message space M and ciphertext space C is perfectly secret if for every distribution over M, every m &isin; M, and every c &isin; C with Pr[C=c]>0, it holds that Pr[M=m|C=c] = Pr[M=m]
 
-- Example 1:
-  - Shift cipher
+- Example 1 (Shift cipher):
   - $Pr[M='cat'] = 0.5,  Pr[M='dog'] = 0.5$
-  - Take $m='dog'$ and $c='ecv'$
   - $Pr[M='dog'|C='ecv'] = 0$
-    - $0 \neq Pr[M='dog']$
+    - $0 \neq Pr[M='dog']$, so shift cipher is not completely secret 
 
-- Example 2:
-  - Shift cipher
+- Example 2 (Shift cipher):
   - $Pr[M='hi'] = 0.3,  Pr[M='no'] = 0.2,  Pr[M='in'] = 0.5$
   - $Pr[M='hi'|C='xy']  =  Pr[C='xy'|M='hi']·Pr[M='hi']/Pr[C='xy']  =  (1/26)·0.3/(1/52)  =  0.6$
     - $0.6 \neq Pr[M='hi']$, so shift cipher is not completely secret 
