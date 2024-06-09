@@ -257,10 +257,14 @@ int main() {
 The **One-time pad** scheme is not used very often nowadays because of several limitations:
 
 - The key is as long as the message.
-- Parties must share keys of length equal to the length of all mmessage they might ever send.
+- Parties must share keys of length equal to the length of all messages they might ever send.
 - Only completely secure if each key is used to encrypt a single message.
 
-If the same key is used twice (c<sub>1</sub> = K &oplus; m<sub>1</sub>, c<sub>2</sub> = K &oplus; m<sub>2</sub>), the attacker can make a certain computation (c<sub>1</sub> &oplus; c<sub>2</sub> = (k &oplus; m<sub>1</sub>) &oplus; (k &oplus; m<sub>2</sub>) = m<sub>1</sub> &oplus; m<sub>2</sub>) that leaks information about m<sub>1</sub> and m<sub>2</sub>.
+If the __same key is used twice__ (c<sub>1</sub> = K &oplus; m<sub>1</sub>, c<sub>2</sub> = K &oplus; m<sub>2</sub>), the attacker can make the following computation; c<sub>1</sub> &oplus; c<sub>2</sub> = (k &oplus; m<sub>1</sub>) &oplus; (k &oplus; m<sub>2</sub>) = m<sub>1</sub> &oplus; m<sub>2</sub>, which leaks information about m<sub>1</sub> and m<sub>2</sub>. The result m<sub>1</sub> &oplus; m<sub>2</sub> reveals some information: 
+
+- We can detect where both messages differ: When they're equal, it's 0; when it's 1, they are different.
+- Frequency analysis is applicable: Similar to shift and Vigenère cipher, but more difficult.
+- Some ASCII characteristics can be exploited: It's easy to identify XOR of a letter and space since all letters begin with 01, space character begins with 00, XOR of 2 letters give 00, and XOR of letter and space gives 01. When an attacker knows that one character is a XOR of a character and a space, he can find out easily the underlying character.
 
 
 
