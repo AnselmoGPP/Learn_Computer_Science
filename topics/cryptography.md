@@ -39,7 +39,7 @@ Example:
 
 - __Binary to Decimal__: Consider that each successive digit in a binary number has a value twice the preceding one, and add up only those that correspond to a digit 1. Example: 1101 = 8·1 + 4·1 + 2·0 + 1·1 = 13
 
-- __Hex to Decimal__: Like binary to decimal, but each position has value 16 times (not twice) the previous one. Example: Ox1AF = 32·1 + 16·A + 1·F = 32·1 + 16·10 + 1·15 = 207
+- __Hex to Decimal__: Like binary to decimal, but each position has value 16 times (not twice) the previous one. Example: 0x1AF = 32·1 + 16·A + 1·F = 32·1 + 16·10 + 1·15 = 207
 
 - __Hex to Binary__: Replace each hex digit with its corresponding nibble. Example: 0x1A = 0001 1010
 
@@ -252,9 +252,9 @@ int main() {
 
 ## Modern Cryptography
 
-### One-time pad limitations
+### One-time pad
 
-The **One-time pad** scheme is not used very often nowadays because of several limitations:
+The schemes achieving perfect secrecy (like One-time pad) have some **inherent limitations** (this is why One-time pad scheme is not used very often nowadays):
 
 - The key is as long as the message.
 - Parties must share keys of length equal to the length of all messages they might ever send.
@@ -264,8 +264,41 @@ If the __same key is used twice__ (c<sub>1</sub> = K &oplus; m<sub>1</sub>, c<su
 
 - We can detect where both messages differ: When they're equal, it's 0; when it's 1, they are different.
 - Frequency analysis is applicable: Similar to shift and Vigenère cipher, but more difficult.
-- Some ASCII characteristics can be exploited: It's easy to identify XOR of a letter and space since all letters begin with 01, space character begins with 00, XOR of 2 letters give 00, and XOR of letter and space gives 01. When an attacker knows that one character is a XOR of a character and a space, he can find out easily the underlying character.
+- Some ASCII characteristics can be exploited: It's easy to identify XOR of a letter and space since all letters begin with 01, space character begins with 00, XOR of 2 letters give 00, and XOR of letter and space gives 01. When an attacker knows that one character is a XOR of a character and a space, he can find out easily the underlying character (if we know A is space and B is character, by computing space &oplus; (A &oplus B) we get character B) (ASCII space = 0x20).
 
+**Optimality of One-time pad:**
+
+Let's demonstrate the following theorem: Given some private-key encryption scheme (like One-time pad), if (Gen, Enc, Dec) with message space M is perfectly secret, then |K| &ge; |M|. So, there're up to |K| possible messages (it's ok if two keys map to the same message). Given any ciphertext, we can try to decrypt it under every possible key in K. 
+
+- Let's assume |K| < |M| (i.e., some messages are not in the list). In this case, we should be able to demonstrate *Pr[M=m|C=c] &ne; Pr[M=m]*.
+- Consider *M(c) = {Dec<sub>k</sub>(c)}<sub>k &isin; K</sub>*  (set of all decryptions of a ciphertext c using all the keys)
+- |M(c)| &le; |K| < |M|, so there's some m not included in M(c). This means that *Pr[M=m|C=c] = 0 &ne; Pr[M=m]*.
+- Conclusion: The encryption scheme, having a key space smaller than the message space, cannot be perfectly secret. So, One-time pad is perfectly secret and optimal.
+
+### Computational secrecy
+
+**Perfect indistinguishability**: Property of a scheme &Pi; where, given 2 messages (m<sub>0</sub>, m<sub>1</sub>) and one ciphertext (c) obtained after encrypting one of them using k, any attacker (A, adversary, eavesdropper) cannot guess correctly which message was used to obtain c with probability any better than 1/2. No attacker can do it better than 1/2. It's perfectly indistinguishable if and only if it's perfectly secret (i.e., this is an alternate definition of perfect secrecy).
+
+- Pr[PrivK<sub>A,&Pi;</sub>=1] = 1/2 + &epsilon;   (the probability that PrivK = 1 (i.e., the probability that A succeeds) is 1/2 for all attackers A on encryption scheme &Pi;)
+
+**Perfect secrecy** requires that no information about the plaintext is leaked, even to eavesdroppers with unlimited computational power. However, it has some drawbacks (seen before) and seems unnecessarily strong.
+
+**Computational secrecy**: It allows some information to be leaked with tiny probability, and only considers "efficient" attackers. It relaxes the idea of perfect indistinguishability. Two approaches:
+
+- **Concrete security**: &Pi; is (t, &epsilon;)-indistinguishable if for all attackers A running in time at most t, it holds that Pr[PrivK<sub>A,&Pi;</sub>=1] &le; 1/2 + &epsilon;
+
+- **Asymptotic security**: Security may fail with probability negligible in n. Attention is restricted to attackers running in time polynomial in n.
+  
+  - **n** (n &isin; Z<sup>+</sup>): Security parameter (key length, for now). Positive integer. Fixed by honest parties at system initialization (when they choose and share their key). Allows users to tailor the security level. We assume it's known by adversary. Running times (integer) of all parties (honests and attackers), and adversary's (attacker) success probability, are functions of n.
+
+  - **Polynomialy bounded**: For different values of n we have different adversary running times. A function f (that maps n to the attacker's running time) is polynomial if there exists a set of constants ({c<sub>i</sub>}) such that f(n) < &sum;<sub>i</sub>c<sub>i</sub>n<sup>i</sup> for all n.
+
+  - **Negligible**: A function f(n) (that maps n to attacker's success probability) is negligible if for every polynomial p there is an N such that f(n) < 1/p(n) for n>N. Example: f(n) = poly(n)·2<sup>-cn</sup>. This means that f is negligible if it's asymptotically smaller than any inverse polynomial function (i.e., it decays faster than any inverse polynomial).
+
+Examples:
+
+- Low probability: Something that occurs with probability 2<sup>-60</sup>/sec is expected to occur once every 100 billion years.
+- Bounded attackers: An attacker with a supercomputer that can test one key per clock cycle could find 2<sup>112</sup> keys since the Big Bang using brute-force search. Modern key spaces usually have 2<sup>128</sup> keys or more.
 
 
 ## Private-Key Encryption
