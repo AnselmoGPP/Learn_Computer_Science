@@ -575,7 +575,7 @@ Example: To access a webpage we may use these protocols:
 
 - **SNMP** (Simple Network Management Protocol): Used for monitoring and managing devices on a network. It can reset a password on a network device or change its baseline configuration, and send requests to network devices for a report on how much of the network’s bandwidth is being used up.
 
-- **ICMP** (Internet Control Message Protocol): Used by devices to tell each other about status and data transmission errors across the network (dropped/disappeared/redirected packets, connectivity issues,...). A receiving device can send a report to the sending device about the data transmission. It helps to detect and solve network errors. Usually used as a quick way to troubleshoot network connectivity and latency by issuing the `ping` command on Linux OS.
+- **ICMP** (Internet Control Message Protocol): Used by devices to tell each other about status and data transmission errors across the network (dropped/disappeared/redirected packets, connectivity issues,...). Device A asks device B for a status update, and B sends a report to A about the data transmission. It helps to detect and solve network errors. Usually used as a quick way to troubleshoot network connectivity and latency by issuing the `ping` command on Linux OS.
 
 - **DHCP** (Dynamic Host Configuration Protocol) (server: UDP port 67) (client: UDP port 68): Used on a network to configure devices. It works with the router to assign a unique IP address to each device and provide the addresses of the appropriate DNS server and default gateway for each device.
 
@@ -722,12 +722,9 @@ the organization.
 
 ### Network intrusions
 
-#### xxx
+#### Attacks
 
-Common network intrusion attacks:
-
-- __Infiltration__: Malware, Spoofing, Packet sniffing...
-- __Operations disruption__: Packet flooding...
+Network attacks may have great negative consequences in an organization: Financial, Reputation, and Public safety.
 
 Attacks can harm an organization by:
 
@@ -736,24 +733,59 @@ Attacks can harm an organization by:
 - Impacting customer retention
 - Costing money and time
 
-Example: In 2014, some hackers attacked the Amerincan home-improvement chain Home Depot and infected their servers with malware. By the time network adminstrators shut down the attack, they had already debit and credit card information for over 56 million customers.
+Example: In 2014, some hackers attacked the Amerincan home-improvement chain Home Depot and infected their servers with malware. By the time network adminstrators shut down the attack, they had already debit and credit card information of over 56 million customers.
 
-**Network interception attackS**: 
+Common network intrusion attacks:
 
-- **Packet sniffing**: It intercepts network traffic and steals valuable information or interfers with the transmission in some way (altering the message, inserting malicious code...). This can be done with hardware or software tools.
-- **On-path attacks**
-- **replay attacks**
+- __Infiltration__: Malware, Spoofing, Packet sniffing...
+- __Operations disruption__: Packet flooding...
+
+**Botnet**: Collection of computers infected by malware that are under the control of a single threat actor (bot-herder)." Each computer can be controlled remotely to send a data packet to a target system. They can be used to perform a DDoS attack.
+
+**Network interception attacks**: 
+
+- **Packet sniffing**: It intercepts network traffic and steals valuable information or interfers with the transmission in some way (altering the message, inserting malicious code...). This can be done with hardware or software tools. A malicious actor can insert himself between two connected devices and spy on every packet comming across his device. Packet sniffing can be passive (packets read in transit) or active (packets manipulated in transit). To be protected, use VPN (encryption), connect to HTTPS websites (SSL/TLS encryption), and avoid unprotected Wi-Fi (doesn't use encryption).
+
+- **IP spoofing**: It changes the source IP of a data packet to impersonate an authorized system and gain access to a network (by passing firewalls). To be protected, use firewalls (If a received packet's sender IP address is the same as the private network, the firewall will deny transmission with that IP address since all devides with that address should already be on the local network. Configure the firewall by creating a rule to reject all incoming traffic that has the same IP address as the local network). Common types are:
+
+  - **On-path attack**: An attacker places himself in the middle of an authorized connection and intercepts or alters the data in transit. After learning IP and MAC addresses of the devices, he can pretend to be either of them.
+  - **Replay attack**: An attacker intercepts a data packet in transit and delays it or repeats it at another time. The attacker may want to cause connection issues between devices, or to impersonate the authorized user by repeating the transmission at a later time.
+  - **Smurf attack**: An attacker sniffs an authorized user's IP address and floods it with packets. Combination of DDoS attack and IP spoofing attack.
 
 **Backdoor attacks**: It works around the security measures by finding a weakness. It may be left intentionally by programmers or system and network adminstrators in order to help programmers conduct troubleshooting or administrative tasks. But it can also be installed by attackers after compromising an organization to ensure persistent access. Once inside, the hacker can cause extensive damage (install malware, DoS attack, steal information, change security settings...).
 
-  - **DoS attack** (Denial of Service): It targets a network or server and floods it with network traffic.
+**DoS attack** (Denial of Service): It targets a network or server and floods it with network traffic. It sends huge amounts of information in order to overload the organization's network (to crash it or make it unable to repond to legitimate users). A network crash can make them vulnerable to other threats and attacks. If multiple devices or servers are used, it's a **DDoS attack** (Distributed Denial of Service). Network level DoS attacks target network bandwidth to slow traffic, and some common types are:
 
-Network attacks may have great negative consequences in an organization: Financial, Reputation, and Public safety.
+- **SYN flood attack**: It simulates a TCP connection and floods a server with SYN packets.
+- **ICMP flood**: It floods a server with ICMP packets.
+- **Ping of death**: It pings a system by sending it an oversized ICMP packet bigger than 64KB. It may overload the system and crash it.
 
+#### Network protocol analyzer
 
+**Network protocol analyzer** (packet sniffer, packet analyzer): Tool for capturing and analyzing data traffic within a network. Usually used to monitor networks and identify suspicious activity. However, attackers can use it to gain information about a specific network.
 
+Most common ones are:
 
+- SolarWinds NetFlow Traffic Analyzer
+- ManageEngine OpManager
+- Azure Network Watcher
+- Wireshark
+- tcpdump
 
+**tcpdump**: Popular, lightweight command-line tool. It uses the open-source libpcap library. It can be installed in Unix-based OSs (Linux, macOS). It provides a brief packet analysis and presents key information about network traffic and each packet. After executing a command, it outputs the sniffed packets to the command line, and optionally to a log file. The output of a captured packet contains some information: timestamp (hours:minutes:seconds), source IP, source port, destination IP, destination port. It may resolve host addresses to hostnames, and resolve port numbers with commonly associated services that use these ports. Commons uses:
+
+- Capture and view network communications and collect statistics about the network (such as troubleshooting network performance issues).
+- Establish baseline for network traffic patterns and network utilization metrics.
+- Detect and identify malicious traffic.
+- Create customized alerts to send the right notifications when network issues or security threats arise.
+- Locate unauthorized instant messaging (IM), traffic, or wireless access points.
+- Attackers can use it to gain information about a network (like capture data packets containing sensitive information).
+
+```
+21:00:23.483629 IP 198.168.10.1.41 > 198.111.123.1.61012
+```
+
+#### Attack tactics and defense
 
 
 
