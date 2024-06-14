@@ -878,6 +878,8 @@ Most common ones are:
 
 The **defense in depth** approach adds layers of security (devices, tools, strategies) to a network until the network owner is satisfied with the level of security. Some tools available are: Firewall, IDS (Intrusion Detection System), IPS (Intrusion Prevention System), SIEM tools. Each tool is a layer that incrementally hardens the network.
 
+<br>![defense in depth](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/defense_in_depth.png)
+
 - **Firewall**: It allows or blocks traffic based on a set of rules. The header of incoming packets are inspected and allowed or denied based on its port number. NGFWs also inspect packet payloads. Each system should have its own firewall, regardless of the network firewall.
 
 - **IDS** (Intrusion Detection System): Application that monitors system activity and alerts on possible intrusions, based on the signature of malicious traffic and anomalies. It can be configured to detect known attacks. It often sniff data packets moving across the network and analyze them. It's placed behind the firewall and before entering the LAN (to analyze filtered traffic, which reduces false positives). New and sophisticated attacks might not be caught. It doesn’t stop the incoming traffic if it detects something awry. It’s up to the network administrator to catch the malicious activity before it damages the network. When combined with a firewall, it adds another layer of defense. 
