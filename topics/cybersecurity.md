@@ -23,6 +23,15 @@
         + [Security zones](#security-zones)
         + [Proxy servers](#proxy-servers)
     + [Network intrusions](#network-intrusions)
+        + [Attacks](attacks)
+        + [Network protocol analyzer](network-protocol-analyzer)
+    + [Security hardening](security-hardening)
+        + [Security hardening](security-hardening)
+        + [OS hardening](os-hardening)
+        + [Network hardening](network-hardening)
+        + [Cloud hardening](cloud-hardening)
++ [Linux](linux)
++ [SQL](sql)
 
 
 ## Foundations
@@ -407,7 +416,7 @@ and they are offered by Cloud service providers.). Despite hubs, switches, route
 
 **Network diagrams**: Maps that show the devices on the network and how they connect. They use small representative graphics to portray each network device and dotted lines to show how each device connects to the other. They show the architecture and design of a private network, and let us develop and refine strategies for securing network architectures.
 
-**Cloud computing**: Practice of using remote servers, applications, and network services that are hosted on the internet instead of on local physical devices.
+**Cloud computing**: Practice of using remote servers, applications, and network services that are hosted on the internet instead of on local physical devices. This allows convenient and on-demand network access to a shared pool of configurable computing resources, which can be configured and released with minimal management effort or interaction with the service provider. 
  
 **Cloud service provider (CSP)**: Company offering cloud computing services. It also provides on-demand storage, processing power that their customers only pay as needed, and business and web analytics that organizations can use to monitor their web traffic and sales. Companies can pay for storage and services and consume them through the CSP’s application programming interface (API) or web console. It provides 3 main services:
 - **Software as a service (SaaS)**: Software suites operated by the CSP that a company can use remotely without hosting the software. 
@@ -416,7 +425,7 @@ and they are offered by Cloud service providers.). Despite hubs, switches, route
 
 **On-premise network**: Network where all the devices used for network operations are kept at a physical location owned by the company.
 
-**Cloud network**: Collection of servers or computers that stores resources and data in a remote data center that can be accessed via the internet. It saves money, simplifies operations, and provides more resources.
+**Cloud network**: Collection of servers or computers that stores data and resources in a remote data center that can be accessed via the internet. It saves money, simplifies operations, and provides more resources. It provices on-demand storage, processing power, and data analytics.
 
 **Hybrid cloud environment**: It's when an organization use a CSP’s services in addition to their on-premise computers, networks, and storage.
 
@@ -740,21 +749,27 @@ Common network intrusion attacks:
 - __Infiltration__: Malware, Spoofing, Packet sniffing...
 - __Operations disruption__: Packet flooding...
 
-**Botnet**: Collection of computers infected by malware that are under the control of a single threat actor (bot-herder)." Each computer can be controlled remotely to send a data packet to a target system. They can be used to perform a DDoS attack.
+**Botnet**: Collection of computers infected by malware that are under the control of a single threat actor (bot-herder). Each computer can be controlled remotely to send a data packet to a target system. They can be used to perform a DDoS attack.
+
+**Network Interface Card** (NIC): Piece of hardware that connects a device to a network. It reads the data transmission and, if it contains the device's MAC addres, it accepts the packet and sends it to the device to process the information based on the protocol. A NIC can be set to promiscuous mode, so it accepts all traffic on the network, including packets not addressed to the NIC's device. 
+
+**Defense-in-depth** principle: There isn't a perfect strategy for stopping each kind of attack. You can layer your defense by using multiple strategies (example: encryption will strangthen security and help against DoS attacks).
 
 **Network interception attacks**: 
 
 - **Packet sniffing**: It intercepts network traffic and steals valuable information or interfers with the transmission in some way (altering the message, inserting malicious code...). This can be done with hardware or software tools. A malicious actor can insert himself between two connected devices and spy on every packet comming across his device. Packet sniffing can be passive (packets read in transit) or active (packets manipulated in transit). To be protected, use VPN (encryption), connect to HTTPS websites (SSL/TLS encryption), and avoid unprotected Wi-Fi (doesn't use encryption).
 
-- **IP spoofing**: It changes the source IP of a data packet to impersonate an authorized system and gain access to a network (by passing firewalls). To be protected, use firewalls (If a received packet's sender IP address is the same as the private network, the firewall will deny transmission with that IP address since all devides with that address should already be on the local network. Configure the firewall by creating a rule to reject all incoming traffic that has the same IP address as the local network). Common types are:
+- **IP spoofing**: It changes the source IP of a data packet (obtained via packet sniffing) to impersonate an authorized system (using IP and MAC addresses of authorized devices) and gain access to a network (by passing firewalls). To be protected, use firewalls (if a received packet's sender IP address is the same as the private network, the firewall will deny transmission with that IP address since all devides with that address should already be on the local network. Configure the firewall by creating a rule to reject all incoming traffic that has the same IP address as the local network). Common types are:
 
-  - **On-path attack**: An attacker places himself in the middle of an authorized connection and intercepts or alters the data in transit. After learning IP and MAC addresses of the devices, he can pretend to be either of them.
+  - **On-path attack** (meddler-in-the-middle attack): An attacker places himself in the middle of an authorized connection and intercepts or alters the data in transit. After learning IP and MAC addresses of the devices, he can pretend to be either of them. Alternatively, if an attacker can intercept a DNS lookup, he can spoof the DNS response from the server and redirect a domain name to a different IP address (protect yourself against this by encrypting data in transit, such as TLS).
+
   - **Replay attack**: An attacker intercepts a data packet in transit and delays it or repeats it at another time. The attacker may want to cause connection issues between devices, or to impersonate the authorized user by repeating the transmission at a later time.
-  - **Smurf attack**: An attacker sniffs an authorized user's IP address and floods it with packets. Combination of DDoS attack and IP spoofing attack.
+
+  - **Smurf attack**: Combination of DDoS attack and IP spoofing attack. An attacker sniffs an authorized user's IP address and floods it with packets (example: ICMP flood). Once the spoofed packet reaches the broadcast address, it's sent to all devices and servers on the network. To get protected, use a firewall to monitor any unusual traffic on the network (most NGFW can detect oversized broadcasts before they can crash the network).
 
 **Backdoor attacks**: It works around the security measures by finding a weakness. It may be left intentionally by programmers or system and network adminstrators in order to help programmers conduct troubleshooting or administrative tasks. But it can also be installed by attackers after compromising an organization to ensure persistent access. Once inside, the hacker can cause extensive damage (install malware, DoS attack, steal information, change security settings...).
 
-**DoS attack** (Denial of Service): It targets a network or server and floods it with network traffic. It sends huge amounts of information in order to overload the organization's network (to crash it or make it unable to repond to legitimate users). A network crash can make them vulnerable to other threats and attacks. If multiple devices or servers are used, it's a **DDoS attack** (Distributed Denial of Service). Network level DoS attacks target network bandwidth to slow traffic, and some common types are:
+**DoS attack** (Denial of Service): It targets a network or server and floods it with network traffic. It sends huge amounts of information in order to overload the organization's network (to crash it or make it unable to repond to legitimate users). A network crash can make them vulnerable to other threats and attacks. The attacker doesn't receive a response from the targeted host (unlike IP spoofing). Everything about the data packet is authorized, including header's IP address (if combined with IP spoofing, they use fake IP address). If multiple devices or servers are used, it's a **DDoS attack** (Distributed Denial of Service). Network level DoS attacks target network bandwidth to slow traffic, and some common types are:
 
 - **SYN flood attack**: It simulates a TCP connection and floods a server with SYN packets.
 - **ICMP flood**: It floods a server with ICMP packets.
@@ -785,26 +800,142 @@ Most common ones are:
 21:00:23.483629 IP 198.168.10.1.41 > 198.111.123.1.61012
 ```
 
-#### Attack tactics and defense
+### Security hardening
+
+#### Security hardening
+
+**World-writable file**: A file that can be altered by anyone in the world.
+
+**Attack surface**: All potential vulnerabilities a threat actor could exploit in a system.
+
+**Security hardening**: Process of strengthening a system to reduce its vulnerability and attack surface. It's performed on hardware, operating systems, applications, networks, and databases. This is achieved via:
+
+- __Physical security__: Cameras, guards, etc.
+- __Software updates__ (patches)
+- __Device application configuration changes__: More frequent passwords update, update encryption standards for databases, disable unused elements (applications, services ports), reduce access permissions, etc. Minimizing the number of applications, devices, ports, and access permissions makes network and device monitoring more efficient and reduces the overall attack surface.
+- __ Backups__
+- __Penetration testing__ (Pen test): Simulated attack that helps identify vulnerabilities in the systems, networks, websites, applications, and processes.
+
+#### OS hardening
+
+**OS hardening**: Set of procedures that maintains OS security and improves it.
+
+**Operative system** (OS): Interface between computer hardware and the user. It's the first program loaded when a computer turns on. It's an intermediary between software applications and the computer hardware. An insecure OS in one device may lead to the whole network being compromised. Recommended OS hardening practices include tasks performed at regular intervals (patch installation, backups, keeping an up-to-date list of devices and authorized users, etc.) and tasks performed once (preliminary safety measures such as configuring a device setting to fit a secure encryption standard).
+
+- **Patch update** (patch installation): Software (including OS) update that, among other things, addresses security vulnerabilities within a program or product. They upgrade software to its latest version. As soon as a software vendor publishes a patch with a vulnerability fix, malicious actors know where the vulnerability is in out-of-date software. Thus, it's important to run patch updates as soon as they're released.
+
+- **Baseline configuration** (baseline image): Documented set of specifications within a system that is used as a basis for future builds, releases, and updates (example: firewall with a list of allowed and disallowed network ports). The newly updated OS must be added to it. If unusual activity affects the OS, we can compare current configuration to the baseline and check if something changed. 
+
+- **Hardware and software disposal**: remove unnecessary vulnerabilities by ensuring that old hardware is properly wiped and disposed of, and delete unused software applications.
+
+- **Password policy**: Security measure that requires passwords to follow specific rules. Ensure the implementation of a strong password policy.
+
+- **Multi-factor authentication (MFA)**: Security measure that requires users to verify their identity in two or more ways to access a system or network. Categories: something you know (pasword...), something you have (ID card...), something unique about you (fingerprint...).
+
+**Brute force attacks**: It's a trial-and-error process of discovering private information. It can be a tedious and time consuming process, but there're a range of tools used to conduct this attack. There're different types of attacks for guessing passwords
+
+- __Simple brute force attack__: The attacker tries to guess a user's login credentials. He may do this by entering any combination of usernames and passwords he can think of.
+- __Dictionary attack__: Similar to simple attack, but using a list of commonly used passwords and stolen credentials from previous breaches. Originally, a list of words from the dictionary was used, until complex password rules became a common security practice. 
+
+**Assesing vulnerabilities**: Before an incident occurs, companies can run some tests on their network or web applications to assess vulnerabilities. Virtual machines and sandboxes can be used to test suspicious files, check for vulnerabilities, or simulate a cybersecurity incident.
+
+- **Virtual machine** (VM): Software version of a physical computer. It provides another security layer because it lets you run code in an isolated environment, preventing malicious code from affecting the rest of the system (or preventing damage if its tools are used improperly). It can be deleted and replaced by a pristine image after testing malware, or reverted to a previous state. It's useful when investigating potentially infected machines or running malware in a constrained environment. However, there’s a small risk that a malicious program can escape virtualization and access the host machine. It can be used to test applications. It helps in streamlining many security tasks. It's easy to switch between different VMs.
+
+- **Sandbox**: Type of testing environment that allows you to execute software or programs separate from your network. It's commonly used for testing patches, identifying and addressing bugs, or detecting cybersecurity vulnerabilities. It can also be used to evaluate suspicious software and files, and simulate attack scenarios. It can be a stand-alone physical computer not connected to a network, or a software or cloud-based virtual machine (more time and cost effective). Note that some malware code can detect if it's executed in a VM or sandbox environment, and behave as harmless software when run inside these environments. 
+
+**Prevention measures** against brute force attacks and similar: 
+
+- **Salting and hashing**: Hashing converts information into a unique value that can then be used to determine its integrity. It is a one-way function (i.e., it's impossible to decrypt and obtain the original text). It adds random characters to hashed passwords, which increases length and complexity of hash values, making them more secure.
+
+- **Multi-factor authentication** (MFA): It requires a user to verify his identity in two or more ways to access a system or network. This verification happens using a combination of authentication factors: username and password, fingerprints, facial recognition, or a **one-time password** (OTP) sent to a phone number or email. The **Two-factor authentication** (2FA) is similar to MFA, except it uses only two forms of verification.
+
+- **CAPTCHA** (Completely Automated Public Turing test to tell Computers and Humans Apart): It asks users to complete a simple test that proves they are human, preventing software from trying to brute force a password. **reCAPTCHA** is a Google free CAPTCHA service for protecting websites from bots and malware.
+
+- **Password policies**: Used to standardize good password practices throughout a business. They can include guidelines on password complexity, updating frequency, reusability, number of login attempts before suspending the account, etc.
+
+#### Network hardening
+
+**Network hardening** focuses on port filtering, network access privilege, and encryption. Two basic types of hardening tasks: 
+
+- **Performed regularly**. Examples:
+
+  - **Network log analysis**: Process of examining network logs to identify events of interest. Security teams perform this by using a __log analyzer tool__ or a __SIEM tool__ (Security Information and Even Management). SIEM tools can gather security data from the network (logs) and present it in a single dashboard, which may show network vulnerabilities and list them in a scale of priority. 
+  - **Firewall rules maintenance**
+  - **Patch updates**
+  - **Server backups
+
+- **Performed once**, and then updated as needed. Examples:
+
+  - **Port filtering**: Firewall function that blocks or allows certain port numbers to limit unwanted communication. Only the needed ports should be allowed, while those not being used should be disallowed.
+  - **Up-to-date protocols**: Networks should be set up with the most up-to-date wireless protocols available. Older ones should be disallowed.
+  - **Network segmentation**: Create isolated subnets for different departments in the organization. This way, issues in one subnet doesn't spread accros the whole company, and each user only has access to the part of the network required for his role. This can also separate different security zones (network zones containing confidential data should be separate from the resto fo the network.
+  - **Firewalls**
+  - **Communications encryption**: Use the latest encryption standards (rules or methods used to conceal outgoing data and uncover or decrypt incoming data), specially in restricted zones.
+
+**Network security applications**:
+
+**SOC** (Security Operations Center): Place where security analysts monitor the activity across the network. 
+
+The **defense in depth** approach adds layers of security (devices, tools, strategies) to a network until the network owner is satisfied with the level of security. Some tools available are: Firewall, IDS (Intrusion Detection System), IPS (Intrusion Prevention System), SIEM tools. Each tool is a layer that incrementally hardens the network.
+
+- **Firewall**: It allows or blocks traffic based on a set of rules. The header of incoming packets are inspected and allowed or denied based on its port number. NGFWs also inspect packet payloads. Each system should have its own firewall, regardless of the network firewall.
+
+- **IDS** (Intrusion Detection System): Application that monitors system activity and alerts on possible intrusions, based on the signature of malicious traffic and anomalies. It can be configured to detect known attacks. It often sniff data packets moving across the network and analyze them. It's placed behind the firewall and before entering the LAN (to analyze filtered traffic, which reduces false positives). New and sophisticated attacks might not be caught. It doesn’t stop the incoming traffic if it detects something awry. It’s up to the network administrator to catch the malicious activity before it damages the network. When combined with a firewall, it adds another layer of defense. 
+
+- **IPS** (Intrusion Prevention System): Application that monitors system activity and takes action to stop intrusive activity. More secure than IDS (it doesn't stop detected anomalies). It searches for signatures of known attacks and data anomalies. It reports anomalies and blocks a specific sender or drops suspicious packets. It's placed between a firewall and the internal network. It's inline (if it breaks, the connection between the private network and the internet breaks). False positive can result in legitimate traffic getting dropped.
+
+- **Full packet capture devices**: Used to record and analyze all of the data that is transmitted over your network. They also aid in investigating alerts created by an IDS. 
+
+- **SIEM tools** (Security Information and Event Management system): Applications that collect and analyze log data in real time to monitor critical activities (examples: Google's Chronicle, Splunk, etc.). They report suspicious activity in a central dashboard. They also analyze network log data sourced from firewalls, IDSs, IPSs, VPNs, proxies, and DNS logs. They're a way to aggregate security event data and place it all in one place for security analysts to analyze (single pane of glass). SIEM tools are used in combination with other security methods. Security analysts determine how to respond to the information on the dashboard and decide when the events require to be oversight.
+
+#### Cloud hardening
+
+**Zero-day attack**: Exploit that was previously unknown.
+
+**VM escapes** (Virtual Machine escapes): Exploit where a malicious actor gains access to the primary hypervisor, potentially the host computer and other VMs.
+
+**Encryption**: Process of scrambling information into ciphertext, which is not readable to anyone without the encryption key. Classic encryption encoded information using an algorithm to convert any given character to a new value. Modern encryption relies on the secrecy of a key, rather than the secrecy of an algorithm.
+
+Many organizations use network services in the cloud. The cloud servers provider host these servers but cannot prevent intrusions (internal or external). Using a server **baseline image** for all server instances stored in the cloud allows us to compare data in cloud servers with the baseline image and confirm that no unverified changes have been done. Similar to OS hardening, data and applications are kept **separate** depending on their service category (examples: Older applications separated from newer applications. Software dealing with internal functions separated from front-end applications). Cloud services provide ease of deployment, speed of deployment, cost savings, and scalability, but present some unique security challenges.
+
+**Shared responsibility model**: Cloud security principle stating that the CSP must take responsibility for security involving the cloud infrastructure, including physical data centers, hypervisors, and host operating systems. The company using the cloud service is responsible for the assets and processes that they store or operate in the cloud. This ensures that both agree about where their security responsibility begins and ends. Problem: an organization may assume that the CSP is taking care of security that is actually responsability of the organization (example: CSP takes responsibility for securing the cloud services, but it's the organization’s responsibility to ensure that services are configured properly according to the organization's security requirements). 
+
+**Cloud security hardening**: Various techniques and tools can be used to secure cloud network infrastructure and resources.
+ 
+- **IAM** (Identity access management): Collection of processes and technologies that helps organizations manage digital identities in their environment. It also authorizes how users can use different cloud resources. Improper configuration of cloud user roles increases risk of unauthorized users accessing critical cloud operations.
+
+- **Configuration**: There're many cloud services available, and each one must be carefully configured to meet security and compliance requirements, especially during an initial migration into the cloud (ensure that every process moved into the cloud has been configured correctly). Otherwise, the network could be compromised. Misconfigured cloud services are a common source of cloud security issues.
+ 
+- **Attack surface**: Each service or application on a network provided by a CSP (Cloud Service Provider) carries risks and vulnerabilities, and increases an organization’s overall attack surface (compensate this with increased security measures). Cloud networks using many services introduce lots of entry points into an organization’s network (used to introduce malware or pose security vulnerabilities), unless the network is designed correctly. Often, CSPs use more secure options, and are under more scrutiny than traditional on-premises networks.
+
+- **Zero-day attacks**: CSPs are more likely to know about this attack occurring before a traditional IT organization does. CSPs have ways of patching hypervisors and migrating workloads to other virtual machines, so customers are not impacted by the attack. There are also several tools available for patching at the OS.
+
+- **Visibility and tracking**: Network administrators have access to every data packet (sniff and inspect) crossing the network with both on-premise and cloud networks. This is used for learning about network performance or checking for possible threats and attacks. This is offered in the cloud through flow logs and tools (such as packet mirroring). CSPs take responsibility for security in the cloud (some provide strong security measures to protect their infrastructure), but don't allow their clients (organizations) to monitor traffic on the CSP’s servers. CSPs pay for third-party audits to verify how secure a cloud network is and identify potential vulnerabilities (including on-premise infrastructure vulnerabilities, and compliance lapses from the CSP).
+
+- **Things change fast in the cloud**: CSPs work hard to stay up-to-date with technology advancements. For some organizations this can be a potential challenge to keep up with (it requires them to often update their IT processes and align with changes made by the CSP). Cloud service updates can affect security considerations for the organizations using them (example: connection configurations might need to be changed based on the CSP’s updates). Cloud networking offers various options that might appear attractive, but each service adds complexity to the security profile of the organization, and requires security personnel to monitor all cloud services. 
+
+- **Hypervisors**: It abstracts the host’s hardware from the operating software environment. Vulnerabilities in hypervisors or misconfigurations can lead to virtual machine escapes. As a CSP customer, you will rarely deal with hypervisors directly. Two types:
+  - Hypervisors running on the hardware of the host computer (example: VMware®'s ESXi). Commonly used by CSPs (they manage hipervisor and other virtualization components, ensure that cloud resources and cloud environments are available, and provide regular patches and updates).
+  - Hypervisors operating on the software of the host computer (example: VirtualBox). 
+
+- **Baselining**: It's a fixed reference point that cover how the cloud environment is configured and set up. This reference point can be used to compare changes made to a cloud environment. Proper configuration and setup can greatly improve the security and performance of a cloud environment. Examples of establishing a baseline in a cloud environment: restricting access to the admin portal of the cloud environment, enabling password management, enabling file encryption, and enabling threat detection services for SQL databases.
+
+- **Cryptography in the cloud**: It can be applied to secure data that is processed and stored in a cloud environment, preventing unauthorized access. It uses encryption and secure key management systems to provide data integrity and confidentiality. 
+
+- **Cryptographic erasure**: Method of erasing the encryption key for the encrypted data. When destroying data in the cloud, traditional data destruction methods are not as effective. **Crypto-shredding** is a newer technique where the cryptographic keys used for decrypting the data are destroyed, making the data undecipherable and preventing anyone from decrypting it. When crypto-shredding, all copies of the key need to be destroyed so no one has any opportunity to access the data in the future.
+
+- **Key Management**: The encryption keys must be secure. Customers typically don't have access to the specific encryption keys used by the CSPs to encrypt their data, but customers can usually provide their own encryption keys. This makes the customer responsible of keeping encryption keys secure and confidential, and limits how the CSP can help if keys are compromised or destroyed. The shared responsibility model makes the customer not entirely responsible for maintenance of the cryptographic infrastructure. Organizations and customers don't have access to the CSP directly, but they can request audits and security reports to the CSP, which let them assess and monitor the risk involved with allowing the CSP to manage the infrastructure. For federal contractors, FEDRAMP provides a list of verified CSPs. Some measures to further protect your data are:
+
+  - **TPM** (Trusted Platform Module): It's a computer chip that can securely store passwords, certificates, and encryption keys.
+  - **CloudHSM** (Cloud hardware security module): Computing device that provides secure storage for cryptographic keys and processes cryptographic operations (like encryption and decryption).
+
+
+## Linux
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# SQL
 
