@@ -1065,7 +1065,7 @@ In the early 1990's, Linus Torvalds and Richard Stallman separately started work
 - **KALI LINUX™**: Debian derived, open-source distro. Trademark of Offensive Security. It's pre-installed with many useful tools for pen testing and digital forensics. It should be used on a virtual machine to prevent damage in case its tools are used improperly, and to be able to revert to a previous state. Some pre-installed tools are: 
 
   - For pen testing:
-    - **Matasploit**: Used to look for and exploit vulnerabilities.
+    - **Metasploit**: Used to look for and exploit vulnerabilities.
     - **Burp Suite**: It helps to test for weaknesses in web applications.
     - **John the Ripper**: Used to guess passwords. 
 
@@ -1105,11 +1105,11 @@ apt list --installed          # list installed apps
 
 #### Shells
 
-**Command**: Instruction telling the computer to do something (perform math, run tests, execute application...).
+**Command**: Instruction telling the computer to do something (perform math, run tests, execute application, find file, output text, ...). A command may need to include an **argument** (specific information needed by a command). All commands and arguments are case sensitive.
 
 **Shell**: Command-line interpreter. It provides a CLI for you to interact with the OS by entering commands. It also allows to combine commands and connect applications to perform complex and automated tasks. The shell communicates with the kernel to execute these commands. There're different types of shells, all of them using common Linux commands but differing in other features (example: bash and ksh use `$` to indicate user location, while zsh use `%`). Some shell are:
 
-- **bash** (Bourne-Again Shell): Default shell in most Linux distributions. User-friendly. Most popular shell in cybersecurity.
+- **bash** (Bourne-Again Shell): Default shell in most Linux distributions. User-friendly. Most popular shell in cybersecurity. The `$` symbol the prompt to enter a new command.
 - **csh** (C Shell)
 - **ksh** (Korn Shell)
 - **tcsh** (Enhanced C shell)
@@ -1138,10 +1138,64 @@ The commands in the shell can take input, give output, or give error messages.
 
 #### Filesystem
 
+**Executable**: File containing a series of commands a computer needs to follow to run programs and perform other functions.
 
+Everything we do in Linux is considered a file somewhere in the system directory. The **FHS** is a hierarchical system where everything grows and branches out from the **root directory** (`/`), the highest-level directory in Linux. Subdirectories branch out further and further away from the root directory. A **file path** describes a file's location (`/home/username/logs`). Some standard FHS directories are:
 
+- `/home`: Contains all the home directories, one per user in the system.
+- `/bin`: Contains binary files and other executables.
+- `/etc`: Stores system's configuration files.
+- `/tmp`: Stores temporary files. It's commonly used by attackers because anyone in the system can modify data in these files.
+- `/mnt`: Stores media (USB drives, hard drives, ...).
+
+**Path types**:
+
+- __Absolute path__: Full file path (`/home/username/logs`).
+- __Relative_path__: Abbreviated file path. It one of these:
+  - `~`: User's home directory (`/home/username/logs` == `~/logs`). Only applicable to directories below user's home.
+  - `.`: Current directory
+  - `..`: Parent of current directory
+
+**Basic commands**:
+
+- `man hier`: Learn more about FHS and its standard directories.
+- `whoami`: Get username of the current user.
+
+- Some navigation commands:
+
+  - `pwd`: Print working directory
+  - `ls`: Display files and directories in the current working directory
+  - `cd`: Navigate between directories
+
+- Some reading commands:
+
+  - `cat`: Display file content
+  - `head`: Display the beginning of a file (default: 10 lines). Show a different number of lines with `-n` (`head -n 5 file.txt`).
+  - `tail`: Display the end of a file (default: 10 lines). Useful for reading the most recent information in a log file.
+  - `less`: Display file content one page at a time. Additional commands: 
+    - `space`: Move forward
+    - `b`: Move back
+    - `down arrow`: Move forward one line
+    - `Up arrow`: Move back one line
+    - `q`: Quit and return to terminal
 
 #### Manage file content
+
+**Options**: They modify the behavior of a command and commonly begin with a hyphen (`-`).
+
+**Asterisk** (`*`): Wildcard to represent zero or more unknown characters.
+
+**Filter content**: Select data matching a certain condition.
+
+- `grep`: Search a specified file and return all lines in the file containing a specified string (`grep abc file.txt`).
+- `|` (pipe): Send the standard output of one command as standard input to another command for further processing.
+  - `ls /home/analyst/reports | grep users`: Look for string "users" in the file names of all files in directory `/home/analyst/reports`.
+- `find`: Search for directories and files that meet specified criteria (contains a given string, has certain file size, were modified in a given time frame...).
+  - `find <directory> <options>`: Start searching from directory `<directory>` following the criteria `<options>`.
+  - `find ~/logs -name "*abc*"`: Find all files containing word `abc`, surrounded by 0 or more characters, in the file name (`-name` is case-sensitive, `-iname` is not).
+  - `find ~/logs -mtime -3`: Find all files modified within the past 3 days (`-mtime +1` = more than 1 day ago) (`-mtime -1` = less than 1 day ago) (`-mtime` for days, `-mmin` for minutes).
+
+
 
 #### Authentication and authorization
 
