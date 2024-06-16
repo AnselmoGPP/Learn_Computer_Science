@@ -30,7 +30,7 @@
         + [OS hardening](os-hardening)
         + [Network hardening](network-hardening)
         + [Cloud hardening](cloud-hardening)
-+ [Operative systems](operative-systems)
++ [Operative system](operative-system)
     + [Operative systems](operative-systems)
     + [Linux](linux)
         + [Architecture](architecture)
@@ -943,7 +943,7 @@ Many organizations use network services in the cloud. The cloud servers provider
   - **CloudHSM** (Cloud hardware security module): Computing device that provides secure storage for cryptographic keys and processes cryptographic operations (like encryption and decryption).
 
 
-## Operative systems
+## Operative system
 
 ### Operating systems
 
