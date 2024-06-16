@@ -30,7 +30,16 @@
         + [OS hardening](os-hardening)
         + [Network hardening](network-hardening)
         + [Cloud hardening](cloud-hardening)
-+ [Linux](linux)
++ [Operative systems](operative-systems)
+    + [Operative systems](operative-systems)
+    + [Linux](linux)
+        + [Architecture](architecture)
+        + [Distributions](distributions)
+        + [Shells](shells)
+        + [Filesystem](filesystem)
+        + [Manage file content](manage-file-content)
+        + [Authentication and authorization](authentication-and-authorization)
+        + [Get help](get-help)
 + [SQL](sql)
 
 
@@ -142,7 +151,9 @@ More terminology: [**National Institute of Standards and Technology glossary**](
 
 - **Web vulnerability**: Unique flaw in a web application that a threat actor could exploit to allow unauthorized access, data theft, and malware deployment. Stay up-to-date on the most critical risks to web applications with [Open Web Application Security Project (OWASP) Top 10](https://owasp.org/www-project-top-ten/).
 
-- **Penetration testing** (pen testing): Act of participating in a simulated attack that helps identify vulnerabilities in systems, networks, websites, applications, and processes. It's a thorough risk assessment that can evaluate and identify external and internal threats as well as weaknesses.
+- **Penetration testing** (pen testing): Simulated attack that helps identify vulnerabilities in systems, networks, websites, applications, and processes. It's a thorough risk assessment that can evaluate and identify external and internal threats as well as weaknesses.
+
+**Digital forensics**: Process of collecting and analyzing data to determine what has happened after an attack. Example: to take an investigative look at data related to network activity.
 
 **Social engineering principles**: Social engineering is incredibly effective because people are generally trusting and conditioned to respect authority. These attacks increase with every new social media application that allows public access to people's data. Although sharing personal data (photos, location...) can be convenient, it’s also a risk. Some reasons why social engineering attacks are effective are:
   - Authority: Threat actors impersonate individuals with power. Most people are conditioned to respect and follow authority figures. 
@@ -635,7 +646,7 @@ Around 2000, technologies were developed to send and receive data over radio. To
 - **Cloud-based firewall**: Cloud service providers offer firewalls as a service (FaaS) for organizations. It's a software firewall hosted by a cloud service provider. Organizations can configure its rules on the cloud service provider's interface, and the firewall will perform security operations on all incoming traffic before
 it reaches the organization’s onsite network. It also protect any assets or processes that an organization might be using in the cloud.
 
-Depending how firewalls operate, they can be **stateful** or **stateless**:
+Depending how firewalls operate, they can be:
 
 - **Stateful**: It keeps track of information passing through it and proactively filters out threats. A stateful firewall analyzes network traffic for characteristics and
 behavior that appear suspicious and stops them from entering the network. It only requires a rule in one direction because it uses a "state table" to track connections, so it can match return traffic to an existing session 
@@ -932,12 +943,210 @@ Many organizations use network services in the cloud. The cloud servers provider
   - **CloudHSM** (Cloud hardware security module): Computing device that provides secure storage for cryptographic keys and processes cryptographic operations (like encryption and decryption).
 
 
-## Linux
+## Operative systems
+
+### Operating systems
+
+**Hardware**: All physical components of a computer.
+
+**Application**: Program that performs a specific task.
+
+**RAM** (Random Access Memory): Hardware component used for short-term memory.
+
+**OS** (Operating System): Interface between computer hardware and the user. It make connections between applications and hardware to allow users to perform tasks. It also manages the resources of the computer. It's responsible for making the device run as efficiently as possible while making it easy to use. It can run multiple applications at once (unlike in 1950s) and access external devices (keyboard, mouse, printer...). Computers communicate in binary language, but the OS makes it easier for us to communicate with them. Many devices (laptops, smartphones, tablets...) have OSs (Linux, Windows, MacOS, iOS, Android...). 
+
+**OS security** is critical for the security of the computer (it involves securing files, data access, user authentication... to protect against threats such as viruses, worms, and malware). A security analyst may be responsible for configuring and maintaining the system security by managing access, or configuring and managing firewalls, setting security policies, enabling virus protection, and performing auditing, accounting, and logging to detect unusual behavior.
+
+The OS **handles resources and memory management** to ensure the limited capacity of the computer system is used where it's needed most. Different programs, tasks, and processes are constantly competing for the resources of the CPU (memory, storage, input/output bandwidth), and all of them have their own reasons. The OS ensures that each program is allocating and de-allocating resources. All this occurs occurs at the same time so that your system functions efficiently. Much of this is hidden from you as a user, but your task manager will list all tasks being processed and their memory and CPU usage. Understanding usage of resources can help you respond to an incident and troubleshoot applications in the system (example: if a computer runs slowly, it may be allocating resources to a malware).
+
+Common operating systems are:
+
+- **Windows** (1985): Used in personal and enterprise computers. It's a closed-source OS (i.e., the source code is not shared freely with the public).
+- **macOS* (1984): Used in personal and enterprise computers. It has some open-source components (such as macOS’s kernel) and some closed-source components.
+- **Linux** (1991): It's completely open-source (i.e., anyone can access Linux and its source code), which allows developers in the Linux community to collaborate. Linux is particularly important to the security industry. Some distributions are specifically designed for security.
+- **ChromeOS** (2011): It's partially open source and is derived from **Chromium OS** (completely open source). It's frequently used in the education field.
+- **Android** (2008): It's an open source mobile OS typically used in mobile devices (phones, tablets, watches...).
+- **iOS** (2007): It's a partially open source mobile OS typically used in mobile devices (phones, tablets, watches...).
+
+**Security issues** are inevitable with all OSs, so it's important to have the system and its components up to date.
+
+- **Legacy operating systems**: OS that is outdated but still being used. Some organizations use it because the software they rely on is not compatible with newer OSs. This can be more common in industries that use a lot of equipment that requires embedded software (i.e., software placed inside components of the equipment). These OSs can be vulnerable to security issues and threats because they’re no longer supported or updated. Keeping OSs up to date makes them more secure.
+
+- **Other vulnerabilities**: Even when OSs are kept up to date, they can still become vulnerable to attack.
+
+  - [Microsoft Security Response Center (MSRC)](https://msrc.microsoft.com/update-guide/vulnerability): List of known vulnerabilities affecting Microsoft products and services.
+  - [Apple Security Updates](https://support.apple.com/en-us/HT201222): List of security updates and information for Apple® OSs (macOS, iOS...) and other products.
+  - [Common Vulnerabilities and Exposures (CVE) Report for Ubuntu](https://ubuntu.com/security/cves): List of known vulnerabilities affecting Ubuntu (Linux distribution).
+  - [Google Cloud Security Bulletin](https://cloud.google.com/support/bulletins): List of known vulnerabilities affecting Google Cloud products and services.
+
+**Turn on the computer**: The user starts interacting with the hardware by pressing the *turn on* button. This boots the computer, which means that a special microchip (called BIOS or UEFI) is activated. This microchip contains booting instructions responsible for loading the **bootloader** program, which is responsible for starting the OS. Vulnerabilities can occur in a booting process. BIOS is not scanned by antivirus software, so it's vulnerable to malware infection.
+
+**Booting microchip**: Microchip containing loading instructions for the computer. It contains many loading instructions for the computer to follow (such as verify the health of the hardware). The last instruction activates the **bootloader** (program that boots the operating system). Two main types:
+
+- **BIOS** (Basic Input/Output System): Prevalent in older systems (until ~2007).
+- **UEFI** (Unified Extensible Firmware Interface): It replaces BIOS in modern systems (after ~2007). It provides enhanced security features.
+
+**Communication process** (once OS is active): User > Application > OS > Hardware. The user wants to accomplish something, so he use an application to complete the task. The application sends a request to the OS. The OS interprets the application's request and directs it to the appropriate hardware component. This component sends information (output) back to the OS, which sends it to the application, which displays it to the user. 
+
+Example: The CPU is used for a computations. The hard drive is used for saving a file.
+
+Example (downloading file from an internet browser): The user decides to download an online file, so he clicks on a download button in the internet browser application. It communicates this action to the OS, which sends the request to download the file to the appropriate hardware for processing. The hardware begins downloading the file, and the OS sends this information to the internet browser application. The internet browser then informs the user when the file has been downloaded.
+
+The computer performs important work that we don't experience directly (it's abstracted), including OS work. Some analogies:
+
+- You make a car (computer) move by pressing a pedal, but you don't see the processes happening inside the car.
+- In a restaurant (computer) you place an order (application request). You don't see what happens in the kitchen (OS), but it interprets your request and sends what you requested (output).
+
+**Virtualization**: Process of using software to create virtual representations of various physical machines.
+
+**Virtual machine** (VM): Virtual version of a physical computer (one type of virtualization). The software simulates physical hardware. Virtual systems don’t use dedicated physical hardware, but software-defined versions of the physical hardware (a single VM has a virtual CPU, virtual storage, and other virtual hardware). Virtual systems are just code. OSs can run on VMs. A single computer (**host**) can run multiple VMs (**guests**) by dividing his resources to be shared across all physical and virtual components (example: a computer with 16GB RAM can host 3 VMs with 4GB RAM). 
+
+**Benefits of VMs**: 
+
+- **Security**: They provide an isolated environment (sandbox) on the physical host machine. It is isolated from the host machine and other guest VMs, providing a security layer separated from the other systems (example: VMs infected with malware are isolated from other machines. Also, VMs are a secure environment for placing and examining malware). However, sometimes a malicious program can escape virtualization and access the host, so never completely trust virtualized systems.
+
+- **Efficiency**: VMs can be an efficient and convenient way to perform security tasks. There's no need to have separated physical machines for certain tasks. You can open multiple VMs at once and switch easily between them. This allows you to streamline security tasks (such as testing and exploring various applicationS).
+
+- **Management**: VMs can be managed with a software called a **hypervisor**. It helps users manage multiple VMs, connect the virtual and physical hardware, and allocate the host's shared resources to one or more VMs.
+
+  - **KVM** (Kernel-based VM): Open-source hypervisor that is supported by most major Linux distributions. It's built into the Linux kernel, so it can be used to create VMs on any Linux OS without the need for additional software.
+
+There are **other forms of virtualization**. Some of them don't use OSs. Example: Multiple virtual servers can be created from a single physical server. Also, virtual networks can also be created to more efficiently use the hardware of a physical network. 
+
+**UI** (User Interface): Program that allows the user to control the functions of the OS. Two types of UI are:
+
+- **GUI** (Graphical User Interface): UI that uses icons on the screen to manage different tasks on the computer. Most OSs can be used with a GUI. Its basic components are: start menu, task bar, desktop with icons and shortcuts. It allows only one request (task) at a time (example: moving all jpg files in A to B must be done one by one).
+- **CLI** (Command Line Interface): Text-based UI that uses commands to interact with the computer. It's more flexible and powerful than a GUI. It allows for customization, which lets you make multiple requests (tasks) simultaneously (example: all jpg files in A can be moved B simultaneously), so it's more efficient. Commonly used by security analysts.
+
+**History file**: The Linux CLI records a history file of all commands and actions performed in the CLI. Among other things, it lets you ensure all your commands were used correctly, or trace the actions of an attacker.
+
+### Linux
+
+#### Architecture
+
+In the early 1990's, Linus Torvalds and Richard Stallman separately started working on an open source OS based on the UNIX OS. Torvalds introduced the Linux kernel and Stallman worked on the GNU OS. After a few years of work, the missing element for GNU was a kernel. Both, Torvalds' and Stallman’s innovations made what is commonly referred to as Linux.
+
+**GNU Public Licence**: The software under this licence can be used, shared, and modified freely.
+
+**Directory** (folder): It's a file that organizes where other files are stored. It can contain files or other directories.
+
+**Linux** is an open-source OS. It's the most-used OS in security today. Linux and many programs it includes are licensed under the GNU Public License. It's widely used today in many organizations. There're different distributions (varieties), that have been developed (over 600), thanks to the large community contribution. Distributions try to fit the needs of their users. Security analysts usually use Linux (for examining logs, to verify access and authorization, ...), specially distributions designed for their tasks (distributions containing a digital forensic tool, distributions for pen testing, ...).
+
+**Linux architecture** is composed of different components:
+
+- **User**: Person interacting with a computer. They initiate and manage computer tasks. Linux is a multi-user system (multiple users can use the same resources at the same time).
+
+- **Application** (program): Program that performs a specific task. Some applications typically come pre-installed (calculators, calendars...) while others might have to be installed (some web browsers, some email clients...). In Linux, a package manager is often used to install applications. 
+
+- **Shell**: It's the command-line interpreter (CLI). Every input is text based. It allows users to give commands to the kernel and receive responses from it. It translates the commands you enter so that the computer can perform the tasks you want.
+
+- **FHS** (Filesystem Hierarchy Standard): It's a component that organizes data. It specifies the location where data is stored in the OS. It defines how directories, directory contents, and other storage is organized so the OS knows where to find specific data.
+
+- **Kernel**: It's a component that manages processes and memory. It communicates with the applications to route commands to the hardware. It controls all major functions of the hardware, and helps allocate resources efficiently, making the system work faster.
+
+- **Hardware**: It's the collection of physical components of a computer (hard drive, CPU...). It can be internal or peripheral.
+
+  - **Peripheral devices**: Hardware components attached and controlled by the computer system (monitor, printer, keyboard, mouse...). They can be can be added or removed freely. They are not core components needed to run the computer system.
+
+  - **Internal hardware**: Hardware components required to run the computer. It includes the following: 
+
+    - **Main circuit board** (motherboard): It has attached different internal hardware components.
+
+    - **CPU** (Central Processing Unit): Main processor. Used to perform general computing tasks. It executes the instructions provided by programs, which enables these programs to run. 
+
+    - **RAM** (Random Access Memory): Used for short-term memory. Data is stored temporarily here as you perform tasks on your computer. Information in RAM cannot be accessed once the computer has been turned off. The CPU takes the data from RAM to run programs. 
+
+    - **Hard drive**: Used for long-term memory. Programs and files store data here so it can be accessed later (even after the computer has been turned off and on again). A computer can have multiple hard drives.
+
+#### Distributions
+
+**Linux distributions** (distros, flavors): Linux is very customizable and there are different versions available. Since the kernel is open source, anyone can take it and modify it to build a new distribution. Each one contains its own components (tools and apps) and serves its own purpose. Distros include the kernel, utilities, a package management system, and an installer. All distros are derived from another distro, but a few of them are considered parent distros (Red Hat®, parent of CentOS) (Slackware®, parent of SUSE®) (Debian, parent of Ubuntu and KALI LINUX™). Some distributions used in security are:
+
+- **KALI LINUX™**: Debian derived, open-source distro. Trademark of Offensive Security. It's pre-installed with many useful tools for pen testing and digital forensics. It should be used on a virtual machine to prevent damage in case its tools are used improperly, and to be able to revert to a previous state. Some pre-installed tools are: 
+
+  - For pen testing:
+    - **Matasploit**: Used to look for and exploit vulnerabilities.
+    - **Burp Suite**: It helps to test for weaknesses in web applications.
+    - **John the Ripper**: Used to guess passwords. 
+
+  - For digital forensics:
+    - **tcpdump**: Command-line packet analyzer. Used to capture network traffic.
+    - ** Wireshark**: GUI used to analyze live and captured network traffic.
+    - **Autopsy**: Used to analyze hard drives and smartphones.
+
+- **Parrot**: Debian derived, open-source distro. It's user-friendly and has both CLI and GUI. It comes with pre-installed tools related to pen testing and digital forensics.
+
+ - **Ubuntu**: Debian derived, open-source distro. It's popular and user-friendly, and has both CLI and GUI. It includes common applications by default, and many more can be downloaded from a package manager. Also used in cloud computing.
+
+- **Red Hat® Enterprise Linux®**: Subscription-based distro for enterprise use. Not free. It offers a dedicated support team for customers to call about issues.
+
+- **CentOS**: Red Hat® derived, open-source distro. It provides a similar plaform than Red Hat.
+
+**Package**: Piece of software that can be combined with other packages to form an application. Some packages may form an application on their own. It contains the files necessary for an application to be installed. These files include **dependencies** (supplemental files used to run an application).
+
+**Package manager**: Tool that helps users install, manage, and remove packages or applications. It can help resolve issues with dependencies and perform other managemnt tasks. Linux uses multiples package managers. The most recent version should be used because it has the most up-to-date bug fixes and security patches, which helps keep the system more secure. Certain package managers work with certain distributions and use different file extensions. Examples:
+
+- DPKG: For Debian derived distros. It uses `.deb` file extension.
+- RPM (Red Hat Package Manager): For Red Hat derived distros. It uses `.rpm` file extension.
+
+**Package management tools**: Tools that allow to easily work with packages through the shell. They're sometimes used instead of package managers because they perform basic tasks more easily (like installing a new package). Most important ones are:
+
+- **APT** (Advanced Package Tool): Used in Debian-derived distros. It's run from the CLI to manage, search, and install packages.
+- **YUM** (Yellowdog Updater Modified): Used in Red Hat-derived distros. It's run from the CLI to manage, search, and install packages. It works with `.rpm` files.
+
+How to install applications with APT:
+
+```
+apt                           # check if apt is installed
+sudo apt install suricata     # install suricata app
+sudo apt remove suricata      # uninstall suricata app
+apt list --installed          # list installed apps
+```
+
+#### Shells
+
+**Command**: Instruction telling the computer to do something (perform math, run tests, execute application...).
+
+**Shell**: Command-line interpreter. It provides a CLI for you to interact with the OS by entering commands. It also allows to combine commands and connect applications to perform complex and automated tasks. The shell communicates with the kernel to execute these commands. There're different types of shells, all of them using common Linux commands but differing in other features (example: bash and ksh use `$` to indicate user location, while zsh use `%`). Some shell are:
+
+- **bash** (Bourne-Again Shell): Default shell in most Linux distributions. User-friendly. Most popular shell in cybersecurity.
+- **csh** (C Shell)
+- **ksh** (Korn Shell)
+- **tcsh** (Enhanced C shell)
+- **zsh** (Z Shell)
+
+The commands in the shell can take input, give output, or give error messages.
+
+- **Standard input**: Information the OS receives from the command line.
+- **Standard output**: Information the OS returns through the shell.
+- **Standard error**: Error messages the OS returns through the shell.
+
+**String data**: Data consisting of an ordered sequence of characters.
+
+**Navigation tips and keyboard shortcuts**:
+
+- `CTRL + C`: Terminate currently running command
+- `CTRL + V`: Paste text
+- `clear` (`CTRL + L`): Clear terminal screen
+- `CTRL + A`: Set cursor at the beginning of a command
+- `CTRL + E`: Set cursor at the end of a command
+- `Left/Right arrow key`: Move left/right within a command
+- `Up/Down arrow key`: Get last/next command in the command history
+- `Tab key`: Get available suggestions for completing your text 
+- `echo`: Output a specified string of text (`echo "hello world"`)
+- `expr`: Perfom basic calculations (`echo 24 * 3`)
+
+#### Filesystem
 
 
 
 
+#### Manage file content
+
+#### Authentication and authorization
+
+#### Get help
 
 
-# SQL
+## SQL
 
