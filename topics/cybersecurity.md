@@ -40,7 +40,7 @@
         + [Manage file content](#manage-file-content)
         + [Authenticate and authorize](#authenticate-and-authorize)
         + [Get help](#get-help)
-+ [SQL](sql)
++ [SQL](#sql)
 
 
 ## Foundations
