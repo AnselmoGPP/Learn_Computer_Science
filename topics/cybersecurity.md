@@ -38,7 +38,7 @@
         + [Shells](#shells)
         + [Filesystem](#filesystem)
         + [Manage file content](#manage-file-content)
-        + [Authentication and authorization](#authentication-and-authorization)
+        + [Authenticate and authorize](#authenticate-and-authorize)
         + [Get help](#get-help)
 + [SQL](sql)
 
@@ -815,8 +815,6 @@ Most common ones are:
 
 #### Security hardening
 
-**World-writable file**: A file that can be altered by anyone in the world.
-
 **Attack surface**: All potential vulnerabilities a threat actor could exploit in a system.
 
 **Security hardening**: Process of strengthening a system to reduce its vulnerability and attack surface. It's performed on hardware, operating systems, applications, networks, and databases. This is achieved via:
@@ -1164,8 +1162,11 @@ Everything we do in Linux is considered a file somewhere in the system directory
 - Some navigation commands:
 
   - `pwd`: Print working directory
-  - `ls`: Display files and directories in the current working directory
   - `cd`: Navigate between directories
+  - `ls`: Display files and directories in the current working directory
+    - `ls -l`: Display their permissions too
+    - `ls -a`: Display hidden files too (they begin with a period `.`)
+    - `ls -la`: Display permissions and hidden files too
 
 - Some reading commands:
 
@@ -1181,26 +1182,114 @@ Everything we do in Linux is considered a file somewhere in the system directory
 
 #### Manage file content
 
-**Options**: They modify the behavior of a command and commonly begin with a hyphen (`-`).
+**Options**: They modify the behavior of a command. They commonly begin with a hyphen (`-`) and can be a single letter or full word. 
 
 **Asterisk** (`*`): Wildcard to represent zero or more unknown characters.
 
 **Filter content**: Select data matching a certain condition.
 
 - `grep`: Search a specified file and return all lines in the file containing a specified string (`grep abc file.txt`).
-- `|` (pipe): Send the standard output of one command as standard input to another command for further processing.
-  - `ls /home/analyst/reports | grep users`: Look for string "users" in the file names of all files in directory `/home/analyst/reports`.
 - `find`: Search for directories and files that meet specified criteria (contains a given string, has certain file size, were modified in a given time frame...).
   - `find <directory> <options>`: Start searching from directory `<directory>` following the criteria `<options>`.
   - `find ~/logs -name "*abc*"`: Find all files containing word `abc`, surrounded by 0 or more characters, in the file name (`-name` is case-sensitive, `-iname` is not).
   - `find ~/logs -mtime -3`: Find all files modified within the past 3 days (`-mtime +1` = more than 1 day ago) (`-mtime -1` = less than 1 day ago) (`-mtime` for days, `-mmin` for minutes).
 
+**Pipe** (`|`, `>`, `>>`): Send the standard output of one command as standard input to another command for further processing. 
+  - `ls /home/analyst/reports | grep users`: Look for string "users" in the file names of all files in directory `/home/analyst/reports`.
+  - When used with `echo`, output can be sent to a file rather than the screen with `>` (overwrite file) or `>>` (append) (`echo "hello" >> file.txt`).
 
+**Files operations** (directories are also files):
 
-#### Authentication and authorization
+- `mkdir`: Create new directory.
+- `rmdir`: Delete empty directory.
+- `touch`: Create new file (`touch data.txt`).
+- `rm`: Delete file.
+- `mv`: Move file to a new location (`mv filename /desti/nation`) (rename: `mv filename newFilename`).
+- `cp`: Copy file into a new location (`cp filename /desti/nation`)
+
+**Command-line editors**: `Vim`, `nano`, `Emacs`, etc.
+  - `nano`: Open file: `nano file.txt`. Save changes: `Ctrl + O`. Exit: `Ctrl + X`.
+
+#### Authenticate and authorize
+
+**Authentication**: Proces of verifying who someone is. Process of a user proving that he is who he says he is in a system.
+
+**Authorization**: Concept of granting somebody access to specific resources in a system. 
+
+**Permission**: Type of access granted for a file or directory. 
+
+**Principle of least privilege**: It grants only the minimal access and authorization required to complete a task or function. Users should not have privileges that are beyond what is necessary; otherwise, security risks can arise.
+
+Types of permissions in Linux:
+
+- **Read** (`r`): File (it can be read) or directory (files inside can be read).
+- **Write** (`w`): File (it can be modified) or directory (new files can be created inside).
+- **Execute** (`x`): Executable (it can be executed) or directory (in can be entered).
+
+Permissions are granted to 3 types of owners (and should follow the principle of least privilege):
+
+- **User** (`u`): When you create a file, you become the owner of it.
+- **Group** (`g`): Group that the owner is part of (every user is part of a certain group/s).
+- **Other** (`o`): Anyone else with access to the system.
+
+File permissions are represented with a 10-character string: `drwxrwxrwx` (<file type (`d`, `-`)> <user> <group> <other>).
+
+`chmod`: Changes permissions on files. Two modes (numeric and symbolic). Symbolic mode works like this:
+  - `chmod g+wx,o-r file.txt`: For `file.txt`, Group gets `w` and `x` permissions, and Other loses `r` permission.
+  - `chmod u=w,g=x, file.txt`: For `file.txt`, User becomes `-w-`, and Other becomes`--x`.
+
+**World-writable file**: File that can be altered by anyone. It can pose a security risk.
+
+New users can be new to an organization or new to a group. Users that move to another group need to be deleter from the original group. Users that leave the organization need to be deleted.
+
+**Root user** (superuser): User with elevated privileges to modify the system. It manages authorization and authentication. Regular users have limitations where the root doesn't. He can create, modify, or delete any file and run any program. Users can be added as root users temporarily to perform specific tasks. Only root users, or users with root privileges, can add new users. 
+
+To become root user you can log in as root user, but running commands as root user is considered bad practice in Linux (use `sudo` instead) due to:
+
+- __Security risks__: Malicious actors would try to breach the root account. We should have root user logins disabled.
+- __Irreversible mistakes__: It's easy for root users to make irreversible mistakes (such as permanently deleting a directory).
+- __Accountability__: If a users is running as root, there's no way to track who exactly ran a command.
+
+`sudo` (super-user-do): Temporarily grants elevated permissions to specific users. Running it will ask you the password for the user you're currently logged in as. Not all users have sudo access. Users must be granted sudo access through a configuration file (**sudoers file**). Users with the elevated permissions to use sudo might be more at risk in the event of an attack. The following commands are only available for super-users or users with sudo privileges.
+
+- `useradd`: Add a user to the system.
+  
+  - `sudo useradd <username>`: Create user.
+  - `sudo useradd -g <group> <username>`: Create user and set its default group (primary group).
+  - `sudo useradd -G <group1> <group2> <group3> <username>`: Create user and add it to additional groups (secondary/supplemental groups). 
+
+- `userdel`: Delete a user from the system.
+
+  - `sudo userdel <username>`: Delete user.
+  - `sudo userdel -r <username>`: Delete user and all files in his home directory.
+
+- `groupdel`: Delete a group from the system (`sudo groupdel <group>`).
+
+- `usermod`: Modify existing user accounts.
+
+  - `sudo usermod -g <newgroup> <username>`: Change user's primary group.
+  - `sudo usermod -a -G <newgroup> <username>: Add user to a new secondary group (not including `-a` will replace all secondary groups).
+  - `sudo usermod -d <new/directory> <username>: Change user's home directory.
+  - `sudo usermod -l <newname> <username>: Change user's login name.
+  - `sudo usermod -L <username>: Lock the account so the user cannot log in.
+
+- `chown`: Change ownership of a file or directory.
+
+  - `sudo chown <username> file.txt`: Change user owner of *file.txt*.
+  - `sudo chown :<group> file.txt`: Change group owner of *file.txt*.
 
 #### Get help
 
+Command-line resources:
+
+- `man` (manual): Displays information of a command and how it works (`man <command>`). Use `Q` to exit manual.
+- `whatis`: Displays a description of a command on a single line (`whatis <command>`).
+- `apropos`: Searches the man page descriptions for a specified string/s (`apropos -a change password`)
+
+Online resources:
+
+- __Community__: Linux has a large and helpful online community. A simple online search can likely answer your questions.
+- [__Unix & Linux Stack Exchange__](https://unix.stackexchange.com/): Answers are ranked with points to show their quality.
 
 ## SQL
 
