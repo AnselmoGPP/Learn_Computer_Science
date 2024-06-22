@@ -14,6 +14,7 @@ Teach yourself Computer Science for free (equivalent to a Bachelor Degree in CS)
 + [Security](#security)
     + Cybersecurity
     + Cryptography
+    + Blockchain
 + [Recommended readings](#recommended-readings)
 + [Links](#links)
 
@@ -66,6 +67,7 @@ int main(int argc, char* argv[])
 
 - [**Cybersecurity**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/cybersecurity.md)
 - [**Cryptography**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/cryptography.md)
+- [**Blockchain**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/blockchain.md)
 
 ## Recommended readings
 

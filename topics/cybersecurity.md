@@ -1,6 +1,6 @@
 # Cybersecurity
 
-<br>![cybersecurity image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/miscellany.jpg)
+<br>![miscellaneous image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/miscellany.jpg)
 
 ## Table of Contents
 + [Foundations](#foundations)
@@ -41,6 +41,10 @@
         + [Authenticate and authorize](#authenticate-and-authorize)
         + [Get help](#get-help)
 + [SQL](#sql)
++ [Assets, threats, and vulnerabilities](#assets-threats-and-vulnerabilities)
++ [Detection and response](#detection-and-response)
++ [Python automation](#python-automation)
++ [Cybersecurity job](#cybersecurity-job)
 
 
 ## Foundations
@@ -1292,4 +1296,11 @@ Online resources:
 - [__Unix & Linux Stack Exchange__](https://unix.stackexchange.com/): Answers are ranked with points to show their quality.
 
 ## SQL
+
+
+
+## Assets, threats, and vulnerabilities
+## Detection and response
+## Python automation
+## Cybersecurity job
 
