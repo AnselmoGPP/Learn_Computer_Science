@@ -5,9 +5,8 @@
 Teach yourself Computer Science for free (equivalent to a Bachelor Degree in CS) and other related topics.
 
 ## Table of Contents
-+ [Learn Computer Science](#learn-computer-science)
-    + [Major in CS](#major-in-cs)
-    + [Minor in Economics](#minor-in-economics)
++ [Computer Science](#computer-science)
++ [Economics and business](#economics-and-business)
 + [C++ language](#cpp-language)
 + [Computer graphics](#computer-graphics)
 + [Machine learning](#machine-learning)
@@ -18,9 +17,8 @@ Teach yourself Computer Science for free (equivalent to a Bachelor Degree in CS)
 + [Recommended readings](#recommended-readings)
 + [Links](#links)
 
-## Learn Computer Science
 
-### Major in CS
+## Computer science
 
 - [**Mathematics:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_science/Mathematics.md) Algebra, Calculus, Discrete mathematics, Statistics.
 - [**Programming:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_science/Programming.md) Programming, data structures, algorithms.
@@ -29,15 +27,15 @@ Teach yourself Computer Science for free (equivalent to a Bachelor Degree in CS)
 - [**Databases**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_science/Databases.md)
 - [**Web programming**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_science/Web_programming.md)
 - [**Software engineering**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_science/Software_engineering.md)
-- [**Others:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_science/others/Others.md) Programming languages, Information retrieval, Mobile applications, Computer graphics, Artificial intelligence, Data mining and machine learning.
+- [**Others:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_science/others/Others.md) Programming languages, Information retrieval, Mobile applications, Computer graphics, Artificial intelligence, Data mining, and machine learning.
 
-### Minor in Economics
+## Economics and business
 
-- **Economy:**
+- [**Economics:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/economics/economics.md)
   - **Introduction to economics**
   - **Microeconomics**
   - **Macroeconomics**
-- **Businesses:**
+- [**Business management:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/economics/business.md)
   - **Principles of business management**
   - **Principles of marketing**
   - **Basic accounting**
@@ -65,9 +63,9 @@ int main(int argc, char* argv[])
 
 ## Security
 
-- [**Cybersecurity**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/cybersecurity.md)
-- [**Cryptography**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/cryptography.md)
-- [**Blockchain**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/blockchain.md)
+- [**Cybersecurity**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/security/cybersecurity.md)
+- [**Cryptography**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/security/cryptography.md)
+- [**Blockchain**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/security/blockchain/blockchain.md)
 
 ## Recommended readings
 
