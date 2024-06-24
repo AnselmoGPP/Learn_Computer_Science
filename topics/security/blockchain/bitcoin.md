@@ -15,8 +15,8 @@
 
 - Harsh Strongman (2022) *Teach yourself crypto*. Retrieved from [teachyourselfcrypto.com](https://teachyourselfcrypto.com/).
 
+- [**History and evolution of money**](https://lifemathmoney.com/the-history-and-evolution-of-money/)
 - **Introduction**
-  - [History and evolution of money](https://lifemathmoney.com/the-history-and-evolution-of-money/)
   - [How does BTC actually work?](https://www.youtube.com/watch?v=bBC-nXj3Ng4)
   - [Bitcoin - Cryptographic hash function](https://www.youtube.com/watch?v=0WiTaBI82Mc)
   - [How secure is 256 bit security?](https://www.youtube.com/watch?v=S9JGmA5_unY)
