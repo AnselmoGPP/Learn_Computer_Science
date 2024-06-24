@@ -15,92 +15,91 @@
 
 - Harsh Strongman (2022) *Teach yourself crypto*. Retrieved from [teachyourselfcrypto.com](https://teachyourselfcrypto.com/).
 
-- **Bitcoin**
-  - Introduction
-    - [History and evolution of money](https://lifemathmoney.com/the-history-and-evolution-of-money/)
-    - [How does BTC actually work?](https://www.youtube.com/watch?v=bBC-nXj3Ng4)
-    - [Bitcoin - Cryptographic hash function](https://www.youtube.com/watch?v=0WiTaBI82Mc)
-    - [How secure is 256 bit security?](https://www.youtube.com/watch?v=S9JGmA5_unY)
-    - [Public key cryptography](https://www.youtube.com/watch?v=GSIDS_lvRv4)
-    - [What are digital signatures?](https://www.youtube.com/watch?v=s22eJ1eVLTU)
-    - [The GNU privacy handbook](https://gnupg.org/gph/en/manual.pdf)
-  - Basics
-    - [Basic concepts](https://youtu.be/FYo5E7zT-vM)
-    - Decentralized consensus
-      - [Bitcoin blockchain consensus](https://www.youtube.com/watch?v=f1ZJPEKeTEY)
-      - [Consensus definition](https://en.bitcoin.it/wiki/Consensus)
-      - [Fork definition](https://en.bitcoin.it/wiki/Fork_(disambiguation))
-      - [Nakamoto consensus](https://blockonomi.com/nakamoto-consensus/)
-  - Nodes
-    - [Role of nodes](https://www.youtube.com/watch?v=fNk7nYxTOyQ)
-    - [Types of nodes and forks](https://nodes.com/)
-  - Proof of work and consensus
-    - [Byzantine fault tolerance](https://www.youtube.com/watch?v=VWG9xcwjxUg)
-    - [Proof of work](https://www.youtube.com/watch?v=9V1bipPkCTU)
-    - [A 51% attack](https://www.youtube.com/watch?v=BuTj9raHQOU)
-  - Bitcoin wallets
-    - [Bitcoin wallet](https://www.youtube.com/watch?v=A1Pl5hYHXiI)
-    - [Wallets: Visual explanation](https://www.youtube.com/watch?v=d8IBpfs9bf4)
-  - Bitcoin whitepaper
-    - [Bitcoin white paper](https://bitcoin.org/bitcoin.pdf)
-    - [Bitcoin white paper made simple](https://static1.squarespace.com/static/567bb4f069a91a95348fa0b2/t/5cd27c8bb208fcb3a45d2196/1557298317565/Intrepid+Ventures+Bitcoin+White+Paper+Made+Simple.pdf)
-  - Extending bitcoin
-    - [BIP approval process](https://www.youtube.com/watch?v=NJqAuZGg1gU)
-    - [BIP list (for reference)](https://github.com/bitcoin/bips)
-    - [Layer 2 solutions](https://www.cryptovantage.com/news/ask-cryptovantage-what-is-bitcoins-layer-2/)
-  - Scalability
-    - Lightning network
-      - [Introduction](https://www.youtube.com/watch?v=rrr_zPmEiME)
-      - [Understanding the bitcoin lightning network](https://jaspa.codes/site/2021/01/11/lightning-network.html)
-      - Understanding the Lightning network [[Part 1](https://bitcoinmagazine.com/technical/understanding-the-lightning-network-part-building-a-bidirectional-payment-channel-1464710791)] [[Part 2](https://bitcoinmagazine.com/technical/understanding-the-lightning-network-part-creating-the-network-1465326903)] [[Part 3](https://bitcoinmagazine.com/technical/understanding-the-lightning-network-part-completing-the-puzzle-and-closing-the-channel-1466178980)]
-    - Segwit
-    - Block size increase (Bitcoin Cash, Bitcoin Satoshi Vision)
-    - Schnorr signatures
-    - Side chains
-    - Colored coins
-      - [Omni layer](https://www.omnilayer.org/)
-  - Advanced bitcoin
-    - Transactions (pre-Segwit) [[Part 1](https://www.youtube.com/watch?v=Em8nJN8IEes&t)] [[Part 2](https://www.youtube.com/watch?v=f9nxuhLSyOg)]
-    - Segwit
-      - [Transaction malleability](https://www.coindesk.com/bitcoin-bug-guide-transaction-malleability)
-      - [What is Segwit](https://www.youtube.com/watch?v=f3CFUbeehc8)
-    - [The script language](https://youtu.be/6Fa04MnURhw)
-    - [More Segwit](https://medium.com/softblocks/segregated-witness-for-dummies-d00606e8de63)
-    - Merkle trees
-      - [Merkle roots and Merkle trees](https://www.youtube.com/watch?v=gUwXCt1qkBU)
-      - [Merkle proofs](https://www.youtube.com/watch?v=2kPFSoknlUU)
-      - [Data corruption and Merkle trees](https://www.youtube.com/watch?v=rsx1nt2bxf8)
-      - [How SPV nodes use Merkle trees](https://www.yourdevopsguy.com/merkle-trees-and-bitcoin/)
-      - [How SPV nodes communicate with full nodes](https://www.youtube.com/watch?v=WSlvBfLGU5I)
-    - Bloom filters
-      - [What are bloom filters and why they exist](https://www.youtube.com/watch?v=gBygn3cVP80)
-      - [Bloom filters and SPV nodes within the Bitcoin blockchain](https://tara-annison.medium.com/bloom-filters-and-spv-nodes-within-the-bitcoin-blockchain-66c36ea673f2)
-      - [Bloom filters and SPV](https://www.yourdevopsguy.com/bloom-filters-and-bitcoin/)
-    - [Elliptic curve cryptography](https://www.youtube.com/watch?v=dCvB-mhkT0w)
-  - Future of Bitcoin
-    - [Quantum computing risks](https://www.youtube.com/watch?v=wlzJyp3Qm7s)
-    - [Schnorr signatures](https://bitcoincore.org/en/2017/03/23/schnorr-signature-aggregation/)
-    - [Taproot](https://bitcoinmagazine.com/technical/taproot-coming-what-it-and-how-it-will-benefit-bitcoin)
-  - FAQ
-    - [Can you spend unconfirmed receipts?](https://bitcoin.stackexchange.com/questions/69937/accidentrally-spent-from-unconfirmed-transaction)
-    - [What happen if your transaction is never confirmed?](https://bitcoin.stackexchange.com/questions/21901/what-happens-if-your-transaction-is-never-confirmed)
-    - [Why does each block store a Merkle root?](https://bitcoin.stackexchange.com/questions/48928/why-does-each-block-store-a-merkle-root)
-    - [What's the difference between SegWit and Native SegWit address?](https://www.ledger.com/academy/difference-between-segwit-and-native-segwit)
-    - [Electrical consumption](https://news.bitcoin.com/bitcoin-energy-consumption-is-far-more-efficient-and-greener-than-todays-banking-system/)
-    - [Coins and Tokens](https://www.youtube.com/watch?v=c7TsIb8KyB8)
-    - [Incentives](https://www.youtube.com/watch?v=Q8KtQ3uM1tk)
-    - [Is Bitcoin ruled by miners?](https://en.bitcoin.it/wiki/Bitcoin_is_not_ruled_by_miners)
-    - [What is economic majority?](https://en.bitcoin.it/wiki/Economic_majority)
-    - [Common myths about Bitcoin](https://en.bitcoin.it/wiki/Myths)
-  - History
-    - Satoshi Nakamoto
-    - [Bitcoin auction: 10.000.000 BTC - Starting bid 50.00 USD](https://bitcointalk.org/index.php?topic=92.0)
-    - [The Bitcoin pizza](https://www.cryptowisser.com/the-story-of-the-bitcoin-pizza/)
-    - [History of Bitcoin](https://en.wikipedia.org/wiki/History_of_bitcoin)
-    - [Mt. Gox](https://www.youtube.com/watch?v=9lJP22qa6Ak)
-    - [The long road to SegWit](https://bitcoinmagazine.com/technical/the-long-road-to-segwit-how-bitcoins-biggest-protocol-upgrade-became-reality)
-    - [Bitcoin Cash (BCH)](https://en.wikipedia.org/wiki/Bitcoin_Cash)
-    - [Bitcoin SV (BSV)](https://www.youtube.com/watch?v=4VWtZpIJPRM)
+- **Introduction**
+  - [History and evolution of money](https://lifemathmoney.com/the-history-and-evolution-of-money/)
+  - [How does BTC actually work?](https://www.youtube.com/watch?v=bBC-nXj3Ng4)
+  - [Bitcoin - Cryptographic hash function](https://www.youtube.com/watch?v=0WiTaBI82Mc)
+  - [How secure is 256 bit security?](https://www.youtube.com/watch?v=S9JGmA5_unY)
+  - [Public key cryptography](https://www.youtube.com/watch?v=GSIDS_lvRv4)
+  - [What are digital signatures?](https://www.youtube.com/watch?v=s22eJ1eVLTU)
+  - [The GNU privacy handbook](https://gnupg.org/gph/en/manual.pdf)
+- **Basics**
+  - [Basic concepts](https://youtu.be/FYo5E7zT-vM)
+  - Decentralized consensus
+    - [Bitcoin blockchain consensus](https://www.youtube.com/watch?v=f1ZJPEKeTEY)
+    - [Consensus definition](https://en.bitcoin.it/wiki/Consensus)
+    - [Fork definition](https://en.bitcoin.it/wiki/Fork_(disambiguation))
+    - [Nakamoto consensus](https://blockonomi.com/nakamoto-consensus/)
+- **Nodes**
+  - [Role of nodes](https://www.youtube.com/watch?v=fNk7nYxTOyQ)
+  - [Types of nodes and forks](https://nodes.com/)
+- **Proof of work and consensus**
+  - [Byzantine fault tolerance](https://www.youtube.com/watch?v=VWG9xcwjxUg)
+  - [Proof of work](https://www.youtube.com/watch?v=9V1bipPkCTU)
+  - [A 51% attack](https://www.youtube.com/watch?v=BuTj9raHQOU)
+- **Bitcoin wallets**
+  - [Bitcoin wallet](https://www.youtube.com/watch?v=A1Pl5hYHXiI)
+  - [Wallets: Visual explanation](https://www.youtube.com/watch?v=d8IBpfs9bf4)
+- **Bitcoin whitepaper**
+  - [Bitcoin white paper](https://bitcoin.org/bitcoin.pdf)
+  - [Bitcoin white paper made simple](https://static1.squarespace.com/static/567bb4f069a91a95348fa0b2/t/5cd27c8bb208fcb3a45d2196/1557298317565/Intrepid+Ventures+Bitcoin+White+Paper+Made+Simple.pdf)
+- **Extending bitcoin**
+  - [BIP approval process](https://www.youtube.com/watch?v=NJqAuZGg1gU)
+  - [BIP list (for reference)](https://github.com/bitcoin/bips)
+  - [Layer 2 solutions](https://www.cryptovantage.com/news/ask-cryptovantage-what-is-bitcoins-layer-2/)
+- **Scalability**
+  - Lightning network
+    - [Introduction](https://www.youtube.com/watch?v=rrr_zPmEiME)
+    - [Understanding the bitcoin lightning network](https://jaspa.codes/site/2021/01/11/lightning-network.html)
+    - Understanding the Lightning network [[Part 1](https://bitcoinmagazine.com/technical/understanding-the-lightning-network-part-building-a-bidirectional-payment-channel-1464710791)] [[Part 2](https://bitcoinmagazine.com/technical/understanding-the-lightning-network-part-creating-the-network-1465326903)] [[Part 3](https://bitcoinmagazine.com/technical/understanding-the-lightning-network-part-completing-the-puzzle-and-closing-the-channel-1466178980)]
+  - Segwit
+  - Block size increase (Bitcoin Cash, Bitcoin Satoshi Vision)
+  - Schnorr signatures
+  - Side chains
+  - Colored coins
+    - [Omni layer](https://www.omnilayer.org/)
+- **Advanced bitcoin**
+  - Transactions (pre-Segwit) [[Part 1](https://www.youtube.com/watch?v=Em8nJN8IEes&t)] [[Part 2](https://www.youtube.com/watch?v=f9nxuhLSyOg)]
+  - Segwit
+    - [Transaction malleability](https://www.coindesk.com/bitcoin-bug-guide-transaction-malleability)
+    - [What is Segwit](https://www.youtube.com/watch?v=f3CFUbeehc8)
+  - [The script language](https://youtu.be/6Fa04MnURhw)
+  - [More Segwit](https://medium.com/softblocks/segregated-witness-for-dummies-d00606e8de63)
+  - Merkle trees
+    - [Merkle roots and Merkle trees](https://www.youtube.com/watch?v=gUwXCt1qkBU)
+    - [Merkle proofs](https://www.youtube.com/watch?v=2kPFSoknlUU)
+    - [Data corruption and Merkle trees](https://www.youtube.com/watch?v=rsx1nt2bxf8)
+    - [How SPV nodes use Merkle trees](https://www.yourdevopsguy.com/merkle-trees-and-bitcoin/)
+    - [How SPV nodes communicate with full nodes](https://www.youtube.com/watch?v=WSlvBfLGU5I)
+  - Bloom filters
+    - [What are bloom filters and why they exist](https://www.youtube.com/watch?v=gBygn3cVP80)
+    - [Bloom filters and SPV nodes within the Bitcoin blockchain](https://tara-annison.medium.com/bloom-filters-and-spv-nodes-within-the-bitcoin-blockchain-66c36ea673f2)
+    - [Bloom filters and SPV](https://www.yourdevopsguy.com/bloom-filters-and-bitcoin/)
+  - [Elliptic curve cryptography](https://www.youtube.com/watch?v=dCvB-mhkT0w)
+- **Future of Bitcoin**
+  - [Quantum computing risks](https://www.youtube.com/watch?v=wlzJyp3Qm7s)
+  - [Schnorr signatures](https://bitcoincore.org/en/2017/03/23/schnorr-signature-aggregation/)
+  - [Taproot](https://bitcoinmagazine.com/technical/taproot-coming-what-it-and-how-it-will-benefit-bitcoin)
+- **FAQ**
+  - [Can you spend unconfirmed receipts?](https://bitcoin.stackexchange.com/questions/69937/accidentrally-spent-from-unconfirmed-transaction)
+  - [What happen if your transaction is never confirmed?](https://bitcoin.stackexchange.com/questions/21901/what-happens-if-your-transaction-is-never-confirmed)
+  - [Why does each block store a Merkle root?](https://bitcoin.stackexchange.com/questions/48928/why-does-each-block-store-a-merkle-root)
+  - [What's the difference between SegWit and Native SegWit address?](https://www.ledger.com/academy/difference-between-segwit-and-native-segwit)
+  - [Electrical consumption](https://news.bitcoin.com/bitcoin-energy-consumption-is-far-more-efficient-and-greener-than-todays-banking-system/)
+  - [Coins and Tokens](https://www.youtube.com/watch?v=c7TsIb8KyB8)
+  - [Incentives](https://www.youtube.com/watch?v=Q8KtQ3uM1tk)
+  - [Is Bitcoin ruled by miners?](https://en.bitcoin.it/wiki/Bitcoin_is_not_ruled_by_miners)
+  - [What is economic majority?](https://en.bitcoin.it/wiki/Economic_majority)
+  - [Common myths about Bitcoin](https://en.bitcoin.it/wiki/Myths)
+- **History**
+  - Satoshi Nakamoto
+  - [Bitcoin auction: 10.000.000 BTC - Starting bid 50.00 USD](https://bitcointalk.org/index.php?topic=92.0)
+  - [The Bitcoin pizza](https://www.cryptowisser.com/the-story-of-the-bitcoin-pizza/)
+  - [History of Bitcoin](https://en.wikipedia.org/wiki/History_of_bitcoin)
+  - [Mt. Gox](https://www.youtube.com/watch?v=9lJP22qa6Ak)
+  - [The long road to SegWit](https://bitcoinmagazine.com/technical/the-long-road-to-segwit-how-bitcoins-biggest-protocol-upgrade-became-reality)
+  - [Bitcoin Cash (BCH)](https://en.wikipedia.org/wiki/Bitcoin_Cash)
+  - [Bitcoin SV (BSV)](https://www.youtube.com/watch?v=4VWtZpIJPRM)
 
 
 ## History of money

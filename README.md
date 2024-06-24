@@ -32,16 +32,16 @@ Teach yourself Computer Science for free (equivalent to a Bachelor Degree in CS)
 ## Economics and business
 
 - [**Economics:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/economics/economics.md)
-  - **Introduction to economics**
-  - **Microeconomics**
-  - **Macroeconomics**
+  - Introduction to economics
+  - Microeconomics
+  - Macroeconomics
 - [**Business management:**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/economics/business.md)
-  - **Principles of business management**
-  - **Principles of marketing**
-  - **Basic accounting**
-  - **E-commerce**
-  - **Personal finance**
-  - **Entrepreneurship**
+  - Principles of business management
+  - Principles of marketing
+  - Basic accounting
+  - E-commerce
+  - Personal finance
+  - Entrepreneurship
 
 ## Cpp language
 
