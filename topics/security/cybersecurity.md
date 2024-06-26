@@ -1297,6 +1297,75 @@ Online resources:
 
 ## SQL
 
+**Spreadsheets**: Organized collection of information or data. It's designed for a single user or a small team. It doesn't store too much data.
+
+**Database**: Organized collection of information or data. It can be accessed by multiple people simultaneously. It can store massive amounts of data. It can perform complex tasks while accessing data. It contains rows (records) and columns. There're different ways to structure a database (like relational databases).
+
+**Relational database**: Structured database containing multiple tables that are related to each other.
+
+  - **Field** (column): Type of data (example: employee_id).
+  - **Table**: It contains fields of information (example: The Employees table contains fields like employee_id, device_id, username, department, office).
+  - **Rows** (records): Single group of related data. They're filled with data related to the columns in the table (example: all data of an specific employee).
+
+We can connect 2 tables if they share a common column (**key**). Two types of keys:
+
+- **Primary key**: Column where every row has a unique entry. It cannot be duplicated, null, or empty value. It let us uniquely identify every row in a table.
+- **Foreign key**: Column in a table that is a primary key in another table. It can be duplicated or empty value.
+
+A table can have multiple foreign keys, but only one primary key.
+
+**SQL** (Structured Query Language): Programming language used to create, interacts with, and request information from a database. Also useful for data analytics. It can search fast through millions of data points and extract  relevant rows of data using a simple query. Nearly all relational databases rely on some version of SQL to query data. Its different versions only have slight differences in their structure (like where to put quotation marks).
+
+**Query**: Request for data from a database table or a combination of tables.
+
+**Log**: Record of events that occur within an organization's systems. Example: it may contain details on company's machines, or on visitors to your web app and their actions.
+
+Security analysts often have to access databases and logs containing useful information (login attempts, updates, machine's owners...) to support their decisions, analyse when things may go wrong, and do data analytics (identify machines without the latest patch, determine best time to update a machine, ...). 
+
+**Accessing SQL**: There are many SQL interfaces and versions. One way to access SQL is through the Linux command line, just by typing the SQL version to use (example: `sqlite3`). After this, any commands typed in the command line will be directed to SQL instead of Linux commands. Both Linux and SQL allow to filter through data, but they have differences:
+
+- **Linux**: 
+
+  - It filters data in the context of files and directories on a computer system (search files, manipulate file permissions, managing processes…). T
+  - he commands and syntax varies depending on the tool and purpose (`find`, `sed`, `cut`, `e grep`, …). 
+  - Its structure is less tidy than SQL (example: an employee login attempts taken from a log would be printed as a line of text without organization). 
+  - It doesn't allow data to be connected to other information.
+  - Useful for formats not compatible with SQL (like logs as text files).
+
+- **SQL**: 
+
+  - Used to filter data within a database management system. It’s used for querying and manipulating data stored in tables and retrieving specific information based on defined criteria. 
+  - It uses the standardized SQL language which contains keywords and clauses for filtering data across SQL databases (`WHERE`, `SELECT`, `JOIN`, …). 
+  - It offers more structure (more tidy and readable) than Linux (example: an employee login attempts taken from a log would be printed as different records separated into columns). 
+  - It allows to join multiple tables together when returning data.
+  - Useful for data stored in a database format.
+
+**Syntax**: Rules that determine what is correctly structured in a computing language. In SQL, keywords are not case-sensitive, and semicolons (`;`) are placed at the end of the statement.
+
+- `SELECT`: Indicates which columns to return. It always comes with `FROM`. For large databases it might be slow to run, and the output difficult to understand.
+- `FROM`: Indicates which table to query.
+- `ORDER BY`: Sequence in ascending (default) or descending (`DESC`) order the records returned by a query based on a specified column/s.
+
+**Queries**:
+
+- `SELECT * FROM employees`: Return all columns from the "employees" table.
+- `SELECT employee_id, device_id FROM employees;`: Return 2 columns from the "employees" table.
+- `SELECT customeerid, city, country FROM customers ORDER BY city DESC`: Sort columns in descending order based on "city" column.
+- `SELECT customeerid, city, country FROM customers ORDER BY country, city`: Sort columns in descending order based on "country" and, for same country, on "city".
+
+
+
+
+
+
+**Filters**:
+
+
+**Joins**:
+
+
+
+
 
 
 ## Assets, threats, and vulnerabilities
