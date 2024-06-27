@@ -7,27 +7,227 @@
 
 + [**References**](#references)
 + [**Introduction**](#introduction)
-+ [**metzdowd.com cryptography mailing list**](#metzdowd.com-cryptography-mailing-list)
++ [**First emails**](#first-emails)
++ [**Cryptography mailing list**](#cryptography-mailing-list)
 + [**P2P foundation**](#p2p-foundation)
++ [**SourceForge**](#sourceforge)
++ [**BitcoinTalk**)(#bitcointalk.org)
++ [**Others**](#others)
 
 
 ## References
 
+- [**Adam Back/Satoshi Nakamoto emails**](https://bitcoinmagazine.com/technical/bitcoin-adam-backs-complete-emails-satoshi-nakamoto)
+- [**Wei Dai/Satoshi Nakamoto emails**](https://gwern.net/doc/bitcoin/2008-nakamoto#emails)
 - [**metzdowd archive**](https://www.metzdowd.com/pipermail/cryptography/2008-October/date.html)
 - [**P2P foundation**](http://p2pfoundation.ning.com/profile/SatoshiNakamoto)
+- [**SourceForge**](https://sourceforge.net/projects/bitcoin/)
+- [**bitcointalk.org**](https://bitcointalk.org/index.php?action=profile;u=3)
+- [**Who is Satoshi Nakamoto?**](https://whoissatoshi.wordpress.com/2016/01/27/the-usual-suspects/)
 
 
 ## Introduction
 
-Satoshi Nakamoto, creator of Bitcoin, appeared for the first time at the **metzdowd.com cryptography mailing list**. There, he started 2 different discussions, whose titles were:
+**Satoshi Nakamoto**, creator of **Bitcoin**, appeared in different platforms:
 
-- Bitcoin P2P e-cash paper
-- Bitcoin v0.1 released
+- [**metzdowd cryptography mailing list**](https://www.metzdowd.com/pipermail/cryptography/2008-October/date.html): Whitepaper publishing, software release announcement, and discussions.
+- [**P2P foundation**](http://p2pfoundation.ning.com/profile/SatoshiNakamoto): Software release announcement.
+- [**SourceForge**](https://sourceforge.net/projects/bitcoin/): Code repository, mailing list, and forum.
+- [**bitcointalk.org forum**](https://bitcointalk.org/index.php?action=profile;u=3): Forum.
 
-Here I have compiled all the posts published within these discussions. 
+He used different emails:
+
+- satoshi@anonymousspeech.com: Used for communicating with Adam Back and Wei Dai.
+- satoshi@vistomail.com: Used in the Cryptography mailing list.
+- satoshin@gmx.com: First mentioned in the paper (31/10/2008).
+
+Chronology:
+
+- Second quarter of 2007: Nakamoto starts coding Bitcoin (according to himself). 
+- 18/08/2008: The domain name [bitcoin.org](https://bitcoin.org) is registered and a web site is created at that address.
+- 20/08/2008: satoshi@anonymousspeech.com email to **Adam Back**.
+- 05/10/2008: Nakamoto2 username registered at Sourceforge
+- 31/10/2008: Nakamoto publishes Bitcoin whitepaper at **metzdowd.com cryptography mailing list**.
+- 31/10/2008 - 25/01/2009: Cryptography mailing list publications.
+- 10/12/2008: S_Nakamoto username registered at Sourceforge
+- 10/12/2008 - 13/12/2010: Sourceforge email list
+- 03/01/2009: Nakamoto mines the Genesis block.
+- 09/01/2009: Nakamoto releases Bitcoin 0.1 software on SourceForge.
+- 11/02/2009 - 18/02/2009: **P2P foundation** publications.
+- 19-11-2009: Nakamoto is registered at [bitcointalk.org](https://bitcointalk.org/index.php?action=profile;u=3) forum as user number 3
+- Until mid-2010: Nakamoto collaborated with other developers on Bitcoin's software. He made all modifications to source code himself.
+- Satoshi gives control of source code repository and network alert key to **Gavin Andresen**, and transfers related domains to prominent members from Bitcoin community. 
+- 12/12/2010: Final public message (at [bitcointalk.org](https://bitcointalk.org/index.php?action=profile;u=3)).
+- Nakamoto continued to correspond privately with Bitcoin’s early developers.
+- 23/04/2011: Final private message (via gmx mail to Mike Hearn).
+- 13/09/2011: Gavin moves source code to [GitHub](https://github.com/bitcoin/bitcoin/).
+
+At the **Cryptography mailing list** he started 2 discussions and only participated on them:
+
+- *Bitcoin P2P e-cash paper*
+- *Bitcoin v0.1 released*
+
+Here, he was invited to publish the whitepaper at the **P2P hackers mailing list**.
+
+At the **P2P foundation forum** he started one discussion and only participated on it:
+
+- *Bitcoin open source implementation of P2P currency*
+
+At SourceForge he stored Bitcoin source code, and participated on a mailing list and forum (mostly related to technical issues and development).
+
+At **bitcointalk.org** he participated in discussions (mostly related to technical issues and development).
+
+This publication compiles the emails and posts made by Satoshi and other related participants around the beginning of Bitcoin. This includes:
+
+- First emails (correspondence with Adam Back and Wei Dai)
+- Cryptography mailing list emails
+- P2P foundation posts
+
+This doesn't include SourceForge and BitcoinTalk publications, which are rather technical and are involved in the subsequent Bitcoin development.
 
 
-## metzdowd.com cryptography mailing list
+## First emails
+
+
+### Satoshi reaches out to Adam Back
+
+From: "satoshi@anonymousspeech.com" <satoshi@anonymousspeech.com>
+Sent: Wed 20/08/2008 6:30:39 PM (UTC+01:00)
+To: adam@cypherspace.org
+Subject: Citation of your Hashcash paper
+
+I'm getting ready to release a paper that references your Hashcash paper and I wanted to make sure I have the citation right. Here's what I have:
+
+[5] A. Back, "Hashcash - a denial of service counter-measure"
+http://www.hashcash.org/papers/hashcash.pdf, 2002.
+
+I think you would find it interesting, since it finds a new use for hash-based proof-of-work as a way to make e-cash work. You can download a pre-released draft at [http://www.upload.ae/file/6157/ecash-pdf.html](http://www.upload.ae/file/6157/ecash-pdf.html). Feel free to forward it to anyone else you think would be interested. I'm also nearly finished with a C++ implementation to release as open source.
+
+Title: Electronic Cash Without a Trusted Third Party
+
+Abstract: A purely peer-to-peer version of electronic cash would allow online payments to be sent directly from one party to another without the burdens of going through a financial institution. Digital signatures offer part of the solution, but the main benefits are lost if a trusted party is still required to prevent double-spending. We propose a solution to the double-spending problem using a peer-to-peer network. The network timestamps transactions by hashing them into an ongoing chain of hash-based proof-of-work, forming a record that cannot be changed without redoing the proof-of-work. The longest chain not only serves as proof of the sequence of events witnessed, but proof that it came from the largest pool of CPU power. As long as honest nodes control the most CPU power on the network, they can generate the longest chain and outpace any attackers. The network itself requires minimal structure. Messages are broadcasted on a best effort basis, and nodes can leave and rejoin the network at will, accepting the longest proof-of-work chain as proof of what happened while they were gone.
+
+satoshi@anonymousspeech.com
+
+
+### Adam points to Wei Dai's work
+
+From: "Adam Back" <adam@cypherspace.org>
+Sent: Thur 21/08/2008 1:55:59 PM (UTC+01:00)
+To: satoshi@anonymousspeech.com
+Subject: Re: Citation of your Hashcash paper
+
+Yes citation looks fine, I'll take a look at your paper. You maybe aware of the "B-money" proposal, I guess google can find it for you, by Wei Dai which sounds to be somewhat related to your paper. (The b-money idea is just described concisely on his web page, he didn't write up a paper).
+
+Adam
+
+
+### Satoshi notes his unique contributions to Bitcoin
+
+From: "satoshi@anonymousspeech.com" <satoshi@anonymousspeech.com>
+Sent: Thur 21/08/2008 6:59:49 PM (UTC+01:00)
+To: adam@cypherspace.org
+Subject: Re: Citation of your Hashcash paper
+
+Thanks, I wasn't aware of the b-money page, but my ideas start from exactly that point. I'll e-mail him to confirm the year of publication so I can credit him.
+
+The main thing my system adds is to also use proof-of-work to support a distributed timestamp server. While users are generating proof-of-work to make new coins for themselves, the same proof-of-work is also supporting the network timestamping. This is instead of Usenet.
+
+Satoshi
+
+
+### Adam still hasn't read the white paper
+
+From: "Adam Back" <adam@cypherspace.org>
+Sent: Thur 21/08/2008 7:17:17 PM (UTC+01:00)
+To: satoshi@anonymousspeech.com
+Subject: Re: Citation of your Hashcash paper
+
+Sorry still not read your paper yet, but another related paper is by Rivest et al called micromint, which uses k-way collisions to create an over-time computational advantage for the bank in creating coins. What you said about one group of players having an advantage (by compute cycles) reminded me of micromint. In micromint the bank gets an increasing advantage over time as there is some cumulative build up of advantage in terms of the partial results accumulated helping create further the partial-collisions more cheaply.
+
+Adam
+
+
+### Satoshi reaches out to Wei Dai
+
+From: satoshi@anonymousspeech.com>
+Sent: Friday, August 22, 2008 4:38 PM
+To: "Wei Dai" <weidai@ibiblio.org>
+Cc: "Satoshi Nakamoto" <satoshi@anonymousspeech.com>
+Subject: Citation of your b-money page
+
+I was very interested to read your b-money page. I'm getting ready to release a paper that expands on your ideas into a complete working system. Adam Back (hashcash.org) noticed the similarities and pointed me to your site.
+
+I need to find out the year of publication of your b-money page for the citation in my paper. It'll look like:
+
+[1] W. Dai, "b-money," http://www.weidai.com/bmoney.txt, (2006?).
+
+You can download a pre-release draft at
+
+[http://www.upload.ae/file/6157/ecash-pdf.html](http://www.upload.ae/file/6157/ecash-pdf.html)  Feel free to forward it to anyone else you think would be interested.
+
+Title: Electronic Cash Without a Trusted Third Party
+
+Abstract: A purely peer-to-peer version of electronic cash would allow online payments to be sent directly from one party to another without the burdens of going through a financial institution.  Digital signatures offer part of the solution, but the main benefits are lost if a trusted party is still required to prevent double-spending.  We propose a solution to the double-spending problem using a peer-to-peer network.  The network timestamps transactions by hashing them into an ongoing chain of hash-based proof-of-work, forming a record that cannot be changed without redoing the proof-of-work.  The longest chain not only serves as proof of the sequence of events witnessed, but proof that it came from the largest pool of CPU power.  As long as honest nodes control the most CPU power on the network, they can generate the longest chain and outpace any attackers.  The network itself requires minimal structure.  Messages are broadcasted on a best effort basis, and nodes can leave and rejoin the network at will, accepting the longest proof-of-work chain as proof of what happened while they were gone.
+
+Satoshi
+
+
+### Wei points to his work
+
+Hi Satoshi. b-money was announced on the cypherpunks mailing list in 1998. Here's the archived post:
+
+[https://cypherpunks.venona.com/date/1998/11/msg00941.html](https://cypherpunks.venona.com/date/1998/11/msg00941.html)
+
+There are some discussions of it at
+
+[https://cypherpunks.venona.com/date/1998/12/msg00194.html](https://cypherpunks.venona.com/date/1998/12/msg00194.html).
+
+Thanks for letting me know about your paper. I'll take a look at it and let you know if I have any comments or questions.
+
+
+### Satoshi informs Wei of Bitcoin's release
+
+From: Satoshi Nakamoto
+Sent: Saturday, January 10, 2009 11:17 AM
+To: weidai@weidai.com
+Subject: Re: Citation of your b-money page
+
+I wanted to let you know, I just released the full implementation of the paper I sent you a few months ago, Bitcoin v0.1.  Details, download and screenshots are at [www.bitcoin.org](www.bitcoin.org)
+
+I think it achieves nearly all the goals you set out to solve in your b-money paper.
+
+The system is entirely decentralized, without any server or trusted parties.  The network infrastructure can support a full range of escrow transactions and contracts, but for now the focus is on the basics of money and transactions.
+
+There was a discussion of the design on the Cryptography mailing list. Hal Finney gave a good high-level overview:
+
+> One thing I might mention is that in many ways bitcoin is two independent ideas: a way of solving the kinds of problems James lists here, of creating a globally consistent but decentralized database; and then using it for a system similar to Wei Dai's b-money (which is referenced in the paper) but transaction/coin based rather than account based. Solving the global, massively decentralized database problem is arguably the harder part, as James emphasizes. The use of proof-of-work as a tool for this purpose is a novel idea well worth further review IMO.
+
+Satoshi
+
+
+### Satoshi informs Adam of Bitcoin's release
+
+From: "Satoshi Nakamoto" <satoshi@vistomail.com>
+Sent: Sat 10/1/2009 6:46:45 PM (UTC)
+To: adam@cypherspace.org
+Subject: Re: Citation of your Hashcash paper
+
+Thanks for the pointers you gave me to Wei Dai's b-money paper and others.
+
+I just released the open source implementation of my paper, Bitcoin v0.1. Details, download and screenshots are at [www.bitcoin.org](www.bitcoin.org)
+
+The main idea of the system is the generation of a chain of hash based proof-of-work to create self evident proof of the majority consensus. Users get new coins by contributing proof-of-work to the chain.
+
+There was a discussion of the design on the Cryptography mailing list. Hal Finney gave a good high-level overview:
+
+> One thing I might mention is that in many ways bitcoin is two independent ideas: a way of solving the kinds of problems James lists here, of creating a globally consistent but decentralized database; and then using it for a system similar to Wei Dai's b-money (which is referenced in the paper) but transaction/coin based rather than account based. Solving the global, massively decentralized database problem is arguably the harder part, as James emphasizes. The use of proof-of-work as a tool for this purpose is a novel idea well worth further review IMO.
+
+Satoshi
+
+
+## Cryptography mailing list
+
 
 ### Satoshi Nakamoto satoshi@vistomail.com (Fri Oct 31 14:10:00 EDT 2008)
 
@@ -1302,8 +1502,146 @@ So the question from John's challenge remains open: is there a POW system which 
 Hal Finney
 
 
-
-
-
-
 ## P2P foundation
+
+
+### Satoshi Nakamoto (February 11, 2009, 22:27)
+
+**Bitcoin open source implementation of P2P currency**
+
+I've developed a new open source P2P e-cash system called Bitcoin. It's completely decentralized, with no central server or trusted parties, because everything is based on crypto proof instead of trust. Give it a try, or take a look at the screenshots and design paper:
+
+Download Bitcoin v0.1 at [http://www.bitcoin.org](http://www.bitcoin.org)
+
+The root problem with conventional currency is all the trust that's required to make it work. The central bank must be trusted not to debase the currency, but the history of fiat currencies is full of breaches of that trust. Banks must be trusted to hold our money and transfer it electronically, but they lend it out in waves of credit bubbles with barely a fraction in reserve. We have to trust them with our privacy, trust them not to let identity thieves drain our accounts. Their massive overhead costs make micropayments impossible.
+
+A generation ago, multi-user time-sharing computer systems had a similar problem. Before strong encryption, users had to rely on password protection to secure their files, placing trust in the system administrator to keep their information private. Privacy could always be overridden by the admin based on his judgment call weighing the principle of privacy against other concerns, or at the behest of his superiors. Then strong encryption became available to the masses, and trust was no longer required. Data could be secured in a way that was physically impossible for others to access, no matter for what reason, no matter how good the excuse, no matter what.
+
+It's time we had the same thing for money. With e-currency based on cryptographic proof, without the need to trust a third party middleman, money can be secure and transactions effortless.
+
+One of the fundamental building blocks for such a system is digital signatures. A digital coin contains the public key of its owner. To transfer it, the owner signs the coin together with the public key of the next owner. Anyone can check the signatures to verify the chain of ownership. It works well to secure ownership, but leaves one big problem unsolved: double-spending. Any owner could try to re-spend an already spent coin by signing it again to another owner. The usual solution is for a trusted company with a central database to check for double-spending, but that just gets back to the trust model. In its central position, the company can override the users, and the fees needed to support the company make micropayments impractical.
+
+Bitcoin's solution is to use a peer-to-peer network to check for double-spending. In a nutshell, the network works like a distributed timestamp server, stamping the first transaction to spend a coin. It takes advantage of the nature of information being easy to spread but hard to stifle. For details on how it works, see the design paper at http://www.bitcoin.org/bitcoin.pdf
+
+The result is a distributed system with no single point of failure. Users hold the crypto keys to their own money and transact directly with each other, with the help of the P2P network to check for double-spending.
+
+Satoshi Nakamoto
+
+[http://www.bitcoin.org](http://www.bitcoin.org)
+
+
+### Sepp Hasslberger (February 12, 2009, 14:44)
+
+Great stuff.
+
+This is the first real innovation in money since the Bank of England started to issue its promissory notes for gold in the vaults, which then became known as banknotes.
+
+I believe an open source currency has great potential. A bit like Google becoming the default search engine for many of us.
+
+
+### Sepp Hasslberger (February 14, 2009, 15:30)
+
+[Dante](http://p2pfoundation.ning.com/profile/DanteGabryellMonson), in an email, has mentioned a UK project called Open Coin. It seems to go in a similar direction.
+
+Could there be synergies with bitcoin?
+
+[http://opencoin.org/](http://opencoin.org/)
+
+
+### Satoshi Nakamoto (February 15, 2009, 16:42)
+
+Could be. They're talking about the old Chaumian central mint stuff, but maybe only because that was the only thing available. Maybe they would be interested in going in a new direction.
+
+A lot of people automatically dismiss e-currency as a lost cause because of all the companies that failed since the 1990's. I hope it's obvious it was only the centrally controlled nature of those systems that doomed them. I think this is the first time we're trying a decentralized, non-trust-based system.
+
+
+### Joerg Baach (February 17, 2009, 10:42)
+
+Hi Satoshi,
+
+we are actually really talking about the old Chaumian central stuff. That was because a) it was there b) it was patent free (we have to think a bit about the US). I had a read of your paper on the weekend - thanks a lot for doing that work. Interesting read.
+
+What I did not understand about your system - how would you use it for a currency of any sort? Everybody can create a coin as they like, as far as I understood, so therefore there is no trusted supply of tokens / coins.
+Or the other way around: if you don't trust the double spending database, because its a central instance, you surely couldn't trust a central issuer to issue and redeem. How would a currency work otherwise? Would you use it for a mutual credit system in which the transactions are shown online?
+
+Cheers,
+
+Joerg
+
+
+### Sepp Hasslberger (February 18, 2009, 14:41)
+
+I have two questions, Satoshi.
+
+the first one ties in with Joerg's doubts about the trusted supply of tokens/coins.
+
+As far as I understand, there will be a limit of the total amount of tokens that can be created, and a changing gradient of difficulty in making the tokens, where the elaboration gets more and more difficult with time. Is that correct?
+
+It is important that there be a limit in the amount of tokens/coins. But it is also important that this limit be adjustable to take account of how many people adopt the system. If the number of users changes with time, it will also be necessary to change the total amount of coins.
+
+Is there a formula to decide on what should be the total amount of tokens, and if so, what is the formula?
+
+If there is no formula, who gets to make that decision and based on what criteria will it be made?
+
+I will keep my second question for later. One thing at a time...
+
+
+### Satoshi Nakamoto (February 18, 2009, 20:50)
+
+It is a global distributed database, with additions to the database by consent of the majority, based on a set of rules they follow:
+
+- Whenever someone finds proof-of-work to generate a block, they get some new coins
+- The proof-of-work difficulty is adjusted every two weeks to target an average of 6 blocks per hour (for the whole network)
+- The coins given per block is cut in half every 4 years
+
+You could say coins are issued by the majority. They are issued in a limited, predetermined amount.
+
+As an example, if there are 1000 nodes, and 6 get coins each hour, it would likely take a week before you get anything.
+
+To Sepp's question, indeed there is nobody to act as central bank or federal reserve to adjust the money supply as the population of users grows. That would have required a trusted party to determine the value, because I don't know a way for software to know the real world value of things. If there was some clever way, or if we wanted to trust someone to actively manage the money supply to peg it to something, the rules could have been programmed for that.
+
+In this sense, it's more typical of a precious metal. Instead of the supply changing to keep the value the same, the supply is predetermined and the value changes. As the number of users grows, the value per coin increases. It has the potential for a positive feedback loop; as users increase, the value goes up, which could attract more users to take advantage of the increasing value.
+
+
+## SourceForge
+
+## BitcoinTalk
+
+
+
+
+## Others
+
+
+### Last public message
+
+At [bitcointalk.org](https://bitcointalk.org/index.php?action=profile;u=3;sa=showPosts), December 12, 2010, 06:22:33 PM
+
+There's more work to do on DoS, but I'm doing a quick build of what I have so far in case it's needed, before venturing into more complex ideas.  The build for this is version 0.3.19.
+
+- Added some DoS controls
+
+As Gavin and I have said clearly before, the software is not at all resistant to DoS attack.  This is one improvement, but there are still more ways to attack than I can count.  
+
+I'm leaving the -limitfreerelay part as a switch for now and it's there if you need it.
+
+- Removed "safe mode" alerts
+
+"safe mode" alerts was a temporary measure after the 0.3.9 overflow bug.  We can say all we want that users can just run with "-disablesafemode", but it's better just not to have it for the sake of appearances.  It was never intended as a long term feature.  Safe mode can still be triggered by seeing a longer (greater total PoW) invalid block chain.
+
+Builds:
+[http://sourceforge.net/projects/bitcoin/files/Bitcoin/bitcoin-0.3.19/](http://sourceforge.net/projects/bitcoin/files/Bitcoin/bitcoin-0.3.19/)
+
+
+### Last private message
+
+From: Satoshi Nakamoto <satoshin@gmx.com>
+Date: Sat, Apr 23, 2011 at 3:40 PM
+To: Mike Hearn <mike@plan99.net>
+Subject: Re: Holding coins in an unspendable state for a rolling time window
+ 
+> I had a few other things on my mind (as always). One is, are you planning on rejoining the community at some point (eg for code reviews), or is your plan to permanently step back from the limelight?
+
+I've moved on to other things.  It's in good hands with Gavin and everyone.
+ 
+I do hope your BitcoinJ continues to be developed into an alternative client.  It gives Java devs something to work on, and it's easier with a simpler foundation that doesn't have to do everything.  It'll get critical mass when impatient new users can get started using it while the other one is still downloading the block chain.
