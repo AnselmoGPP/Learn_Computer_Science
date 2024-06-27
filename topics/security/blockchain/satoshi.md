@@ -11,7 +11,7 @@
 + [**Cryptography mailing list**](#cryptography-mailing-list)
 + [**P2P foundation**](#p2p-foundation)
 + [**SourceForge**](#sourceforge)
-+ [**BitcoinTalk**)(#bitcointalk.org)
++ [**BitcoinTalk**](#bitcointalk.org)
 + [**Others**](#others)
 
 
@@ -91,14 +91,14 @@ This doesn't include SourceForge and BitcoinTalk publications, which are rather 
 
 ### Satoshi reaches out to Adam Back
 
-From: "satoshi@anonymousspeech.com" <satoshi@anonymousspeech.com>
-Sent: Wed 20/08/2008 6:30:39 PM (UTC+01:00)
-To: adam@cypherspace.org
-Subject: Citation of your Hashcash paper
+From: "satoshi@anonymousspeech.com" <satoshi@anonymousspeech.com>  
+Sent: Wed 20/08/2008 6:30:39 PM (UTC+01:00)  
+To: adam@cypherspace.org  
+Subject: Citation of your Hashcash paper  
 
 I'm getting ready to release a paper that references your Hashcash paper and I wanted to make sure I have the citation right. Here's what I have:
 
-[5] A. Back, "Hashcash - a denial of service counter-measure"
+[5] A. Back, "Hashcash - a denial of service counter-measure"  
 http://www.hashcash.org/papers/hashcash.pdf, 2002.
 
 I think you would find it interesting, since it finds a new use for hash-based proof-of-work as a way to make e-cash work. You can download a pre-released draft at [http://www.upload.ae/file/6157/ecash-pdf.html](http://www.upload.ae/file/6157/ecash-pdf.html). Feel free to forward it to anyone else you think would be interested. I'm also nearly finished with a C++ implementation to release as open source.
@@ -112,10 +112,10 @@ satoshi@anonymousspeech.com
 
 ### Adam points to Wei Dai's work
 
-From: "Adam Back" <adam@cypherspace.org>
-Sent: Thur 21/08/2008 1:55:59 PM (UTC+01:00)
-To: satoshi@anonymousspeech.com
-Subject: Re: Citation of your Hashcash paper
+From: "Adam Back" <adam@cypherspace.org>  
+Sent: Thur 21/08/2008 1:55:59 PM (UTC+01:00)  
+To: satoshi@anonymousspeech.com  
+Subject: Re: Citation of your Hashcash paper  
 
 Yes citation looks fine, I'll take a look at your paper. You maybe aware of the "B-money" proposal, I guess google can find it for you, by Wei Dai which sounds to be somewhat related to your paper. (The b-money idea is just described concisely on his web page, he didn't write up a paper).
 
@@ -124,10 +124,10 @@ Adam
 
 ### Satoshi notes his unique contributions to Bitcoin
 
-From: "satoshi@anonymousspeech.com" <satoshi@anonymousspeech.com>
-Sent: Thur 21/08/2008 6:59:49 PM (UTC+01:00)
-To: adam@cypherspace.org
-Subject: Re: Citation of your Hashcash paper
+From: "satoshi@anonymousspeech.com" <satoshi@anonymousspeech.com>  
+Sent: Thur 21/08/2008 6:59:49 PM (UTC+01:00)  
+To: adam@cypherspace.org  
+Subject: Re: Citation of your Hashcash paper  
 
 Thanks, I wasn't aware of the b-money page, but my ideas start from exactly that point. I'll e-mail him to confirm the year of publication so I can credit him.
 
@@ -138,10 +138,10 @@ Satoshi
 
 ### Adam still hasn't read the white paper
 
-From: "Adam Back" <adam@cypherspace.org>
-Sent: Thur 21/08/2008 7:17:17 PM (UTC+01:00)
-To: satoshi@anonymousspeech.com
-Subject: Re: Citation of your Hashcash paper
+From: "Adam Back" <adam@cypherspace.org>  
+Sent: Thur 21/08/2008 7:17:17 PM (UTC+01:00)  
+To: satoshi@anonymousspeech.com  
+Subject: Re: Citation of your Hashcash paper  
 
 Sorry still not read your paper yet, but another related paper is by Rivest et al called micromint, which uses k-way collisions to create an over-time computational advantage for the bank in creating coins. What you said about one group of players having an advantage (by compute cycles) reminded me of micromint. In micromint the bank gets an increasing advantage over time as there is some cumulative build up of advantage in terms of the partial results accumulated helping create further the partial-collisions more cheaply.
 
@@ -150,11 +150,11 @@ Adam
 
 ### Satoshi reaches out to Wei Dai
 
-From: satoshi@anonymousspeech.com>
-Sent: Friday, August 22, 2008 4:38 PM
-To: "Wei Dai" <weidai@ibiblio.org>
-Cc: "Satoshi Nakamoto" <satoshi@anonymousspeech.com>
-Subject: Citation of your b-money page
+From: satoshi@anonymousspeech.com>  
+Sent: Friday, August 22, 2008 4:38 PM  
+To: "Wei Dai" <weidai@ibiblio.org>  
+Cc: "Satoshi Nakamoto" <satoshi@anonymousspeech.com>  
+Subject: Citation of your b-money page  
 
 I was very interested to read your b-money page. I'm getting ready to release a paper that expands on your ideas into a complete working system. Adam Back (hashcash.org) noticed the similarities and pointed me to your site.
 
@@ -175,12 +175,10 @@ Satoshi
 
 ### Wei points to his work
 
-Hi Satoshi. b-money was announced on the cypherpunks mailing list in 1998. Here's the archived post:
-
+Hi Satoshi. b-money was announced on the cypherpunks mailing list in 1998. Here's the archived post:  
 [https://cypherpunks.venona.com/date/1998/11/msg00941.html](https://cypherpunks.venona.com/date/1998/11/msg00941.html)
 
-There are some discussions of it at
-
+There are some discussions of it at  
 [https://cypherpunks.venona.com/date/1998/12/msg00194.html](https://cypherpunks.venona.com/date/1998/12/msg00194.html).
 
 Thanks for letting me know about your paper. I'll take a look at it and let you know if I have any comments or questions.
@@ -188,10 +186,10 @@ Thanks for letting me know about your paper. I'll take a look at it and let you 
 
 ### Satoshi informs Wei of Bitcoin's release
 
-From: Satoshi Nakamoto
-Sent: Saturday, January 10, 2009 11:17 AM
-To: weidai@weidai.com
-Subject: Re: Citation of your b-money page
+From: Satoshi Nakamoto  
+Sent: Saturday, January 10, 2009 11:17 AM  
+To: weidai@weidai.com  
+Subject: Re: Citation of your b-money page  
 
 I wanted to let you know, I just released the full implementation of the paper I sent you a few months ago, Bitcoin v0.1.  Details, download and screenshots are at [www.bitcoin.org](www.bitcoin.org)
 
@@ -208,10 +206,10 @@ Satoshi
 
 ### Satoshi informs Adam of Bitcoin's release
 
-From: "Satoshi Nakamoto" <satoshi@vistomail.com>
-Sent: Sat 10/1/2009 6:46:45 PM (UTC)
-To: adam@cypherspace.org
-Subject: Re: Citation of your Hashcash paper
+From: "Satoshi Nakamoto" <satoshi@vistomail.com>  
+Sent: Sat 10/1/2009 6:46:45 PM (UTC)  
+To: adam@cypherspace.org  
+Subject: Re: Citation of your Hashcash paper  
 
 Thanks for the pointers you gave me to Wei Dai's b-money paper and others.
 
