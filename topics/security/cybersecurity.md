@@ -1316,7 +1316,7 @@ A table can have multiple foreign keys, but only one primary key.
 
 **SQL** (Structured Query Language): Programming language used to create, interacts with, and request information from a database. Also useful for data analytics. It can search fast through millions of data points and extract  relevant rows of data using a simple query. Nearly all relational databases rely on some version of SQL to query data. Its different versions only have slight differences in their structure (like where to put quotation marks).
 
-**Query**: Request for data from a database table or a combination of tables.
+**Operator**: Symbol or keyword that represents an operation. Example: = operator.
 
 **Log**: Record of events that occur within an organization's systems. Example: it may contain details on company's machines, or on visitors to your web app and their actions.
 
@@ -1326,8 +1326,8 @@ Security analysts often have to access databases and logs containing useful info
 
 - **Linux**: 
 
-  - It filters data in the context of files and directories on a computer system (search files, manipulate file permissions, managing processes…). T
-  - he commands and syntax varies depending on the tool and purpose (`find`, `sed`, `cut`, `e grep`, …). 
+  - It filters data in the context of files and directories on a computer system (search files, manipulate file permissions, managing processes…).
+  - The commands and syntax varies depending on the tool and purpose (`find`, `sed`, `cut`, `e grep`, …). 
   - Its structure is less tidy than SQL (example: an employee login attempts taken from a log would be printed as a line of text without organization). 
   - It doesn't allow data to be connected to other information.
   - Useful for formats not compatible with SQL (like logs as text files).
@@ -1340,25 +1340,44 @@ Security analysts often have to access databases and logs containing useful info
   - It allows to join multiple tables together when returning data.
   - Useful for data stored in a database format.
 
+Common **data types** in DBs:
+
+- **String**: Ordered sequence of characters (numbers, letters, or symbols).
+- **Numeric**: Numbers. Mathematical operations can be used on them.
+- **Date and time**: Date and/or time. Mathematical operations can be used on them
+
+Common operators for numeric, date, and time data types: `=`, `>`, `<`, `>=`, `<=`, `<>` (not equal to).
+
 **Syntax**: Rules that determine what is correctly structured in a computing language. In SQL, keywords are not case-sensitive, and semicolons (`;`) are placed at the end of the statement.
 
-- `SELECT`: Indicates which columns to return. It always comes with `FROM`. For large databases it might be slow to run, and the output difficult to understand.
-- `FROM`: Indicates which table to query.
-- `ORDER BY`: Sequence in ascending (default) or descending (`DESC`) order the records returned by a query based on a specified column/s.
+- **Query**:
+  - `;`: Semicolon must be placed where the query ends.
+  - `SELECT`: Operator that indicates which columns to return. It always comes with `FROM`. For large databases it might be slow to run, and the output difficult to understand.
+  - `FROM`: Indicates which table to query.
+  - `ORDER BY`: Sequence in ascending (default) or descending (`DESC`) order the records returned by a query based on a specified column/s.
 
-**Queries**:
+- **Filtering**:
+  - `WHERE`: Indicates the condition for a filter. The condition is listed using operators.
+  - `LIKE`: Similar to `=`, but used with `WHERE` to search for a pattern in a column.
+  - `BETWEEN`: It filters for numbers or dates within a range (inclusive). Used with `AND`.
+  - __Wildcard__: Special character that can be substituted with any other character. It needs to use `LIKE` operator instead of `=` sign.
+    - `%`: Wildcard for an unspecified set of characters. Example: `a%`, `%a`, `%a%`.
+    - `_`: Wildcard for an unspecified single character. Example: `a_`, `_a`, `a__`, `_a_`.
 
-- `SELECT * FROM employees`: Return all columns from the "employees" table.
+**Query**: Request for data from a database table or a combination of tables.
+
+- `SELECT * FROM employees;`: Return all columns from the "employees" table.
 - `SELECT employee_id, device_id FROM employees;`: Return 2 columns from the "employees" table.
-- `SELECT customeerid, city, country FROM customers ORDER BY city DESC`: Sort columns in descending order based on "city" column.
-- `SELECT customeerid, city, country FROM customers ORDER BY country, city`: Sort columns in descending order based on "country" and, for same country, on "city".
+- `SELECT customeerid, city, country FROM customers ORDER BY city DESC;`: Sort columns in descending order based on "city" column.
+- `SELECT customeerid, city, country FROM customers ORDER BY country, city;`: Sort columns in descending order based on "country" and, for same country, on "city".
 
+**Filtering:** Selecting data that match a certain condition. Choosing the data we want. When filtering for strings, dates, and times, we use quotation marks (''). Example: Filter all log-in attempts from a specific country.
 
-
-
-
-
-**Filters**:
+- `SELECT * FROM log_in_attempts WHERE country = 'USA';`: Return all records from table X where field country is equal to USA.
+- `SELECT * FROM log_in_attempts WHERE country LIKE 'US%';`: "" field country begins with US.
+- `SELECT * FROM log_in_attempts WHERE country LIKE 'US_';`: "" field country is US + another character.
+- `SELECT * FROM log_in_attempts WHERE time > '18:00';`: "" field time is greater than 18:00.
+- `SELECT * FROM machines WHERE OS_patch_date BETWEEN '2021-03-01' AND '2021-09-01'; "" field OS_patch_date is between 2021-03-01 and 2021-09-01.
 
 
 **Joins**:

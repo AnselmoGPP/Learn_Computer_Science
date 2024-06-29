@@ -1,4 +1,4 @@
-# Satoshi Nakamoto's posts
+# Satoshi Nakamoto beginnings
 
 <br>![miscellaneous image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/miscellany.jpg)
 
@@ -28,7 +28,11 @@
 
 ## Introduction
 
-**Satoshi Nakamoto**, creator of **Bitcoin**, appeared in different platforms:
+**Satoshi Nakamoto** is the creator of **Bitcoin**. His first known communications happened via email with Adam Back and Wei Dai. Then, he appeared at the **Cryptography mailing list** (at metzdowd.com), where he published the Bitcoin whitepaper, participated in discussions about it, and announced the release of Bitcoin 0.1 software. He also announced Bitcoin 0.1 later at **P2P foundation** and discussed it a little. All these communications (emails and posts) have been compiled into this document.
+
+He continued working on the Bitcoin software, together with some collaborators that decided to join him. He moved the source code to SourceForge, where he participated in an email list and forum. Then, he moved to **BitcoinTalk.org** forum. The publications Satoshi made in these two places are not included here since they are mostly technical discussions about issues that arised during Bitcoin software development. Finally, he decided to disappear forever and left Bitcoin development to other collaborators.
+
+He appeared in different platforms:
 
 - [**metzdowd cryptography mailing list**](https://www.metzdowd.com/pipermail/cryptography/2008-October/date.html): Whitepaper publishing, software release announcement, and discussions.
 - [**P2P foundation**](http://p2pfoundation.ning.com/profile/SatoshiNakamoto): Software release announcement.
@@ -46,11 +50,9 @@ Chronology:
 - Second quarter of 2007: Nakamoto starts coding Bitcoin (according to himself). 
 - 18/08/2008: The domain name [bitcoin.org](https://bitcoin.org) is registered and a web site is created at that address.
 - 20/08/2008: satoshi@anonymousspeech.com email to **Adam Back**.
-- 05/10/2008: Nakamoto2 username registered at Sourceforge
-- 31/10/2008: Nakamoto publishes Bitcoin whitepaper at **metzdowd.com cryptography mailing list**.
-- 31/10/2008 - 25/01/2009: Cryptography mailing list publications.
-- 10/12/2008: S_Nakamoto username registered at Sourceforge
-- 10/12/2008 - 13/12/2010: Sourceforge email list
+- 05/10/2008: "Nakamoto2" username registered at Sourceforge
+- 31/10/2008: Nakamoto publishes Bitcoin whitepaper at **metzdowd.com cryptography mailing list**. He participates from 31/10/2008 to 25/01/2009.
+- 10/12/2008: "S_Nakamoto" username registered at Sourceforge. The Sourceforge email list goes from 10/12/2008 to 13/12/2010.
 - 03/01/2009: Nakamoto mines the Genesis block.
 - 09/01/2009: Nakamoto releases Bitcoin 0.1 software on SourceForge.
 - 11/02/2009 - 18/02/2009: **P2P foundation** publications.
