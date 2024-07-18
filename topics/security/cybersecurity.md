@@ -42,6 +42,10 @@
         + [Get help](#get-help)
 + [SQL](#sql)
 + [Assets, threats, and vulnerabilities](#assets-threats-and-vulnerabilities)
+    + [Asset security](#asset-security)
+    + [Assets protection](#assets-protection)
+    + [Vulnerabilities in systems](#vulnerabilities-in-systems)
+    + [Threats to asset security](#threats-to-asset-security)
 + [Detection and response](#detection-and-response)
 + [Python automation](#python-automation)
 + [Cybersecurity job](#cybersecurity-job)
@@ -57,10 +61,10 @@ Organizations have to protect themselves from attacks in order to minimize risks
 
 **Asset**: Item perceived as having value to an organization (office space, computers, customers' PII, intellectual property...). Since it carries risk, it requires some security controls.
 
-**Risk**: Anything that can impact confidentiality, integrity, or availability of an asset. It's the "likelihood of a threat occurring". A vulnerability and a threat must be present for there to be a risk. There different risk levels, depending on possible threats and asset's value.
+**Risk**: Anything that can impact confidentiality, integrity, or availability of an asset. It's the "likelihood of a threat occurring". A vulnerability and a threat must be present for there to be a risk. There're different risk levels, depending on possible threats and asset's value.
 - **Low-risk asset**: Information that would not harm the organization's reputation or ongoing operations, and would not cause financial damage if compromised.
 - **Medium-risk asset**: Information not available to the public that may cause some damage to the organization's finances, reputation, or ongoing operations.
-- **High-risk asset**: Information protected by regulations/laws that may have severe negative impact on an organization's finances, ongoing operations, or reputation.
+- **High-risk asset**: Information protected by regulations/laws that may have severe negative impact on an organization's finances, ongoing operations, or reputation (PII, SPII, intellectual property...).
 
 **Threat**: Any circumstance or event that can negatively impact assets.
 - **Internal threat**: It can be a current/former employee, an external vendor, or a trusted partner who poses a security risk. Sometimes it's accidental (like an employee who accidentally clicks on a malicious email link). Sometimes, he intentionally engages in risky activities (like unauthorized data access).
@@ -189,7 +193,7 @@ CISSP has established 8 domains for security professionals. All of them are rela
 - **Security architecture and engineering**:: Optimizes data security by ensuring effective tools, systems, and processes are in place to protect assets and data.
 - **Communication and network security**: Manage and secure physical networks and wireless communications.
 - **Identity and access management**: Focused on access and authorization (identification, authentication, authorization, accountability) to keep data secure, by ensuring users follow established policies to control and manage assets (physical and logical).
-- **Security assessment and testing**: Conducting security control testing, collecting and analyzing data, and conducting security audits to monitor for risks, threats, and vulnerabilities.
+- **Security assessment and testing**: Conducting security control testing, collecting and analysing data, and conducting security audits to monitor for risks, threats, and vulnerabilities.
 - **Security operations**: Conducting investigations and implementing preventive measures.
 - **Software development security**: Uses secure coding practices (recommended guidelines for creating secure applications and services). Each phase of the software development lifecycle must undergo security reviews, so security can be fully integrated into the software.
 
@@ -1316,7 +1320,7 @@ A table can have multiple foreign keys, but only one primary key.
 
 **SQL** (Structured Query Language): Programming language used to create, interacts with, and request information from a database. Also useful for data analytics. It can search fast through millions of data points and extract  relevant rows of data using a simple query. Nearly all relational databases rely on some version of SQL to query data. Its different versions only have slight differences in their structure (like where to put quotation marks).
 
-**Operator**: Symbol or keyword that represents an operation. Example: = operator.
+**Operator**: Symbol or keyword that represents an operation (like `=`). In the case of comparison operators, they can be inclusive (includes the value of comparison) or exclusive (doesn't include it).
 
 **Log**: Record of events that occur within an organization's systems. Example: it may contain details on company's machines, or on visitors to your web app and their actions.
 
@@ -1343,26 +1347,27 @@ Security analysts often have to access databases and logs containing useful info
 Common **data types** in DBs:
 
 - **String**: Ordered sequence of characters (numbers, letters, or symbols).
-- **Numeric**: Numbers. Mathematical operations can be used on them.
+- **Numeric**: Numbers. Mathematical operations can be used on them. Booleans are usually stored as 1 or 0.
 - **Date and time**: Date and/or time. Mathematical operations can be used on them
-
-Common operators for numeric, date, and time data types: `=`, `>`, `<`, `>=`, `<=`, `<>` (not equal to).
 
 **Syntax**: Rules that determine what is correctly structured in a computing language. In SQL, keywords are not case-sensitive, and semicolons (`;`) are placed at the end of the statement.
 
-- **Query**:
-  - `;`: Semicolon must be placed where the query ends.
-  - `SELECT`: Operator that indicates which columns to return. It always comes with `FROM`. For large databases it might be slow to run, and the output difficult to understand.
-  - `FROM`: Indicates which table to query.
-  - `ORDER BY`: Sequence in ascending (default) or descending (`DESC`) order the records returned by a query based on a specified column/s.
-
-- **Filtering**:
-  - `WHERE`: Indicates the condition for a filter. The condition is listed using operators.
-  - `LIKE`: Similar to `=`, but used with `WHERE` to search for a pattern in a column.
-  - `BETWEEN`: It filters for numbers or dates within a range (inclusive). Used with `AND`.
-  - __Wildcard__: Special character that can be substituted with any other character. It needs to use `LIKE` operator instead of `=` sign.
-    - `%`: Wildcard for an unspecified set of characters. Example: `a%`, `%a`, `%a%`.
-    - `_`: Wildcard for an unspecified single character. Example: `a_`, `_a`, `a__`, `_a_`.
+- `;`: Semicolon must be placed where the query ends.
+- `SELECT`: Operator that indicates which columns to return. It always comes with `FROM`. For large databases it might be slow to run, and the output difficult to understand.
+- `FROM`: Indicates which table to query.
+- `ORDER BY`: Sequence in ascending (default) or descending (`DESC`) order the records returned by a query based on a specified column/s.
+- `WHERE`: Indicates the condition for a filter. The condition is listed using operators.
+- `LIKE`: Similar to `=`, but used with `WHERE` to search for a pattern in a column.
+- `BETWEEN`: It filters for numbers or dates within a range (inclusive). Used with `AND`.
+- __Comparison operators__: Used for numeric, date, and time data types: `=`, `>`, `<`, `>=`, `<=`, `<>`/`!=` (not equal to).
+- __Logical operators__:
+  - `AND`: Two conditions must be met simultaneously.
+  - `OR`: Either condition can be met.
+  - `NOT`: The condition must not be met. It negates a condition.
+- __Wildcard__: Special character that can be substituted with any other character. It needs to use `LIKE` operator instead of `=` sign.
+  - `%`: Wildcard for an unspecified set of characters. Example: `a%`, `%a`, `%a%`.
+  - `_`: Wildcard for an unspecified single character. Example: `a_`, `_a`, `a__`, `_a_`.
+- `NULL`: Represents a missing value.
 
 **Query**: Request for data from a database table or a combination of tables.
 
@@ -1378,16 +1383,306 @@ Common operators for numeric, date, and time data types: `=`, `>`, `<`, `>=`, `<
 - `SELECT * FROM log_in_attempts WHERE country LIKE 'US_';`: "" field country is US + another character.
 - `SELECT * FROM log_in_attempts WHERE time > '18:00';`: "" field time is greater than 18:00.
 - `SELECT * FROM machines WHERE OS_patch_date BETWEEN '2021-03-01' AND '2021-09-01'; "" field OS_patch_date is between 2021-03-01 and 2021-09-01.
+- `SELECT * FROM machines WHERE op_system = 'linux' AND browser = 'brave';`: "" field op_system is linux, and field browser is brave.
+- `SELECT * FROM machines WHERE op_system = 'linux' OR NOT browser = 'brave';`: "" field op_system is linux, or field is not brave. Alternative: `... AND browser != 'brave';`.
+.- `SELECT * FROM machines WHERE op_system = 'linux' AND office LIKE 'East%';`: "" field op_system is Linux, and office is "East...".
+
+**Joins**: Combine 2 tables together. Useful when we need information from 2 tables. It returns all specified columns from all joined tables. If 2 tables are joined with `SELECT *`, all columns in both of the tables are returned. If a column exists in both tables, it's returned twice when using `SELECT *` (this can be avoided by selecting which one to return with `.`, like `employees.device`).
+
+- `SELECT username, op_system, employees.device_id FROM employees INNER JOIN machines ON employees.device_id = machines.device_id;`: Create a table (username, office, device_id) from joining (inner join) employees and machines tables, taking employee_id as common column.
+- `SELECT * FROM employees LEFT JOIN machines ON employees.device_id = machines.device_id;`
+- `SELECT * FROM employees RIGHT JOIN machines ON employees.device_id = machines.device_id;`
+- `SELECT * FROM employees FULL OUTER JOIN machines ON employees.device_id = machines.device_id;`
 
 
-**Joins**:
+**Join types**:
+- `INNER JOIN`: Returns rows matching on a specified shared column (column existing in both tables). It returns all rows that match in both tables the common column, and all columns in both tables. The order of tables doesn't change the result of the query.
+- **Outer join**: It doesn't necessarily require a shared column to return a row.
+  - `LEFT JOIN`: Returns all records of first table (left), but only returns rows of second table (right) that match on a specified column.
+  - `RIGHT JOIN`: Returns all records of second table (right), but only returns rows of first table (left) that match on a specified column.
+  - `FULL OUTER JOIN`: Returns all records from all tables. It's like completely merging two tables. The order of tables doesn't change the result of the query.
 
+Note: You can use `LEFT JOIN` and ``RIGHT JOIN` and return the exact same result if you use the tables in reverse order.
 
+<br>![inner join image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/join_inner.jpg)
+<br>![left join image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/join_left.jpg)
+<br>![right join image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/join_right.jpg)
+<br>![full outer join image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/join_full_outer.jpg)
 
+**Aggregate functions**: Functions that perform a calculation over multiple data points and return the result of the calculation. The actual data is not returned. Syntax: Place the aggregate function keyword after SELECT, and then in parentheses, indicate the column you want to perform the calculation on. Some function examples are: 
 
+- `COUNT`: Returns a single number that represents the number of rows, excluding NULL values, returned from your query.
+- `AVG`: Returns a single number representing the average of the numerical data in a column.
+- `SUM`: Returns a single number that represents the sum of the numerical data in a column.
+
+- `SELECT COUNT(firstname) FROM customers`: Get number of customers.
+- `SELECT COUNT(firstname) WHERE country = 'USA'`: Get number of customers from USA.
 
 
 ## Assets, threats, and vulnerabilities
+
+### Asset security
+
+**Risk**: Anything that can impact the __confidentiality__, __integrity__, or __availability__ of an asset (the 3 components of the CIA triad).
+
+**Security risk planning**: First step towards protecting the CIA triad. It's based on the analysis of 3 elements:
+
+- **Assets**: Item perceived as having value to an organization (building, equipment, data, people, reputation, ...).
+- **Threats**: Any circumstance or event that can negatively impact assets (thieves, accidents...). Two main types: __intentional__ (malicious hacker gains access privileges) and __unintentional__ (employee opens door to unknown person).
+- **Vulnerabilities**: Weakness that can be exploited by a threat. It's like a flaw in an asset. Two main types: __technical__ (misconfigured software) and __human__ (employee loses keys in a parking lot).
+
+The security plans depend upon how an organization defines risk. Since organizations have particular assets, they tend to differ in how they interpret and approach risk. Two ways risk can be interpreted:
+
+- Risk = Potential effects that negative events can have on a business
+- **Risk = Likelihood x Impact**
+
+In general, we calculate risk for:
+
+- Preventing costly and disruptive events
+- Identifying improvements for systems and processes
+- Determining tolerable risks
+- Prioritizing critical assets
+
+**Risk factors**: The main ones are __threats__ (a nail puncturing your tire) and __vulnerabilities__ (tires are vulnerable to sharp objects). We try to reduce these risks (by driving on clean roads).
+
+**Asset management**: Process of tracking assets and the risks that affect them (you can only protect what you know you have). All security plans revolve around asset management.
+
+**Asset inventory**: Catalogue of assets that need to be protected. Used for keeping track of assets.
+
+**Asset classification**: Practice of labelling assets based on sensitivity and importance to an organization (this requires answering: what you have? where is it? who owns it? how important is it?) It determines whether an asset can be disclosed, altered, or destroyed. Different levels:
+
+- __Public__: Can be shared with anyone
+- __Internal-only__: Can only be shared with anyone in the organization and business partners
+- __Confidential__: Can only be accessed by those working on an specific project.
+- __Restricted__: Highly sensitive. Need protection. Considered need-to-know. Examples: intellectual property, health/payment information, etc.
+
+**Data**: Information that is translated, processed, or stored by a computer. States of data:
+
+- **In use**: Data being accessed by one or more users.
+- **In transit**: Data traveling from one point to another.
+- **At rest**: Data not currently being accessed.
+
+**Information security** (InfoSec): Practice of keeping data in all states away from unauthorized users. Information is one the most valuable assets a company can have. Weak InfoSec can lead to identity theft, financial loss, reputation damage, etc. Protecting data depends on where it is and what it's doing.
+
+**Cloud computing**: On-demand, massively scalable service, hosted on shared infrastructure, accessible via the internet.
+
+**Cloud-based services**: On-demand or web-based business solutions. They allow businesses to scale and adapt quickly while lowering costs (by allowing companies connect with customers, employees, and partners via internet), but introduce new cybersecurity challenges. Provided by a cloud service provider (Google Cloud Platform, Microsoft Azure, etc.). Three types of cloud-based services:
+
+- **SaaS** (Software as a service): Front-end applications that users access via a web browser. The service providers host, manage, and maintain the back-end systems of these applications Examples: Gmail, Zoom, Slack, etc.
+- **PaaS** (Platform as a service): Back-end application development tools accessible online. Developers use them to write code and build, manage, and deploy apps. The service provider hosts and maintains the back-end hardware and software that the apps use to operate. Examples: Google App Engine, Heroku, VMware Cloud Foundry, etc.
+- **IaaS** (Infrastructure as a service): It gives remote access to a range of back-end systems that are hosted by the service provider. Resources are commonly licensed as needed, making it a cost-effective alternative to buying and maintaining on premises. Examples: data processing servers, storage, networking resources, etc.
+
+**Cloud security**: Protection of data, applications, and infrastructure in the cloud. Cloud services complicate keeping data private and safe. Traditionally, organizations had their entire IT infrastructure on premises, so protecting it was up to the internal security team. But, when some operational environment is in the cloud, these responsibilities are not so clearly defined. Example: a PaaS client is responsible for securing the apps he builds, but the servers he access should be protected by the cloud service provider. More information: [UK National Cyber Security Centre](https://www.ncsc.gov.uk/collection/cloud/understanding-cloud-services/cloud-security-shared-responsibility-model), [Cloud Security Alliance](https://cloudsecurityalliance.org/), [CompTIA Cloud+](https://www.comptia.org/blog/your-next-move-cloud-security-specialist). 
+
+**Shared responsibility**: Clients are commonly responsible for securing anything directly within their control (identity and access management, resource configuration, data handling) while some other responsibilities are delegated to the service provider (depending on the service it provides). 
+
+__Challenges__: Much of the provider's success depends on preventing breaches and protecting sensitive information, but several challenges exist (customer not configuring well his security environment, cloud-native breaches due to misconfigured services, monitoring access might be difficult, not meeting regulatory standards, ...).
+
+**Risk categories**: 
+
+- **Damage**: 
+- **Disclosure**: 
+- **Loss of information**: 
+
+**Security plans** have 3 elements:
+
+- **Policies**: Set of rules that reduces risk and protects information. Focused on the strategic side (identify scope, objectives, and limitations of a security plan).
+- **Standards**: References that inform how to set policies. Tactical function (NIST SP 800-63B Password Management Standard, ...).
+- **Procedures**: Step-by-step instructions to perform a specific security task (how to set passwords, how to reset them, ...). They create accountability, consistency, and efficiency.
+
+**Compliance**: Process of adhering to internal standards and external regulations. There're many reasons for compliance (trust, reputation, safety, integrity of data, fines, penalties, lawsuits...).
+
+**Regulations**: Rules set by a government or other authority to control the way something is done. Like policies, but on larger scale.
+
+One main role of **NIST** (National Institute of Standards and Technology) is to openly provide companies with a set of frameworks and security standards that reflect key security related regulations. 
+
+- **CSF** (NIST Cybersecurity Framework) (2014): Voluntary framework that consists of standards, guidelines, and best practices to manage cybersecurity risk. It's flexible (adaptable) and applies to any industry. Developed to help businesses secure information. It can help identify and assess risk. It evolves with time, and is influenced by the standards and best practices of some of the largest companies in the world. It helps with regulatory compliance. When using it, always consider current risk, threat, and vulnerability trends. CSF has 3 components:
+
+  - __Core__: Simplified version of the functions (duties, desired outcomes) of a security plan. It identifies 5 core functions (security checklist): Identify, Protect, Detect, Respond, Recover.
+  - __Tiers__: Ways of measuring performance across each core function. It identifies 4 levels: 1 (passive, limited), 2 (), 3 (), 4 (exemplary performance).
+  - __Profiles__: They provide insights into the current security plan state. They're pre-made NIST CSF templates that address specific risks and help organizations develop a baseline for their cybersecurity plans.
+
+The U.S. **CISA** (Cybersecurity and Infrastructure Security Agency) provides guidance for implementing the CSF. Summary of his recommendations:
+
+- __Create a current profile__ of the security operations and outline the specific needs of your business.
+- __Perform a risk assessment__ to identify which of your current operations are meeting business and regulatory standards.
+- __Analyse and prioritize existing gaps__ in security operations that place the businesses assets at risk.
+- __Implement a plan of action__ to achieve your organization's goals and objectives.
+
+### Assets protection
+
+**Security controls**: Safeguards designed to reduce specific security risks. They include a wide range of tools for protecting assets before, during, and after an event. Types:
+
+- __Technical__: Technologies for protecting assets (encryption, authentication systems...).
+- __Operational__: Maintain day-to-day security environment (awareness training, incident response...).
+- __Managerial__: Make technical and operational controls reduce risks (policies, standards, procedures...).
+
+**Information privacy**: Protection of unauthorized access and distribution of data. Security controls are the technologies used to regulate information privacy.
+
+**Principle of least privilege** (PoLP): Concept in which a user is only granted the minimum level of access and authorization required to complete a task or function. It's a fundamental security control that supports confidentiality, integrity, and availability (CIA) of information. Limiting access reduces risks (theft, accidental modification, monitoring, administration...). To implement it, you have to know who the user is (person, device, software...) and how much access he needs to a specific resource. Participants: data owners and data custodians. Accounts: guest, user, service, privilege.
+
+**Accounts**: There're different account types (guest, user, service, privilege). It's good practice to determine a baseline access level for each account type before implementing least privilege. The appropriate access level can change from time to time (example: a customer support representative should only have access to your information while helping you, and then it should become inaccessible. Least privilege can only reduce risk if user accounts are routinely and consistently monitored. Also, insecure passwords can compromise your system.
+
+- __Guest account__: External user
+- __User account__: Staff
+- __Service account: Application or software
+- __Privilege account__: Elevated permission or administrative access
+
+**Auditing accounts**: Auditing accounts is key for keeping your company's systems secure. Three common account auditing approaches:
+
+- __Usage audits__: Review which resources each account is accessing and what is the user doing with the resource. Helpful for determining whether users follow the organization's security policies, and for identifying permissions that can be revoked because they're no longer used.
+- __Privilege audits__: Asses whether a user's role have access only to the resources he needs. Users tend to accumulate more access privileges than they need over time (privilege creep).
+- __Account change audits__: Ensure that all account changes are made by authorized users. Account directory services usually save changes to an account (in record and logs) and can be used to identify suspicious activity (like multiple attempts to change an account password). Most directory services can be configured to alert system administrator of activity.
+
+**Separation of duties**: Security concept that divides tasks and responsibilities among different users to prevent giving a single user a complete control over critical business functions. Closely related to PoLP.
+
+**Data lifecycle**: Model for protecting information. It influences how to set policies that align with business objectives, and the technologies used to make information accessible. It has 5 stages (collect, store, use, archive, destroy) that describe how data flows through an organization from its creation until it's no longer useful. Protecting information at each stage describes the need to keep it accessible and recoverable should something go wrong.
+
+**Data governance**: Set of processes that define how an organization manages information. It often includes policies for keeping data private, accurate, available, and secure throughout its lifecycle. To be efficient, it should be a collaborative activity that relies on people. Data governance policies commonly categorize individuals 3 types and often assign them accountability:
+
+  - __Data owner__: Person/s that decide who can access, edit, use, or destroy their information.
+  - __Data custodian__: Anyone/anything responsible for the safe handling, transport, and storage of information. It's main responsibility is to maintain security and privacy rules for the organization.
+  - __Data steward__: Person/group that maintains and implements data governance policies set by an organization.
+
+**Data governance policy**: Policy (included in most security plans) outlining how information will be managed across an organization. It defines procedures that should be followed to participate in keeping data safe. They place limits on who or what can access data. Data custodians are responsible for ensuring that data isn't damaged, stolen, or misused.
+ 
+Security professional must always respect a person's data privacy decision. All types of personal information must be protected from unauthorized use and disclosure. Securing data can be challenging, in large part because data owners generate more data than they can manage. Thus, data custodians and stewards sometimes lack specific instructions on how to manage some types of data. Governments and other regulatory agencies have bridged this gap by creating rules that specify they types of information that organizations must protect by default:
+
+- **PII** (Personally Identifiable Information): Information used to infer an individual's identity, or contact or locate someone.
+- **PHI** (Protected Health Information): Information related to past, present, or future physical or mental health or condition of an individual. In U.S. it's regulated by the HIPAA (Health Insurance Portability and Accountability Act). In EU, it's regulated by the GDPR (General Data Protection Regulation).
+- **SPII** (Sensitive PII): Type of PII that should only be accessed on a need-to-know basis (bank account number, login credentials...). It falls under stricter handling guidelines.
+
+Regarding information, **privacy** is about providing people with control over their personal information and how it's shared, while **security** is about protecting people’s choices and keeping their information safe from potential threats. Both are essential for maintaining customer trust and brand reputation.
+
+- **Information privacy**: Protection of unauthorized access and distribution of data.
+
+- **Information security** (InfoSec): Practice of keeping data in all states away from unauthorized users.
+
+Example: A retail company collects specific kinds of personal information from its customers for marketing purposes. How this information will be used should be disclosed to customers before it's collected, and customers should have the option to opt-out if they decide not to share their data. After obtaining consent to collect personal information, the company might implement specific security controls for protecting that private data from unauthorized access, use, or disclosure, and for respecting the privacy of stakeholders and anyone who chose to opt-out.
+
+Some tips: Encrypt data when it's being stored at rest. Encrypt data when it's being transmitted over the Internet using TLS or SSL. Think clearly about who has access to that data (almost nobody if it's sensitive). If somebody needs access to that data, record the access, who accessed it, and why. You should have a program to look at the audit records for that data. 
+
+Companies store people's data and use it for business purposes. The more data they collect, the more vulnerable it is to be abused, misused, stolen, and to breaches and threats. They have to be transparent about how they collect, store, and use this information. They have to implement security measures for protecting people's data privacy. Regulations protect users from having their information collected, used, or shared without their consent (**privacy regulations**), and describe measures that need to be in place to keep private information away from threats. Most influential industry regulations are:
+
+- **GDPR** (General Data Protection Regulation): Set of rules and regulations developed by EU that puts data owners in total control of their personal information (name, address, phone number, financial information, medical information...). It applies to any business that handles the data of EU citizens or residents, regardless of where it operates.
+
+- **PCI DSS** (Payment Card Industry Data Security Standard): Set of security standards formed by major organizations in the financial industry. It aims to secure credit and debit card transactions against data theft and fraud.
+
+- **HIPAA** (Health Insurance Portability and Accountability Act): U.S. law that requires the protection of sensitive patient health information. It prohibits the disclosure of a person's medical information without their knowledge and consent.
+
+Meeting **compliance standards** is usually a continual process of two parts, which ensures that your systems are effectively protecting everyone's privacy:
+
+- **Security audit**: Review of organization's security controls, policies, and procedures against a set of expectations. It may be performed both internally and externally by different third-party groups. Usually performed once per year.
+- **Security assessment**: Check to determine how resilient current security implementations are against threats. Typically performed by internal employees. Usually performed every 3-6 months.
+
+**Algorithm**: Set of rules used that solve a problem.
+
+**Encryption**: Process of converting data from a readable format to an encoded format.
+
+**Cryptography**: Process of transforming information into a form that unintended readers cannot understand (ciphertext). Data is hidden via encryption, and unhidden it via decryption. Every form of encryption relies on both a **cipher** (algorithm that encrypts information) and a **key** (mechanism that decrypts ciphertext). A key should not be stored in public places and should be shared separately from the information it will decrypt.
+
+- **Caesar's cipher**: Cryptographic method where the letters of the message are shifted by a fixed number of spaces. Very unsecure (only about ~26 possible keys). Example: ABC &rarr; DEF. If letters were shifted by 3 spaces to the right, we can decrypt the message with `cat .leftShift3 | tr "d-za-cD-ZA-C" "a-zA-Z"`, which translates text from one set of characters to another, using a mapping.
+
+**Brute force attack**: Trial and error process of discovering private information. Ciphers are vulnerable to them. The longer the key, the more secure it is, but the slower processing times it has. 
+
+**Main types of encryption**: Both methods rely on sharing keys that can be misused, lost, or stolen. Both are used to protect data online and meet compliance regulations.
+
+- **Symmetric encryption**: Use of a single secret key to exchange information. Anybody with the secret key (the owner or anybody he shared the key with) can encrypt and decrypt a message. Faster and simpler process.
+
+- **Asymmetric encryption**: Use of a public (shareable) and private (secret) key pair for encryption and decryption of data. The public key is used by anybody (people, servers...) to encrypt a message, while the private key is used by the owner to decrypt it. This encryption method is used as a secure way to exchange information online. Slower process.
+
+**Digital certificate**: File that verifies the identity of a public key holder. Most online information is exchanged using digital certificates. Users, companies, and networks hold one and exchange them when communicating information online as a way of signalling trust. It's used as an ID badge that's used online to restrict or grant access to information. 
+
+- Example: An online business launching its website wants a digital certificate. When registering its domain, the hosting company sends certain information (company name, country of headquarters...) and a public key for the site over to a trusted certificate authority (CA). The CA verifies the company's identity and encrypts the data with his own private key. Then, the CA creates a digital certificate containing the encrypted company data and the CA's digital signature to prove it's authentic.
+
+**Public key infrastructure** (PKI): Encryption framework that secures the exchange of information online. It involves 2 steps:
+
+- __Exchange of encrypted information__ (asymmetric encryption, symmetric encryption, or both, depending on whether speed of security is the priority). Example: Mobile chat applications use asymmetric encryption to establish a connection between people at the start of a conversation when security in the priority. Afterwards, when speed is priority, symmetric encryption takes over.
+
+- Establish trust using a system of __digital certificates__ between computers and networks. 
+
+Websites tend to use asymmetric encryption to secure small blocks of data that are important. Example: Usernames and passwords are often secured with asymmetric encryption while processing login requests. Once a user gains access, the rest of their web session often switches to using symmetric encryption for its speed.
+
+Using data encryption is increasingly required by law. Regulations like the FIPS 140-3 (Federal Information Processing Standards) and the GDPR (General Data Protection Regulation) outline how data should be collected, used, and handled. 
+
+**Approved algorithms**: Many web applications use a combination of symmetric and asymmetric encryption.
+
+- **Symmetric algorithms**: 
+
+  - **3DES** (Triple Data Encryption Standard): It's known as a block cipher because it converts plaintext into ciphertext in blocks. DES (developed in early 1970s) was one of the earliest symmetric encryption algorithms that generated 64-bit keys. 3DES generates 192-bit keys (64·3=192). Organizations are moving away from 3DES due to limitations on the amount of data that can be encrypted, but it's likely to remain in use for backwards compatibility purposes.
+
+  - **AES** (Advanced Encryption Standard): One of the most secure symmetric algorithms today. It generates keys of 128, 192, or 256 bits. These lengths are considered safe from brute force attacks (brute forcing a 128-bit key could take a computer billions of years).
+
+- **Asymmetric algorithms**: 
+
+  - **RSA** (Rivest Shamir Adleman) (MIT): It's one of the first asymmetric encryption algorithms that produces a public and private key pair. Key sizes are 1024, 2048, 4096 bits. It's mainly used to protect highly sensitive data.
+
+  - **DSA** (Digital Signature Algorithm) (NIST, early 1990s): Widely used as a complement to RSA in public key infrastructure. It also generates key lengths of 2048 bits.
+
+**OpenSSL**: Open-source command line tool (but not the only one) that can be used to generate public and private keys for different algorithms. It's commonly used by computers to verify digital certificates that are exchanged as part of public key infrastructure. In early 2014, OpenSSL disclosed the ["Heartbleed bug"](https://en.wikipedia.org/wiki/Heartbleed) vulnerability, that exposed sensitive data in the memory of websites and applications, which was patched later that year. Example command:
+
+- `openssl aes-256-cbc -pbkdf2 -a -d -in Q1.encrypted -out Q1.recovered -k mypassword`: Decrypt a file with a secure symmetric cipher (`aes-256-cbc`). Different options used: `-pbkdf2` (add extra security to the key), `-a` (desired encoding for the output), `-d` (decrypting), `-in` (input file), `-out` (output file), `-k` (password).
+
+**Obscurity is not security**: A cipher must be proven to be unbreakable before claiming it's secure. According to [Kerchoff's principle](https://en.wikipedia.org/wiki/Kerckhoffs%27s_principle), a cryptographic system should be secure even if everything about the system, except the key, is public knowledge. It should not be considered secure if it requires secrecy around how it works.
+
+**Hash function**: Algorithm that produces a code of fixed size that cannot be decrypted. It's a one-way process that doesn't generate decryption keys, but a unique identifier (hash value, or digest). Generally, standard hash functions that produce longer hashes are considered more secure. The slightest change results in a totally different hash value. In Linux we can generate the hash value for any file on the computer (examples: `sha256sum file.txt`, `sha256sum file.txt >> file1hash`, `cmp file1hash file2hash`).
+
+- Comparing hash values we can validate that two programs are different. 
+- Hash values are primarily used to determine the **integrity** of files and applications (authentication and non-repudiation).
+- If an attacker replaces a program with a malicious version, its hash function would be different. 
+- Hash value of a file can be **compared** with hash values of known viruses. One such database is __VirusTotal__ (useful for analysing suspicious files, domains, IPs, and URLs).
+
+**Non-repudiation**: Concept describing that the authenticity of information cannot be denied. **Data integrity** relates to the accuracy and consistency of information. Hash functions make proven data integrity possible. 
+
+In the early days of computing, hash functions were used for quickly search for data (data is represented by small, fixed-size digests, which are stored in a hash table for efficiently reference it).
+
+**MD5** (Message Digest 5) (MIT, early 1990s): It's one of the earliest hash functions. It was used to verify that files sent over a network matched their source files. It converts data to 128-bit hash values (32 characters). Now, it's considered vulnerable to hash collision.
+
+**Hash collision**: Some inputs can produce the same hash value. There're infinite possible inputs, but only a finite set of available outputs. Hash functions map any input, regardless of its length, into a fixed-size hash value. Hash functions that produce not enough large hash values (like MD5) are vulnerable to hash collision, which attackers can use to fraudulently impersonate authentic data.
+
+**SHA** (Secure Hashing Algorithms): Group of hash functions considered collision resistant because they generate larger hash values. The SHA algorithms are: **SHA-1** (160-bit digest), **SHA-224**, **SHA-256**, **SHA-384**, **SHA-512**.
+
+**Secure password storage**: Passwords are typically stored in a database where they're mapped to a username. The server receives a request for authentications containing the user's credentials. It then looks up the username in the database and compares passwords. If passwords are stored in plaintext, an attacker that gains access to the database could steal them. But hashing them prevents this.
+
+**Rainbow table**: File of pre-generated hash values and their associated plaintext containing weak passwords. Attackers capable of obtaining an organization’s password database can use a rainbow table to compare them against all possible values.
+
+**Salting**: Additional safeguard used to strengthen hash functions. An random string of characters (**salt**) is added to data before it's hashed. This produces a more unique hash value, making salted data resilient to rainbow table attacks. Example: A passwords database might have several hashed entries for password "password". By salting them, each entry would be different.
+
+**Access controls**: Security controls that manage access, authorization, and accountability of information. They maintain data confidentiality, integrity, and availability, and get users the information they need quickly.
+
+**AAA framework**: Set of 3 access control systems (authentication, authorization, accounting).
+
+**Authentication**: Access control that identifies who is trying to access information. In general, there're 3 factors of authentication (knowledge, ownership, characteristics). If the provided authentication information matches information on a file, access is granted; otherwise, access is denied. 
+
+  - __Knowledge__: Something the user knows (like a password).
+  - __Ownership__: Something the user possesses (such as an OTP, one-time passcode: random number sequence a website/application sends you and asks you to provide).
+  - __Characteristic__: Something the user is (such as biometrics, like a fingerprint or facial scan).
+ 
+**SSO** and **MFA** are technologies that implement these authentication factors. Usually, both are used in conjunction to provide a secure and convenient access.
+
+- **SSO** (Single sign-on): Technology that combines several different logins into one. Instead of requiring users to authenticate over and over again, SSO establishes identity once, allowing access to company resources faster. It improves user experience (less usernames and passwords to remember), lower costs (by streamlining how connected services are managed), and improves overall security (reduces number of access points of attackers). However, presents an important vulnerability if it relies on a single factor of authentication. Adding more authentication factors strengthen these systems.
+
+- **MFA** (Multi-factor authentication): Security measure which requires a user to verify his identity in two or more ways (knowledge, ownership, characteristic) to access a system or network.
+
+
+
+**Authorization**: Access control that
+
+**Accounting**: Access control that
+
+
+
+
+### Vulnerabilities in systems
+### Threats to asset security
+
+
+
+
+
+
+
+
 ## Detection and response
 ## Python automation
 ## Cybersecurity job

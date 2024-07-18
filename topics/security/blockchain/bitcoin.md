@@ -117,7 +117,7 @@ It's completely infeasible to find a valid signature without knowing the SK (the
 
 - The number of zeros a PoW must create is changed periodically so it takes 10 minutes on average to find a new block.
 
-**Blockchain**: Data structure of the ledger. Each valid block of transactions has a PoW at the end. To ensure the order of the blocks, each block also contains the hash of the previous block at its header. So, if somebody wants to modify a block, he will need to compute the PoW of that block and the following ones. When somebody finds out the block's PoW, he broadcasts the block to the rest of the world so everybody copy it to the blockchain. You can check blocks information at [BlockExplorer](https://blockexplorer.one/).
+**Blockchain**: Data structure of the ledger. Decentralized digital ledger. Each valid block of transactions has a PoW at the end. To ensure the order of the blocks, each block also contains the hash of the previous block at its header. So, if somebody wants to modify a block, he will need to compute the PoW of that block and the following ones. When somebody finds out the block's PoW, he broadcasts the block to the rest of the world so everybody copy it to the blockchain. You can check blocks information at [BlockExplorer](https://blockexplorer.one/).
 
 **Miners**: They create new blocks, looking for a **block reward** and **fees**. Not everybody are miners. Those making transactions just listen for blocks broadcasted by miners and update their own personal copies of the blockchain. If you hear two distinct blockchains with conflicting transaction histories, you take the longest one (who has the most work put into it). If they have the same length, just wait until one of them is longer. This provides a decentralized consensus (we don't trust a central authority but computational work). 
 
@@ -213,47 +213,303 @@ BTC requires a consensus algorithm where:
 - Nodes can join or leave at any time, while maintaining consensus and without causing deadlock.
 - The network is partition tolerant (each half forms a consensus, but when the partition heals, so does the consensus).
 
-**Strawman consensus algorithm**: Create a block whenever you want and tell your neighbours about it so they can replicate it. If you hear about a block, tell about it to your neighbors and replicate it. It's like a gossip protocol. This works well if there's one node that creates blocks, but fails if there're two blocks generating blocks at the same time. 
+**Strawman consensus algorithm**: Create a block whenever you want and tell your neighbours about it so they can replicate it. If you hear about a block, tell about it to your neighbours and replicate it. It's like a gossip protocol. This works well if there's one node that creates blocks, but fails if there're two blocks generating blocks at the same time. 
 
 - We may try to resolve forks by picking randomly one of the longest branches. However, it's possible to get a fork where each branch grows forever without consensus (livelock). This is caused because we can add blocks faster than we can learn about other blocks. 
 
-- Solution: Slow adding blocks, and sleep some random time before adding one. 
+  - Solution: Slow adding blocks, and sleep some random time before adding one. 
 
-- Problems: The longer the timeout, the lower the odds of a fork, but the longer to reach consensus. The more computers, the shorter the time for someone to timeout (and the longer to reach consensus).
+  - Problems: The longer the timeout, the lower the odds of a fork, but the longer to reach consensus. The more computers, the shorter the time for someone to timeout (and the longer to reach consensus).
 
 - Network partitions: One or more computers loose communication with the rest of the network, so they start running their own blockchain. Chances are that the largest group grows their blockchain faster. After communication is restored, partition can be healed and a single consensus reached.
 
+- Choose a (cheat-resistant) timeout value empirically: If blocks arrive too quickly, slow down (BTC changes timeout every ~14 days). Solution: to create a block, a math problem must be solved first. This problems must be impossible to solve quickly, but easy to verify. The solution (Proof of Work) must be included in the block. This problem involves adding a number (nonce) to the block in order to make the block hash (the hash to include in the next block) begin with a certain number of zeros. This can only be solved via brute force (try different nonces). 
 
+**Bitcoin rules** (hard rules) (often called, incorrectly, consensus rules): Specific set of rules that all BTC full nodes will unfailingly enforce when considering the validity of a block and its transactions (example: A block can only create a certain number of bitcoin. If it creates more, all full nodes will reject the block). These rules require that all participants in the Bitcoin economy have consensus (with the meaning of the next definition) as to the consensus rules. If the economy disagrees about the consensus rules, then the currency and economy splits into two or more independent pieces. Adding new consensus rules can generally be done as a **softfork**, while removing any consensus rule requires a **hardfork**. Rules regarding the behaviour of the mere network protocol are not consensus rules, even if a change to its behaviour breaks backward-compatibility. The consensus rules are only concerned with the validity of blocks and transactions. 
 
+**Consensus**: Two meanings:
 
+- **Near-unanimity** (non-contentious, near-unanimous): No significant objection among the set of people who "matter". Level of agreement required to roll out a hardfork (no significant section of the Bitcoin economy should actively oppose the hardfork).
 
+- **General agreement**: Strong majority when participants are weighted for expertise/strength of argument (votes of experts have more value). This is commonly the way technical decisions are made in open source projects like Bitcoin.
 
+**Code fork**: An altcoin that is derivative of Bitcoin.
 
+**Chain fork**: Occurrence of multiple blocks at the same height.
 
+[**Hardfork**](https://en.bitcoin.it/wiki/Hardfork): Change to the protocol that makes previously invalid events (blocks, transactions) valid, and therefore requires all users to upgrade. Anything that changes block structure (including block hash), difficulty rules, or amount of valid transactions is a hardfork. 
 
+Some of these changes can be implemented in a softfork by having the new transaction appear to older clients as a pay-to-anybody transaction (of a special form), and getting the miners to agree to reject blocks including the pay-to-anybody transaction unless the transaction validates under the new rules. 
 
+Bitcoin Core has had two accidental hardforks (and many altcoins have had intended hardforks):
 
+- 2013: Due to a BerkeleyDB issue, Bitcoin pre-0.8 hardforked, and there was a chain split. This happened before the foundation of Bitcoin Core. The post mortem is in [BIP 0050](https://github.com/bitcoin/bips/blob/master/bip-0050.mediawiki).
+- Bitcoin Core 0.15 accidentally hardforked (see [CVE-2018-17144 full disclosure](https://bitcoincore.org/en/2018/09/20/notice/)). The fix was a softfork deployed in v0.16.3. There was no chain split.
+- In August 2019, John Newbery proposed another hardfork to bury CSV and segwit activation.
 
+[**Softfork**](https://en.bitcoin.it/wiki/Softfork): Change to the protocol where only previous blocks/transactions are invalidated. Since old nodes will recognize the new blocks as valid, a softfork is backward-compatible. 
 
+- New transaction types can often be added as softforks, requiring only that the participants (sender and receiver) and miners understand the new transaction type. This is done by having the new transaction appear to older clients as a "pay-to-anybody" transaction (of a special form), and getting the miners to agree to reject blocks including these transaction unless the transaction validates under the new rules (this is how [P2SH](https://en.bitcoin.it/wiki/Pay_to_script_hash) and [Segregated Witness](https://en.bitcoin.it/wiki/Segregated_Witness) were added to Bitcoin.
 
+- Accidental hardforks can be undone using a softforks (this is how [CVE-2018-17144](https://bitcoincore.org/en/2018/09/20/notice/) was fixed in Bitcoin Core 0.16.3).
 
+Softfork enforcing types:
 
+- __MASF__ (Miner-activated softfork): A majority of miners upgrade to enforce new rules.
+- __UASF__ (User-activated softfork): Full nodes coordinate to enforce new rules, without support from miners.
 
+Given a set of valid blocks, you can take any subset from it and that subset will also be valid. But in a softfork, only a subset of blocks that were previously valid remain so. Often softforks make certain transactions invalid (example: it could make any transaction that is more than 1KB invalid). The [P2SH](https://en.bitcoin.it/wiki/P2SH) (Pay-to-Script-Hash) was a softfork.
 
+**BFT** (Byzantine Fault Tolerance): Ability of a distributed computer network to remain fault tolerant with valid consensus despite imperfect information or failed components of the network. Prior to BTC, the only way to maintain a BFT, P2P (Peer to Peer) network was by employing a closed or semi-closed group of nodes (selected using a different method than Nakamoto consensus). 
 
+- In [pBFT systems](https://blockonomi.com/practical-byzantine-fault-tolerance/), the consensus model only works in small groups of closed nodes (~50) with substantial communication overhead, which prevent operating at scale. Achieving consensus in systems with arbitrary faults usually requires a specific voting system to help achieve consensus. 
 
+  - In cryptocurrencies using pBFT, the block leader is selected through a voting process and replaced in a round-robin style format each round (no mining system, the leader select the next block, and 2/3 of other nodes have to approve it). This doesn't work well with BTC (thousands of nodes, connection/disconnection at will, malicious participants). Maintaining BFT in Bitcoin (open, distributed, large network) requires rules relying on cryptography and game theory mechanics in order to create a trustless environment necessary for a decentralized consensus.
 
+**Nakamoto consensus**: Set of rules, in conjunction with the PoW consensus model in the network, that govern the consensus mechanism and ensures its trustless nature (consensus build agreement among a network of mutually distrusting participants). Blockchain wouldn't be so powerful without it. It's applied to distributed ledger systems. This made Bitcoin the first BFT open and distributed P2P network that uses a distributed network of anonymous nodes that are free to join and leave the network at will. The PoW adds a cost to participate and discourage malicious actions. Nakamoto consensus is made of 4 parts:
+
+- **PoW**: Designed to prevent double spending (the signature scheme within the UTXO model provides the verifiable ownership of transaction outputs to be spent, but doesn't prevent double spending). The more computing power you have in the network, the more likely you are to mine a block. Thus, the largest blockchain is considered the valid one because it came from the largest pool of computational power. As long as the longest chain and majority of network's hashing power is controlled by hones nodes, the hones chain will grow the fastest. Once a miner finds the PoW for a block, he proposes the block to the network, the network validates it if all transactions are not double spent, and it's added to the longest chain. Since BTC's network is massive, the cost of a 51% attach is enormous.
+
+- **Block selection**: Miners compete to win the block reward for mining the next block. The block leader is not selected through a voting process (unlike in pBFT), but by solving a cryptographic puzzle (increment a nonce in the block until the block's hash have the required number of 0 bits at the beginning). The first miner to find the solution wins and can propagate the block across the network so other mining nodes add it to the longest chain. The process is random and the leader cannot be predicted. The more hashing power, the more probabilities to win, but the more costly to participate. 
+
+- **Scarcity**: BTC's has a limited total supply (21 millions), and it can only be injected into the system through the mining process where the block reward is halved every 210.000 blocks (~4 years).
+
+- **Incentive structure**: BTC's deflationary nature incentivise participants to secure and validate the network, to support BTC's growth in value, and to cooperate. The block reward incentivise miners to validate and secure the network honestly. Nakamoto consensus 
 
 
 ## Nodes
+
+**Node**: Computer that is participating in the global Bitcoin network by speaking a protocol called Bitcoin (a P2P protocol that allows nodes to communicate to each other to propagate transactions and blocks everywhere). A node that wants to advertise his presence listens on specific ports in a way that can be discovered (but many more aren't doing this, or are hidden behind protocols such as Tor, or listening to hidden ports). Anybody can run a node. Nodes validate the consensus rules, not miners. Miners take the transactions nodes decided were valid and give back blocks.
+
+- **Full node** (or fully validating node): Node that validates every transaction and block. Optionally, it can keep a full copy of the blockchain. It communicates, by a random process of connection, with a set of peers that it chooses from the network. When it receives a block or transaction from a peer, it independently verifies it (nodes don't trust each other): it reconciles it with his copy of the ledger and determines if funds were double spent. If the block or transaction verified is incorrect, the node rejects it and stops talking to that peer for a period of time that depends on the level of the offense (ban for 1h, 24h, permanet, etc.). 
+
+**Node**: Every participant in a coin's network. It has specific hardware in order to host or connect to one. Blockchain technology is decentralized, based in a P2P network, with no dedicated servers, not one authority, but a consensus among users. BTC has 2 types of nodes:
+
+- **Full node**: Stores a copy blockchain and thus guarantee the security and correctness of the data on the blockchain by validating data.
+- **Lightweight node**: Each user participating. He needs to connect to a full node in order to synchronize to the current network state and participate.
+
+**Consensus**: Rules by which a blockchain network operates and confirms the validity of information written in blocks and/or work performed. Most common consensus are **PoW** (Proof of work) and **PoS** (Proof of stake). 
+
+**Node**: The blockchain relies on full nodes for enforcing rules and validating transactions. Anyone can become a full node (the more there are, the more decentralization and security). In a **51% attack** more than half the network power is concentrated in a single entity (leading to monopoly), allowing it to change consensus and forcing everybody to follow new rules, hardfork, or abandon. However, for the network to evolve, alterations need to be voted on by the community. Types of node:
+
+- **Full node**: Acts as a server in a decentralized network. It maintains consensus between other nodes, verifies transactions, and stores a blockchain copy. It enables custom functions (instant send, private transactions...). When deciding the future of the network, full nodes vote on proposals. If more than 51% don't agree, the proposal is skipped (in some cases, a hardfork may happen, like [Bitcoin Cash Fork](https://coin.info/bitcoin-cash/#forks-tokens)). Two types of full nodes:
+
+  - **Pruned node**: It begins downloading blocks from the beginning and once it reaches the set limit, deletes the oldest ones, retaining only their headers and chain placement. In order to get it, you would first have to go through the entire blockchain to validate all the previous blocks. This node still can verify transactions and be involved in the consensus.
+
+  - **Archival node**: Server which hosts the full blockchain in its database. Different types:
+
+    - Nodes that **can add blocks** to the blockchain: They depend on the consensus rules being enforced and require at least one full archival node to operate.
+
+      - **Mining node** (miner): Full or lightweigh. It aims to prove that they've completed the required work to create a block (PoW). It has to be either full archival node itself or receive data from other full nodes to know blockchain's status and required parameters for the next block. The first to solve the cryptographic problem broadcasts his result to the network so it can be verified by full nodes and, once consensus is achieved, he can add it to the blockchain. Then, the miner gets a reward of a pre-defined amount of coins (coinbase) plus the transaction fees. The coinbase transaction is the first one in the block, included there free or charge by the miner that created the block.
+
+      - **Staking node** (staker): Staking is similar to hold coins while in return receiving an interest back as a reward. Staking is like a lottery. It has a lower entry barrier, but offers less certainty compared to mining. Who will create the next block and get rewarded depends on some pre-defined rules and luck change factored in. Factors include coin age (how long you've had your coins), amount of coins you have, and their ratio to available ones in the network. You don't need expensive machinery, just keeping your wallet online 24/7. You need to be a full archival node. This is a solo endeavor due to lack of transparency in staking pools.
+
+    - Nodes that **cannot add blocks** to the blockchain:
+
+      - **Authority node**: If we allow some centralization (less trust, easier to attack), we can gain some benefits (increased speed, no storage required, easier to upgrade...). There're a few consensus algorithms for this (Delegated proof of stake, Delegated BFT, Proof of authority, etc.). A fixed number of these nodes have to be defined (set by development team or voted by the community). Their task is to create and validate blocks, while distributing information to users on the network. The rest of participants run lightweight nodes, which depend on the broadcasted data to be able to operate on the blockchain.
+
+      - **Masternode**: Cannot add blocks to the blockchain. It just keeps a record of transactions and validate them. It makes the network more secure and can earn a share of the rewards for his services. It requires to lock away some funds as collateral. It's expected to be online 24/7. Hosting on a Virtual Private Server is good practice. 
+
+- **Lightweight node** (SPV node: Simple Payment Verification node): Used in day to day operations. It communicates with the blockchain while relying on full nodes to provide them with the necessary information. They only query the last block's status and boradcast transactions for processing. It doesn't require many resources, but sacrifice security for convenience.
+
+- **Lightning node**: It connects with users outside the blockchain, reducing the network's load, shortening transfer times, and increasing usability. Transaction fees are really low. It opens a separate payment channel between entities. Instead of waiting for each transaction to be confirmed and filling the network with space-wasting data, parties can interact between each other and lower the load on the blockchain. Furthermore, if someone else wants to deal with the same party, the lightning network will search for a path with the least number of intermediaries and lowest transfer fees, thus reducing wait times.
+
+**Forks**: If there's not at least 51% agreement between full nodes, a proposed change to the network is rejected. But, if a developer implements the proposed change and a large part of the community accepts and supports it, a fork happens. Two types:
+
+- **Hard fork**: Change to the network consensus algorithm. Every alteration not compatible with the previous version of the client used (new block reward, block time, transition from PoW to PoS, implementation of masternodes...). After launching a hardfork, every not updated node is rejected by the consensus since it's operating on invalid rules. Many developers and communities avoid major changes because some people may be left out or the transition may compromise the network's security.
+
+- **Soft fork**: Alteration that has no mandatory rule for users to update their nodes. 
+
+  - Example: BTC's Segregated Witness feature. Transactions can be made with or without using this feature but, once 95% of clients are updated to the version that supports SegWit, the consensus will automatically refuse any old transactions without it, making it a smoother transition that doesn't force users to immediately update.
+
+**VPS** (Virtual Private Servers): Using it with your node is optional. In exchange for a small payment, it protects your node from DDoS attacks, not having to maintain any hardware and not worry about your bandwidth capabilities. Otherwise, somebody could hack into your server and steal your funds, providing you're storing your coins in those wallets.
+
+
 ## Proof of work and consensus
+
+**Byzantine generals' problem** (1982): A group of generals, which are separated from each other, have to agree on their next move. Each one has one vote (attack or retreat). After casting a vote, it cannot be changed. All generals have to agree on the same decision and execute it in coordination. They communicate via messages, which can be delayed, destroyed, or lost. Some generals may send a fraudulent message to confuse the rest, leading to a system failure. In a blockchain, each general is a node, and they need to reach consensus on the current system 's state (i.e., the majority of participants must agree on and execute the same action).
+
+**BFT** (Byzantine Fault Tolerance): A BFT system is capable of resisting the types of faults derived from a Byzantine generals' problem (i.e., it's still operative even when some nodes act maliciously or fail to communicate). There're different ways to build a BFT blockchain, depending upon the consensus algorithm used (PoW, PoS, Delegated PoS...).
+
+**Consensus algorithm**: Mechanism through which a blockchain network reaches consensus. While the protocol (Bitcoin) defines the rules, the consensus algorithm (PoW) determines how these rules will be followed. Satoshi used a modified PoW version that made BTC a BFT system. Although PoW is not 100% fault tolerant, it proved to be one of the most secure implementations for blockchain networks. Consensus algorithms still need to overcome some limitations.
+
+**Consensus achievement**: This is when participants in the network agree on the current state of the blockchain.
+
+**PoW** (Proof of Work): Proof that you engaged in a significant amount of computational effort. Usually, it's a proof that you solved a puzzle that is difficult to solve but easy to verify. PoW has been used for deterring spam email or DoS attacks (someone that wants to send a huge amount of messages has to spend too many CPU cycles, which may be expensive). 
+
+- In BTC, the puzzle is: you have to find a number (PoW) such that, when attached to you message (block) and applied a hash function to it, the result is a hash (set of bits) with X number of leading zeros. The best way to find this number is by brute force (test numbers until one outputs the correct result). Verifying the PoW is easy (just hash the message + number and check the leading zeros). The difficulty can be adjusted by changing the number of required zeros. Example: if 15 zeros are required, the probability of finding the number is 2<sup>15</sup>.
+
+**51% attack** (majority attack): The PoW consensus algorithm ensures that miners can only validate a new block if the network nodes collectively agree on its validity. A miner's performance depends on the amount of computational power it has (also called hash rate, or hashing power). The mining power is distributed over many nodes across the world. However, if a single entity can obtain more than 50% hashing power, it could cause network issues such as:
+
+- Exclude or modify order of transactions
+- Reverse transactions (allowing double spending)
+- Prevent some or all transactions from being confirmed
+- Prevent miners from mining
+
+Nevertheless, the attacker won't be able to do some other things such as:
+
+- Reverse other user's transactions
+- Prevent transactions from being created and broadcasted
+- Change block's reward
+- Create coins
+- Steal coins that never belonged to him
+
+The bigger the network, the stronger the protection against these attacks. The more valuable BTC becomes, the more miners go to compete for the rewards, which gives miners no incentive to invest large amounts of resources if they're not acting honestly. The bigger the chain, the more difficult to change old blocks because that requires to discard all subsequent blocks. The more confirmations a block has, the greater the cost of altering or reversing it. A successful attack would probably only be able to modify the transactions of a few recent blocks for a short period of time.
+
+
 ## Bitcoin wallets
+
+**BTC wallet**: Program that sends, receives, and stores BTC, and monitors BTC balances. Program used for managing your BTC. It interfaces with the blockchain (ledger of BTC transactions). It monitors addresses in the blockchain and update their own balance with each transaction. 
+
+**Private/Secret key** (SK): Large string of numbers and letters that acts like a password to your wallet. The SK makes your wallet capable of sending your BTC. Whoever knows your SK has power over your BTC. The SK is also used to generate your BTC address, which you give out to people who want to send you BTC. The wallet's core function is the creation, storage and use of the SK (it automates BTC's complex cryptography for you). A standard BTC wallet creates a `wallet.dat` file containing its SK.
+
+You can use a software for generating a SK and PK. The PK is used to generate a unique BTC address. This address is provided to those who want to pay you, so they can transfer BTC from their addresses to your address. The SK is used for signing new transactions and accessing your funds. The SK can be used to recover the PK and BTC address. However, most modern wallets use a seed phrase (see HD wallet below).
+
+**HD wallet** (Hierarchical Deterministic wallet): It generates an initial phrase (mnemonic phrase, seed) made of common words, which is easier to memorize than the SK. If your wallet gets destroyed or stolen, you can enter the seed to reconstruct the SK. This wallet can create, from the same seed, multiple SKs. Thus, it can create multiple BTC addresses, being all of them part of the same wallet.
+
+**Multisig wallet** (Multi-Signature wallet): It allows sending BTC only with the approval of enough SKs. Example: 3 SKs can share a multisig wallet, so sending BTC is only possible with the approval of 2 SKs (often used by escrow services).
+
+There're different types of wallets, each one establishing a compromise between security and convenience:
+
+- Classification based on **weight**:
+
+  - **Full node**: Wallet that stores a blockchain's copy in order to validate every transaction.
+
+  - **Light wallet**: Doesn't hold a blockchain's copy. It relies on full nodes it's connected to in order to validate transactions.
+
+    - **SPV wallet** (Simple Payment Verification wallet): Faster. Consumes less disk space.
+
+- Classification based on **SK storage**:
+
+  - **Hot wallet** (software wallet): Connected to the Internet. Least secure wallet. More convenient.
+
+    - **Web wallet**: Least secure wallet (multiple attack vectors). It relies on a third party and you don't have access to the SK (it's like asking somebody to hold you coins for you). Often used by web services (markets, exchanges, betting site...) that require you to deposit funds on their online wallets. It's convenient for operating fast. Some provide multi-factor authentication for protecting against hackers. It's recommended to use it only for small amounts.
+
+    - **Desktop wallet**: Stores SK in your computer. Requires a malware free computer (which isn't easy). 
+
+    - **Mobile wallet**: Mobile app. Stores SK in your mobile phone. Low security. Low privacy (potential association of your wallet, phone number, and geo-location). Multi-factor authentication is advised. Very convenient, but it's recommended for small amounts.
+
+  - **Cold wallet**: Most secure wallet. Independent from any Internet connection, so it's resistant to hackers. Suitable for long term investors. More secure. Less convenient. 
+
+    - **Hardware wallet**: Physical device that safely store the SK and PK (both generated with a RNG: Random Number Generator). It cannot be hacked even if your device is compromised by malware. It can be safely used with any machine. Most of them provide a seed backup in case it's lost or stolen.
+
+    - **Paper wallet**: Piece of paper with the SK (or seed) and blockchain address printed out (usually, as QR codes). It cannot send partial funds, only all of them at once. Considered obsolete and unreliable.
+
+    - **Brain wallet**: Generate a SK from a chosen text or set of words. You decide your own passphrase and then use an algorithm for generating a SK from it. It's less secure because we are very predictable. 
+
+The more convenient a wallet is, the more unsecure becomes, and viceversa. Use secure wallets for holding large amounts, and convenient wallets for small and regular expenses.
+
+
 ## Bitcoin whitepaper
+
+- [Bitcoin whitepaper](https://bitcoin.org/bitcoin.pdf)
+- [Explanations](https://static1.squarespace.com/static/567bb4f069a91a95348fa0b2/t/5cd27c8bb208fcb3a45d2196/1557298317565/Intrepid+Ventures+Bitcoin+White+Paper+Made+Simple.pdf)
+
+### Abstract
+
+A pure P2P electronic cash would allow online payments without going through a financial institution. Digital signatures solve part of the problem, but a third party is still required for preventing double-spending. To solve the double-spending problem we propose using a P2P network that timestamps transactions by hashing them into an ongoing chain of hash-based PoW, creating a record that cannot be changed without redoing the PoW. Thus, the longest chain comes from the largest pool of CPU power and is proof of the sequence of events. As long as a majority CPU power is controlled by nodes that don't cooperate to attack the network, they will generate the longest chain and outpace attackers. The network requires minimal structure. Messages are broadcast on a best effort basis. Nodes can leave an rejoin the network at will, accepting the longest PoW chain as proof of what happened when gone.
+
+### Introduction
+
+Commerce on the Internet relies on financial institutions serving as trusted third parties to process electronic payments. Completely non-reversible transactions are not possible because financial institutions mediate disputes. Problems:
+
+- The cost of mediation increases transaction costs, which prevents small transactions.
+- There's a cost for not being able to make non-reversible payments for non-reversible services.
+- Merchants have to ask for more information about the customer than they would otherwise need.
+- Some percentage of fraud is accepted as unavoidable.
+
+It's needed an electronic payment system, not based on trust but on cryptographic proof, allowing two parties to transact directly without a trusted third party. Non-reversible transactions are would protect sellers from fraud. Routine escrow mechanisms could easily be implemented to protect buyers. We propose a solution to the double-spending problem using a P2P distributed timestamp server to generate computational proof of the order of transactions. The system is secure as long as honest nodes control more CPU power than any cooperating group of attacker nodes.
+
+### Transactions
+
+__Electronic coin__: Chain of digital signatures. Each owner transfers the coin to the next by digitally signing a hash of the previous transaction and the PK of the next owner and adding these to the end of the coin. A payee can verify the signatures to verify the chain of ownership.
+
+However, the payee cannot verify that one of the owners did not double-spend the coin. A common solution is to go through a trusted central authority (mint) that checks every transaction for double spending. The payee have to know that the previous owners didn't sign any earlier transactions, which can only be known by being aware of all transactions (the mint is aware). To accomplish this without a trusted party, transactions must be publicly announces, and participants have to agree somehow on a single story of the order of received transactions. The payee needs proof that at the time of each transaction, the majority of nodes agreed it was the first received.
+
+### Timestamp server
+
+The proposed solution is a timestamp server that takes a hash of a block of items to be timestamped and widely publish the hash. Each timestamp includes the previous timestamp in its hash, forming a chain, with each additional timestamp reinforcing the ones before it.
+
+### Proof-of-Work
+
+To implement a distributed timestamp server on a P2P basis, we need to use a PoW. This PoW involves looking for a value that when hashed, the hash begins with a number of zero bits. The average amount of work required increases exponentially with the number of zeros, but can be easily verified by executing a single hash. We implement the PoW by incrementing a nonce in the block until a hash with the required number of leading zeros is found. Once this work is done, the block cannot be changed without redoing the work. Since later blocks are chained after it, changing the block would included redoing all the subsequent blocks.
+
+The PoW also determines representation in majority decision making. Considering one-IP-address-one-vote, anyone able to allocate many IPs could subvert the majority. PoW is one-CPU-one-vote, so the majority decision is represented by the longest chain, which has used the most PoW effort. If a majority of CPU power is controlled by honest nodes, the honest chain will grow the fastest. An attacker that wants to modify a past block would have to redo the PoW of the block and all subsequent blocks, and surpass the work of the honest nodes.
+
+If blocks are generated too fast, the PoW difficulty will be adjusted.
+
+### Network
+
+Steps to run the network:
+
+1. New transactions are broadcast to all nodes
+2. Each node collects new transactions into a block
+3. Each node work on finding a difficult PoW for its block
+4. When a node finds a PoW, it broadcasts the block to all nodes
+5. Nodes accept the block only if all transactions in it are valid and not already spent
+6. Nodes accept the block by working on creating the next block using the hash of the accepted block as the previous hash
+
+Nodes always consider the longest chain the correct one and keep working on extending it. If two nodes broadcast different versions of the next block simultaneously, some nodes may receive one of them first, so they work on the first one received but save the other branch in case it becomes longer. When the next PoW is found and one branch becomes longer, the nodes that were working on the other branch switch to the longer one.
+
+New transaction broadcasts don't necessarily need to reach all nodes: If they reach many nodes, they will get into a block before long.
+
+If a node doesn't receive a block, when he receives the next block he will realize that he missed one, so he will request it.
+
+### Incentive
+
+The first transaction in a block is special because it creates a coin owned by the block's creator. This incentivises nodes to support the network, and initially distributes coins into circulation. Nodes are also incentivised with transaction fees: if the output value of a transaction is less than its input value, the difference is a transaction fee. These incentives may encourage nodes to stay honest (a greedy attacker with more CPU power than all the honest nodes my find more profitable to play by the rules than undermining the system and the validity of his own wealth).
+
+### Reclaiming disk space
+
+Once the latest transaction in a coin is buried under enough blocks, the spent transactions before it can be discarded to save disk space. To facilitate this without breaking the block's hash, transaction are hashed in a Merkle tree, with only the root included in the block's hash. Old blocks can be compacted by stubbing off branches of the tree (i.e., interior hashes). A block header with no transaction would have about 80 bytes. If we suppose blocks are generated every 10 minutes, 80 bytes * 6 * 24 * 365 = 4.2 MB/year.
+
+### Simplified payment verification (SPV)
+
+It's possible to verify payments without running a full network node. A user only needs a copy of the block headers of the longest PoW chain, which can get by querying network nodes until he's convinced he has the longest chain, and obtain the Merkle branch linking the transaction to the block it's timestamped in. He can't check the transaction for himself, but by linking it to a place in the chain, he can see that a network node has accepted it, and blocks added after it further confirm the network has accepted it.
+
+The verification is reliable as long as honest nodes control the network. While network nodes can verify transactions for themselves, the simplified method can be fooled by an attacker's fabricated transactions for as long as the attacker can continue to overpower the network. One strategy to protect against this would be to accept alerts from network nodes when they detect an invalid block, prompting the user's software to download the full block and alerted transactions to confirm the inconsistency.
+
+- **FPV wallets** (Full Payment Verification wallets, or heavyweight wallets: It requires a complete copy of the blockchain and can verify transactions.
+- **SPV wallet** (Simplified Payment Verification wallet, or lightweight wallet): It doesn't have a full copy of the blockchain and cannot check whether transactions are valid. But it can send and receive BTC, and verify a transaction. 
+
+### Combining and splitting value
+
+Making a separate transaction for every cent in a transfer would be highly inefficient. To allow value to be split and combined, transactions contain multiple inputs and outputs. Normally there will be either a single input (from a larger previous transaction) or multiple inputs (combining smaller amounts), and at most two outputs (one for the payment, and one returning the change back to the sender).
+
+When a transaction depends on several transaction, and those transactions depend on many more, is not a problem here because there's never the need to extract a complete standalone copy of a transaction's history.
+
+### Privacy
+
+The necessity to announce all transactions publicly prevents some privacy. However, privacy can still be maintained by keeping PKs anonymous (so nobody can link a transaction to anyone). Additionally, a new key pair should be used for each transaction to keep them from being linked to a common owner, though some linking is unavoidable with multi-input transactions (which reveal that their inputs were owned by the same owner).  
+
+### Calculations
+
+An attacker that manages to generate an alternate chain faster than the honest chain cannot make arbitrary changes: he cannot create value out of thin air, nor take money that never belonged to him. Nodes won't accept invalid transactions as payment, and honest nodes will never accept a block containing them. An attacker can only try to change one of his own transactions to take back money he recently spent.
+
+There's a race between the honest chain and the attacker's chain. If the probability of an honest node finding the next block is bigger than an attacker finding it, the probability of the attacker catching up drops exponentially as the number of blocks the attacker has to catch up with increases.
+
+An attacker may make a transfer, trying to make the recipient believe he paid him for a while, and then switch it to pay back to himself after some time passed.
+
+### Conclusion
+
+Coins made from digital signatures provide strong control of ownership. To prevent double-spending, we use a P2P network using PoW to record a public history of transactions that an attacker cannot change if honest nodes control most CPU power. Nodes work with little coordination. Nodes don't need to be identified since messages are not delivered to any particular place and only need to be delivered on a best effort basis. Nodes can leave and rejoin the network at will, accepting the PoW chain as proof of what happened while gone. They vote with their CPU power, expressing their acceptance of valid blocks by working on extending them and rejecting invalid blocks by refusing to work on them.
+
+### Key points
+
+- **Digital signatures** prevent fraudulent payments. A payer must sign his payment, so nobody else can pay in his place.
+- **Double spending problem** is usually solved via intermediaries, but it has some issues (reversible transactions, increased costs...). Satoshi solves this without requiring an intermediary.
+- **Blockchain** is a decentralized database that is continually updated with sets of transaction (blocks). 
+- To prevent double spending, the network has to agree on the order of transactions. All transactions in a block occur simultaneously.
+- **PoW** prevents DoS attacks and spamming (by determining valid blocks), distributes fees and rewards (minting) randomly to miners, gives some time for gathering transactions in a block, and allows the most honest chain to grow faster (if honest nodes control most of the CPU power).
+- Fees and block rewards incentivise mining (and disincentivise double-spending), which is necessary for supporting the network. Block rewards is the way of initially distributing coins.
+
+
 ## Extending bitcoin
 ## Scalability
 ## Advanced bitcoin
 ## Future of Bitcoin
 ## FAQ
+
 
 
 

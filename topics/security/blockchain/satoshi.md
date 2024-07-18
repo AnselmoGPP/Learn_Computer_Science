@@ -30,7 +30,7 @@
 
 **Satoshi Nakamoto** is the creator of **Bitcoin**. His first known communications happened via email with Adam Back and Wei Dai. Then, he appeared at the **Cryptography mailing list** (at metzdowd.com), where he published the Bitcoin whitepaper, participated in discussions about it, and announced the release of Bitcoin 0.1 software. He also announced Bitcoin 0.1 later at **P2P foundation** and discussed it a little. All these communications (emails and posts) have been compiled into this document.
 
-He continued working on the Bitcoin software, together with some collaborators that decided to join him. He moved the source code to SourceForge, where he participated in an email list and forum. Then, he moved to **BitcoinTalk.org** forum. The publications Satoshi made in these two places are not included here since they are mostly technical discussions about issues that arised during Bitcoin software development. Finally, he decided to disappear forever and left Bitcoin development to other collaborators.
+He continued working on the Bitcoin software, together with some collaborators that decided to join him. He moved the source code to **sourceforge.net**, where he participated in an email list and [forum](http://bitcoin.sourceforge.net/boards/index.php). Then, he moved to **BitcoinTalk.org** forum. The publications Satoshi made in these two places are not included here since they are mostly technical discussions about issues that arised during Bitcoin software development. Finally, he decided to disappear forever and left Bitcoin development to his collaborators and community.
 
 He appeared in different platforms:
 
@@ -50,13 +50,13 @@ Chronology:
 - Second quarter of 2007: Nakamoto starts coding Bitcoin (according to himself). 
 - 18/08/2008: The domain name [bitcoin.org](https://bitcoin.org) is registered and a web site is created at that address.
 - 20/08/2008: satoshi@anonymousspeech.com email to **Adam Back**.
-- 05/10/2008: "Nakamoto2" username registered at Sourceforge
+- 05/10/2008: "Nakamoto2" username registered at Sourceforge.
 - 31/10/2008: Nakamoto publishes Bitcoin whitepaper at **metzdowd.com cryptography mailing list**. He participates from 31/10/2008 to 25/01/2009.
 - 10/12/2008: "S_Nakamoto" username registered at Sourceforge. The Sourceforge email list goes from 10/12/2008 to 13/12/2010.
 - 03/01/2009: Nakamoto mines the Genesis block.
 - 09/01/2009: Nakamoto releases Bitcoin 0.1 software on SourceForge.
 - 11/02/2009 - 18/02/2009: **P2P foundation** publications.
-- 19-11-2009: Nakamoto is registered at [bitcointalk.org](https://bitcointalk.org/index.php?action=profile;u=3) forum as user number 3
+- 19-11-2009: Nakamoto is registered at [bitcointalk.org](https://bitcointalk.org/index.php?action=profile;u=3) forum as user number 3.
 - Until mid-2010: Nakamoto collaborated with other developers on Bitcoin's software. He made all modifications to source code himself.
 - Satoshi gives control of source code repository and network alert key to **Gavin Andresen**, and transfers related domains to prominent members from Bitcoin community. 
 - 12/12/2010: Final public message (at [bitcointalk.org](https://bitcointalk.org/index.php?action=profile;u=3)).
@@ -75,17 +75,16 @@ At the **P2P foundation forum** he started one discussion and only participated 
 
 - *Bitcoin open source implementation of P2P currency*
 
-At SourceForge he stored Bitcoin source code, and participated on a mailing list and forum (mostly related to technical issues and development).
+At SourceForge he stored Bitcoin source code, and participated on a mailing list and forum. At **bitcointalk.org** he participated in discussions. In both sites his messages were related to technical issues involving Bitcoin development.
 
-At **bitcointalk.org** he participated in discussions (mostly related to technical issues and development).
-
-This publication compiles the emails and posts made by Satoshi and other related participants around the beginning of Bitcoin. This includes:
+Here, I compiled the emails and posts made by Satoshi and other related participants around the beginning of Bitcoin. This includes:
 
 - First emails (correspondence with Adam Back and Wei Dai)
 - Cryptography mailing list emails
 - P2P foundation posts
+- Some other relevant writings
 
-This doesn't include SourceForge and BitcoinTalk publications, which are rather technical and are involved in the subsequent Bitcoin development.
+This doesn't include all the SourceForge and BitcoinTalk publications, which are mostly technical discussion about Bitcoin software development.
 
 
 ## First emails
@@ -231,7 +230,7 @@ Satoshi
 
 ### Satoshi Nakamoto satoshi@vistomail.com (Fri Oct 31 14:10:00 EDT 2008)
 
-(Note: Satoshi Nakamoto starts discussion "Bitcoin P2P e-cash paper")
+> Note: Satoshi Nakamoto starts discussion "Bitcoin P2P e-cash paper"
 
 I've been working on a new electronic cash system that's fully peer-to-peer, with no trusted third party.
 
@@ -344,7 +343,7 @@ But let us suppose that the coin issue network is dominated by a small number of
 
 If a small number of entities are issuing new coins, this is more resistant to state attack that with a single issuer, but the government regularly attacks financial networks, with the financial collapse ensuing from the most recent attack still under way as I write this.
 
-Government sponsored enterprises enter the business, in due course bad behavior is made mandatory, and the evil financial network is bigger than the honest financial network, with the result that even though everyone knows what is happening, people continue to use the paper issued by the evil financial network, because of network effects - the big, main issuers, are the issuers you use if you want to do business.
+Government sponsored enterprises enter the business, in due course bad behaviour is made mandatory, and the evil financial network is bigger than the honest financial network, with the result that even though everyone knows what is happening, people continue to use the paper issued by the evil financial network, because of network effects - the big, main issuers, are the issuers you use if you want to do business.
 
 Then knowledgeable people complain that the evil financial network is heading for disaster, that the government sponsored enterprises are about to cause a "collapse of the total financial system", as Wallison and Alan Greenspan complained in 2005, the government debates shrinking the evil government sponsored enterprises, as with "S. 190 [109th]: Federal Housing Enterprise Regulatory Reform Act of 2005" but they find easy money too seductive, and S. 190 goes down in flames before a horde of political activists chanting that easy money is sound, and opposing it is racist, nazi, ignorant, and generally hateful, the recent S. 190 debate on limiting portfolios (bond issue supporting dud mortgages) by government sponsored enterprises being a perfect reprise of the debates on limiting the issue of new assignats in the 1790s.
 
@@ -352,7 +351,7 @@ The big and easy government attacks on money target a single central money issue
 
 Still, it is better, and more resistant to attack by government sponsored enterprises, than anything I have seen so far.
 
-James A. Donald:
+Satoshi Nakamoto:
 > Visa processed 37 billion transactions in FY2008, or > an average of 100 million transactions per day. That many transactions would take 100GB of bandwidth, or the size of 12 DVD or 2 HD quality movies, or about $18 worth of bandwidth at current prices.
 >
 > If the network were to get that big, it would take several years, and by then, sending 2 HD movies over the Internet would probably not seem like a big deal. If there were a hundred or a thousand money issuers by the time the government attacks, the kind of government attacks on financial networks that we have recently seen might well be more difficult.
@@ -415,9 +414,6 @@ I'm extremely interested in the subject myself, having taken part in two notable
 Regards,
 
 Zooko
----
-[http://allmydata.org](http://allmydata.org) -- Tahoe, the Least-Authority Filesystem
-[http://allmydata.com](http://allmydata.com) -- back up all your files for $10/month
 
 
 ### Hal Finney hal@finney.org (Fri Nov 7 18:40:12 EST 2008)
@@ -443,50 +439,6 @@ Sorry about all the questions, but as I said this does seem to be a very promisi
 Hal Finney
 
 [1] [http://unenumerated.blogspot.com/2005/12/bit-gold.html](http://unenumerated.blogspot.com/2005/12/bit-gold.html)
-
-
-### Satoshi Nakamoto satoshi@vistomail.com (Thu Nov 13 17:56:55 EST 2008)
-
-James A. Donald:
-> It is not sufficient that everyone knows X. We also need everyone to know that everyone knows X, and that everyone knows that everyone knows that everyone knows X - which, as in the Byzantine Generals problem, is the classic hard problem of distributed data processing.
-
-The proof-of-work chain is a solution to the Byzantine Generals' Problem.  I'll try to rephrase it in that context.
-
-A number of Byzantine Generals each have a computer and want to attack the King's wi-fi by brute forcing the password, which they've learned is a certain number of characters in length.  Once they stimulate the network to generate a packet, they must crack the password within a limited time to break in and erase the logs, otherwise they will be discovered and get in trouble.  They only have enough CPU power to crack it fast enough if a majority of them attack at the same time.
-
-They don't particularly care when the attack will be, just that they all agree.  It has been decided that anyone who feels like it will announce a time, and whatever time is heard first will be the official attack time.  The problem is that the network is not instantaneous, and if two generals announce different attack times at close to the same time, some may hear one first and others hear the other first.
-
-They use a proof-of-work chain to solve the problem.  Once each general receives whatever attack time he hears first, he sets his computer to solve an extremely difficult proof-of-work problem that includes the attack time in its hash.  The proof-of-work is so difficult, it's expected to take 10 minutes of them all working at once before one of them finds a solution.  Once one of the generals finds a proof-of-work, he broadcasts it to the network, and everyone changes their current proof-of-work computation to include that proof-of-work in the hash they're working on.  If anyone was working on a different attack time, they switch to this one, because its proof-of-work chain is now longer.
-
-After two hours, one attack time should be hashed by a chain of 12 proofs-of-work.  Every general, just by verifying the difficulty of the proof-of-work chain, can estimate how much parallel CPU power per hour was expended on it and see that it must have required the majority of the computers to produce that much proof-of-work in the allotted time.  They had to all have seen it because the proof-of-work is proof that they worked on it.  If the CPU power exhibited by the proof-of-work chain is sufficient to crack the password, they can safely attack at the agreed time.
-
-The proof-of-work chain is how all the synchronisation, distributed database and global view problems you've asked about are solved.
-
-
-### Satoshi Nakamoto satoshi@vistomail.com (Fri Nov 14 13:55:35 EST 2008)
-
-Hal Finney:
-> I think it is necessary that nodes keep a separate pending-transaction list associated with each candidate chain. ... One might also ask... how many candidate chains must a given node keep track of at one time, on average?
-
-Fortunately, it's only necessary to keep a pending-transaction pool for the current best branch.  When a new block arrives for the best branch, ConnectBlock removes the block's transactions from the pending-tx pool.  If a different branch becomes longer, it calls DisconnectBlock on the main branch down to the fork, returning the block transactions to the pending-tx pool, and calls ConnectBlock on the new branch, sopping back up any transactions that were in both branches.  It's expected that reorgs like this would be rare and shallow.
-
-With this optimisation, candidate branches are not really any burden.  They just sit on the disk and don't require attention unless they ever become the main chain.
-
-Hal Finney:
-> Or as James raised earlier, if the network broadcast is reliable but depends on a potentially slow flooding algorithm, how does that impact performance?
-
-Broadcasts will probably be almost completely reliable.  TCP transmissions are rarely ever dropped these days, and the broadcast protocol has a retry mechanism to get the data from other nodes after a while.  If broadcasts turn out to be slower in practice than expected, the target time between blocks may have to be increased to avoid wasting resources.  We want blocks to usually propagate in much less time than it takes to generate them, otherwise nodes would spend too much time working on obsolete blocks.
-
-I'm planning to run an automated test with computers randomly sending payments to each other and randomly dropping packets.
-
-Hal Finney:
-> 3. The bitcoin system turns out to be socially useful and valuable, so that node operators feel that they are making a beneficial contribution to the world by their efforts (similar to the various "@Home" compute projects where people volunteer their compute resources for good causes).
-> 
-> In this case it seems to me that simple altruism can suffice to keep the network running properly.
-
-It's very attractive to the libertarian viewpoint if we can explain it properly.  I'm better with code than with words though.
-
-Satoshi Nakamoto
 
 
 ### Satoshi Nakamoto satoshi@vistomail.com (Sat Nov 8 13:54:38 EST 2008)
@@ -847,9 +799,9 @@ When a coin is spent, the buyer and seller digitally sign a (blinded) transactio
 
 The nodes keeping track of consensus regarding coin ownership are in a loop where they are all trying to "add a link" to the longest chain they've so far recieved.  They have a pool of reported transactions which they've not yet seen in a "consensus" signed chain.  I'm going to call this pool "A".  They attempt to add a link to the chain by moving everything from pool A into a pool "L" and using a CPU-intensive digital signature algorithm to sign the chain including the new block L.  This results in a chain extended by a block containing all the transaction records they had in pool L, plus the node's digital signature.  While they do this, new transaction records continue to arrive and go into pool A again for the next cycle of work. 
 
-They may also recieve chains as long as the one they're trying to extend while they work, in which the last few "links" are links that are *not* in common with the chain on which they're working. These they ignore.  (?  Do they ignore them?  Under what circumstances would these become necessary to ever look at again, bearing in mind that any longer chain based on them will include them?) 
+They may also receive chains as long as the one they're trying to extend while they work, in which the last few "links" are links that are *not* in common with the chain on which they're working. These they ignore.  (?  Do they ignore them?  Under what circumstances would these become necessary to ever look at again, bearing in mind that any longer chain based on them will include them?) 
 
-But if they recieve a _longer_ chain while working, they immediately check all the transactions in the new links to make sure it contains no double spends and that the "work factors" of all new links are appropriate.  If it contains a double spend, then they create a "transaction" which is a proof of double spending, add it to their pool A, broadcast it, and continue work.  If one of the "new" links has an inappropriate work factor (ie, someone didn't put enough CPU into it for it to be "licit" according to the rules) a new "transaction" which is a proof of the protocol violation by the link-creating node is created, broadcast, and added to pool A, and the chain is rejected.  In the case of no double spends and appropriate work factors for all links not yet seen, they accept the new chain as consensus. 
+But if they receive a _longer_ chain while working, they immediately check all the transactions in the new links to make sure it contains no double spends and that the "work factors" of all new links are appropriate.  If it contains a double spend, then they create a "transaction" which is a proof of double spending, add it to their pool A, broadcast it, and continue work.  If one of the "new" links has an inappropriate work factor (ie, someone didn't put enough CPU into it for it to be "licit" according to the rules) a new "transaction" which is a proof of the protocol violation by the link-creating node is created, broadcast, and added to pool A, and the chain is rejected.  In the case of no double spends and appropriate work factors for all links not yet seen, they accept the new chain as consensus. 
 
 If the new chain is accepted, then they give up on adding their current link, dump all the transactions from pool L back into pool A (along with transactions they've recieved or created since starting work), eliminate from pool A those transaction records which are already part of a link in the new chain, and start work again trying to extend the new chain. 
 
@@ -1331,7 +1283,7 @@ Satoshi Nakamoto:
 
 It's interesting that the system can be configured to only allow a certain maximum number of coins ever to be generated. I guess the idea is that the amount of work needed to generate a new coin will become more difficult as time goes on.
 
-One immediate problem with any new currency is how to value it. Even ignoring the practical problem that virtually no one will accept it at first, there is still a difficulty in coming up with a reasonable argument in favor of a particular non-zero value for the coins.
+One immediate problem with any new currency is how to value it. Even ignoring the practical problem that virtually no one will accept it at first, there is still a difficulty in coming up with a reasonable argument in favour of a particular non-zero value for the coins.
 
 As an amusing thought experiment, imagine that Bitcoin is successful and becomes the dominant payment system in use throughout the world.  Then the total value of the currency should be equal to the total value of all the wealth in the world. Current estimates of total worldwide household wealth that I have found range from $100 trillion to $300 trillion. With 20 million coins, that gives each coin a value of about $10 million.
 
@@ -1352,7 +1304,7 @@ I would be surprised if 10 years from now we're not using electronic currency in
 
 It could get started in a narrow niche like reward points, donation tokens, currency for a game or micropayments for adult sites.  Initially it can be used in proof-of-work applications for services that could almost be free but not quite.
 
-It can already be used for pay-to-send e-mail.  The send dialog is resizeable and you can enter as long of a message as you like. It's sent directly when it connects.  The recipient doubleclicks on the transaction to see the full message.  If someone famous is getting more e-mail than they can read, but would still like to have a way for fans to contact them, they could set up Bitcoin and give out the IP address on their website.  "Send X bitcoins to my priority hotline at this IP and I'll read the message personally." 
+It can already be used for pay-to-send e-mail.  The send dialog is resizeable and you can enter as long of a message as you like. It's sent directly when it connects.  The recipient double clicks on the transaction to see the full message.  If someone famous is getting more e-mail than they can read, but would still like to have a way for fans to contact them, they could set up Bitcoin and give out the IP address on their website.  "Send X bitcoins to my priority hotline at this IP and I'll read the message personally." 
 
 Subscription sites that need some extra proof-of-work for their free trial so it doesn't cannibalize subscriptions could charge bitcoins for the trial.
 
@@ -1460,7 +1412,7 @@ Satoshi Nakamoto
 
 ### John Gilmore gnu@toad.com (Sun Jan 25 17:40:45 EST 2009)
 
-(Note: John Gilmore starts discussion "Proof of Work -> atmospheric carbon" about the energy consumption of PoW, which won't be included in this compilation)
+> Note: John Gilmore starts discussion "Proof of Work -> atmospheric carbon" about the energy consumption of PoW, which won't be included in this compilation)
 
 Hal Finney:
 > If POW tokens do become useful, and especially if they become money, machines will no longer sit idle. Users will expect their computers to be earning them money (assuming the reward is greater than the cost to operate).
@@ -1605,12 +1557,26 @@ In this sense, it's more typical of a precious metal. Instead of the supply chan
 
 ## SourceForge
 
+
+For more information about this, visit [**sourceforge.net**](https://sourceforge.net/projects/bitcoin/) and [bitcoin.sourceforge forum](http://bitcoin.sourceforge.net/boards/index.php).
+
+
 ## BitcoinTalk
 
 
+For more information about this, visit [**bitcointalk.org**](https://bitcointalk.org/index.php?action=profile;u=3).
 
 
 ## Others
+
+
+### Reaction to PC World article about Bitcoin
+
+> Note: The 10/12/2010, PC World published an [article](https://www.pcworld.com/article/499375/could_wikileaks_scandal_lead_to_new_virtual_currency.html) about Wikileaks accepting Bitcoins.
+
+At [bitcointalk.org](https://bitcointalk.org/index.php?topic=2216.msg29280#msg29280), December 11, 2010, 11:39:16 PM
+
+It would have been nice to get this attention in any other context.  WikiLeaks has kicked the hornet's nest, and the swarm is headed towards us.
 
 
 ### Last public message
@@ -1619,17 +1585,15 @@ At [bitcointalk.org](https://bitcointalk.org/index.php?action=profile;u=3;sa=sho
 
 There's more work to do on DoS, but I'm doing a quick build of what I have so far in case it's needed, before venturing into more complex ideas.  The build for this is version 0.3.19.
 
-- Added some DoS controls
-
+- Added some DoS controls  
 As Gavin and I have said clearly before, the software is not at all resistant to DoS attack.  This is one improvement, but there are still more ways to attack than I can count.  
 
 I'm leaving the -limitfreerelay part as a switch for now and it's there if you need it.
 
-- Removed "safe mode" alerts
-
+- Removed "safe mode" alerts  
 "safe mode" alerts was a temporary measure after the 0.3.9 overflow bug.  We can say all we want that users can just run with "-disablesafemode", but it's better just not to have it for the sake of appearances.  It was never intended as a long term feature.  Safe mode can still be triggered by seeing a longer (greater total PoW) invalid block chain.
 
-Builds:
+Builds:  
 [http://sourceforge.net/projects/bitcoin/files/Bitcoin/bitcoin-0.3.19/](http://sourceforge.net/projects/bitcoin/files/Bitcoin/bitcoin-0.3.19/)
 
 
@@ -1639,7 +1603,8 @@ From: Satoshi Nakamoto <satoshin@gmx.com>
 Date: Sat, Apr 23, 2011 at 3:40 PM
 To: Mike Hearn <mike@plan99.net>
 Subject: Re: Holding coins in an unspendable state for a rolling time window
- 
+
+Mike Hearn:
 > I had a few other things on my mind (as always). One is, are you planning on rejoining the community at some point (eg for code reviews), or is your plan to permanently step back from the limelight?
 
 I've moved on to other things.  It's in good hands with Gavin and everyone.
