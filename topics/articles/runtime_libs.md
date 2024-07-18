@@ -1,6 +1,6 @@
 # C Runtime Library (CRT)
 
-The "Runtime Library" option in Visual Studio's project properties determines how the C runtime library (CRT) is linked to your project. The C runtime library (CRT) is a library that provides routines for programming tasks such as string handling, file I/O, memory allocation, etc. There are four main choices for linking CRT to your project (in project's Properties > **Configuration Properties > C/C++ > Code Generation > Runtime Library**):
+The C runtime library (CRT) is a library that provides routines for programming tasks such as string handling, file I/O, memory allocation, etc. There are four main choices for linking CRT to your project (in project's Properties > **Configuration Properties > C/C++ > Code Generation > Runtime Library**):
 
 1. **Multi-threaded (/MT)**
 2. **Multi-threaded Debug (/MTd)**
