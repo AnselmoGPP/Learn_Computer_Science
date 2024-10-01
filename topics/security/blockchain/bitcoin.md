@@ -496,7 +496,7 @@ Coins made from digital signatures provide strong control of ownership. To preve
 
 ### Key points
 
-- **Digital signatures** prevent fraudulent payments. A payer must sign his payment, so nobody else can pay in his place.
+- **Digital signatures** prevent fraudulent payments. A payer must sign his payment, so nobody else can pay in his place. Also useful for proving ownership of a certain address without revealing the sk.
 - **Double spending problem** is usually solved via intermediaries, but it has some issues (reversible transactions, increased costs...). Satoshi solves this without requiring an intermediary.
 - **Blockchain** is a decentralized database that is continually updated with sets of transaction (blocks). 
 - To prevent double spending, the network has to agree on the order of transactions. All transactions in a block occur simultaneously.

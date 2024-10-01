@@ -73,7 +73,7 @@ Organizations have to protect themselves from attacks in order to minimize risks
 
 **Vulneravility**: Weakness that can be exploited by a threat.
 
-**Attack vectors**: The pathways attackers use to penetrate security defenses
+**Attack vectors**: Pathways attackers use to penetrate security defenses
 
 **Security benefits**:
 - It protects from internal and external threads
@@ -250,6 +250,7 @@ Most common SIEM tools:
 **Playbook**: Manual that provides details about any operational action, including incident response, security or compliance reviews, access management, and many other organizational tasks that require a documented process from beginning to end. It varies between organizations. It guides analysts in how to handle a security incident (open attack, privacy incident, data leak, DDoS, service alert...) before, during, and after it occurred. Sometimes, it may need to be updated. Threat identification and mitigation must be urgent, efficient, and accurate. There're different playbooks (incident response, vulnerability response, security alerts, team-specific, product-specific...).
 
 - **Incident response playbook**: Used to identify an attack, contain the damage, and correct the effects of a security breach. Phases:
+
   - __Preparation__: Organizations mitigate likelihood, risk, and impact of a security incident by documenting procedures, establishing staffing plans, and educating users.
   - __Detection and analysis of events__: Use appropriate tools and strategies for this.
   - __Containment__: Prevent further damage and reduce the immediate impact of the incident.
@@ -1534,7 +1535,7 @@ The U.S. **CISA** (Cybersecurity and Infrastructure Security Agency) provides gu
 - __Privilege audits__: Asses whether a user's role have access only to the resources he needs. Users tend to accumulate more access privileges than they need over time (privilege creep).
 - __Account change audits__: Ensure that all account changes are made by authorized users. Account directory services usually save changes to an account (in record and logs) and can be used to identify suspicious activity (like multiple attempts to change an account password). Most directory services can be configured to alert system administrator of activity.
 
-**Separation of duties**: Security concept that divides tasks and responsibilities among different users to prevent giving a single user a complete control over critical business functions. Closely related to PoLP.
+**Separation of duties**: Security concept that divides tasks and responsibilities among different users to prevent giving a single user a complete control over critical business functions. Closely related to PoLP. Users should not be given levels of authorization that would allow them to misuse a system.
 
 **Data lifecycle**: Model for protecting information. It influences how to set policies that align with business objectives, and the technologies used to make information accessible. It has 5 stages (collect, store, use, archive, destroy) that describe how data flows through an organization from its creation until it's no longer useful. Protecting information at each stage describes the need to keep it accessible and recoverable should something go wrong.
 
@@ -1650,9 +1651,18 @@ In the early days of computing, hash functions were used for quickly search for 
 
 **Access controls**: Security controls that manage access, authorization, and accountability of information. They maintain data confidentiality, integrity, and availability, and get users the information they need quickly.
 
-**AAA framework**: Set of 3 access control systems (authentication, authorization, accounting).
+The major **security control frameworks** are AAA and IAM. Both systems are designed to authenticate users, determine their access privileges, and track their activities within a system. They each consist of a collection of security controls that ensure that the right user (person, device, software) gets access to the right resources at the right time and for right reasons.
 
-**Authentication**: Access control that identifies who is trying to access information. In general, there're 3 factors of authentication (knowledge, ownership, characteristics). If the provided authentication information matches information on a file, access is granted; otherwise, access is denied. 
+- **AAA framework**: Set of 3 access control systems (authentication, authorization, accounting).
+- **IAM framework** (Identity and Access Management): Collection of processes and technologies that helps organizations manage digital identities in their environment. 
+
+**AAA framework**: Set of 3 access control systems:
+
+- **Authentication**: Identifies who is trying to access information.
+- **Authorization**: Determines what a user is allowed to do.
+- **Accounting**: Monitors access logs of a system.
+
+**Authentication**: Access control that identifies who is trying to access information. In general, there're 3 factors of authentication (knowledge, ownership, characteristics). If the provided authentication information matches information on a file, access is granted; otherwise, access is denied. Authentication proofs:
 
   - __Knowledge__: Something the user knows (like a password).
   - __Ownership__: Something the user possesses (such as an OTP, one-time passcode: random number sequence a website/application sends you and asks you to provide).
@@ -1660,30 +1670,700 @@ In the early days of computing, hash functions were used for quickly search for 
  
 **SSO** and **MFA** are technologies that implement these authentication factors. Usually, both are used in conjunction to provide a secure and convenient access.
 
-- **SSO** (Single sign-on): Technology that combines several different logins into one. Instead of requiring users to authenticate over and over again, SSO establishes identity once, allowing access to company resources faster. It improves user experience (less usernames and passwords to remember), lower costs (by streamlining how connected services are managed), and improves overall security (reduces number of access points of attackers). However, presents an important vulnerability if it relies on a single factor of authentication. Adding more authentication factors strengthen these systems.
+- **SSO** (Single sign-on): Technology that combines several different logins into one. Instead of requiring users to authenticate over and over again, SSO establishes identity once, allowing access to company resources faster. 
 
-- **MFA** (Multi-factor authentication): Security measure which requires a user to verify his identity in two or more ways (knowledge, ownership, characteristic) to access a system or network.
+  - Advantages: It improves user experience (less usernames and passwords to remember), lower costs (by streamlining how connected services are managed), and improves overall security (reduces number of access points attackers can target).
+  - SSO solutions use trusted third-parties to prove user's identity, which is done through the exchange of encrypted access tokens, using specific protocols (usually, __LDAP__ and __SAML__ together). 
+  - SSO is very vulnerable if it relies on a single factor of authentication. Adding more authentication factors strengthen these systems.
 
+- **MFA** (Multi-factor authentication): Security measure which requires a user to verify his identity in two or more ways (knowledge, ownership, characteristic) to access a system or network. To authenticate an identification a user has to provide 2 (2FA) or 3 factors (3FA). It asks user for proofs (__knowledge__, __ownership__, __characteristic__).
 
+**Authorization**: Access control that determines what a user is allowed to do. Applied principles: Least privilege (access to information only lasts as long as needed) and Separation of duties (users should not have authorization levels that allow misuse, which reduces system failures and inappropriate behaviour from users). Both principles apply to people and all systems (networks, databases, processes...). Some access controls are:
 
-**Authorization**: Access control that
+- __Basic auth__: Technology used to establish a user's request to access a server. Some uses:
 
-**Accounting**: Access control that
+  - __HTTP__: An identifier is sent every time a user communicates with a website so it can tell if he is authorized or not to access information. It's considered vulnerable because usernames and passwords are transmitted openly over the network.
+  - __HTTPS__: It uses encryption to prevent exposing sensitive information while transmitting it.
 
+- __OAuth__: Open-standard authorization protocol that shares designated access between applications. Instead of transmitting sensitive information, an __API token__ (small block of encrypted code that contains user's information) is used to verify access. Access requests are sent and received using API tokens by passing them from a server to a user's device.
 
+**Accounting**: Access control that monitors access logs of a system. 
 
+- **Session**: Sequence of network HTTP basic auth requests and responses associated with the same user. When initiating a session, a __session ID__ is created, and session __cookies__ are exchanged between the server and user's device, so it can read your session ID to determine what information to show you. Exchanging tokens prevent sharing sensitive data. 
+
+  - __Session ID__: Unique token that identifies a user and their device while accessing a system, until it closes his browser or session times out.
+  - __Session cookies__: Token that websites use to validate a session and determine how long that session should last. Cookies make web sessions safer (attacker cannot obtain sensitive data) and efficient. However, an stolen cookie can be used to impersonate a user (__session hijacking__: attackers obtains a legitimate user's session ID).
+
+- **Access logs**: Records of sessions that capture the moment a user enters. They contain information such as who accessed a system, when they accessed, what resources they used, etc. They're useful for identifying trends (failed login attempts...), uncovering hackers that gained access to a system, and detecting incidents (data breach...).
+
+**Least privilege** limits the access that an individual receives. **Separation of duties** divides responsibilities among multiple people so nobody has too much control.
+
+**IAM framework** (Identity and Access Management): Collection of processes and technologies that helps organizations manage digital identities in their environment. 
+
+- **User provisioning**: Process of creating and maintaining a user's digital identity. Example: A new user account is created for a recently hired teacher, and it will be configured to provide access to teacher-only resources while they're teaching. Security analysts are routinely involved with provisioning users and their access privileges.
+
+  - __Deprovision users__: Practice that removes a user's access rights when they should no longer have them.
+
+- **Granting authorization**: If the right user has been authenticated, the network should ensure the right resources are made available. There're 3 common frameworks used for handling this step:
+
+  - **MAC** (Mandatory access control, or Non-discretionary control): Authorization is based on a strict need-to-know basis. Access to information must be granted manually by a central authority or system administrator. Example: Often applied in law enforcement, military, and government agencies where users request access through a chain of command.
+
+  - **DAC** (Discretionary access control): Typically applied when a data owner decides appropriate levels of access. Example: The owner of a Google Drive folder shares editor, viewer, or commentor access with someone else.
+
+  - **RBAC** (Role-based access control): Used when authorization is determined by a user's role within an organization. Example: A user in the marketing department has access to user analytics but not network administration.
+
+- [IDPro](https://idpro.org/): Professional organization that shares IAM industry knowledge.
 
 ### Vulnerabilities in systems
+
+**Vulnerability**: Weakness that can be exploited by a threat (like a window in a house).
+
+**Exploit**: Way of taking advantage of a vulnerability (like breaking the window).
+
+- **Zero-day**: Exploit that was previously unknown (like using heat to open a door). It's an unexpected threat we don't anticipate and we haven't planned for.
+
+**Vulnerability management**: Process of finding and patching vulnerabilities (fixing their exploits). It helps keep assets safe by stopping threats before they can become a problem. Steps:
+
+- Identify vulnerabilities
+- Consider potential exploits
+- Prepare defences against threats
+- Evaluate those defences 
+- Repeat (there're always new vulnerabilities)
+
+For every asset that needs protection, there are many vulnerabilities. To keep assets safe we have to find and fix them before they become a problem (vulnerability management). Assets are protected according to their vulnerabilities and how they can be exploited.
+
+**Defense in depth**: Security framework based on a layered approach to vulnerability management that reduces risk. It's often used for protecting information using a 5 layer design, where each layer features a number of security controls. Information passes through these layers whenever it's exchanged over a network.
+
+- **Perimeter layer**: User authentication layer (username, password...). It only allows trusted partners to reach the next layer.
+- **Network layer**: Authorization layer (firewall...).
+- **Endpoint layer**: Technologies used (antivirus...) to protect devices that have access on a network (laptop, desktop, server...).
+- **Application layer**: Security layers programmed as part of an application (MFA...). It includes the interfaces users interact with.
+- **Data layer**: Critical data (stored, in transit, or in use) to be protected (PII...). Asset classification is an important security control here.
+
+Protecting information is a global effort. There are online public libraries (like CVE list) that are used to share and document common vulnerabilities and exposures.
+
+**Exposure**: Mistake that can be exploited by a threat (like putting important documents in an open window).
+
+**[CVE list]** (Common Vulnerabilities and Exposures list): Openly accessible dictionary of known vulnerabilities and exposures. It offers a standard way of identifying and categorizing them. Created by MITRE. Popular resource. Used by many organization to improve their defences. Anybody can report CVEs (independent researchers, technology vendors, ethical hackers...), which then go through a review process by the CNA. They're also reviewed by other online vulnerability databases. 
+
+- **MITRE**: Collection of non-profit research and development centers. Sponsored by US government. It focuses on improving security technologies.
+
+- **CNA** (CVE Numbering Authority): Organization that volunteers to analyse and distribute information on eligible CVEs. It has a stablished record of researching vulnerabilities and security advisory capabilities.
+
+A CVE must meet 4 criteria before it's assigned a CVE ID:
+
+- Independence from other issues (i.e., it can be fixed without fixing something else)
+- Recognized as a potential security risk
+- Submitted with supporting evidence
+- It can only affect one codebase (i.e., only one program's source code)
+
+[**NIST NVD**](https://nvd.nist.gov/) (NIST National Vulnerabilities Database): Online vulnerability database. It uses a CVSS (Common Vulnerability Scoring System), a measurement system that scores (0-10) the severity of a vulnerability. This score can change over time. Scores below 4 are considered low risk, but above 9 are critical risk.
+
+Security teams use CVSS for calculating the impact a vulnerability can have on a system and how quickly it should be patched. They commonly use CVE list and CVSS scores in their vulnerability management system.
+
+**OWASP**: Non-profit foundation that works to improve security of software. Open platform used by security professionals to share information, tools, and events focused on securing the web. One of its most valuable resources is the OWASP Top 10.
+
+- **OWASP Top 10**: List of the web's most targeted vulnerabilities. Many organizations reference to this list during application development to ensure their programs address common security mistakes. It's updated every few years. Rankings are based on how often the vulnerabilities are discovered and their level of risk. Auditors also use this list as a reference when checking for regulatory compliance. The most regularly listed vulnerabilities are:
+
+  - __Broken access control__: Access controls limit what users can do in a web application (example: visitors to a blog can publish but cannot delete an article). Failures here can lead to unauthorized information disclosure, modification, or destruction, or even access to other business applications.
+  - __Cryptographic failures__: Privacy laws (like GDPR) require sensitive data to be protected with encryption. Failing to correctly encrypt important information can lead to vulnerabilities (example: using weak hashing algorithm like MD5).
+  - __Injection__: Malicious code is inserted in a vulnerable application. It can create a backdoor into an organization's information system. A common target is a website's login form, which can give attackers access to modify or steal user credentials.
+  - __Insecure design__: Applications should be designed so they are resilient to attack. Insecure designs have missing or poorly implemented security controls.
+  - __Security misconfiguration__: Security settings aren't properly set or maintained (example: network server that uses default settings).
+  - __Vulnerable and outdated components__: Open-source libraries are used for developing applications faster. Using vulnerable non-maintained components can lead to great risks. 
+  - __Identification and authentication failures__: Applications failing to recognize who has access and what they're authorized to do. Example: home Wi-Fi router failing to keep attackers off the network.
+  - __Software and data integrity failures__: Updates or patches inadequately reviewed before implementation. This can lead to downstream effects. Third parties can be infected if a single component is compromised (supply chain attack). Example: during [SolarWinds cyberattack](https://www.gao.gov/blog/solarwinds-cyberattack-demands-significant-federal-and-private-sector-response-infographic) (2020), hackers injected malicious code in software updates that were released later.
+  - __Security logging and monitoring failures__: Logging (recording events like login attempts) allows to trace back events, so problems can be found and fixed. Monitoring and incident response is also important.
+  - __Server-side request forgery__ (SSRF): Companies store public and private information on web servers. After a user requests data from a server, it validates the user, fetch data, and returns the data. SSRFs are attacks that manipulate the normal operations of a server to read or update other resources on that server. Vulnerable applications on the server may carry malicious code for fetching unauthorized data to the host server.
+
+**OSINT** (Open-Source Intelligence): Collection and analysis of information from publicly available sources to generate usable intelligence. It can be used to provide insights into cyberattacks, detect potential data exposures, evaluate existing defences, identify unknown vulnerabilities, etc. It can be part of vulnerability management process.
+
+- **Information**: Collection of raw data or facts about a specific subject. Example: A new update to the OS has some vulnerabilities.
+
+- **Intelligence**: Analysis of information to produce knowledge or insights that can be used to support decision-making. Intelligence is derived from information through analysis, interpretation, and integration. Example: An analysis of information makes us decide to don't install the update.
+
+- __OSINT tools__: There's a lot of open-source information online (search engines, social media, discussion boards, blogs...). Some tools are:
+
+  - [VirusTotal](https://www.virustotal.com/gui/home/upload): Allows anyone to analyse suspicious files, domains, URLs, and IP addresses for malicious content.
+  - [MITRE ATT&CK](https://attack.mitre.org/): knowledge base of adversary tactics and techniques based on real-world observations.
+  - [OSINT framework](https://osintframework.com/): Web-based interface where you can find OSINT tools for almost any kind of source or platform.
+  - [Have I been Pwned](https://haveibeenpwned.com/): Tool that can be used for searching for breached email accounts.
+
+**Vulnerability assessment**: Internal review process of an organization's security systems. Its main purpose is to identify weak points (vulnerabilities) and prevent attacks, and determine if security controls meet regulatory standards. The organization's security team performs, evaluates, scores, and fix vulnerabilities. Process:
+
+1. __Identification__: Understand current state of a security system. Find vulnerabilities using scanning tools and manual testing.
+2. __Vulnerability analysis_: Test the identified vulnerabilities and find the source of the problem.
+3. __Risk assessment__: Assign a severity score to each vulnerability depending on the potential severity of exploiting it and the likelihood of this happening. 
+4. __Remediation__: Address vulnerabilities depending on their severity score (enforcing new security procedures, update OSs, implement system patches...).
+
+**Vulnerability scanning**: Software that automatically compares known vulnerabilities and exposures against the technologies on the network. In general, they scan systems looking for misconfigurations or programming flaws. Used for analysing each of the 5 attack surfaces from defence in depth. When scanning a layer, it compares the findings against databases of security threats. Found vulnerabilities are added to its database. Each scan adds more information to the database, which improves the tool's analysis. Vulnerability databases are routinely updated by the company that designed the scanning software. These scanners are meant to be non-intrusive (they don't break or take advantage of a system, unlike an attacker), they simply scan and alert of unlocked doors in your systems. There're special cases where a scanner can inadvertently cause issues (system crash...). There're different ways of scanning, based on a threat actor pathway:
+
+- **External vs. internal**: Scans that simulate an attacker's approach.
+  - __External scans__ test outward facing systems (websites, firewalls...) to uncover vulnerable things (network ports, servers...).
+  - __Internal scans__ examine internal systems (user input management...).
+
+- **Authenticated vs. unauthenticated**: Scans that simulate whether or not a user has access to a system.
+  - __Authenticated scans__: Used to check for vulnerabilities (broken access controls...). Example: Test a system by logging in with a user or admin account.
+  - __Unauthenticated scans__: Simulate external threat actors that don't have access to business resources. Unauthenticated users should get "access denied" when trying to open them. 
+
+- **Limited vs. comprehensive**: It focuses on particular devices that are accessed by internal and external users. A **discovery scanning** (discover computers, devices, and open ports that are on a network) should be done first.
+  - __Limited scans__: Analyse particular devices on a network (like searching for misconfigurations on a firewall).
+  - __Comprehensive scans__: Analyse all devices connected to a network (OSs, databases...).
+
+**Updates** usually take place after a vulnerability assessment. A **patch update** is a software and OS update that addresses security vulnerabilities within a program or product. Patches usually contain **bug fixes** that address common security vulnerabilities and exposures. Patches usually address vulnerabilities and exposures before malicious hackers find them, but sometimes they are developed as a result of a zero-day (previously unknown exploit). Two update types:
+
+- **Manual**: IT departments or users have to find, download, and install updates themselves. This process can be handled with a configuration management tool. This gives more control, but critical updates can be forgotten or disregarded entirely.
+- **Automatic**: The system or application finds, downloads, and install updates. Requires to enable certain permissions. CISA recommends this option. The deployment process is simplified, and keeps systems and software current with the latest, critical patches; but instability issues may occur if patches are not thoroughly tested by the vendor, resulting in poor performance and user experience.
+
+**EOL software** (End-Of-Life software): Software no longer supported by the manufacturer. There're no more updates available for it.
+
+**Upgrade**: Completely new version of hardware or software that can be purchased.
+
+CISA recommends stop using EOL software because it poses an unfixable risk to systems. However, it's not always done because replacing it can be costly for users and businesses. Example: There're billions of IoT devices connected to home and work networks. A single unpatched device could serve an attacker for gaining access to the network.
+
+**Penetration testing** (Pen test): Simulated attack that helps identify vulnerabilities in systems, networks, websites, applications, and processes. It uses the same tools and techniques as malicious actors use. It's a form of ethical hacking. It exploits weaknesses to determine potential consequences of attacks. Organizations regulated by PCI DSS, HIPAA, or GDPR must routinely perform pen testing to maintain compliance standards. Different approaches to pen testing:
+
+- __Red team__: Simulates attacks (proactive simulation) to identify vulnerabilities in systems, networks, or applications. Red teams are usually made of independent pen testers. They tend to spend more time planning attacks than performing them.
+- __Blue team__: Focused on defense and incident response (reactive simulation) to validate an organization's existing security systems. It focuses on gathering information about the assets they protect, usually using vulnerability scanning tools.
+- __Purple team__: Combines elements of red and blue team exercises for improving the organization's security posture.
+
+There're 3 common pen testing **strategies**:
+
+- **Open-box testing** (internal, full knowledge, white-box, clear-box): The tester has the same privileged access than an internal developer.
+- **Closed-box testing** (external, black-box, zero-knowledge): The tester has little to no access to internal systems, similar to a malicious hacker.  This tends to produce the most accurate simulations of real attacks.
+- **Partial knowledge testing** (gray-box): The tester has limited access and knowledge of an internal system. 
+
+Pen tester **skills**:
+
+- Network and application security
+- Experience with OSs (Linux...)
+- Vulnerability analysis and threat modelling
+- Detection and response tools
+- Programming languages (Python, BASH...)
+- Communication skills
+
+**Bug bounty programs**: Organizations may offer freelance pen testers financial rewards for finding and reporting vulnerabilities in their products. You can find some bug bounties in [HackerOne](https://hackerone.com/bug-bounty-programs).
+
+**Attack surface**: All the potential vulnerabilities that a threat actor could exploit. Analysing it is usually the first thing security teams do. Two types of attack surfaces:
+
+- **Physical**: Made of people and their devices. It can be attacked from inside and outside the organization. Examples: staff, laptop, devices...
+- **Digital**: Everything beyond the organization's firewall. Anything that connects to an organization online. Examples: networks, website, cloud servers...
+
+**Attack tree**: Diagram that maps threats to assets.
+
+**Security hardening**: Process of strengthening a system to reduce its vulnerabilities and attack surface. It minimizes the attack surface by limiting its points of entry. The smaller the attack surface, the easier it is to protect. Some security controls (organization policies, access controls...) are used to harden the physical attack surface. Cloud computing has expanded the attack surface (organizations save data on the cloud, not in their own servers).
+
+**Threat actor**: Person or group who presents a security risk. They can be from inside or outside the organization. They can put assets at risk intentionally or accidentally. Types:
+
+- __Competitors__: Rival companies that might benefit from leaked information.
+- __State actors__: Government intelligence agencies.
+- __Criminal syndicates__: Organized groups that make money from criminal activity.
+- __Insider threats__: Individual that has or had authorized access to the organization's resources. They can put assets at risk intentionally or accidentally.
+- __Shadow IT__: Individuals who use technologies that lack IT governance.  
+
+**Hacker**: Person who uses computers to gain unauthorized access to computer systems, networks, or data. Types:
+
+- __Unauthorized hackers__: He uses programming skills to commit crimes.
+- __Authorized/ethical hackers__: He uses programming skills to improve an organization's overall security (employees, externals, freelances).
+- __Semi-authorized hackers__: He violates ethical standards, but are not considered malicious. Example: hacktivist (he uses his skill for achieving a political goal).
+
+**APT** (Advanced Persistent Threat): A threat actor maintains unauthorized access to a system for an extended period of time (instead of leaving after attacking). Mostly associated with nation states and state-sponsored actors. APTs are usually concerned with surveilling a target to gather information, and then use the intel to manipulate government, defense, financial, and telecom services. APTs often target private organizations first before gaining access to larger entities.
+
+**Attack vectors**: Pathways attackers use to penetrate security defences (intentionally or accidentally).
+
+**Access point**:  Attack vectors used by threat actors to gain access to a system. Types:
+
+- __Direct access__: Physical access to the system.
+- __Removable media__, including portable hardware (USB flash drives...).
+- __Social media platforms__ used for communication and content sharing.
+- __Email__, including personal and business accounts.
+- __Wireless networks__ on premises.
+- __Cloud services__ usually provided by third-party organizations.
+- __Supply chains__, like third-party vendors that can present a backdoor into systems.
+
+Security teams think of each attack vector with an attacker mindset. Practicing an attacker mindset provides insight into the best security controls to implement and the vulnerabilities to monitor. Steps:
+
+- Identify a target
+- Determine how the target can be accessed
+- Evaluate attack vectors that can be exploited
+- Find the tools and methods of attack
+
+Defending attack vectors:
+
+- Educating users
+- Applying the principle of least privilege
+- Using the right security controls and tools
+- Building a diverse security team
+
+**Brute force attack**: Trial-and-error process of discovering private information. It can be tedious and time consuming. Types of access credentials brute force attacks:
+
+- __Simple brute force attack__: Attacker guess user's login credentials. He can try any combination he can think of until one works.
+- __Dictionary attack__: Similar to simple brute force, but using a list of commonly used credentials to access a system.
+- __Reverse brute force attack__: Similar to dictionary attack, but starting with a single credential and trying it in various systems until a match is found.
+- __Credential stuffing__: Uses stolen login credentials from previous data breaches to access user accounts at another organization. A special type is __pass the hash__ (reuse stolen, unsalted hashed credentials to trick an authentication system into creating a new authenticated user session on the network).
+
+**Exhaustive key search**: Brute force technique for accessing encrypted information.
+
+Common brute force __tools__:
+
+- Aircrack-ng__
+- Hashcat__
+- John the Ripper__
+- Ophcrack__
+- THC Hydra__
+
+Techniques for __defending__ against brute force attacks:
+
+- __Hashing and salting__: Hashing converts information into a unique value that can then be used to determine its integrity. Salting is an additional safeguard for strengthening hash functions (it adds random characters to data, like passwords, increasing length and complexity of hash values, making them harder to brute force and dictionary attacks).
+- __MFA__: User verify his identity in two or more ways to access a system or network. It's a layered approach to protecting information. Unauthorized users can hardly meet all authentication requirements.
+- __CAPTCHA__ (Completely Automated Public Turing test to tell Computers and Humans Apart): Challenge-response authentication system for proving that you are human and not software that's trying to brute force a password.
+- __Password policies__: Organizations use managerial controls to standardize good password practices across their business (example: use passwords with certain characteristics, limit the number of login attempts before suspending account, or require users to create new password after some time). The [NIST SP 800-63B](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63b.pdf) provide guidance about password policies.
+
 ### Threats to asset security
 
+#### Social engineering
 
+**Threat**: Any circumstance or event that can negatively impact assets.
 
+**Social engineering**: Manipulation technique that exploits human error to gain private information, access, or valuables. It can happen anywhere (online, in person, and other interactions). Anyone is vulnerable. Threat actors use many different tactics (fake tech support...). It can happen in a few seconds, or take months or longer. These attacks can be very dangerous because they don't require sophisticated computer skills, and allows to bypass technological defenses. Typical stages:
 
+1. __Prepare__: Gather information about the target to find the best way to exploit him.
+2. __Establish trust__ (pretexting): Previously gathered information is used to open communication (usually, to trick the target into a false sense of trust).
+3. __Persuasion tactics__: Manipulate the target into volunteering information.
+4. __Disconnect from the target__: Disappear to cover tracks.
 
+Example: During the [Twitter hack of 2020](https://www.dfs.ny.gov/Twitter_Report) a group of hackers made phone call to Twitter employees pretending to be from the IT department and gained access to the organization's network and tools, allowing them to take over accounts of high-profile users.
 
+__Defending__ against social engineering attacks requires a multi-layered approach that combines user awareness with technological controls (firewalls, MFA, block lists, email filtering...). Recognizing the __signs of social engineering__ is key for reducing the likelihood of successful attacks:
+
+- __Baiting__: Tempt people into compromising their security. Example: someone finds an infected USB drive and plugs it into his device.
+- __Phishing__: Use digital communications to trick people into revealing sensitive data or deploying malicious software. Very common. Usually performed via email.
+- __Quid pro quo__: Trick someone into believing that they’ll be rewarded in return for sharing access, information, or money. Example: an attacker impersonates a bank loan officer and offers a low interest rate on your credit card, but needs your account details to claim the deal.
+- __Tailgating__ (piggybacking): Unauthorized people follow an authorized person into a restricted area.
+- __Watering hole__: A website frequently visited by a specific group of users is compromised. Oftentimes, these sites are infected with malicious software. Example: Holy Water attack (2020) infected various religious, charity, and volunteer websites.
+
+__Preventing__ social engineering:
+
+- Implement managerial controls (policies, standards, procedures...).
+- Stay informed of trends.
+- Share your knowledge with others.
+
+__Encouraging caution__: Train employees and customers about social engineering threats.
+
+- __Stay alert__ of suspicious communications and unknown people, especially from email.
+- __Be cautious__ about sharing information, especially over social media.
+- __Control curiosity__ when something seems too good to be true.
+
+Resources (social engineering):
+
+- [OUCH!](https://www.sans.org/newsletters/ouch/): Free monthly newsletter from SANS Institute that reports on social engineering trends and other security topics.
+- [Scamwatch](https://www.scamwatch.gov.au/): News and tools for recognizing, avoiding, and reporting social engineering scams.
+
+#### Phishing
+
+**Phishing**: Use of digital communications (usually, email) to trick people into revealing sensitive data or deploying malicious software. Attackers carrying out phishing commonly use __phishing kits__. Some forms of phishing are:
+
+- **Email phishing**: Use of email for sending messages pretending to be a trusted person or entity.
+  - **Spear phishing**: Subset of email phishing where specific people is targeted.
+    - **Whaling**: Type of spear phishing that targets high-ranking executives in an organization.
+  - **Angler phishing**: Impersonate customer service representatives on social media to get sensitive information from customers.
+- **Smishing**: Use of __text messages__ to obtain sensitive information or to impersonate a known source. 
+- **Vishing**: Exploitation of __electronic voice communication__ (voice call or voice messages) to obtain sensitive information or impersonate a known source.
+
+**Phishing kit**: Collection of software tools needed to launch a phishing campaign. Not much technical background is needed. Each tool is designed to avoid detection. Main tools:
+
+  - __Malicious attachments__: Infected files that can cause harm.
+  - __Fake data-collection forms__: Forms looking like legitimate forms (like a survey) and used for asking for sensitive information.
+  - __Fraudulent web links__: Malicious web pages looking like trusted brands and built to steal information.
+
+Phishing __security measures__:
+
+- Anti-phishing policies
+- Employee training resources
+- Email filters (blocklists, allowlists...)
+- Intrusion prevention systems (there're monitoring tools that spot suspicious emails, quarantine them, and produce a log of events)  
+
+Resources (phishing):
+
+- [Google's phishing quiz](https://phishingquiz.withgoogle.com/): See how difficult it can be to identify these attacks.
+- [Phishing.org](https://www.phishing.org/): Latest phishing trends and free resources.
+- [APWG](https://apwg.org/) (Anti-Phishing Working Group): Non-profit security experts that publish a quaterly report on phishing trends.
+
+#### Malware
+
+**Malware**: Software designed to harm devices or networks. Most common types:
+
+- **Virus**: Malicious code written to interfere with computer operations and cause damage to data and software. When the user launches the infected program, the virus clones itself and spreads to other files in the device. It has to be installed by the target user.
+- **Worm**: Malware that can duplicate and spread itself across systems on its own (no need of the user executing something). It has to be installed by the target user. It uses an infected device as a host and scan the connected network for other devices. Then, infect everything on the network without requiring an action to trigger the spread.
+- **Trojan**: Malware that looks like a legitimate file or program. It is often used to gain access and install a ransomware. It's hidden in file and application downloads.
+- **Ransomware**: Attackers encrypt the organization's data and demand payment to restore access (decrypt). It makes himself known to its target in order to collect the payment. Example: [WannaCry](https://en.wikipedia.org/wiki/WannaCry_ransomware_attack).
+- **Adware**: Legitimate software that is sometimes used to display digital advertisements in applications. It allows developers monetize their product (software, freeware, shareware) through ad revenue.
+- **PUA** (Potentially Unwanted Application): Unwanted software (like malicious adware) bundled in with legitimate programs (bundleware). It displays ads, cause device slowdown, or install other software. Example: Malicious adware monetize ads not for the developer but for somebody else.
+- **Spyware**: Type of PUA. Malware used to gather and sell information without consent. Often hidden in bundleware (additional software packaged with other applications).
+- **Scareware**: Type of PUA. Malware that frightens users into infecting their own device (like displaying fake warnings). It's spread via email, pop-ups, etc.
+- **Fileless malware**: No need to be installed by the user because it uses legitimate programs that are already installed to infect a computer. This infection resides in memory where the malware never touches the disk, instead of being stored in a file on disk. It gets into the OS or hide within trusted applications. It's detected by performing memory analysis.
+- **Rootkits**: Malware that provides remote, administrative access to a computer. Mostly used to open a backdoor, allowing malware installation or network security attacks. Often spread using both a __dropper__ and a __loader__.
+  - **Dropper**_: Malware packed with malicious code which is delivered and installed onto a target system. It's often disguised as a legitimate file to deceive its target into opening it, which executes the malicious code and it hides itself on the target system.
+  - **Loader**: Malware that downloads strains of malicious code from an external source and installs them onto a target system. Often used to setup another type of malware.
+- **Botnets**: Collection of computers (robot network) infected by malware that is controlled by a single threat actor (bot-herder). The initial infection is often spread by viruses, worms, and trojans. The attacker then uses file sharing, email, or social media application protocols to create new bots and grow the botnet. When a target opens the malicious file, the computer reports the information back to the bot-herder, who can execute commands on the infected computer.
+- **Cryptojacking**: Malware that installs software to illegally mine cryptocurrencies. It's hard to detect. Main signs: slowdown, increased CPU usage, system crashes, fast draining batteries, high electricity costs.
+
+**IDS** (Intrusion Detection System): Application that monitors system activity and alerts on possible intrusions. New forms of malware may remain undetected.
+
+Some measures for reducing likelihood of malware attacks:
+
+- Some browser extensions are designed to block malware.
+- Use adblockers
+- Disable JavaScript
+- Stay alert on the latest trends
+
+#### Web-based exploits
+
+**Web-based exploit**: Malicious code or behaviour that's used to take advantage of coding flaws in a web application.
+
+**Injection attack**: Malicious code inserted into a vulnerable application. Infected applications often appear to work normally because the injected code runs in the background. 
+
+Applications are vulnerable to injections because they are programmed to receive data inputs (something the user types or clicks, something one program is sharing with another...). Applications should be able to interpret and handle user inputs. Example: if an application expects the user to enter a phone number, it should validate that input (make sure it's no more than 10 numbers, without letters). If the input doesn't meet the requirements, the application should know how to handle it (sanitized input).
+
+**XSS** (Cross-site scripting): Injection attack that inserts code into a vulnerable website or web application. Often delivered by exploiting HTML and JavaScript (used by most websites), which can give access to everything loaded on the infected webpage (session cookies, geolocation, webcams, microphones...). Types of XSS attacks:
+
+- **Reflected**: A malicious script is sent to a server and activated during the server's response. Example: A criminal sends his target a web link that appear to go to a trusted site. When the target clicks the link, it sends a HTTP request to the vulnerable site server, which returns the attacker script, which is loaded by the browser because it trusts the server's response, and information (session cookies…) is sent back to the attacker.
+- **Stored**: A malicious script is injected directly on the server (unlike reflected XSS, it's not hidden in a link that needs to be sent to the server). Attackers target elements of a site that are served to the user (images, buttons... loaded when the site is visited). Infected elements activate the malicious code when a user visits the site. The user cannot know if the site is infected beforehand.
+- **DOM-based**: A malicious script exists in the webpage a browser loads (unlike reflected XSS, this attack doesn't need to be sent to the server to activate). The malicious script can be seen in the URL (a URL containing parameter values that reflect input from the user). Criminals change the parameter that's expecting an input (example: a script modifies `my.website.com/mything?theme=light` to `my.website.com/mything?theme=alert(1)`). The browser would process the HTML and execute the JavaScript.
+
+**SQL injection**: Attack that executes unexpected queries on a database. It's done to modify, delete, or steal information from databases, and even gain unauthorized access to web applications. Some websites, like shopping websites, use databases. Websites don't normally make users enter SQL queries manually, but provide an interface instead (images, menus, buttons...). Sometimes, the backend queries are vulnerable to injection, which is due to a lack of sanitized input. It takes place in a website area designed to accept user input. The best defense is to use code that sanitize the input (like a Prepared statement).
+
+- Example: When a user enters his credentials (`username` and  `password`), a login form might trigger a backend SQL statement (`SELECT id FROM users WHERE user_id = '$username' AND pass_w = '$password';`) that is sent to a server to run the query. User's input should not be inserted exactly as it entered. Otherwise, attackers can exploit this (like injecting SQL code that makes the server run an unexpected harmful query), allowing them to obtain sensitive information, modify tables, gain administrative rights, etc.
+
+- **Prepared statement**: Coding technique that executes SQL statements before passing them on to the database. Useful when user's input is unknown. It executes the code before passing it to the server (code is validated before performing the query).
+
+**SQL queries**: Request for data from a database. SQL injections can occur anywhere within a vulnerable application that can accept a SQL query. Every bit of information that’s accessed online is stored in a database (organized collection of information or data in one place). In SQL, database information is organized in tables. SQL is commonly used for retrieving, inserting, updating, or deleting information in tables using queries. Queries are usually initiated in places where users can input information into an application or a website via an input field, which accepts text input (login forms, search bars, comment submission boxes...). 
+
+SQL injection **categories**:
+
+- **In-band**: It uses the same communication channel to launch the attack and gather the results. Most common type. After the injection, the data returned from the database is displayed back where the malicious code was injected (example: a search box).
+- **Out-of-band**: It uses a different communication channel to launch the attack and gather the results. Very uncommon.
+- **Inferential**: The attacker is unable to directly see the results of their attack. Instead, he can interpret the results by analyzing the behavior of the system.
+
+**Escape user inputs**: Action of preventing someone from inserting any code that a program isn't expecting. This is key for preventing SQL injection. Different ways:
+
+- **Prepared statements**: Coding technique that executes SQL statements before passing them on to a database. Useful when user's input is unknown. It executes the code before passing it to the server (code is validated before performing the query).
+- **Input sanitization**: Programming that removes user input which could be interpreted as code.
+- **Input validation**: Programming that ensures user input meets a system's expectations.
+
+More information in [OWASP's SQL injection detection techniques](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection).
+
+#### Threat modelling
+
+**Threat actor**: Person or group who presents a security risk. It can be internal (like an employee) or external (like a malicious hacker).
+
+**Attack tree**: Diagram that maps threats to assets.
+
+**Threat modelling**: Process of identifying assets, their vulnerabilities, and how each is exposed to threats. It combines various security activities (vulnerability management, threat analysis, incident response...). This is performed to ensure systems are adequately protected, or for finding ways of reducing risks. It's applied to anything that needs protection (systems, applications, business processes...). It's often performed by experienced security professionals, but almost never done alone. There're several threat modelling frameworks (for network security, information security, application development...). Steps:
+
+1. __Define scope of the model__: Create an inventory of assets and classify them.
+2. __Identify threats__: Define potential threat actors. Then, put together an attack tree.
+3. __Characterize the environment__: Apply an attacker's mindset to the business. 
+4. __Analyze threats__: Examine existing protections and identify gaps. Then, rank threats according to their risk score.
+5. __Mitigate risks__: Create a plan for defending against threats. Choices: avoid risk, transfer it, reduce it, or accept it.
+6. __Evaluate findings__: Everything done in previous steps is documented, fixes are applied, and teams make note of any success they had and report lessons learned.
+7. Repeat
+
+One key to threat modelling is asking the right questions: What are we working on? What kind of things can go wrong? What are we doing about it? Have we addressed everything? Did we do a good job?
+
+In __application development__, ideally, threat modelling should be performed before, during, and after an application is developed (though it takes time and resources). It should be incorporated at every stage of the SDLC.
+
+**Threat modelling methods**: There're different methods (STRIDE, PASTA, Trike, VAST...). Organizations use any one of them to gather intelligence and make decisions to improve their security posture. The right one depends on the situation and types of risks.
+
+- **PASTA** (Process of Attack Simulation and Threat Analysis): Popular threat modelling framework that's used across many industries. It's risk-centric, and is focused on discovering evidence of viable threats and representing this information as a model. It's evidence-based design can be applied when threat modelling an application or the environment supporting it. Developed by 2 OWASP leaders and supported by VerSprite (cybersecurity firm). Stages:
+
+  1. Define business and security __objectives__ (example: protect user's data).
+  2. Define the __technical scope__: Identify the application components to evaluate (attack surface).
+  3. __Decompose the application__: Identify the existing controls for ensuring the objectives.
+  4. Perform a __threat analysis__: Get into the attacker's mindset. Collect up-to-date information on the type of attacks being used.
+  5. Perform a __vulnerability analysis__: Investigate potential vulnerabilities by considering the root of the problem.
+  6. Conduct __attack modelling__: Test the analysed vulnerabilities by creating an attack tree, which is used to identify attack vectors that need to be tested to validate threats.
+  7. __Analyze risk and impact__: Using all the collected information make informed risk management recommendations to business stakeholders that align with their goals.
+
+- **STRIDE** (Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege): Commonly used to identify vulnerabilities in 6 specific attack vectors (the acronym represents each vector). Developed by Microsoft. 
+
+- **Trike**: Open source methodology and tool that takes a security-centric approach to threat modeling. It's commonly used to focus on security permissions, application use cases, privilege models, and other elements that support a secure environment.
+
+- **VAST** (Visual, Agile, and Simple Threat): Modelling framework that is part of the ThreatModeler® automated threat-modeling platform. It's often used as a way of automating and streamlining the threat modelling assessments.
 
 
 ## Detection and response
+
+
+### Introduction
+
+**Frameworks** help develop a standardized approach to the incident response process, so that incidents are managed in an effective and consistent way. There are different types of frameworks that can be adopted and modified according to needs.
+
+**NIST CSF**: Cybersecurity Framework consisting of 5 core functions: identify, protect, detect, respond, recover.
+
+**NIST Incident Response Lifecycle**: NIST framework for incident response (focused on detect, respond, recover). It's a cycle. Phases:
+
+  - __Preparation__
+  - __Detection and analysis of events__
+  - __Containment__, Eradication and recovery__
+  - __Post incident activity__
+
+**Incident**: Occurrence that actually or imminently jeopardizes, without lawful authority, the confidentiality, integrity, or availability of information or an information system; or constitutes a violation imminent threat of violation of law, security policies, security procedures, or acceptable use policies. 
+
+**Event**: Observable occurrence on a network, system, or device. All security incidents are events, but not all events are security incidents.
+
+- Example: A user cannot login because he forgot his password, so it request a password request and successfully change it. This is observable because there's evidence of what happened (systems and applications log password reset requests).
+- Example: A malicious actor trying to access the user's account requests a password reset and changes it. This is an event (because is an observable occurrence) and a security incident (security policy was violated to access another's account).
+
+**The 5 W's of an incident**: Keeping track of this information is essential during incident investigation and when writing the final report.
+
+- Who triggered the incident
+- What happened
+- When the incident took place
+- Where the incident took place
+- Why the incident occurred
+
+**Incident handler's journal**: Form of documentation used in incident response.
+
+**CSIRT** (Computer Security Incident Response Team) (or IHT: Incident Handling Team) (or SIRT: Security Incident Response Team): Specialized group of security professionals that are trained in incident management and response. Their goals are to manage incidents effectively and efficiently, provide services and resources for response and recovery, and prevent futures incidents from occurring. It works cross-functionally with other departments to share relevant information. 
+
+**Roles in CSIRT**:
+
+- **Security analyst**: Continuously monitor an environment for any security threats. Investigates security alerts to determine if an incident has occurred (analyze and triaging alerts). If so, he will determine the criticality of the incident (perform root-cause investigation). He can remediate some incidents, but critical ones are escalated to the technical lead.
+- **Technical lead** (or Ops lead): Provides technical leadership by guiding security incidents through their lifecycle. Determines the root cause of the incident, and then create and implement strategies for containing, eradicating, and recovering from the incident (he manages all technical aspects of the incident response process). 
+- **Incident coordinator**: Coordinates with the relevant departments during a security incident (security and nonsecurity professionals from different departments). Tracks and manages the CSIRT activities and other teams involved in the response effort. He ensures that incident response processes are followed and teams are regularly updated on the incident status.
+- **Other roles** can be found (communications lead, legal lead, planning lead...).
+- **Nonsecurity professionals**: Those consulted to offer their expertise on the incident. They can be from external departments (human resources, public relations, management, IT, legal...).
+
+**Skill for CSIRT** to achieve his goals:
+
+- __Command__: Leadership and direction to eversee the response.
+- __Control__: Manage technical aspects during incident response (coordinating resources, assigning tasks...).
+- __Communication__: Keep stakeholders informed.
+
+**SOC** (Security Operations Center): Unit dedicated to monitoring networks, systems, and devices for security threats or attacks. It often exists within a CSIRT or as its own separate unit. It's involved in various types of blue team activities (network monitoring, analysis, response to incidents...). It's composed of:
+
+- **Tier 1 SOC analyst**: The least experienced SOC analysts (level 1, L1s). Responsibilities:
+
+  - Monitoring, reviewing, and prioritizing alerts based on criticality or severity
+  - Creating and closing alerts using ticketing systems
+  - Escalating alert tickets to Tier 2 or Tier 3
+
+- **Tier 2 SOC analyst**: More experienced SOC analysts (level2, L2s). Responsibilities:
+
+  - Receiving escalated tickets from L1 and conducting deeper investigations
+  - Configuring and refining security tools
+  - Reporting to the SOC Lead
+
+- **Tier 3 SOC lead**: Highly experienced professionals (level3, L3s). Responsibilities:
+
+  - Managing the operations of their team
+  - Exploring methods of detection by performing advanced detection techniques, such as malware and forensics analysis
+  - Reporting to the SOC manager
+
+- **SOC manager**: Top SOC leader. Responsibilities:
+
+  - Hiring, training, and evaluating the SOC team members
+  - Creating performance metrics and managing the performance of the SOC team
+  - Developing reports related to incidents, compliance, and auditing
+  - Communicating findings to stakeholders such as executive management  
+
+- **Other roles**: 
+
+  - **Forensic investigators** (L2s, L3s): Collect, preserve, and analyze digital evidence related to security incidents to determine what happened.
+  - **Threat hunters** (L3s): Detect, analyze, and defend against new and advanced cybersecurity threats using threat intelligence.
+
+**Resources**:
+
+- [Cyber-career pathways tool](https://niccs.cisa.gov/workforce-development/cyber-career-pathways-tool)
+
+**Incident response plan**: Document that outlines the procedures to take in each step of incident response. It may be included in the security plan or be a separated document. Incident processes and procedures must be regularly reviewed and tested . Elements:
+
+- Incident response procedures (instructions on how to respond to incidents)
+- System information (network diagrams, data flow diagrams, logging, asset inventory information...)
+- Other documents (contact lists, forms, and templates)
+
+**Elements of a security plan**: 
+
+- **Policies**
+- **Standards**
+- **Procedures**
+
+**Tools of the trade**:
+
+- __Detection and management tools__: To monitor system activity to identify events that require investigation.
+- __Documentation tools__: To collect and compile evidence.
+- __Investigative tools__: To analyze events (like packet sniffers).
+
+**Documentation**: Any form of recorded content (audio, digital, handwritten, video...) that is used for a specific purpose. It's meant to provide instruction and guidance on a specific topic. There's no industry standard for documentation, so it can vary from one organization to another. Effective documentation reduces uncertainty and confusion; it should be clear, consistent, and accurate.
+
+- __Types of documentation__: playbooks (manual of an operational action), incident handler's journals, policies, plans, final reports, etc.
+- __Documenting tools__:
+
+  - __Word processor tool__: Google Docs, OneNote, Evernote, Notepad++, …
+  - __Ticketing system__: Jira, …
+  - __Others__: Google Sheets, audio recorder, camera, handwritten notes, …
+
+**Detection tools**: They help organizations protect their networks and systems against unwanted and unauthorized access.
+
+- **IDS** (Intrusion Detection System): Application that monitors system and network activity and produces alerts on possible intrusions. It collects and analyses information for abnormal activities. If something unusual is detected, it sends out an alert to appropriate channels and personnel. It detects malicious activity, logs activity, and generates alerts. A detection can be a true positive, true negative, false positive, or false negative. Some IDS tools: Zeek, Kismet
+
+- **IPS** (Intrusion Prevention System): Application that monitors system activity for intrusions and take action to stop the activity. Like IDS, but also prevents intrusions. Some IPS tools: Suricata, Snort, Sagan.
+
+- **EDR** (Endpoint Detection and Response): Like IPS, but also performs behavioural analysis (using AI and ML) to identify threat patterns happening on an endpoint. It's installed on endpoints (devices connected to a network) and monitors it for malicious activity. Some EDR tools: Open EDR, Bitdefender EDR, FortiEDR.
+
+**SIEM tools** (Security Information and Event Management tools): Application that collects and analyses log data to monitor critical activities in an organization and report them. Like an IDS, it also has detection capabilities. It provides a high-level overview of what happens in a network. It looks at data flows between all the systems in a network and analyses them to provide a real-time picture of any potential threats. It provides access to event data in a centralized location (real-time or historical data), monitors systems and networks, analyzes data to detect malicious activity, and alerts if detected. Some SIEM tools: AlienVault OSSIM, Chronicle, Elastic, Exabeam, IBM QRadar Security Intelligence Platform, LogRhythm, Splunk.
+
+Process:
+
+1. Collect data (mostly from logs, which record events on a given source) from different sources (computers, servers, IDS, IPS, databases, firewalls, applications, routers, switches, ...).
+2. Aggregate (centralize) that data in one place. Data can be parsed (map data according to their fields and values, making it more readable).
+3. Normalize data: Clean up raw data by removing non essential attributes so only relevant data is left. Format data so it is easily searchable and easily processed by the SIEM.
+4. Analyze data according to configured rules (including correlation) to detect possible security incidents. If any log activity matches a rule, alerts are sent to cybersecurity teams.
+  - Correlation: Comparison of multiple log events to identify common patterns that indicate potential security threats. 
+
+**SOAR tools** (Security Orchestration, Automation, and Response tool): Collection of applications, tools, and workflows that uses automation to respond to security events. It automates analysis and response to security events and incidents. It can also be used to track and manage cases (collection of incidents).
+
+
+### Network monitoring and analysis
+
+**Network traffic**: Amount of data that moves across a network.
+
+**Network data**: Data that's transmitted between devices on a network
+
+Network monitoring helps detect, prevent, and respond to attacks. Network communication can be noisy. By understanding how data should be flowing across a network, we can know what is the expected network traffic flow. By knowing what's normal (baseline), we can spot what's abnormal. Monitoring for deviations from typical network traffic patterns often yield big results. Traffic abnormalities can be can detected through observation to spot IoC.
+
+- **IoC** (Indicators of Compromise): Observable evidence that suggests signs of a potential security incident.
+- **Data exfiltration**: Unauthorized transmission of data from a system.
+- **Baseline**: Reference point used for comparison. It helps establish a standard of expected or normal behaviour for systems, devices, and networks. It helps identify abnormal network behaviour. 
+- **Monitoring** involves examining network components to detect unusual activities (those that deviate from the baseline).
+
+  - **Flow analysis**: Movement of network communications. Packets travel to ports, which receive and transmit communications. Ports are often (not always) associated with network protocols. Malicious actors can use protocols and ports that are not commonly associated to maintain communication with the compromised system (C2, Command and Control). Organizations must know which ports should be open, and watch out for mismatches between ports and their associated protocols.
+
+  - **Packet payload information**: Actual data that is transmitted (apart from the header and trailer). Organizations can monitor it to uncover unusual activity. 
+
+  - **Temporal patterns**: Network packets contain information relating to time. It can be used to detect abnormal network activity 
+
+**NOC** (Network Operations Center): Organizational unit that monitors the performance of a network and responds to any network disruption (like network outage). It's responsible for maintaining network performance, availability, and uptime. 
+
+Some **network monitoring tools** are:
+
+- **IDS** (Intrusion Detection System): It monitors system activity and alerts on possible intrusions. It will detect and alert on deviations you’ve configured it to detect. Commonly, it monitors the content of packet payload to detect patterns associated with threats (malware, phishing...).
+
+- **Network protocol analyzer** (packet sniffer): It captures and analyzes data traffic within a network. It can be used to analyze network communications manually in detail. Some tools: tcpdump, Wireshark, etc.
+
+**Data exfiltration**: Unauthorized transmission of data from a system.
+
+- Process:
+
+  1. Attacker gains access to a system (via social engineering...)
+  2. He tries to  maintain access and remain undetected, often via lateral movement, or pivoting (explore network for expanding and maintaining their access).
+  3. He looks for valuable assets. Once identified, he collects, packages, and prepares data for exfiltration outside of the organization.
+  4. He often reduces the stolen data size to hide it and bypass security controls.
+  5. Data is exfiltrated (through a stolen email account or other means).
+
+- Defensive measures:
+
+  1. Prevent attacker access (using MFA...).
+  2. Monitor network activity to identify suspicious activity (like multiple logins from outside the network...).
+  3. Protect assets using asset inventories and security controls.
+  4. Detect and stop exfiltration. It can be detected via network monitoring (SIEM tools can detect and alert). There're many ways to stop I (like blocking IP addresses using firewall rules). 
+
+Resources:
+
+- [Network traffic (MITRE ATT&CK)](https://attack.mitre.org/datasources/DS0029/)
+- [Data exfiltration techniques (MITRE ATT&CK)](https://attack.mitre.org/tactics/TA0010/)
+
+**Ports**: Non-physical locations on a computer that organizes data transmission between devices on a network.
+
+**Packet**: Basic unit of information that travels from one device to another within a network. When data is sent, it's divided into packets, and some delivery information is added to each one. Components:
+
+- **Header**: Information for routing the packet to its destination (network protocol, port used, source and destination IP address, packet type, packet length, packet id...). It varies from one protocol to another.
+- **Payload**: Actual data to be delivered.
+- **Footer** (or trailer): Signifies the end of the packet. Some protocols use footer (Ethernet use it for error-checking information) while other don't.
+
+**Network protocol analyzer** (packet sniffer): It captures and analyzes data traffic within a network. It can be used to analyze network communications manually in detail, to collect network statistics (bandwidth, speed...), to troubleshoot network performance issues (slowdowns...), or to capture packets containing sensitive data (by malicious hackers). Used to inspect packets for IoC. We can generate a P-cap and then analyze the captured traffic to identify unusual activity on a network.
+
+- __Tools__: tcpdump (CLI), Wireshark (GUI), TShark...
+
+- **P-cap** (Packet capture): File containing data packets intercepted from an interface or network. It can be viewed and analysed using a sniffer. Useful in incident investigation for knowing network interactions and what exactly happened. P-cap files come in many formats depending on the packet capture library used:
+
+  - __Libpcap__: Packet capture library for Unix-like systems (Linux, MacOS...). Used by tcpdmp by default.
+  - __WinPcap__: Open-source packet capture library for Windows. Older file format not predominantly used.
+  - __Npcap__: Library for Windows used by Nmap (port scanning tool).
+  - __PCAPng__: Modern file format that can simultaneously capture packets and store data.
+
+- **NIC** (Network Interface Card): Hardware that connects computers to a network (like a router). It receives and transmit network traffic. By default, it only listen to network traffic addressed to him. It can be configured to capture all visible network traffic (promiscuous or monitoring mode).
+
+- Sniffers collect packets via a NIC configured to promiscuous mode and positioned in an appropriate network segment with access to all traffic between different hosts. Network traffic is collected in raw binary format, but then displayed in a human-readable format.
+
+Resource: [Packet crafting (Infosec)](https://www.infosecinstitute.com/resources/hacking/packet-crafting-a-serious-crime/)
+
+Network evidence like packet captures may need to be analysed to identify IoC. Filtering network traffic using packet sniffers to gather relevant information is an essential skill. Example: A network analyzer tool can be used to filter the packet capture to sort packets in order to identify an event associated with data exfiltration (like large amount of data leaving a database).
+
+**TCP/IP model**: Framework used to visualize how data is organized and transmitted across a network. It's made of 4 layers: Application, Transport, Internet, and Network access.
+
+- **Internet layer**: It accepts and delivers packets for the network. The Internet Protocol (IP) operates here.
+
+**IP** (Internet Protocol): Set of standards used for routing and addressing data packets as they travel between devices on a network. Foundation of all Internet communications. It uses the information in headers to makes sure packets reach their destinations. There're 2 versions: IPv4 (most widely used) and IPv6 (larger address space), each one with a different type of header.
+
+**IPv4 header**: Contains 13 fields:
+
+- __Version__: IP version used (IPv4 or IPv6).
+- __IHL__ (Internet Header Length): Length of the header + any options.
+- __ToS__ (Type of Service): Information about packet priority for delivery.
+- __Total length__: Length of the entire packet.
+- __Identification__: Fragment unique identifier (big packets are broken into smaller packets, transmitted, and reassembled at destination). Necessary for reassembling.
+- __Flags__: Information about fragmentation (was the original packet was fragmented? Are there more packets in transit?...).
+- __Fragment offset__: Used to identify the correct sequence of fragments.
+- __TTL__ (Time To Live): How long a packet can live before it's discarded. This prevents packets from being forwarded by routers indefinitely.
+- __Protocol__: Protocol used.
+- __Header checksum__: Value used for error-checking the header.
+- __Source address__
+- __Destination address__
+- __Options__: Optional field. Commonly used for network troubleshooting and security.
+
+**IPv6 header**: Contains 8 fields:
+
+- __Version__
+- __Traffic class__: Similar to ToS. Information about packet priority for delivery.
+- __Flow label__: It identifies the packets of a flow (sequence of packets sent from a specific source).
+- __Payload length__: Length of the data portion of the packet.
+- __Next header__: Type of header that follows the IPv6 header (such as TCP).
+- __Hop limit__: Similar to TTL. How long a packet can live before it's discarded. This prevents packets from being forwarded by routers indefinitely.
+- __Source address__.
+- __Destination address__.
+
+**Wireshark**: Open-source network protocol analyzer that uses a GUI. It provides display filters (filter by specific information: protocol, IP addresses, ports...).
+
+- __Comparison__ (`==`, `!=`, `<`, `>`, `<=`, `>=`) and __boolean__ operators (`and`, `or`...) can be used to create complex display filters.
+- `contains` operator can be used to filter packets containing an exact match of a string of text.
+- `matches` operator can be used to filter packets based on a specified regular expression (regex) (sequence of characters that form a pattern).
+- The __filter toolbar__ can be used to apply filters to a packet capture.
+- __Filter for protocol__: Display packets containing a certain protocol just by entering the protocol name in the filter toolbar (`dns`, `http`, `ftp`, `ssh`, `arp`, `telnet`, `icmp`...). Different colors are used to represent protocols. This is customizable.
+- __Filter for IP address__: Display packets with a certain IP address (`ip.addr == 172.21.224.8`), source IP address (`ip.src == 10.10.10.10`), or destination IP address (`ip.dst == 4.4.4.4`). 
+- __Filter for MAC address__: Display packets with a certain MAC address (unique alphanumeric identifier assigned to each physical device on a network) (`eth.addr == 00:70:f4:23:18:c4`).
+- __Filter for ports__: Display packets based on port numbers. Useful for isolating specific types of traffic (example: DNS traffic uses TCP or UDP port 53) (`udp.port == 53`) (`tcp.port == 25`).
+- __Follow streams__: Filter for packets specific to a protocol and view streams (stream, or converstion, is the exchange of data between devices using a protocol). Wireshark reassembles the data transferred in the stream to make it more readable. Useful for understanding the details of a conversation (example: view the content of the exchanged request and response messages in a HTTP conversation).
+- [Wireshark officia user guide](https://www.wireshark.org/docs/wsug_html/).
+
+
+
+
+
+
+
+
+
+
+### Incident investigation and response
+
+### Network traffic and logs using IDS and SIEM tools
+
+
 ## Python automation
+
+
+
 ## Cybersecurity job
 
