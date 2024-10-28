@@ -273,9 +273,9 @@ Parameters meaning:
 
 ## Container adaptors
 
-**Adaptor**: Mechanism for making one thing act like another. A 
+**Adaptor**: Mechanism for making one thing act like another.
 
-**Container adaptor**: Adaptor that takes an existing container type and makes it act like a different type. The standard library defines 3: `stack`, `queue`, and `priority_queue`. Each one is a class template that acts as wrapper to the underlying container (only a specific set of functions is provided), providing the functionality of a certain data structure (stack or queue). Each container adaptor provides its own operations (the only ones we can use), which make use of operations provided by the underlying container type (which we cannot use).
+**Container adaptor**: Adaptor that takes an existing container type and makes it act like a different type. The standard library defines 3: `stack`, `queue`, and `priority_queue`. Each one is a class template that acts as wrapper to the underlying container (only a specific set of functions is provided), providing the functionality of a certain data structure (stack or queue). It's an interface to the underlying container. Each container adaptor provides its own operations (the only ones we can use), which make use of operations provided by the underlying container type (which we cannot use).
 
 **Operations and types common to all container adaptors:**
 
@@ -310,6 +310,21 @@ Parameters meaning:
 - `s.emplace(args): Create a new top element on the stack by constructing it from args.
 - `s.top()`: Returns, but doesn't remove, the top element on the stack.
 
+**Queue adaptor** (`<queue>`): Acts as a FIFO (first-in, first-out) data structure. The queue pushes the elements on the back of the underlying container and pops them from the front. Provided operations:
+
+- `q.pop()`: Removes, but doesn't return, the front element.
+- `q.front()`: Returns, but doesn't remove, the front element.
+- `q.back()`: Returns, but doesn't remove, the back element.
+- `q.push(item)`: Create element with value item at the end of the queue.
+- `q.emplace(args)`: Construct an element from args at the end of the queue.
+
+**Priority queue adaptor** (`<queue>`): Queue where there's a priority among the elements held in the queue (by default, determined by `<` operator). Newly added elements are placed ahead of all the elements with lower priority. It provides constant time lookup of the largest (by default) element, at the expense of logarithmic insertion and extraction. A user-provided Compare can be supplied to change the ordering (e.g. using `std::greater<T>` would cause the smallest element to appear as the `top()`).
+
+- `q.pop()`: Removes, but doesn't return, the highest-priority element.
+- `q.top()`: Returns, but doesn't remove, the highest-priority element.
+- `q.push(item)`: Create element with value item in its appropriate position.
+- `q.emplace(args)`: Construct an element from args in its appropriate position.
+
 ```
 stack<int> intStack;
 
@@ -323,21 +338,3 @@ while(!intStack.empty())
   intStack.pop();
 }
 ```
-
-**Queue adaptor** (`<queue>`): Acts as a FIFO (first-in, first-out) data structure. The queue pushes the elements on the back of the underlying container and pops them from the front. Provided operations:
-
-- `q.pop()`: Removes, but doesn't return, the front element.
-- `q.front()`: Returns, but doesn't remove, the front element.
-- `q.back()`: Returns, but doesn't remove, the back element.
-- `q.push(item)`: Create element with value item at the end of the queue.
-- `q.emplace(args)`: Construct an element from args at the end of the queue.
-
-**Priority queue adaptor** (`<queue>`): Similar to a `queue`, but there's a priority among the elements held in the queue (by default, determined by `<` operator). Newly added elements are placed ahead of all the elements with lower priority. It provides constant time lookup of the largest (by default) element, at the expense of logarithmic insertion and extraction. A user-provided Compare can be supplied to change the ordering (e.g. using `std::greater<T>` would cause the smallest element to appear as the `top()`).
-
-- `q.pop()`: Removes, but doesn't return, the highest-priority element.
-- `q.top()`: Returns, but doesn't remove, the highest-priority element.
-- `q.push(item)`: Create element with value item in its appropriate position.
-- `q.emplace(args)`: Construct an element from args in its appropriate position.
-
-471
-

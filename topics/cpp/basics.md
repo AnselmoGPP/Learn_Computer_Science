@@ -4,12 +4,11 @@
 + [Basics](#basics)
 + [Flow of control](#flow-of-control)
 + [Return](#return)
-+ [Variables}(#variables)
-+ [Keywords, operators and punctuators](#keywords,-operators-and-punctuators)
-+ [Input/Output](#input/output)
-+ [Keywords](#keywords)
-+ [Identifiers](#identifiers)
-+ [Preprocessor directives](#preprocessor-directives)
++ [Variables](#variables)
++ [Keywords, operators and punctuators](#keywords,-operators-and-punctuators)<<<
++ [Keywords](#keywords)<<<
++ [Identifiers](#identifiers)<<<
++ [Preprocessor directives](#preprocessor-directives)<<<
 + [References](#references)
 
 
@@ -613,8 +612,6 @@ The global scope has no name, so the **scope operator** with empty left side is 
 
 
 
-
-## Input / Output
 
 
 
