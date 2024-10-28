@@ -1599,10 +1599,10 @@ Builds:
 
 ### Last private message
 
-From: Satoshi Nakamoto <satoshin@gmx.com>
-Date: Sat, Apr 23, 2011 at 3:40 PM
-To: Mike Hearn <mike@plan99.net>
-Subject: Re: Holding coins in an unspendable state for a rolling time window
+From: Satoshi Nakamote <satoshin@gmx.com>  
+Date: Sat, Apr 23, 2011 at 3:40 PM  
+To: Mike Hearn <mike@plan99.net>  
+Subject: Re: Holding coins in an unspendable state for a rolling time window  
 
 Mike Hearn:
 > I had a few other things on my mind (as always). One is, are you planning on rejoining the community at some point (eg for code reviews), or is your plan to permanently step back from the limelight?

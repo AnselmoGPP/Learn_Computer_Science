@@ -45,12 +45,7 @@ Teach yourself Computer Science for free (equivalent to a Bachelor Degree in CS)
 
 ## Cpp language
 
-```
-int main(int argc, char* argv[])
-{
-  return 0;
-}
-```
+- [**C++ language**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/cpp/cpp_language.md)
 
 ## Computer graphics
 

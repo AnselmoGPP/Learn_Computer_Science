@@ -727,7 +727,17 @@ Events are powerful, but it's recommended first leveraging the render pass and s
 
 ## Particularities
 
-...
+### Descriptor set
+
+**Descriptor**: Pointer or reference to a resource. A uniform buffer descriptor points to a buffer. A sample descriptor points to an image and a sampler used to access it.
+
+**Descriptor set**: It's a part of the resource management system that allows shaders to access external resources (buffers, textures, samplers...). It's a collections of descriptors that tell the shader where these resources are and how to access them.
+
+Each descriptor describes the type of resource (buffer, texture, sampler...) and how the shader will use it (read-only, read-write...).
+
+
+
+
 
 
 

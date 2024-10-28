@@ -96,7 +96,13 @@
 
 - **SQL Database Operations**
 
+  4. __SQL-Fundamentals__
+    4.6. Data Definition Language (DDL) (pp. 86-87)
+      4.6.1. DDL Commands (pp. 87-90)
+    4.7. Data Manipulation Language (DML) (pp. 90-95)
 
+  - Peterson, R. (2023, December 26). _**MySQL – ALTER, DROP, RENAME, MODIFY**_. GURU99. Retrieved from [here](https://www.guru99.com/alter-drop-rename.html).
+  - Yadav, A. (2022, February 28). _**Create, Insert, Update, Delete, Select, Truncate, Drop Statement In Oracle PL-SQL**_. C # Corner. Retrieved from [here](https://www.c-sharpcorner.com/article/create-insert-update-delete-select-truncate-drop-statement-in-oracle-pl-sq/).
 
 - **Advanced Structured Query Language (SQL) Queries and Data Integrity**
 

@@ -31,6 +31,7 @@
 - **Good coding**
   - Clean code
   - The cleaner coder
+  - Agile Software  Development: Principles, Patterns, and Practices
   - Clean architecture
   - Code complete
   - Programming pearls
