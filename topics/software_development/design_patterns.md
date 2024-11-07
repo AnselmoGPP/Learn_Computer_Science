@@ -2,7 +2,6 @@
 
 ## Table of Contents
 + [References](#references)
-+ [Diagrams](#diagrams)
 + [Introduction](#introduction)
 
 
@@ -10,33 +9,6 @@
 - Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides (1994) _**Design patterns. Elements of object-oriented software**_. Addison-Wesley. Retrieved from [link1](http://www.uml.org.cn/c++/pdf/designpatterns.pdf), [link2](http://www.grch.com.ar/docs/unlu.poo/Gamma-DesignPatternsIntro.pdf), [link3](https://github.com/TushaarGVS/Design-Patterns-Mentorship/blob/master/Erich%20Gamma%2C%20Richard%20Helm%2C%20Ralph%20Johnson%2C%20John%20M.%20Vlissides-Design%20Patterns_%20Elements%20of%20Reusable%20Object-Oriented%20Software%20%20-Addison-Wesley%20Professional%20(1994).pdf).
 - [Sourcemaking](https://sourcemaking.com/design_patterns)
 - [MVC design pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)
-
-
-## Diagrams
-
-## Class diagrams
-
-It depicts classes, their strructure, and the static relationships between them.
-
-<br>![class_diagram_2](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/class_diagrams_2.png)
-
-<br>![class_diagram_1](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/class_diagram_1.png)
-
-### Object diagrams
-
-It depicts a particular object structrue at run-time.
-
-<br>![object_diagram_1](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/object_diagram_1.png)
-
-<br>![object_diagram_2](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/object_diagrams_2.png)
-
-### Interaction diagrams
-
-It shows the flow of requests between objects.
-
-<br>![interaction_diagram_1](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/interaction_diagrams_2.png)
-
-<br>![interaction_diagram_2](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/interaction_diagram_1.png)
 
 
 ## Introduction
@@ -132,6 +104,8 @@ A **pattern** describes a problem that happens very often in our environment, an
   - **State**: Allow an object to alter its behavior when its internal state changes. The object will appear to change its class.
   - **Strategy**: Define a family of algorithms, encapsulate each one, and make them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
   - **Visitor**: Represent an operation to be performed on the elements of an object structure. Visitor lets you define a new operation without changing the classes of the elements on which it operates.
+
+The simplest and most common patterns are: Abstract factory, Adapter, Composite, Decorator, Factory method, Observer, Strategy, Template method.
 
 ### Relationships
 
@@ -243,4 +217,4 @@ Disadvantages:
 
 Delegation is a good choice only when it simplifies more than it complicates. It works best when used in highly stylized ways (i.e., in standard patterns). Several design patterns use delegation (State, Strategy, Visitor, Mediator, Chain of Responsability, Bridge).
 
-22
+53
