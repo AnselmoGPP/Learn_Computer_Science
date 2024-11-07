@@ -23,17 +23,17 @@ The class and object diagrams are based on **OMT (Object Modeling Technique)** [
 
 It depicts classes, their structure, and the static relationships between them.
 
-A **class** is denoted by a box. The class name in bold type is at the top. Below are the key operations. And below are instance variables. Type information is optional. Italic type is used for abstract classes or operations.
+- A **class** is denoted by a box. The class name in bold type is at the top. Below are the key operations. And below are instance variables. Type information is optional. Italic type is used for abstract classes or operations.
 
-**Client classes** (they use or interact with a design pattern to solve a problem) are shown in gray. **Participant classes** (they're involved in the design pattern in a certain role) are shown in black.
+- **Participant classes** (they're involved in the design pattern in a certain role) are shown in black. **Client classes** (they use or interact with a design pattern to solve a problem) are shown in gray. 
 
-**Class inheritance** is denoted by a triangle connecting a subclass to its parent class.
+- **Class inheritance**: Triangle connecting a subclass to its parent class.
 
-An **object reference** representing a part-of or aggregation relationship is indicated by an arrowheaded line (pointing to the class that's aggregated) with a diamond base. **Acquaintance** is indicated by an arrowheaded line without diamond base. The reference name may appear near the base to distinguish it from other references.
+- **Object reference** representing a part-of or aggregation relationship: Arrowheaded line, pointing to the class that's aggregated, with a diamond base. **Acquaintance** is indicated by an arrowheaded line without diamond base. The reference name may appear near the base to distinguish it from other references.
 
-Which classes instantiate which others is indicated by dashed arrowheaded line (pointing to the instantiated class).
+- Which classes instantiate which others: Dashed arrowheaded line pointing to the instantiated class.
 
-**Operations implementation** can be sketched using a dashed line with circle base.
+- **Operations implementation** can be sketched using a dashed line with circle base.
 
 <br>![class_diagrams](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/class_diagrams.png)
 
@@ -42,11 +42,11 @@ Which classes instantiate which others is indicated by dashed arrowheaded line (
 
 It depicts a particular object structure at run-time. It shows instances exclusively (a snapshot of them).
 
-A **rounded box** denotes an object. A line separates the object name from any object references.
+- A **rounded box** denotes an object. A line separates the object name from any object references.
 
-Objects are named "aSomething" (`aDrawing`, `anObject`...), where "Something" is the class of the object.
+- Objects are named "aSomething" (`aDrawing`, `anObject`...), where "Something" is the class of the object.
 
-Arrows indicate the object referenced.
+- Arrows indicate the object referenced.
 
 <br>![object_diagrams](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/object_diagrams.png)
 
