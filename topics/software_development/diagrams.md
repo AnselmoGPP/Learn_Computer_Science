@@ -67,6 +67,6 @@ It shows the flow of requests between objects, the order in which requests betwe
  
 Example: `aCreationTool` requests to create `aLineShape`. Then, `aLineShape` is added to `aDrawing`, which prompts `aDrawing` to send a `Refresh` request to itself (`aDrawing` sends a `Draw` request to `aLineShape` as part of the `Refresh` operation). 
 
-<br>![interaction_diagrams](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/interaction_diagramss.png)
+<br>![interaction_diagrams](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/interaction_diagrams.png)
 
 
