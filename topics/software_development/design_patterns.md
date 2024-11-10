@@ -3,6 +3,7 @@
 ## Table of Contents
 + [References](#references)
 + [Introduction](#introduction)
++ [Case study: Designing a document editor](#case-study:-designing-a-document-editor)
 
 
 ## References
@@ -23,7 +24,7 @@ Designing reusable object-oriented software is hard. You have to:
 
 The design should be specific to the problem at hand but also general enough to address future problems and requirements. Furthermore, you want to avoid redesign, or at least minimize it. A flexible and reusable design is difficult to get.
 
-Experienced designers discovered that certain patterns of classes and communicating objects were very useful for solving specific design problems and make object-oriented designs more flexible, elegant and reusable. They can apply this patterns immediately to solve design problems without having to rediscover them.
+Experienced designers discovered that certain patterns of classes and communicating objects were very useful for solving specific design problems and make object-oriented designs more flexible, elegant and reusable. They can apply these patterns immediately to solve design problems without having to rediscover them.
 
 ### Types
 
@@ -67,7 +68,7 @@ A **pattern** describes a problem that happens very often in our environment, an
 **Creational patterns**:
 
 - **Class**:
-  - **Factory method**: Define an interface for creating an object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to subclasses.
+  - **Factory method**: Define an interface for creating an object, but let subclasses decide which class to instantiate. It lets a class defer instantiation to subclasses.
 - **Object**:
   - **Abstract factory**: Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
   - **Builder**: Separate the construction of a complex object from its representation so
@@ -80,11 +81,11 @@ A **pattern** describes a problem that happens very often in our environment, an
 - **Class**:
   - **Adapter class**: Convert the interface of a class into another interface clients expect. It let classes work together by making their interfaces compatible.
 - **Object**:
-  - **Adapter object**: Convert the interface of a class into another interface clients expect. It let classes work together by making their interfaces compatible.
+  - **Adapter object**: Convert the interface of an object into another interface clients expect. It let objects work together by making their interfaces compatible.
   - **Bridge**: Decouple an abstraction from its implementation so that the two can vary
  independently.
-  - **Composite**: Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.
-  - **Decorator**: Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.
+  - **Composite**: Compose objects into tree structures to represent part-whole hierarchies. It lets clients treat individual objects and compositions of objects uniformly.
+  - **Decorator**: Attach additional responsibilities to an object dynamically. It provides a flexible alternative to subclassing for extending functionality.
   - **Facade**: Provide a unified interface to a set of interfaces in a subsystem. It defines a higher-level interface that makes the subsystem easier to use.
   - **Flyweight**: Use sharing to support large numbers of fine-grained objects efficiently.
   - **Proxy**: Provide a surrogate or placeholder for another object to control access to it.
@@ -125,7 +126,7 @@ Objects can vary tremendously in size and number (from everything down to the ha
 
 - **Specifying object interfaces**
 
-Objects are only known through their interfaces, and interfaces say nothing about the object’s implementation. The interface is the set of operations allowed by the object, wich are defined by their **signatures** (operation’s name, parameters and return values). A **type** is a name used to denote a particular interface. A type is a sub-type of another if its interface contains the interface of its super-type (sub-type **inherits** from its super-type).
+Objects are only known through their interfaces, and interfaces say nothing about the object’s implementation. The interface is the set of operations allowed by the object, wich are defined by their **signatures** (operation’s name, parameters and return values). A **type** is a name used to denote a particular interface. A type can be a sub-type: a sub-type has an interface that contains the interface of its super-type (sub-type **inherits** from its super-type).
 
 **Dynamic binding**: It’s the run-time association of a request to an object and one of its operations. So, issuing a request doesn’t commit you to a particular implementation until run-time. Then, you can write programs that expect an object with a particular interface, knowing that any object that has the correct interface will accept the request. Moreover, dynamic binding lets you substitute objects that have identical interfaces for each other at run-time (**polymorphism**).
 
@@ -146,11 +147,13 @@ An object implementation is defined by its class. The class defines the object�
 
 A sub-class may **override** an operation defined by its parent class, which gives it a chance to handle requests instead of their parent classes. Class inheritance lets you define classes simply by extending other classes, making it easy to define families of objects having related functionality.
 
-**Mixin class**: It’s intended to provide an optional interface or functionality to other classes. It’s similar to an abstract class in that it’s not intended to be instantiated. I requires multiple inheritance (the mixin in one of many classes that are inherited by a certain class).
+**Mixin class**: Class designed to provide an optional interface or functionality to other classes through inheritance (which promotes code reuse and modularity). It's not intended to be instantiated. It requires multiple inheritance.
+
+<br>![mixin class](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/mixin_class.png)
 
 **Object**:
 
-- **Object’s class**: Defines how the object is implemented. The internal state and the implementation of its operations.
+- **Object’s class**: Defines how the object is implemented. It's the internal state and the implementation of its operations.
 - **Object’s type**: The object’s interface (set of requests to which it can respond). An object can have many types, and objects of different classes can have the same type.
 
 **Inheritance**:
@@ -158,7 +161,10 @@ A sub-class may **override** an operation defined by its parent class, which giv
 - **Class inheritance**: Defines an object’s implementation in terms of another object’s implementation. Useful for extending an application’s functionality by reusing functionality in parent classes. It lets you define a new kind of object rapidly in terms of an old one.
 - **Interface inheritance**: Defines when an object can be used in place of another. Polymorphism depends on this inheritance.
 
-In C++, inheritance means both interface and implementation inheritance. The standard way to _inherit an interface_ in C++ is to inherit publicly from a class that has (pure) virtual member functions. Pure interface inheritance can be approximated in C++ by inheriting publicly from pure abstract classes. Pure implementation or _class inheritance_ can be approximated with private inheritance.
+In C++, inheritance means both interface and implementation inheritance. The standard way to _inherit an interface_ in C++ is to inherit publicly from a class that has (pure) virtual member functions. In C++:
+
+- Pure _interface inheritance_ can be approximately inheriting publicly from pure abstract classes.
+- Pure implementation or _class inheritance_ can be approximated with private inheritance.
 
 When inheritance is used carefully, all classes derived from an abstract class will share its interface. This implies that a subclass merely adds or overrides operations and doesn’t hide operations of the parent class. All subclasses can then respond to the requests in the interface of this abstract class, making them all subtypes of the abstract class. Benefits from manipulating objects solely in terms of the interface defined by abstract classes:
 
@@ -169,9 +175,11 @@ When inheritance is used carefully, all classes derived from an abstract class w
 
 ### Reuse mechanisms
 
-#### Most common techniques:
+#### Most common techniques to compose behaviour in object-oriented systems
 
-- **Class inheritance**: You define the implementation of one class in terms of another’s. With inheritance, the internals of parent classes are often visible to subclasses (white-box reuse). Defined **statically** at compile-time.
+- **Class inheritance**:
+
+You define the implementation of one class in terms of another’s. With inheritance, the internals of parent classes are often visible to subclasses (white-box reuse). Defined **statically** at compile-time (cannot change at run-time).
 
   - Advantages:
 
@@ -181,24 +189,28 @@ When inheritance is used carefully, all classes derived from an abstract class w
   - Disadvantages:
 
     - You can’t change the implementations inherited from parent classes at run-time, because inheritance is defined at compile-time.
-    - Inheritance exposes a subclass to details of its parent’s implementation (it’s often said that “inheritance breaks encapsulation”). The implementation of a subclass becomes so bound up with the implementation of its parent class that any change in the parent’s implementation will force the subclass to change.
+    - Inheritance exposes a subclass to details of its parent’s implementation (it’s often said that “inheritance breaks encapsulation”). The implementation of both a subclass and its parent class become so bound up that any change in the parent’s implementation will force the subclass to change.
     - If any aspect of the inherited implementation is not appropriate for new problems, the parent class must be rewritten/replaced. One solution: Inherit from abstract classes (they have little or no implementation)
 
-- **Object composition**: New functionality is obtained by assembling (composing) objects to get more complex functionality (it requires well-defined interfaces). No internal details of objects are visible (black-box reuse). It requires objects to respect each others’ interfaces (objects are accessed solely through their interfaces). Defined **dynamically** at run-time through objects acquiring references to objects.
+- **Object composition**:
+
+New functionality is obtained by assembling (composing) objects to get more complex functionality (it requires well-defined interfaces). No internal details of objects are visible (black-box reuse). It requires objects to respect each others’ interfaces (objects are accessed solely through their interfaces). Defined **dynamically** at run-time through objects acquiring references to objects.
 
   - Advantages:
 
-    - It’s easy to compose behaviors at run-time by changing how they’re composed.
+    - It’s easy to compose behaviours at run-time by changing how they’re composed.
     - Any object can be replaced at run-time by another as long as it has same type.
-    - Fewer implementation dependencies (since an object’s implementations is written in terms of objects interfaces).
+    - Fewer implementation dependencies (since an object’s implementation is written in terms of objects interfaces).
     - Keeps each class encapsulated and focused on one task.
-    - It has more objects (if fewer classes), and its behavior depends on their relationships instead of being defined in one class.
+    - It has more objects (if fewer classes), and its behaviour depends on their relationships instead of being defined in one class.
 
-- **Parameterized types** (Templates): It lets define types without specifying all the other types it uses. Unspecified types are supplied as parameters at the point of use(e.g.: a List class can be parameterized by the types of elements it contains).
+  - Disadvantages:
+
+    - It requires indirection, which can be less efficient.
 
 **Favor object composition over class inheritance**: However, the set of available components is never quite rich enough in practice, so both mechanisms should work together. Inheritance makes it easier to make new components that can be composed with old ones. Object composition makes designs more reusable and simpler.
 
-#### Delegation
+- **Delegation**:
 
 It is a type of object composition that makes composition as powerful for reuse as inheritance. Two objects are involved in handling a request: a receiving object delegates operations to its **delegate** (analogous to subclasses deferring requests to parent classes). To let the delegated operation refer to the receiver, the receiver passes itself to the delegate. Delegation shows that inheritance can always be replaced with object composition.
 
@@ -206,15 +218,121 @@ Example: Instead of making class Window a subclass of Rectangle, Window class mi
 
 <br>![window object](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/titan1.png)
 
-Advantages:
+  - Advantages:
 
-- It’s easy to compose behaviors at run-time and change the way they’re composed. Replacing Rectangle instance with a Circle instance (assuming they have same type) our window can become circular at run-time.
+    - It’s easy to compose behaviors at run-time and change the way they’re composed. Replacing Rectangle instance with a Circle instance (assuming they have same type) our window can become circular at run-time.
 
-Disadvantages:
+  - Disadvantages:
 
-- Dynamic, highly parameterized software is harder to understand than more static software.
-- Run-time inefficiencies (though human inefficiencies are more important in the long run).
+    - Dynamic, highly parameterized software is harder to understand than more static software.
+    - Run-time inefficiencies (though human inefficiencies are more important in the long run).
 
 Delegation is a good choice only when it simplifies more than it complicates. It works best when used in highly stylized ways (i.e., in standard patterns). Several design patterns use delegation (State, Strategy, Visitor, Mediator, Chain of Responsability, Bridge).
 
-53
+- **Parameterized types (Templates)**:
+
+It lets define types without specifying all the other types it uses. Unspecified types are supplied as parameters at the point of use (e.g.: a List class can be parameterized by the type of the elements it contains). It cannot change at run-time.
+
+Example: To parameterize a sorting routine by the operation it uses to compare elements, we could make the comparison:
+
+  1. an operation implemented by subclasses (Template method).
+  2. the responsibility of an object that's passed to the sorting routine (Strategy).
+  3. an argument of a template that specifies the name of the function to call to compare the elements.
+
+#### Run-time and compile-time structures
+
+**Aggregation** and **acquaintance** look similar but are different. They are determined more by intent than by explicit language mechanisms. 
+
+- ** Aggregation** implies that one object owns or is responsible for another object. Both objects have identical lifetimes. Aggregation relationships tend to be fewer and more permanent than acquaintance. This is implemented with pointers or references, or by defining member variables that are real instances.
+
+- **Acquaintance** implies that an object merely knows of another object. Acquainted objects may request operations of each other, but aren't responsible for each other. Acquaintance is a weaker relationship than aggregation and suggests much looser coupling between objects. Acquaintance relationships are made and remade more frequently (sometimes existing only for the duration of an operation), and are more dynamic. This is implemented with pointers or references.
+
+Such disparity between a program's run-time and compile-time structures shows that code won't reveal everything about how a system will work. The system's run-time structure must be imposed more by the designer than the language. The relationships between objects and their types must be designed well because they determine how good or bad the run-time structure is.
+
+Many design patterns capture the distinction between compile-time and run-time structures explicitly (Composite, Decorator, Observer, Chain of responsibility). In geeral, run-time structures aren't clear from the code until you understand the patterns.
+
+#### Designing for change
+
+To design a system robust to changes, you have to anticipate how the system might need to change over its lifetime. Otherwise, you risk major redesigns in the future, which is expensive. Design patterns ensure that a system can change in specific ways. Each design pattern lets some aspect of system structure to vary independently of other aspects. Some common causes of redesign are:
+
+- Creating an object by specifying a class explicitly. This commits you to a particular implementation instead of a particular interface. Design patterns: Abstract factory, Factory method, Prototype.
+
+- Dependence on specific operations. Specifying a particular operation commits you to one way of satisfying a request. Avoiding hard-coded requests makes it easier to change the way it gets satisfied both at compile-time and run-time. Design patterns: Chain, Command.
+
+- Dependence on hardware and software platform. External OS interfaces and APIs are different on different hardware and software platforms. Limiting platform dependencies make your software will be easier to port and to keep up to date. Design patterns: Abstract factory, Bridge.
+
+- Dependence on object representations or implementations. Hiding this information from clients prevent changes on these objects to cascade. Design patterns: Abstract factory, Bridge, Memento, Proxy.
+
+- Algorithmic dependencies. Objects depending on an algorithm will have to change when the algorithm changes. Thus, isolate those algorithms that are likely to change. Design patterns: Builder, Iterator, Strategy, Template method, Visitor.
+
+- Tight coupling. Classes tightly coupled are hard to reuse in isolation, leading to monolithic systems where you cannot change/remove a class without understanding and changing many others). This prevents a class from being used by itself, and make the code dense, and hard to learn, port, and maintain. Design patterns use some techniques (abstract coupling, layering...) to promote loosely coupled systems. Design patterns: Abstract factory, Bridge, Chain, Command, Facade, Mediator, Observer.
+
+- Extending functionality by subclassing. This can lead to an explosion of subclasses. Object composition and delegation are flexible alternatives, though they could make designs harder to understand. Design patterns: Bridge, Chain, Composite, Decorator, Observer, Strategy.
+
+- Inability to alter classes conveniently. Maybe you need the source code but it's not available, or maybe any change requires to modify many existing subclasses. Design patterns: Adapter, Decorator, Visitor.
+
+Design patterns provide the flexibility your software needs, which depends on the types of software you build:
+
+- **Application programs**: Internal reuse, maintainability, and extension are high priorities.
+
+  - __Internal reuse__ ensures that you don't design and implement any more than you have to. Reducing dependencies (looser coupling) increase internal reuse. 
+  - __Maintainability__ increases when limiting platform dependencies and layering a system.
+  - __Extensibility__ is enhanced by reducing coupling, extending class hierarchies correctly, and exploiting object composition.
+
+- **Toolkits**: Set of related and reusable classes designed to provide useful, general-purpose functionality. The doesn't impose a particular design on your application. They are used in many different applications, so they have to avoid assumptions and dependencies that can limit the toolkit's flexibility.
+
+- **Frameworks**: Set of cooperating classes that make up a reusable design for a specific class of software (graphical editors, financial modelling, compilers...). You customize a framework to a particular application by creating application-specific subclasses of abstract classes from the framework. It dictates the architecture of your application (predefined by the framework). Frameworks enphasize design reuse over code reuse. The framework's architecture should work for all domain applications, so it should be as flexible and extensible as possible. Also, loose coupling is important to prevent minor changes to the framework to have major repercussions on the applications. Frameworks and design patterns are similar, but design patterns are more abstract, have smaller architectural elements, and are less specialized than frameworks.
+
+### How to select a design pattern
+
+- Consider how design patterns solve design problems. Find appropriate objects, determine their granularity, specify object interfaces, etc.
+- Check the intent of each design pattern. 
+- Study how patterns interrelate.
+- Study patterns of like purpose. 
+- Examine a cause of redesign.
+- Consider what should be variable in your design without redesign. Encapsulate the concept that varies.
+
+### How to use a design pattern
+
+These are some guidelines, but you will develop your own way over time.
+
+- Get an overview of the pattern, specially Applicability and Consecuences.
+- Study the structure, participants, and collaborations (classes, objects, and their relationships).
+- Study a sample code.
+- Choose names for pattern participants that are meaningful in the application context and make the pattern more explicit in the implementation.
+- Define the classes: Declare interfaces, establish inheritance relationships, define instance variables, identify existing classes that the pattern will affect, and modify them accordingly.
+- Define application-specific names for operations in the pattern. Use the responsibilities and collaborations of each operation as a guide, be consistent in your naming conventions, and make the pattern explicit.
+- Implement the operations to carry out the responsibilities and collaborations in the pattern. 
+- Evaluate consequences of the pattern. They achieve flexibility and variability by introducing additional levels of indirection, which may complicate a design and/or cost some performance. Design patterns should only be applied where the flexibility they afford is actually needed.
+
+
+## Case study: Designing a document editor
+
+We want to design a WYSIWYG document editor called Lexi. The user interface has a representation of the document, which can mix text and graphics freely in different formatting styles. It's surrounded by pull-down menus, scroll bars, and a some page icons for jumping to particular pages.
+
+### Design problems
+
+- **Document structure**: The choice of internal representation for the document will impact the design of the rest of the application.
+- **Formatting**: Arrangement of text and graphics into lines and columns. Formatting policies. Interaction between policies and the internal representation.
+- **Embellishing the user interface**: Embellishments (scroll bars, borders, drop shadows…) should be able to be added and removed easily without affecting the rest of the application.
+- **Supporting multiple look-and-feel standards**: Lexi should adapt easily to different look-and-feel standards (Motif, Presentation Manager...) without major modification.
+- **Supporting multiple window systems**: Look-and-feel standards are usually implemented on different window systems. Lexi's design should be as independent of the window system as possible.
+- **User operations**: User controls Lexi through various user interfaces (buttons, pull-down menus...). Their functionality is scattered throughout the objects in the application. Provide a uniform mechanism for both accessing this scattered functionality and for undoing its effects.
+- **Analytical operations** (like spelling checking and hyphenation): Support for analytical operations (checking for misspelled words, determining hyphenation points...). Minimize the number of classes to modify to add a new analytical operation.
+
+### Document structure
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+53/378
