@@ -47,6 +47,10 @@
     + [Vulnerabilities in systems](#vulnerabilities-in-systems)
     + [Threats to asset security](#threats-to-asset-security)
 + [Detection and response](#detection-and-response)
+    + [Introduction](#introduction)
+    + [Network monitoring and analysis](#network-monitoring-and-analysis)
+    + [Incident investigation and response](#incident-investigation-and-response)
+    + [Network traffic and logs using IDS and SIEM tools](#network-traffic-and-logs-using-ids-and-siem-tools)
 + [Python automation](#python-automation)
 + [Cybersecurity job](#cybersecurity-job)
 
@@ -2097,6 +2101,8 @@ In __application development__, ideally, threat modelling should be performed be
 
 ### Introduction
 
+#### Incident response lifecycle
+
 **Frameworks** help develop a standardized approach to the incident response process, so that incidents are managed in an effective and consistent way. There are different types of frameworks that can be adopted and modified according to needs.
 
 **NIST CSF**: Cybersecurity Framework consisting of 5 core functions: identify, protect, detect, respond, recover.
@@ -2105,35 +2111,37 @@ In __application development__, ideally, threat modelling should be performed be
 
   - __Preparation__
   - __Detection and analysis of events__
-  - __Containment__, Eradication and recovery__
+  - __Containment, eradication and recovery__
   - __Post incident activity__
 
-**Incident**: Occurrence that actually or imminently jeopardizes, without lawful authority, the confidentiality, integrity, or availability of information or an information system; or constitutes a violation imminent threat of violation of law, security policies, security procedures, or acceptable use policies. 
+**Incident**: Occurrence that actually or imminently jeopardizes, without lawful authority, the confidentiality, integrity, or availability of information or an information system; or constitutes a violation or imminent threat of violation of law, security policies, security procedures, or acceptable use policies. 
 
-**Event**: Observable occurrence on a network, system, or device. All security incidents are events, but not all events are security incidents.
+**Event**: Observable occurrence on a network, system, or device. All security incidents are events, but not all events are security incidents. Examples:
 
-- Example: A user cannot login because he forgot his password, so it request a password request and successfully change it. This is observable because there's evidence of what happened (systems and applications log password reset requests).
-- Example: A malicious actor trying to access the user's account requests a password reset and changes it. This is an event (because is an observable occurrence) and a security incident (security policy was violated to access another's account).
+- A user cannot login because he forgot his password, so it requests a password reset and successfully changes it. This is observable because there's evidence of what happened (systems and applications log password reset requests).
+- A malicious actor trying to access the user's account requests a password reset and changes it. This is an event (because is an observable occurrence) and a security incident (security policy was violated to access another's account).
 
 **The 5 W's of an incident**: Keeping track of this information is essential during incident investigation and when writing the final report.
 
-- Who triggered the incident
-- What happened
-- When the incident took place
-- Where the incident took place
-- Why the incident occurred
+- **Who** triggered the incident
+- **What** happened
+- **When** the incident took place
+- **Where** the incident took place
+- **Why** the incident occurred
 
 **Incident handler's journal**: Form of documentation used in incident response.
+
+#### Incident response operations
 
 **CSIRT** (Computer Security Incident Response Team) (or IHT: Incident Handling Team) (or SIRT: Security Incident Response Team): Specialized group of security professionals that are trained in incident management and response. Their goals are to manage incidents effectively and efficiently, provide services and resources for response and recovery, and prevent futures incidents from occurring. It works cross-functionally with other departments to share relevant information. 
 
 **Roles in CSIRT**:
 
-- **Security analyst**: Continuously monitor an environment for any security threats. Investigates security alerts to determine if an incident has occurred (analyze and triaging alerts). If so, he will determine the criticality of the incident (perform root-cause investigation). He can remediate some incidents, but critical ones are escalated to the technical lead.
+- **Security analyst**: Continuously monitors an environment for any security threats. Investigates security alerts to determine if an incident has occurred (analyze and triaging alerts). If so, he will determine the criticality of the incident (perform root-cause investigation). He can remediate some incidents, but critical ones are escalated to the technical lead.
 - **Technical lead** (or Ops lead): Provides technical leadership by guiding security incidents through their lifecycle. Determines the root cause of the incident, and then create and implement strategies for containing, eradicating, and recovering from the incident (he manages all technical aspects of the incident response process). 
-- **Incident coordinator**: Coordinates with the relevant departments during a security incident (security and nonsecurity professionals from different departments). Tracks and manages the CSIRT activities and other teams involved in the response effort. He ensures that incident response processes are followed and teams are regularly updated on the incident status.
-- **Other roles** can be found (communications lead, legal lead, planning lead...).
-- **Nonsecurity professionals**: Those consulted to offer their expertise on the incident. They can be from external departments (human resources, public relations, management, IT, legal...).
+- **Incident coordinator**: Coordinates with the relevant departments during a security incident (security and non-security professionals from different departments). Tracks and manages the CSIRT activities and other teams involved in the response effort. He ensures that incident response processes are followed and teams are regularly updated on the incident status.
+- **Other roles**: Communications lead, legal lead, planning lead, etc.
+- **Non-security professionals**: Those consulted to offer their expertise on the incident. They can be from external departments (human resources, public relations, management, IT, legal...).
 
 **Skill for CSIRT** to achieve his goals:
 
@@ -2189,6 +2197,8 @@ In __application development__, ideally, threat modelling should be performed be
 - **Standards**
 - **Procedures**
 
+#### Incident response tools
+
 **Tools of the trade**:
 
 - __Detection and management tools__: To monitor system activity to identify events that require investigation.
@@ -2227,11 +2237,13 @@ Process:
 
 ### Network monitoring and analysis
 
+#### Network traffic
+
 **Network traffic**: Amount of data that moves across a network.
 
 **Network data**: Data that's transmitted between devices on a network
 
-Network monitoring helps detect, prevent, and respond to attacks. Network communication can be noisy. By understanding how data should be flowing across a network, we can know what is the expected network traffic flow. By knowing what's normal (baseline), we can spot what's abnormal. Monitoring for deviations from typical network traffic patterns often yield big results. Traffic abnormalities can be can detected through observation to spot IoC.
+**Network monitoring** helps detect, prevent, and respond to attacks. Network communication can be noisy. By understanding how data should be flowing across a network, we can know what is the expected network traffic flow. By knowing what's normal (baseline), we can spot what's abnormal. Monitoring for deviations from typical network traffic patterns often yield big results. Traffic abnormalities can be can detected through observation to spot IoC.
 
 - **IoC** (Indicators of Compromise): Observable evidence that suggests signs of a potential security incident.
 - **Data exfiltration**: Unauthorized transmission of data from a system.
@@ -2273,6 +2285,8 @@ Resources:
 
 - [Network traffic (MITRE ATT&CK)](https://attack.mitre.org/datasources/DS0029/)
 - [Data exfiltration techniques (MITRE ATT&CK)](https://attack.mitre.org/tactics/TA0010/)
+
+#### Capture and view network traffic
 
 **Ports**: Non-physical locations on a computer that organizes data transmission between devices on a network.
 
@@ -2342,28 +2356,1007 @@ Network evidence like packet captures may need to be analysed to identify IoC. F
 - The __filter toolbar__ can be used to apply filters to a packet capture.
 - __Filter for protocol__: Display packets containing a certain protocol just by entering the protocol name in the filter toolbar (`dns`, `http`, `ftp`, `ssh`, `arp`, `telnet`, `icmp`...). Different colors are used to represent protocols. This is customizable.
 - __Filter for IP address__: Display packets with a certain IP address (`ip.addr == 172.21.224.8`), source IP address (`ip.src == 10.10.10.10`), or destination IP address (`ip.dst == 4.4.4.4`). 
-- __Filter for MAC address__: Display packets with a certain MAC address (unique alphanumeric identifier assigned to each physical device on a network) (`eth.addr == 00:70:f4:23:18:c4`).
-- __Filter for ports__: Display packets based on port numbers. Useful for isolating specific types of traffic (example: DNS traffic uses TCP or UDP port 53) (`udp.port == 53`) (`tcp.port == 25`).
+- __Filter for MAC address__ (`eth.addr == 00:70:f4:23:18:c4`): Display packets with a certain Ethernet MAC address (unique alphanumeric identifier assigned to each physical device on a network).
+- __Filter for ports__ (`udp.port == 53`) (`tcp.port == 25`): Display packets based on port numbers. Useful for isolating specific types of traffic (example: DNS traffic uses TCP or UDP port 53).
 - __Follow streams__: Filter for packets specific to a protocol and view streams (stream, or converstion, is the exchange of data between devices using a protocol). Wireshark reassembles the data transferred in the stream to make it more readable. Useful for understanding the details of a conversation (example: view the content of the exchanged request and response messages in a HTTP conversation).
+- __Filter to select TCP packet data containing a specific text data__ (`tcp contains "curl"`).
+- __Key property columns__ listed for each packet: No. (index number of the packet in this packet capture file), Time (packet's timestamp), Source (source IP address), Destination (destination IP address), Protocol (protocol contained in the packet), Length (packet total length), Info (some information about the payload).
+- __Packet colouring__: Different data packets may have different colors, depending on the type of data (DNS traffic, TCP and HTTP protocol traffic...).
 - [Wireshark officia user guide](https://www.wireshark.org/docs/wsug_html/).
 
+#### Packet inspection
 
+**tcpdump**: Command line (CLI) network protocol analyser (packet analyser) supported by most Unix-like OSs (like Linux and MacOS). It often comes pre-installed in Linux. Used for capturing network traffic (TCP, IP, ICMP...), which can be saved to a **p-cap** (packet capture) file (useful for later analysis). It lets you execute commands together with options and flags to filter network traffic (for IP address, protocol, or port number).
 
+Network traffic is often **encrypted**, so data may be unreadable. Inspecting network packets might require decrypting the data using the appropriate private keys.
 
+**Capture packets**: `sudo tcpdump [-i interface] [option/s] [expression/s] &`
 
+- `&`: Bash shell instruction for running the command in the background.
 
+- **`sudo tcpdump`**: If the account used doesn't have permission to run tcpdump, use `sudo` to use elevated permissions.
 
+- **`-i`** (interface): Specify the network interface from where capture network traffic. Use `-i any` to sniff traffic from all network interfaces in the system.
+- **`-D`** (`sudo tcpdump -D`): List all network interfaces available on a system for packet capture.
 
+- **`option/s`** (flag/s): Optional. Options alter the execution of a command. Options can be long (`--interface`) or abbreviated (`-i`). Short options can be written with or without a space between the option and its value (`-i any` == `-iany`). Tcpdump has over 50 options (explore them [here](https://www.tcpdump.org/manpages/tcpdump.1.html)). Options are case sensitive (`-w` != `-W`). Options that don't accept parameters can be combined (`-v` + `-n` = `-vn`).
+  - `-w` (write): Save the sniffed network packets to a packet capture file (`-w packetcapture.pcap`) instead of just printing it out in the terminal. 
+  - `-r` (read): Read a packet capture file (`-r packetcapture.pcap`). 
+  - `-v` (verbose): Get detailed packet information. Three verbosity levels: `-v`, `-vv`, `-vvv`.
+  - `-c` (count): Specify how many packets will be captured.
+  - `-n` (name): Tcpdump automatically convert IP addresses to names, and resolve ports to commonly associated services that use them. This can be innacurate and misleading, and might alert attackers that you are investigating them through their DNS records (because name resolution uses reverse DNS lookup, a query that looks for the domain name associated with an IP address). Using `-n` disables resolving hostname. Using `-nn` disables resolving both hostname and port. This is considered best practice when sniffing or analysing traffic.
+
+- **`expression/s`**: Optional. Way to further filter network traffic packets. Combine filters using boolean expressions (`and`, `or`, `not`...). Single or double quotes can be used to ensure that all the expression is executed ('ip and port 80'). Parentheses can be used to group and prioritize different expressions (in `ip and (port 80 or port 443)`, the enclosed filters are prioritized). Some filters are:
+  - `ip`: Filter to find only IPv4 traffic.
+  - `ip6`: Filter to find only IPv6 traffic.
+  - `port`: Filter by port (`port 80`).
+
+- **Output**: After running a command for capturing packets, tcpdump will print one line of text for each sniffed packet. Each line begins with a timestamp. It can output the capture size, packet's timestamp, IP version, protocol type, packet length, TOS (Type of service), TTL (Time to live), fragmentation information (identification, offset, flags), destination and source IP addresses, port number, header checksum, TCP information (flags), etc. Example: command `sudo tcpdump -I any -v -c 1` will output the timestamp (hours, minutes, seconds, fraction of a second), source IP, source port, destination IP, destination port, TCP connection details.
+
+**Resources**:
+
+- [tcpdump documentation](https://www.tcpdump.org/)
+- Daniel Miessler (2023) A tcpdump tutorial with examples. danielmiessler.com. Retrieved from [here](https://danielmiessler.com/study/tcpdump).
+
+Examples:
+
+- `sudo ifconfig`: Identify available interfaces.
+- `sudo tcpdump -D`: Identify available interfaces for packet capture.
+- `sudo tcpdump -i eth0 -v -c5`: Capture 5 network packets from the `eth0` interface. Be verbose.
+- `sudo tcpdump -i any -v -c 1`: Capture 1 network packet from any interface. Be verbose.
+- `sudo tcpdump -i eht0 -nn -c9 port 80 -w capture.pcap &`: Capture 9 packets, at port 80, from `eth0` interface, and save data to file `capture.pcap`. Run command in the background. Don't resolve neither hostname nor port.
+- `curl opensource.google.com`: Generate some HTTP (TCP port 80) traffic that can be captured.
+- `ls -l capture.pcap`: Verify that packet data has been captured.
+- `sudo tcpdump -nn -r capture.pcap -v`: Read captured data from a capture file. Don't resolve neither hostname nor port. Be verbose.
+- `sudo tcpdump -nn -r capture.pcap -X`: Same, but instead of being verbose, display the hexadecimal and ASCII output format packet data. This output can be analysed to detect patterns or anomalies during malware analysis or forensic analysis.
+  - **Hexadecimal** (hex, base16) uses 16 symbols to represent values (0-9, A-F).
+  - **ASCII** (American Standard Code for Information Interchange): Character encoding standard that uses a set of characters to represent text in digital form.
 
 
 ### Incident investigation and response
 
+#### Incident detection and verification
+
+**Events**: Regular occurrences in business operations (website visits, password reset requests...). All incidents are events, but not all events are incidents.
+
+**Detection and analysis** (second phase of the Incident response lifecycle): Incident response teams verify and analyse incidents by collecting and analysing data.
+
+- **Detection**: Prompt discovery of security events. IDS and SIEM tools collect and analyse event data from different sources to identify potential unusual activity. If an incident is detected (like an unauthorized access to an account), an alert is sent out, and then security teams begin the Analyse phase.
+
+- **Analysis**: Investigation and validation of alerts. Done by analysts by applying critical thinking and incident analysis skills. They examine indicators of compromise to determine if an incident occurred.
+
+**Challenges** with detection tools:
+- It's impossible to detect everything (due to tools' limitations, limited resources, or unavoidability). This is why it's important to have an incident response plan.
+- High volume of alerts (often due to misconfigured alert settings).
+
+**Additional detection methods** can be used, since IDS and SIEM tool may not detect some threats.
+
+- **Threat hunting**: Type of human-driven detection (combination of technology and human to discover hidden threats undetected by detection tools). Proactive search for threats on a network that were not detected by detection tools (like fileless malware, which hides in memory instead of using files or applications). Threat hunters use a combination of threat intelligence, indicators of compromise, indicators of attack, and machine learning to search for threats.
+
+- **Threat intelligence**: Way of staying updated on the evolving threat landscape and understanding the relationship between their environment and malicious actors. Evidence-based threat information that provides context about existing or emerging threats. Large volumes of threat intelligence can be managed by a TIP (threat intelligence platform), which is an application that collects, centralizes, and analyses threat intelligence from different sources, and can be used to identify and prioritize relevant threats and improve the security posture. Threat intelligence data feeds are best used to add context to detections. They should not drive detections completely and should be assessed before applied to an organization. Sources can be private or public:
+  - Industry reports: They often include details about attacker's TTP (tactics, techniques, and procedures).
+  - Government advisories: They often include details about attacker's TTP.
+  - Threat data feeds: Stream of threat-related data (usually a list of indicators like IP addresses, domains, and file hashes). Useful against APTs (advanced persistent threats), which maintain unauthorized access for an extended period of time).
+
+- **Cyber deception**: Techniques for deceiving malicious actors with the goal of increasing detection and improving defensive strategies. Example:
+  - **Honeypot**: Active cyber defense mechanism that uses deception technology. Systems or resources created as decoys vulnerable to attacks with the purpose of attracting potential intruders (like a file called `client_credit_cards`). When malicious actors try to access this file, security teams are alerted. 
+
+Resources:
+
+- [The Threat Hunting Project](https://www.threathunting.net/) provides an informational repository
+- [Threat Analysis Group (TAG)](https://blog.google/threat-analysis-group/) has a research on state-sponsored hackers.
+
+**Indicators of compromise**: They don't always confirm a security incident, they might result from a human error, system malfunction, or something else not security-related.
+
+- **Indicators of compromise (IoCs)**: Observable evidence that suggests a potential security incident. It charts specific pieces of evidence associated to an attack (like a file name associated with a type of malware). They help identify the why and how of an ongoing or unknown attack.
+
+- **Indicators of attack (IoA)**: Observed events that indicate a real-time incident. IoAs focus on identifying the behavioral evidence of an attacker, including their methods and intentions. It helps identify the who and what of an attack after it took place.
+
+**Pyramid of pain**: It captures the relationship between indicators of compromise and the difficulty level that malicious actors experience when they are blocked by security teams. Example: blocking the IP address of a malicious actor is labelled as easy because he can use different IP addresses to work around this. If security teams can block the IoCs located at the top of the pyramid, the attacker will face great difficulties. Pyramid levels (from bottom to top):
+
+1. **Hash values** (trivial) of malicious files. Often used to provide unique references to specific samples of malware or files involved in an intrusion.
+2. **IP addresses** (easy) of malicious actors.
+3. **Domain names** (simple): Web addresses. 
+4. **Network artifacts** (annoying): Observable evidence created by malicious actors on a network, like information found in network protocols (such as User-Agent strings).
+4. **Host artifacts** (annoying): Observable evidence created by malicious actors on a host (device connected to a network), like the name of a file created by malware.
+5. **Tools** (challenging): Software used by a malicious actor to achieve his goal (like John the Ripper, a password cracking tool).
+6. **TTPs** (tough): Behavior of a malicious actor. Three elements: tactics (high-level overview of the behavior), techniques (detailed descriptions of the behavior relating to the tactic), and procedures (highly detailed descriptions of the technique). TTPs are the hardest to detect.
+
+**Investigative tools**: Used for analyzing IoCs and add context to them.
+
+**Adding context to investigations**: Even after blocking the corresponding IoC, a malicious actor could evade detection and continue attacking. Focusing on a single piece of evidence can make you miss the bigger picture. Threat intelligence is evidence-based threat information that provides context about threats. This context (i.e., additional information about IoCs) let us observe the bigger picture (i.e., a detailed picture of a security incident), take more informed response actions, and detect security incidents faster.
+
+**Crowdsourcing**: Practice of gathering information using public input and collaboration. The community (people and organizations) openly share and access a collection of threat intelligence data, which helps to continuously improve detection technologies and methodologies. Threat intelligence platforms use crowdsourcing to collect information from the global cybersecurity community. Without crowdsourcing, attackers can perform the same attacks against multiple organizations. ISACs (Information Sharing and Analysis Centers) are an example of information-sharing organizations. **OSINT** (Open-source intelligence: collection and analysis of information from publicly available sources to generate usable intelligence) can be a method to gather information about threat actors, threats, vulnerabilities, and more. This threat intelligence data is used to improve detection methods and techniques of security products (like detection tools or anti-virus software), and help other organization defend against the same attack. 
+
+[**VirusTotal**](https://www.virustotal.com/gui/home): Service that analyses suspicious files, domains, URLs, and IP addresses for malicious content. It also offers services and tools for enterprise use. The website is available for free and non-commercial use, where users can submit artifacts to get reports that contain the following sections:
+
+- __Detection__: List of third-party security vendors and their detection verdicts on an IoC (malicious, suspicious, unsafe...).
+- __Details__: Information extracted from a static analysis of the IoC (hashes, file types, file sizes, headers, creation time, first and last subimssion information...).
+- __Relations__: Related IoCs that are somehow connected to an artifact (contacted URLs, domains, IP addresses, dropped files...).
+- __Behavior__: Observed activity and behaviors of an artifact after executing it in a controlled or sandboxed environment (tactics and techniques detected, network communications, registry and file systems actions, processes...). 
+- __Community__: Comments and insights about the IoC from members of the VirusTotal community.
+- __Vendors' ratio and community score__: Vendors' ratio (how many security vendors have flagged the IoC as malicious overall) and community score (based on the inputs of the VirusTotal community).
+
+[**Jotti malware scan**](https://virusscan.jotti.org/): Free service that scans suspicious files with several antivirus programs. There are some limitations to the number of files that you can submit. 
+
+[**Urlscan.io**](https://urlscan.io/): Free service that scans and analyses URLs and provides a detailed report.
+
+[**MalwareBazaar**](https://bazaar.abuse.ch/browse/): Free repository for malware samples. Great source of threat intelligence useful for research.
+
+#### Create and use documentation
+
+**Documentation**: Any form of recorded content that is used for a specific purpose. Security teams use documentation (playbooks, final reports...) to support investigations, complete tasks, and communicate findings. Security operations teams need to document what rules to activate, what severity to assign, what might lead to false positives, and how the analysts can confirm the alert is legitimate. The security field is constantly changing, so it's important to maintain, review, and update documentation regularly.
+
+**Chain of custody**: Process of documenting evidence possession and control during an incident lifecycle. Once evidence is collected, chain of custody forms are introduced, which are filled out with details as the evidence is handled. Each time a piece of evidence is transferred to another person, they need to log it in the form, so that movement of evidence is transparent (who, when, why, and where handled it). Common elements: description of evidence (records the items identifications, quantities, and descriptions), custody log (records the name of the people that transferred and received the evidence, item identification, date and time, purpose of the transfer). It establishes proof of the integrity, reliability, and accuracy of the evidence, which makes it useful for meeting legal standards in security incidents (so this evidence can be used in legal proceedings against malicious actors).
+
+- **Broken chain of custody**: Inconsistencies in the collection and logging of evidence in the chain of custody (due to incorrect logging, missing entry...). It can impact the integrity, reliability, and accuracy of the evidence.
+
+**Benefits** of documentation:
+
+- **Transparency**: Relevant information can be accessed. Example: a source of evidence. Critical for demonstrating compliance with regulations and internal processes, meeting insurance requirements, and for legal proceedings. Chain of custody documents evidence possession and control during an incident lifecycle, producing transparency and an audit trail.
+
+- **Standardization**: Stablished set of guidelines or standards that members of an organization can follow to complete a task or workflow. It helps with continuous improvement, knowledge transfer, and team members onboarding. This maintains quality of work. Example: organization's security policy, processes, and procedures, like an incident response plan or the NIST security frameworks. 
+
+- **Clarity**: Clear understanding of team members' roles and duties, and providing information on how to get the job done. It gives quickly access to the needed information. Example: playbooks providing detailed instructions prevent uncertainty.
+
+**Best practices**:
+
+- __Know your audience__: Consider your audience and their needs in order to tailor your document to meet their needs.
+- __Be concise__: Too long documentation can discourage people from using it. Make it useful by establishing the purpose immediately.
+- __Update regularly__: Regularly review and update it to keep up with the evolving threat landscape (new vulnerabilities are discovered and exploited constantly).
+
+**Playbook**: Manual that provides details about any operational action (steps, checklists...). It provides security analysts with instructions on what to do when an incident occurs (ransomware, data breach, malware, DDoS). It reduces guesswork and uncertainty during response times, and is critical for executing quickly and effective responses. Since threats are constantly evolving, it needs to be regularly maintained and updated. There're 3 types of playbooks:
+
+- __Non-automated__: Set of steps-by-step actions to be performed by an analyst.
+- __Automated__: Automates tasks (categorizing the severity of an incident, gathering evidence...). It helps lower the time to resolution. SOAR and SIEM tools can be configured to automate playbooks.
+- __Semi-automated__: Combines a person's actions with automation. Tedious, error-prone, or time-consuming tasks can be automated. It helps increase productivity and decrease time to resolution.
+
+#### Response and recovery
+
+**Triage**: Prioritizing of incidents according to their level of importance or urgency. Since the resources for incident response are limited, incidents are triaged according to the threat they pose to the confidentiality, integrity, and availability of systems. Security analysts prioritize incident alerts according to their urgency. The priority level defines how the security team will respond to the incident. Benefits: better resource management, standardized approach, reduced scope of impact, and a timely response. Process:
+
+1. __Receive and assess__ an alert to determine if it's a false positive and if it's related to an existing incident.
+2. __Assign priority__ based on the organization's policy and guidelines. You can take into account its functional impact (business functionality), information impact (data and information), and recoverability (how much effort takes to recover). Security alerts often come with an assigned priority or severity level.
+3. __Collect and analyse__ any evidence associated with the alert (like logs). Also, conduct external research and document the investigation. Goal: gather information to make an informed decision to address it.
+
+**Add context to your investigation** to determine if an alert is malicious. It prevents making assumptions, which can result in incorrect or incomplete conclusion. It can be done by asking questions like:
+
+- Is the alert a false positive?
+- Was this alert triggered in the past? If so, how was it resolved?
+- Is the alert triggered by a known vulnerability?
+- What is the severity of the alert? Useful for determining the priority.
+- Is there anything out of the ordinary?
+- When did this happen?
+
+**Containment, Eradication, and Recovery** (third phase of the Incident response lifecycle): Containment helps with eradication, and eradication helps with recovery. This phase integrates with the core functions of the NIST Cybersecurity Framework, Respond and Recover.
+
+- **Containment**: Act of limiting and preventing additional damage caused by an incident. The Incident response plan outlines the organization's containment strategies (actions security teams have to take after detecting an incident).
+
+- **Eradication**: Complete removal of the incident elements from all affected systems (like performing vulnerability tests, applying patches...).
+
+- **Recovery**: Process of returning affected systems back to normal operations (like reimaging systems, resetting passwords, adjusting network configurations...).
+
+**Business continuity plan (BCP)**: Document outlining the procedures to sustain business operations during and after a significant disruption. It helps ensure that critical business functions can resume or be quickly restored when an incident occurs.
+
+- __Ransomware__ attacks can be devastating for business operations. BCPs minimize interruptions to operations so that essential services can be accessed.
+- __Recovery strategies__: BCPs can include strategies for recovery focused on returning to normal operations. Example: site resilience.
+  - __Site resilience__: Organizations can design their systems to be resilient (ability to prepare for, respond to, and recover from disruptions) so that they can continue delivering services despite facing disruptions. It ensures the availability of networks, data centers, or other infrastructure when a disruption happens. There're 3 types of recovery sites:
+    - __Host sites__: Fully operational facility that is a duplicate of the main one and can be activated immediately.
+    - __Warm sites__: Facility containing a fully updated and configured version of the hot site. It can be activated quickly, but not immediately.
+    - __Cold sites: Backup facility equipped with some of the necessary infrastructure, that might need additional work to be operational.
+
+**Disaster recovery plan (DRP)**: Document outlining how to recover information systems in response to a major disaster (hardware failure, facilities destruction...).
+
+#### Post-incident actions
+
+**Post-incident activity** (final phase of the Incident response lifecycle): Process of reviewing an incident to identify areas for improvement during incident handling. Goal: to minimize risk of it happening again. Different documents are updated or created. Incident response documentation, at minimum, should describe the incident by covering the 5 W's: who, what, where, why, when.
+
+- **Final report**: Document that provides a comprehensive review of an incident. It contains a timeline and details of all events related to the incident and recommendations for future prevention. Consider the audience you are writing the report for (sometimes, they're not security professionals). It's not standardized; its format vary across organizations. Common elements:
+
+  - __Executive summary__: High-level summary of the report (including key findings and essential facts).
+  - __Timeline__: Detailed chronological timeline of the incident (including timestamps dating the sequence of events that led to the incident).
+  - __Investigation__: Actions taken during the detection and analysis of the incident.
+  - __Recommendations__: Suggested actions for future prevention.
+
+- **Lessons learned meeting** (or post-mortem): Meeting after a major incident (within about 2 weeks after the incident) where all parties involved participate. The incident is reviewed to determine what happened, actions taken, actions effectivity, and areas of improvement; and can let members share information and recommendations. The final report is used as the main reference. Goal: share ideas and information about the incident and how to improve future responses. Incident reviews can reveal human errors before detection and during response. This is an opportunity to learn from what happened and improve, not to blame anybody. Not all incidents require this meeting, it depends on the incident's size and severity, but all major incidents should have one. 
+
 ### Network traffic and logs using IDS and SIEM tools
+
+#### Overview of logs
+
+**Events**: Observable occurrences that happen on a network, system, or device.
+
+**Logs**: Record of events that occur within an organization's systems. Almost every device or system can generate logs. It contains multiple entries, each one detailing information about a specific event or occurrence (what, when, where occurred) (date, time, location, system characteristics, action, action's author...). Logs can be adjusted to log the information we want. They're are useful for troubleshooting system performance issues, incident investigations, and security monitoring (detection of unusual or malicious activity). Logs help uncover the details aobut the 5 W's of an incident (who, what, when, where, why).
+
+**Log analysis**: Process of examining logs to identify events of interest. Logs help create a timeline around event occurrences to understand what happened. 
+
+An enormous volume of log data can be generated (from many sources). It's helpful to **log efficiently** by being selective on what we log. Excluding specific data from being logged helps reduce the time spent searching through log data.
+
+**SIEM tools**: They provide a high-level overview of what happened in a network. They collect data from multiple data sources, aggregate (centralize) it in one place, and the different log formats are normalized (converted into a single format). It helps process large log volumes from multiple data sources in real-time, which allow to quickly search for log data and perform log analysis during investigations. There're many log data source. Log types:
+
+- __Network logs__: From routers, switches, proxies, firewalls, etc.
+- __System logs__: From OSs.
+- __Application logs__: From software applications.
+- __Security logs__: From security tools (IDS, IPS, antivirus...).
+- __Authentication logs__: They record login attempts.
+
+Log forwarders collect logs from various sources and automatically forward them to a centralized log repository for storage.
+
+**Log management**: Process of collecting, storing, analysing, and disposing of log data. Log management, protection, and retention are vital for maintaining log integrity.
+
+- __Choosing what to log__ is important. Organizations are different, their logging requirements can differ too, and the event of interests can vary.
+- __Overlogging__ can have disadvantages with some SIEM tools: increased storage, maintenance costs, and load time (causing bad performance and less usability, making difficult to search and identify events).
+- __Log protection__: Malicious actors may try to modify logs to mislead security teams or hide their activity. When logs are generated, they should be sent to a centralized log server instead of storing them on a local machine. This creates a barrier between logs and attackers.
+- __Log retention__: Some regulations require organizations to retain logs for a set periods of time, which can be implemented in their log management policy. Organizations in the following industries may need to modify these policies to meet regulatory requirements:
+
+  - Public sector, like the FISMA (Federal Information Security Modernization Act).
+  - Healthcare, like the HIPAA (Health Insurance Portability and Accountability) Act of 1996.
+  - Financial services, like the PCI DSS (Payment Card Industry Data Security Standard), GLBA (Gramm-Leach-Bliley Act), and SOX (Sarbanes-Oxley) Act of 2002.
+
+**Log formats**: Different logs can have different formats (human-readable or machine-readable, verbose or short...). Custom log formats also exist. Commonly used log formats:
+
+- **Syslog**: Standard for logging and transmitting data. Read more [here](#https://www.rfc-editor.org/rfc/rfc5424). It has different capabilities:
+
+  - __Protocol__: Transports logs to a centralized log server for log management. Uses port 514 for plaintext logs and port 6514 for encrypted logs.
+  - __Service__: It's a log forwarding service that consolidates logs from multiple sources into a single location. It receives and then forwards any syslog log entry to a remote server. 
+  - __Log format__: It has 3 components (header, structured-data, and message). It's the native logging format in Unix systems.
+
+    - __Header__: Contains priority field (PRI: `<236>`) (urgency level: usually, the lower, the more urgent), timestamp (date, time, and timezone: `2022-03-21T01:11:11.003Z`), hostname (machine sending the log: `virtual.machine.com`), application name (`evntslog `), message ID (`ID01`), etc. It can be combined with JSON and XML formats.
+
+    - __Structured data__: Contains additional logging information. Enclosed in square brackets and structured in key-value pairs (`[user@32473 iut="1" eventSource="Application" eventID="9999"]`).
+    - __Message__: Detailed log message about the event (`This is a log entry!`).
+
+```
+<236>1 2022-03-21T01:11:11.003Z virtual.machine.com evntslog - ID01 [user@32473 iut="1" eventSource="Application" eventID="9999"] 
+This is a log entry!
+```
+
+- **JSON** (JavaScript Object Notation): Used to store and transmit data in web and cloud. It's simple, lightweight, text-based, and easy to read and write. It's syntax is derived from JavaScript, including:
+
+  - __Key-value pairs__ (`A: B`): Two linked items (`"Alert: "Malware"`)
+  - __Commas__ (`,`): Separate data (`"Alert": "Malware", "Code": 1090, "Level": 10`)
+  - __Double quotes__ (`" "`): Enclose a string (text data)
+  - __Curly brackets__ (`{ }`): Enclose an object (data type that stores data in a comma separated list of key-value pairs). Objects are often used to describe multiple properties for a given key. JSON log entries start and end with a curly bracket.
+  - __Square brackets__ (`[ ]`): Used to enclose an array (data type that stores data in a comma-separated ordered list). Useful for storing data as an ordered collection (`["Servers", "Clients", "Users"]`).
+
+```
+{
+  "Alert*: "Malware",
+  "Alert code": 1090,
+  "User":
+  {
+    "id": "1234",
+    "name": "user"
+    "age": 30
+  }
+}
+```
+
+- **XML** (Extensive Markup Language): Language and format used for storing and transmitting data. Native file format used in Windows systems. It structures data using:
+
+  - __Tags__: Pair of tags that enclose data (`<tag>...</tag>`). Used to store and identify data. All XML entries must contain at least one root element. Root elements contain other elements underneath them (child elements).
+
+  - __Elements__: Contains both the tags and the data enclosed by them (`<Event> <EventID>4688</EventID> <Version>5</Version> </Event>`).
+
+```
+<Event>
+  <EventID>4688</EventID>
+  <Version>5</Version>
+</Event>
+```
+
+  - __Attributes__: Elements can also contain attributes (they provide additional information about elements), which are included as the second part of the tag itself and must always be quoted using single or double quotes (`<EventData> <Data Name='SubjectUserSid'>S-2-3-11-160321</Data> <Data Name='SubjectUserName'>JSMITH</Data> </EventData>`).
+
+```
+<EventData>
+  <Data Name='SubjectUserSid'>S-2-3-11-160321</Data>
+  <Data Name='SubjectUserName'>JSMITH</Data>
+  <Data Name='SubjectDomainName'>ADCOMP</Data>
+  <Data Name='SubjectLogonId'>0x1cf1c12</Data>
+  <Data Name='NewProcessId'>0x1404</Data>
+</EventData>
+```
+
+```
+<xml>
+  <name firstName="Nate" lastName="Thomas" />
+  <employeeId>12345</employeeId>
+  <dataJoined>2022-01-14 09:10:11,125</dataJoined>
+</xml>
+```
+
+- **CSV** (Comma Separated Values): It uses separators (like commas) to separate data values. The position of the data corresponds to its field name, but field names might not be included in the log, so its critical to know what fields are being included in the log. Examples:
+
+```
+2009-11-24T21:27:09.534255,ALERT,192.168.2.7,
+1041,x.x.250.50,80,TCP,ALLOWED,1:2001999:9,"ET MALWARE BTGrab.com Spyware
+Downloading Ads",1
+```
+
+```
+2020/07/31
+14:15:30,013201006261,TRAFFIC,end,2049,2020/07/31
+14:15:30,10.1.2.3.,10.10.10.200,172.1.2.3,10.10.10.200,TRUST-UNTRUST,,,incomple,vsys1,TRUST,UNTRUST,ethernet1/13,ethernet1/1,Panorama-Shared,2020/07/31
+14:15:30,3947917,1,56207,445,7577,445,0x404019,tcp,allow,60,60,0,1,2020/07/31
+14:15:24,0,any,0,6597965036465334757,0x8000000000000000,10.0.0.0-10.255.255.255,10.0.0.0-10.255.255.255,0,1,0,aged-out,37,23,0,0,,DVC-1234-COL-FW1,from-policy,,,0,,0,,N/A,0,0,0,0
+```
+
+- **CEF** (Common Event Format): It uses key-value pairs to structure data and identify fields and their values. Its syntax contain these fields: `CEF:Version|Device Vendor|Device Product|Device Version|Signature ID|Name|Severity|Extension`. Fields are separated with `|` (pipe). Anything in the `Extension` field must be written in a key-value format. Syslog is a common method used to transport logs like CEF (in this case, a timestamp and hostname will be prepended to the CEF message). Extensions and syslog prefix are optional to add to a CEF log. Example (application `threatmanager` stops a worm from spreading from internal network `10.0.0.2` to external network `2.1.2.2`):
+
+```
+Sep 29 08:26:10 host CEF:1|Security|threatmanager|1.0|100|worm successfully stopped|10|src=10.0.0.2 dst=2.1.2.2 spt=1232
+```
+
+**Useful links**:
+
+  - [Test data generator tool](#https://generatedata.com/)
+  - [Timestamps](#https://www.rfc-editor.org/rfc/rfc3339)
+
+#### Overview of IDS (Intrusion Detection Systems)
+
+**Telemetry**: Collection and transmission of data for analysis (example: packet capture).
+
+**IDS** (Intrusion Detection System): Application that monitors activity on systems and networks (example: monitoring parts of a system or network, like an endpoint). When suspicious activity is detected, it records output as logs and generates an alert. IDS logs can be sent, stored, and analysed in a centralized log repository (like a SIEM).
+
+- **HIDS** (Host-based IDS): Application that monitors the activity of the host (computer, laptop, server...) on which it's installed (as an agent) to detect suspicious activity. It can monitor inbound/outbound traffic flows, file systems, user activity, system resources usage, etc. Often used for monitoring endpoints.
+
+  - **Endpoint**: Any device connected to a network (computer, smartphone, server...). Entry point into a network. It's a key target for malicious actor trying to get access into a system.
+  - **Host**: Any device that communicates with other devices on a network.
+
+- **NIDS** (Network-based IDS): Application that collects and monitors network traffic and network data (example: traffic from/to a server). It analyses network traffic and network data on a point on a network (similarly to packet sniffers). Usually, there're many IDS sensors on different points in the network.
+
+**Detection techniques**: Detection systems use them to detect threats and attacks. Most commonly used ones are:
+
+- **Signature analysis**: Used to find events of interest. It uses a signature, which specifies a set of rules that an IDS refers to when it monitors activity (example: failed login happened 3 times in a row). It the activity matches the rules in the signature, the IDS logs and alerts. Indicators of compromise (IoCs) (from the Pyramid of Pain) and other indicators of attack can be useful for creating targeted signatures. Advantages and disadvantages:
+
+  - (adv) Low rate of false positives: It just compares activity to signatures.
+  - (dis) Signatures can be evaded easily: Attackers can modify their attack behaviours to bypass signatures.
+  - (dis) Signatures require updates: When new exploits or attacks are discovered, new signatures must be added to the database.
+  - (dis) Inability to detect unknown threats: Only known threats are detected through their signatures. Unknown ones are not (zero-day attacks, new malware families...).
+
+- **Anomaly-based analysis**: Identifies abnormal behaviour. It has 2 phases: training phase (a baseline of normal/expected behavior is stablished by collecting data corresponding to normal system behaviour) and detection phase (current system activity is compared against the baseline). Activity happening outside of the baseline gets logged, and an alert is generated. Advantages and disadvantages:
+ 
+  - (adv) Ability to detect new and evolving threats.
+  - (dis) High rate of false positives: Any behaviour that deviates from the baseline is flagged as abnormal.
+  - (dis) Pre-existing compromise: If an attacker exists during the training phase, the baseline can include malicious behaviour, which can lead to missing the attacker.
+
+**Signature**: Pattern associated with malicious activity (sequence of binary numbers or bytes, malicious scripts, specific data like an IP address...). Used to detect and alert on this activity, or to provide additional context and visibility into systems and networks (helping to identify potential security threats or vulnerabilities). It specifies detection rules that outline the types of network intrusions that we want an IDS to detect (failed login happened 3 times in a row, suspicious traffic attempting to connect to a port...). Components of a NIDS rule:
+
+- __Action__: Action to take if the rule criteria is met (`alert`, `pass`, `drop`, `reject`...). 
+- __Header__: It defines the network traffic information (source and destination IP addresses, source and destination ports, protocols, traffic direction...). Example: `tcp 10.120.170.17 any -> 133.113.202.181 80`.
+- __Rule options__: Parameters for customizing signatures. Useful for narrowing down network traffic (example: `msg:"This is a message";sid:12345;rev:1;` represents the alert message to print, signature id, signature revision/version used).
+
+**Suricata**: Open source signature-based IDS, IPS, and network analysis tool (Network Security Monitoring: NSM).
+
+- **IDS**: As NIDS, it monitors network traffic and alerts on suspicious activities and intrusions. It can be set up as a HIDS to monitor the system and network activities of a single host like a computer.
+- **IPS**: As IPS, it can detect and block malicious activity and traffic. Running this mode requires additional configuration.
+- **NSM**: As NSM, it helps keep networks safe by producing and saving relevant network logs. It can analyze live network traffic, existing packet capture files, and create and save full or conditional packet captures. Useful for forensics, incident response, and for testing signatures.
+
+**Suricata configuration file** (`suricata.yaml`): Used to configure the settings of an application. It let you customize how your IDS interact with the environment. It has YAML file format.
+
+**Suricata signatures (rules)**: It uses the Signature analysis detection method, which consists of 3 components (action, header, options). Like many NIDS, it comes with pre-written signatures, which can be used as customizable templates. In Linux, Suricata's configuration files live in `/etc/suricata`. Signature templates (for different protocols and services) live in `/etc/suricata/rules`, where you can also add new signatures. It's recommended to modify/customize the existing rules to meet your specific security requirements (there is no one-size-fits-all approach). Custom rules help minimize false positive alerts.
+
+- __Rule order__ (order in which rules are evaluated): Usually, rules are processed in the order in which they are defined in the configuration file. However, Suricata processes rules in a different default order: pass, drop, reject, and alert. Rule order may affect the final verdict of a packet (example: conflicting actions, like drop and alert rules, match on the same packet).
+
+- Suricata __signature example__: `/etc/suricata/rules/custom.rules` contains a rule for an HTTP connection. It generates an `alert` action whenever it detects traffic leaving the home network and going to the external network, and that contains the word `GET`.
+
+```
+# Custom rules example for http connection
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"GET on wire"; flow:established; content:"GET", sid:12345; rev:1;)
+```
+
+  - __Action__: `alert`
+  - __Header__:
+    - __Protocol__: HTTP
+    - __IP addresses__ (source & dest.)
+    - __Ports__ (source & dest.)
+    - __Traffic direction__
+  - __Options__: Enclosed in parentheses and separated by semicolons.
+    - __Message__: Output when alert is triggered.
+    - __Flow direction__: `established` means that a connection has been successfully made.
+    - __Content__: Inspects content of a packet. `GET` means that the signature will match if a network packets contains the text `GET`, which is an HTTP request used to retrieves and request data from a server). Comments begin with `#`.
+    - __Signature ID__
+    - __Revision number__
+
+**Suricata logs**: It generates 2 types of log data, which output alerts and events in EVE JSON format (Extensible Event Format JavaScript Object Notation). Stored at `var/log/suricata`.
+
+- __Network telemetry logs__ (events): Contains information about network traffic flows. It just records what happens on a network (like a connection being made to a specific port). It's not always security relevant.
+- __Alert logs__ (alerts): Contains information relevant to security investigations. These are usually output by signatures triggering an alert (like suspicious traffic on a network). Triggered alerts generate 2 log files:
+
+  - `fast.log`: Records minimal alert information (basic IP address, ports...). Used for basic logging and alerting. It's considered legacy file format and not suitable for incident response or threat hunting tasks.
+  - `eve.json`: Standard Suricata log file. It's in JSON format. Contains detailed data about generated events and alerts. Events contain a unique identifier (`flow_id`) that is used to correlate related logs or alerts to a single network flow. Used for detailed analysis. It's a better file format for log parsing and SIEM log ingestion.
+
+    - Raw content may be difficult to read. The `jq` tool is very useful for processing JSON data.
+    - `jq . /var/log/suricata/eve.json | less`: Display content in a cleared format. Navigate with `f` and `b`. Quit with `q`. 
+    - `jq -c "[.timestamp,.flow_id,.alert.signature,.proto,.dest_ip]" /var/log/suricata/eve.json`: Extract a set of fields from the JSON payload.
+    - `jq "select(.flow_id==<flow_id_value>)" /var/log/suricata/eve.json`: Display all event logs related to a specific `flow_id`.
+      - __Network traffic flow__: Sequence of packets between a source and destination that share common characteristics (IP addresses, protocols...). It helps understand the behavior of network traffic to identify and analyze threats. Suricata assigns a unique `flow_id` to each network flow. All logs from a network flow share the same `flow_id`, which is useful for correlating network traffic that belongs to the same network flows.
+
+**Running Suricata** using `custom.rules` and `sample.pcap` files:
+
+- Initial files:
+
+  - `custom.rules`: Rules (signatures) that can be run.
+  - `sample.pcap`: Packet capture file that contains an example of network traffic data. It simulates network traffic. Useful for testing Suricata rules.
+
+- `sudo suricata -r sample.pcap -S custom.rules -k none`. This command starts Suricata application and processes `sample.pcap` using the rules in `custom.rules`. Cancel process with `Ctrl + C`.
+
+  - `-r sample.pcap`: Specify an input file to mimic network traffic.
+  - `-S custom.rules`: Use rules defined in a file.
+  - `-k none`: Disable all checksum checks. Checksums detect if a packet has been modified in transit.
+
+- Running that command will return an output stating how many packets were processed, and will create 4 files in `/var/log/suricata`:
+
+  - `fast.log`: A new alert line will be added to this file when all conditions in any of the rules are met.
+  - `eve.json`: Contains more data than `fast.log`.
+  - `stats.log`
+  - `suricata.log`
+
+**Suricata links**:
+
+- [Official website](https://suricata.io/)
+- [User guide](https://docs.suricata.io/en/latest/index.html)
+- [Features](https://suricata.io/features/)
+- [Rule management](https://docs.suricata.io/en/latest/rule-management/suricata-update.html)
+- [Rule performance analysis](https://docs.suricata.io/en/latest/configuration/suricata-yaml.html#engine-analysis-and-profiling)
+- [Threat hunting webinar](https://www.youtube.com/watch?v=kaDGolhTu94)
+- [Introduction to writing Suricata rules](https://www.youtube.com/watch?v=tvoqFBVSShA)
+- [Eve.json jq examples](https://docs.suricata.io/en/latest/output/eve/eve-json-examplesjq.html)
+
+#### Overview of SIEM (Security Information Event Management)
+
+**SIEM** (Security Information and Event Management): Application that collects and analyses log data to monitor critical activities in an organization. It does this by collecting, analyzing, and reporting on security data from multiple sources. SIEM tools __collect__ and __process__ enormous amounts of data generated by devices and systems from all over an environment. Devices generate data in different formats (data is not represented on a unified format). SIEM tools __normalize__ this data (making it more readable and easier to analyze), and __index__ it (so it can be easily accessed through search). When making search queries, the more specific it is, the faster and more relevant the result.
+
+**Log analysis**: Process of examining logs to identify events of interest.
+
+**Search methods**:
+
+  - __Raw log search__: Search through not normalized logs. Useful for looking for data not included in the normalized logs or troubleshoot data ingestion problems.
+  - __UDM search__: Search through normalized data. Faster. UDM fields can be used to query for specific information from an event. All UDM events contain some common fields like:
+
+    - __Entities__ (or Nouns): Additional context about a device, user, or process involved in an event (hostname, username, event's IP address...). All UDM events must contain at least one entity. 
+    - __Event metadata__: Basic description of an event (type of event, timestamps...).
+    - __Network metadata__: Information about network-related events and protocol details.
+    - __Security results__: Security-related outcome of events (like "virus detected and quarantined").
+
+There're different **SIEM tools** used in the security industry such as:
+
+- **Splunk**: Data analysis platform. Splunk Enterprise Security provides SIEM solutions that let you search, analyze, and visualize security data. It collects data from different sources, process it, and store in an index. Then, it can be accessed in many different ways (like through search). It uses its own query language called SPL (Search Processing Language) for searching (using Splunk’s Search & Reporting app). Learn more: [Splunk's search manual](https://docs.splunk.com/Documentation/Splunk/9.0.1/Search/GetstartedwithSearch), the [Splunk's search reference](https://docs.splunk.com/Documentation/Splunk/9.0.2/SearchReference/UnderstandingSPLsyntax), and the [Chronicle's UDM field list](https://cloud.google.com/chronicle/docs/reference/udm-field-list). Search examples (raw log search):
+
+  - `index=main fail`: Retrieve events from the index called `main` that contain the term `fail`.
+  - `tablegames error OR fail* host!=www1`: Retrieve events from index `tablegames` that contain the term `error` or any ending containing the term `fail` ("failed", "failure"...). It doesn't include www1 hosts (`host!=www1`). The search can be filtered by a time range (use the time range picker button).
+  - `index=main fail | chart count by host`: Retrieve events from index `main` containing term `fail`. Then, transform the search results into a `chart` based on the number of events (`count`) and the hosts (devices from where events come from).
+  - `OR`: Boolean operator.
+  - `*` (asterisk): Wildcard. It can be substituted with any other character.
+  - `|` (pipe): Use the output of one commands as the input of the next command.
+  - `""` (double quotes): Specify an exact phrase or string. Example: searching for "login failure" will prevent matching events that contain `failure` or `login` separately.
+
+- **Chronicle**: Google Cloud's SIEM. It stores security data for search, analysis, and visualization. It gets data forwarded to Chronicle, and normalize or clean it up (making it easier to process and index). Then, the data becomes available to be accessed through a search bar. It uses YARA-L (computer language for creating rules for searching through ingested log data) for searching (using the Search field and the Procedural filtering). Learn more: [Chronicle's quickstart guide](https://cloud.google.com/chronicle/docs/review-security-alert). Search examples:
+
+  - (UDM search) `metadata.event_type = "USER_LOGIN"`: Get metadata from user authentication events.
+  - (UDM search) `metadata.event_type = "USER_LOGIN" AND security_result.action = "BLOCK"`: Find user authentication events that were blocked or failed.
+  - (Raw log search) In the search field you can specify usernames, filenames, hashes, etc. Regular expressions can be used for narrowing down the search.
+  - Quick Filters table: It can be used to further filter the search results.
+
+**SIEM process**:
+
+  1. **Collect and aggregate data** (log ingestion): Collect event data from various data sources.
+  2. **Normalize data**: Convert the data into a standard format, so it becomes easier to read and search.
+  3. **Analyze data**: Analyze and correlate data to identify common patterns that indicate unusual activity.
+
+**Log ingestion**: Process of collecting and importing data from log sources into a SIEM tool. The SIEM copies event data into its own storage. There're many ways SIEM tools can ingest log data. You can upload data manually (inefficient) or use software to help to do it.
+
+- [Data ingestion into Splunk](https://docs.splunk.com/Documentation/SplunkCloud/9.0.2303/Data/Howdoyouwanttoadddata)
+- [Data ingestion into Chronicle](https://cloud.google.com/chronicle/docs/data-ingestion-flow)
+
+**Log forwarders**: Software that automates the process of collecting and sending log data. You can install one, but some OSs already have native log forwarders. You will have to configure it to specify which logs to forward and where to send them (like to a SIEM tool). Many SIEM tools utilize their own proprietary log forwarders, or integrate with open-source ones.
 
 
 ## Python automation
 
 
+### Introduction
+
+**Programming**: Used to create a specific set of instructions for a computer to execute tasks. Programming languages are converted to binary numbers that represent operations the CPU should perform. An **instruction** is a specific operation (add 2 numbers, load value from memory...). Programming languages are convenient because they use less syntax when instructing computers to perform complex processes.
+
+**Python** is a general-purpose programming language (web development, data analysis, tasks automation...). Advantages: It resembles human language, is easy to read, requires less code, has a lot of built-in code, there're standard guidelines, and there's a lot of online support. Python must be converted through an **interpreter** (program that translates Python code into runnable instructions line by line) before CPU can process it. There're multiple versions of Python, each one with some differences in the **syntax** (rules that determine what is correctly structured in a language).
+
+**Automation**: Use of technology to reduce human and manual effort to perform common and repetitive tasks. In cybersecurity, Python is used especially for automation (log analysis, malware analysis, access control list management, intrusion detection, compliance checks, network scanning).
+
+**Python environments**: Python can be run in different environments:
+
+- **Notebook**: Online interface for writing, storing, and running code. It also allows to document information about the code. Notebook content either appears in a __code cell__ (used to write and run code) or __markdown cell__ (used to describe code and format text in the Markdown language). Common notebook environments are [Jupyter notebook](https://jupyter.org/about) and [Google Colaboratory](https://colab.research.google.com/).
+- **IDE** (Integrated Development Environment): Software application for writing code that provides editing assistance and error correction tools. It includes a GUI (Graphical User Interface) with multiple options to customize and build programs. 
+- **CLI** (Command line interface): Text-based user interface that uses commands to interact with the computer. It provides access to all files and directories on the hard drive, and let us open a file editor.
+
+
+### Core components
+
+**Comment** (`# my comment`): Note programmers make about the intentions behind their code. It can cover a single line (`# abc`) or multiple lines (`""" abc """`).
+
+**Indentation**: Space added at the beginning of a line of code. It improves readability and ensures code is executed properly. Python requires it to create code blocks. You should indent the body of conditional statements, iterative statements, and function definitions.
+
+**Data type** Category for a particular type of data item. Most common ones are:
+
+- **Float**: Number with a decimal point (`-2.4`, `0.0`, `0.85`...).
+- **Integer**: Number that doesn't include a decimal point (`-6`, `0`, `15`...).
+- **Boolean**: Data with only one of two values: `True` or `False`.
+- **String**: Ordered sequence of characters (letters, numbers, symbols, spaces) inside single (`'…'`) or double (`"…"`) quotation marks (`"I'm a string"`). Empty string: `""`.
+- **List**: Collection of data in sequential form (`["peter", "john", "mary"]`, `[True, False]`, `[15, "john", True, 3.5]`). Empty list: `[]`.
+- **Tuple**: Like a list, but elements cannot be changed (`("abc", "xyz")`, `(True, False)`, `(15, "john", True, 3.5)`). More memory efficient than lists.
+- **Dictionary**: One or more key-value pairs (`{1: "east", 2: "west", 3: "north", 4: "south"}`). Each key is mapped to a value.
+- **Set**: Unordered collection of unique values (`{"peter", "john", "mary"}`).
+
+`print()`: Output a specified object to the screen. It takes any number of parameters of any type.
+
+- `print("Hello world!")` >> `Hello world!`
+- `print(3 + 7)` >> `10`
+- `print(5 > 8)` >> `False`
+- `print(True)` >> `True`
+- `print(["peter", "john", "mary"])` >> `['peter', "john', 'mary']`
+- `print(1/2)` or `print(1.0/2.0)` >> `0.5` (using `/` results in float output)
+- `print(1/2)` >> `0` (using `//` rounds to the nearest integer)
+- `print(1.0/2.0)` >> `0.0` (using `//` rounds to the nearest whole number, but float type is kept)
+- `print("Hello, name, surname, 18)`   >> `Hello John Smith 18`
+
+**Variable**: Container that stores data (`username = "john"`). Named storage location in memory that can hold a value. Variables are useful for readability and reusability. To use the variable's content, just call it (`print(device_id)`). At creation, you store in it data of some type (assignment), but you can later change that data (reassignment), even to a different data type. One variable can be assigned to another. Variable names are case-sensitive. Python built-in keywords cannot be used as names (`False`, `if`...). Use only letters, numbers, and underscores in variable names.
+
+Naming recommendations: Separate words with underscores (`login_attempts`) (alternative: capitalize the first letter of each word, except the first one). Avoid variables with similar names. Avoid unnecessarily long names. Use relevant names (names should describe the data, not be random words).
+
+`type()`: Returns the data type of its input (`data_type = type(username)`). Data type can be printed (`print(data_type)` >> `<class 'str'>`). It takes one parameter of any data type
+
+**Type error**: Error caused by using the wrong data type. Example: trying to add a number and a string. But it's fine to make `myVar = 10` and then `myVar = "ten"`.
+
+
+### Conditional and iterative statements
+
+**Comparison operators**: `<`, `>`, `<=`, `>=`, `==`, `!=`.
+
+**Logical operators**: `and` (both true), `or()` (at least one true), `not` (negation).
+
+- `(status > 0 **and** status < 5) **or** **not**(status <= 10)` (`True` if `status` is between 0 and 5, or above 10)
+
+**Parentheses** can be used for modifying operations priority (as shown above).
+
+**Conditional statement**: It evaluates code to determine if it meets a specified set of conditions, and outputs a boolean value. If `True`, certain actions are performed.
+
+```
+**if** status >= 0 and status <= 200:   # Header
+  print("Correct")   # Body. Requires indentation
+**elif** status == 400:
+  print("Bad request")
+**else**:
+  print("Error")
+```
+
+```
+val = 5;
+values = [3, 5, 2]
+if val **in** values:
+  print("The value is in the list")
+```
+
+**Iterative statement** (loop): It repeatedly executes a set of instructions. Two types of loops:
+
+- **for loop**: Repeat code for a specified sequence. If the sequence is a string, the loop traverses each character.
+
+```
+**for** i **in** [1,2,3,4]:
+  print(i)
+```
+
+```
+for i in **range**(0, 10, 1):   # range from 0 to 9 with increments of 1 (alternative: range(10))
+  print(i)
+```
+
+- **while loop**: Repeated code based on a specified condition.
+
+```
+time = 0
+**while** time < 10:
+  print(time)
+  time = time + 1
+```
+
+- **`break`**: Break out of a loop.
+
+- **`continue`**: Skip an iteration and continue with the next one. 
+
+Infinite loops never end. Stop it using `Ctrl + C` or `Ctrl + Z`.
+
+
+### Functions
+
+**Functions**: Section of code that can be reused in a program. Its definition has a header and a body. Including parameters in the header allows to pass **arguments** (data brought into a function when it's called). Including a **return** statement in the body allows to return information.
+
+- **Built-in functions**: Functions that exist within Python and can be called directly (like `print()`).
+- **User-defined functions**: Functions defined by programmers for their specific needs. 
+
+Creation of a user-defined function:
+
+```
+**def** greetings(name, surname):
+  print("Welcome", name, surname)
+  message = "Welcome" + name + surname;
+  return message
+
+greetings()
+```
+
+```
+def func():   # infinite loop
+  func()
+```
+
+Types of variables based on their **scope**: 
+
+  - **Local**: Available only inside a function body. Assigned within a function. This include function parameters.
+  - **Global**: Available through the entire program. Assigned outside of a function definition. Beware: Reusing a global variable's name within a function will create a new local variable with that name.
+
+Some built-in functions:
+
+- `print()`
+- `type()`
+- `max()` / `min()`: Get the maximum/minimum numeric input passed to it. It takes any number of parameters (`max(5, 3, 8)`) or an iterable (`min(my_list)`).
+- `sorted()`: Returns a sorted list. Sorts the components of a list (`sorted(my_list)`) or iterable (`sorted(my_string)`) in ascending order or alphabetically. It cannot take lists or strings with elements of more than one data type.
+
+Learn more: [Python Standard Library documentation](https://docs.python.org/3/library/functions.html)
+
+
+### Community
+
+**Library**: Collection of modules that provide code users can access in their programs.
+
+- **Module**: Python file containing additional functions, variables, classes, and any runnable code.
+
+**Python Standard Library**: Extensive collection of usable Python code that often comes packaged with Python. Some modules it has:
+
+- `re`: Useful for searching for patterns in log files.
+- `csv`: For working with `.csv` files.
+- `glob` and `os`: For command-line interaction.
+- `time` & `datetime`: For timestamps.
+- `statistics`: For calculating statistics related to numeric data (`mean()`, `median()`...).
+
+**External libraries**: To use them in your environment (Jupyter Notebook, Google Colab…), you need to install them first. Some of them are:
+
+- `bs4` (Beautiful Soup): For parsing HTML website files.
+- `numpy`: For arrays and maths. To intall it, run `%pip install numpy` prior to importing it.
+
+To access a module from a library, you need to import it, or only import specific functions from it.
+
+```
+import statistics
+amounts = [20, 17, 29, 32, 15, 25, 19]
+amounts_mean = statistics.mean(amounts)
+amounts_median = statistics.median(amounts)
+```
+
+```
+from statistics import mean, median
+amounts = [20, 17, 29, 32, 15, 25, 19]
+amounts_mean = mean(amounts)
+amounts_median = median(amounts)
+```
+
+**Style guide**: Manual that informs the writing, formatting, and design of documents.
+
+[**PEP 8 style guide**](https://peps.python.org/pep-0008/) (PEP: Python Enhancement Proposals): Resource that provides stylistic guidelines for programmers working in Python. It provides syntax-related suggestions. Example: For readability, it recommends to keep all lines under 79 characters, and that indentations should be four spaces long.
+
+**Syntax errors**: They involve invalid usage of Python language. They often occur because of mistakes with data types, or in the headers of conditional/iterative statements or function definitions (also, they must end with a colon).
+
+
+### Strings
+
+**String**: Ordered sequence of characters. It's between quotations marks, single (`'abc'`) or double (`"abc"`). Triple quotation marks (`"""`) can be used for multi-line strings. Strings are immutable (cannot be changed after it's created and assigned a value).
+
+`str()`: Converts the input object into a string (`str(myStr)`).
+
+`len()`: Returns the number of elements in an object. For a string, it returns the number of characters it has (`len(myStr)`).
+
+**String concatenation**: Process of joining two strings together (`phrase = name + " rescued " + str(3) + " dogs"`).
+
+**Index**: Number assigned to every element in a sequence that indicates its position. For a string, an index indicates the position of each character (range: [0, n-1] or [-1, -n]).
+
+- `word[1]` returns character at position 1.
+- `"Hello"[1]` returns character `e`.
+- `"Hello"[1:4]` returns the slice `ell`.
+
+**Method**: Function that belongs to a specific data type.
+
+- `.upper()`/`.lower()`: Returns a copy of the string in all uppercase/lowercase letters (`"Hello".upper()`, `"Hello".lower()`).
+- `.index()`: Finds the first occurrence of the input in a string and returns its location (`"Hello".index("l")` returns `2`) (`"Hello".index("ell")` returns `1`). If not found, it returns a error.
+
+
+### Lists
+
+**List**: Collection of data in sequential form (`["peter", "john", "mary"]`, `[True, False]`, `[15, "john", True, 3.5]`). Empty list: `[]`.
+
+Lists are not immutable (unlike strings). We can modify, insert, and remove elements.
+
+```
+my_list = ["a", "b", "c", "d"]
+my_list[2] = 5
+print(my_list)   # output: ['a', 'b', 5, 'd']
+print(my_list[2])   # output: 5
+print([1, 2, 3][1])   # output: 2
+print(my_list[1:3])   # output: ['b', 5]
+```
+
+List methods:
+
+- `.insert()`: Adds an element in a specific position inside a list. Example: `my_list.insert(2, "a")` inserts `"a"` at position 2.
+- `.remove()`: Removes first occurrence of a specific element in a list. Example: `my_list.remove("a")`.
+- `.append()`: Adds input to the end of a list. It's often used in for loops to populate an empty list. Example: `my_list.append("a")`.
+- `.index()`: Finds the first occurrence of an element and returns its index. Example: `my_list.index("a")`.
+
+**List concatenation** (`list_1 + list_2`): Combination of 2 lists into one by placing the elements of the second list directly after the elements of the first list.
+
+```
+numbers = [1, 2, 3]
+print(my_list + numbers)   # output: [a', 'b', 5, 'd', 1, 2, 3]
+```
+
+If an element is in the list, do something:
+
+```
+if "a" in my_list:
+  # do something
+```
+
+**Algorithm**: Set of rules that solves a problem. Set of steps that take an input from a problem, uses it to perform tasks, and returns a solution as an output.
+
+```
+# Extract the first three characters from a list of IP addresses
+IP = ["195.224.00.00", "180.152.00.00", "192.167.00.00", "188.175.00.00"]
+networks = []
+for address in IP:
+  networks.append(addres[0:3])
+print(networks)
+```
+
+
+### Regular expressions
+
+**Regular expression (regex)**: Sequence of characters that form a pattern. Useful for searching for a variety of patterns.
+
+- `\w`: Matches with any alphanumeric character or underscore (`_`) but it doesn't match symbols.
+- `\d`: Matches all single digits [0-9].
+- `\.`: Represents the period character (`.`).
+- `\s`: Matches all single spaces.
+- `+`: Represents one or more occurrences of a specific character.
+- `*`: Represents zero, one, or more occurrences of a specific character.
+- `{n}`: Represents n repetitions.
+- `{n, m}`: Represents a minimum (n) and maximum (m) number of repetitions.
+
+`re.findall()`: Returns a list of matches to a regular expression in a given string. Parameters: ´<expression>´, ´<string_where_to_search>´.
+
+Examples:
+
+- `re.findall("ts", "tsnow, tshah, bmoreno")` returns `['ts', 'ts']`
+- `re.findall("\w", "abc_123")` returns `['a', 'b', 'c', '_', '1', '2', '3']`
+- `re.findall("a+", "sataaaphaa"`) returns `['a', 'aaa', 'aa']`
+- `re.findall("\w+", "abc.a1b//5_0")` returns `['abc', 'a1b', '5_0']`
+- `re.findall("\d*", "h32rb17")` returns `['', '32', '', '', '17', '']` (empty strings represent characters that aren't single digits)
+- `re.findall("\d{2}", "h32rb17 k825t0m c2994eh")` returns `['32', '17', '82', '29', '94']`
+- `re.findall("\d{1,3}", "h32rb17 k825t0m c2994eh")` returns `['32', '17', '825', '0', '299', '4']`
+- Extract every email in a file: We can search for the structure of an email address through the regular expression `\w+ @ \w+ \. \w+`.
+
+```
+import re
+email_log = """Email received June 2 from user1@email.com.
+            Email received June 2 from user2@email.net.
+            Email rejected June 2 from invalid_email@email.org"""
+print(re.findall("\w+ @ \w+ \. \w+", email_log))   # output: ['user1@email.com', 'user2@email.net', 'invalid_email@email.org']
+```
+
+- Extract the username and the login attempts:
+
+```
+import re
+employee_logins_string = "1001 bmoreno: 12 Marketing 1002 tshah: 7 Human Resources 1003 sgilmore: 5 Finance"
+print(re.findall("\w+:\s\d+", employee_logins_string))   # output: ['bmoreno: 12', 'tshah: 7', 'sgilmore: 5']
+```
+
+
+### Automation
+
+**Automation**: Use of technology to reduce human and manual effort to perform common and repetitive tasks.
+
+A security analyst uses Python primarily to automate tasks, which requires understanding some Python component:
+
+- **Variables**: Container that stores data.
+- **Conditional statements**: Statement that evaluates code to determine if it meets a specified set of conditions.
+- **Iterative statements**: Code that repeatedly executes a set of instructions.
+  - `for` loop: Repeats code based on a sequence.
+  - `while` loop: Repeat code based on a condition.
+- **Function**: Section of code that can be reused in a program.
+- **Techniques** for working with:
+  - **Strings**: Bracket notation, functions (`str()`, `lend()`...), and methods (`.index()`...).
+  - **Lists**: Bracket notation and methods (`.insert()`, `.remove()`, `.append()`, `.index()`...).
+- **Work with files**: Security data is often in log files (record of events in an organization's systems). Two common file formats for security logs are `.csv` (values are separated by commas) and `.txt` (no specific format for separating values), both plain text.
+
+Example: Given a list identifying the username associated with each login attempt made one day, count the logins made by a flagged user.
+
+  1. Use a __`for` loop__ to iterate through all usernames in the list.
+  2. Use a __conditional statement__ to check if each username matches the flagged user.
+  3. A counter __variable__ is incremented each time the condition evaluates to `True`.
+  4. All this can be incorporated into a __function__ that can be reused, and include parameters (username and list) and return value (count).
+
+
+### Files
+
+**Read** a file:
+
+```
+with open("/logs/login_attempts.txt", "r") as file:
+  file_str = file.read()
+print(file_str)   # file_str can be use outside the with statement.
+```
+
+- `with`: Handles errors and manages external resources automatically (otherwise, they can keep our system busy). In file handling, it automatically closes a file after exiting the `with` statement (otherwise, you must close it yourself).
+- `open()`: Opens a file. Parameters: `fileName`, `action` (`r`, `w`, `a`).
+  - `a` for reading
+  - `w` for writing (replaces file, or creates and opens a new one)
+  - `a` to append to a file.
+- `as`: It assigns some object to a variable. Here, it assigns the output of `open()` to the variable `file`.
+- The file object is stored in the variable `file` while inside the `with` statement.
+- `.read()`: Converts files into strings.
+
+**Write** to a file:
+
+```
+with open("/logs/login_attempts.txt", "a") as file:
+  file.write("this is a new line")
+print(file_str)
+```
+
+**Parsing**: Process of converting data into a more readable format.
+
+`.split()`: Converts a string into a list (`my_string.split(",")`). It splits the string based on a specified character (by default, a space). Different characters are considered whitespaces in Python (space, new line...).
+
+- `.join()`: Converts a list into a string (`"\n".join(my_list)`). It concatenates the elements of an iterable into a string, separated with a given characters.
+
+Example 1:
+
+```python3
+with open("login_attempts.txt", "r") as file:
+  file_text = file.read()
+usernames = file_text.split()
+
+def login_check(login_list, current_user):
+  count = 0
+  for i in login_list:ç
+    if i == current_user:
+      counter = counter + 1
+  if counter >= 3:
+    return "Your tried 3 or more logins. Your account is locked."
+  else:
+    return "You can log in."
+
+login_check(usernames, "John Doe")
+```
+
+Example 2:
+
+```python3
+def update_file(import_file, remove_list):
+  with open(import_file, "r") as file:
+    ip_addresses = file.read()
+
+  ip_addresses = ip_addresses.split()
+
+  for element in ip_addresses:
+    if element in remove_list:
+      ip_addresses.remove(element)
+
+  ip_addresses = " ".join(ip_addresses)
+
+  with open(import_file, "w") as file:
+    file.write(ip_addresses)
+
+update_file("allow_list.txt", ["192.168.25.60", "192.168.140.81", "192.168.203.198"])
+
+with open("allow_list.txt", "r") as file:
+  text = file.read()
+
+print(text)
+```
+
+
+### Debugging
+
+**Debugging**: Practice of identifying and fixing errors in code.
+
+**Error types**:
+
+- **Syntax errors**: Invalid usage of Python language. Causes error messages. Example: forgetting a colon after a function header.
+- **Logic errors** (semantic error): The code logic produces unintended results. May not cause error messages. Example: writing a `+` instead of a `-` symbol.
+- **Exceptions** (runtime error): The code cannot be executed even though it's syntactically correct. Example: dividing something by 0, accessing non-existent index values, use of an incorrect data type (like adding an integer to a string), calling a non-defined function, or opening a non-existent file.
+
+**Debugging** strategies:
+
+- **Debugger**: Software tool for locating an error source and assess its causes. It helps narrow down the error source by working with __breakpoints__ (markers placed on certain lines of executable code that indicate which sections of code should run when debugging). Some debuggers allow to check the values stored in variables as they change throughout the code. IDEs usually provide a debugger.
+- **Print statements**: Strategically incorporated, they can help identify the error source.
+
 
 ## Cybersecurity job
+
+### Data and assets
+
+A security professional's role is to ensure a company’s data and assets are protected from threats, risks, and vulnerabilities.
+
+**Security mindset**: Ability to evaluate risk and constantly seek out and identify the potential or actual breach of a system, application, or data.
+
+**Data** types:
+
+- **Public**: Data accessible to the public. It poses minimal risk to the organization if viewed/shared by others. It requires basic security measures to protect it. Example: marketing material, job descriptions, press releases.
+- **Private**: Data kept from the public. Unauthorized access to it poses a potential serious risk. Examples: email addresses, employees ids, research data.
+- **Sensitive**: Protected from everyone without authorized access. Unauthorized access can cause significant damage to an organization's finances and reputation. This includes PII (Personally Identifiable Information), SPII (Sensitive Personally Identifiable Information), PHI (Protected Health Information). Examples: banking account numbers, passwords, medical information. 
+- **Confidential**: Important information for an organization's ongoing business operations. Often, limited people has access to it and NDAs (Non-Disclosure Agreements) are signed. Example: trade secrets, financial records, govenment data.  
+
+**Asset classification**: Labeling assets based on sensitivity and importance to an organization. Asset levels range from low to high level.
+
+- **Low**: Public data. Available to the public. No negative impact if compromised.
+- **High**: Sensitive and confidential data. It can have significant negative impact if leaked publicly (loss of competitive edge, reputation, and customer trust).
+
+### Data protection
+
+When a security event results in a data breach, it is called a security incident.
+
+Security teams steps to protect an organization:
+
+1. Identify the assets that must be protected
+2. Determine potential threats that could negatively impact those assets.
+3. Implement tools and processes to detect potential threats to assets.
+4. Creation of the business continuity and disaster recovery plans.
+
+These plans are created in conjunction with one another, and help to minimize the impact of a security incident involving one of the organization’s assets.
+
+**Business continuity plan**: Document outlining the procedures to sustain business operations during and after a significant disruption. It's created alongside a disaster recovery plan to minimize the damage of a successful security attack. Essential procedures:
+
+- Conduct a business impact analysis. It's focused on possible effects of a disruption of business functions.
+- Identify, document, and implement steps to recover critical business functions and processes.
+- Organize a business continuity team.
+- Conduct training for the business continuity team.
+
+**Disaster recovery plan**: Document outlining the steps needed to minimize the impact of a security incident. It's typically created alongside a business continuity plan. Essential steps:
+
+- Implementing recovery strategies to restore software.
+- Implementing recovery strategies to restore hardware functionality.
+- Identifying applications and data that might be impacted after a security incident has taken place.
+
+**Information lifecycle**:
+
+1. Identify the important assets of the company.
+2. Assess the security measures in place to protect the identified assets and review the company’s information security policies.
+3. Protect the identified assets of the organization.
+4. Monitor the security processes that have been implemented to protect the organization’s assets.
+
+### Escalation
+
+**Incident escalation**: Process of identifying a potential security incident, triaging it, and handling it off to a more experienced team member. After evaluating an incident, it could be necessary to escalate it to the right individual or team.
+
+Low-level security issues are security risks that don't result in the exposure of PII. They are not significant security challenges, but they must be investigated further in case they need to be escalated. 
+
+Escalating incidents require attention to detail and ability to follow an organization's escalation guidelines or processes. Every company has its escalation policies, which detail who to notify when a security alert is received and who should be contacted if the first responder is not available, and how someone should specifically escalate an incident (via IT desk, incident management tool, or direct communication).
+
+Many countries have breach notification laws which may require companies and government entities to notify individuals of security breaches involving PII.
+
+Some **incident types**:
+
+- **Malware infection**: A malicious software designed to disrupt a system infiltrates an organization's computer or network.
+- **Unauthorized access**: An individual gains digital of physical access to a system or application without permission.
+- **Improper usage**: An employee of an organization violates the organization's acceptable use policies.
+
+Team members who are a part of the incident escalation process:
+
+- **Data owner**: Decides who can access, edit, use, or destroy their information. Has administrative control over specific information hardware or software and are accountable for the classification, protection, access, and use of company data. Escalate to him if, for example, if an employee gains unauthorized access to software he doesn't need.
+- **Data controller**: Determines the procedure and purpose for processing data. Focuses on collecting the personal information of customers. Determines how that data is used. Ensures that data is used, stored, and processed in accordance with relevant security and privacy regulations. Escalate to him if sensitive customer information is at risk.
+- **Data processor**: Responsible for processing the data on behalf of the data controller. Reports directly to the data controller. He's typically a vendor, often tasked with installing security measures to help protect the data. Data processing issues are typically escalated to the individual who oversees the third-party organization responsible for data processing.
+- **Data custodian**: Assigns and removes access to software or hardware. Responsible for implementing security controls for the data they are responsible for, granting and revoking access to that data, creating policies regarding how that data is stored and transmitted, advising on potential threats to that data, and monitoring the data. He's notified when data security controls need to be strengthened or have been compromised.
+- **Data protection officer (DPO)**: Responsible for monitoring the internal compliance of an organization’s data protection procedures. He advises the security team on the obligations required by the organization's data protection standards and procedures. He conducts assessments to determine whether or not the security measures in place are properly protecting the data as necessary. He's notified when set standards or protocols have been violated.  
+
+
 

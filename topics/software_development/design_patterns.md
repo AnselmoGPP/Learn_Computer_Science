@@ -216,7 +216,7 @@ It is a type of object composition that makes composition as powerful for reuse 
 
 Example: Instead of making class Window a subclass of Rectangle, Window class might keep a rectangle member variable and delegate Rectangle-specific behavior to it.
 
-<br>![window object](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/titan1.png)
+<br>![window object](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/delegation.png)
 
   - Advantages:
 
@@ -305,10 +305,14 @@ These are some guidelines, but you will develop your own way over time.
 - Implement the operations to carry out the responsibilities and collaborations in the pattern. 
 - Evaluate consequences of the pattern. They achieve flexibility and variability by introducing additional levels of indirection, which may complicate a design and/or cost some performance. Design patterns should only be applied where the flexibility they afford is actually needed.
 
+<br>![modifiable design aspects](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/modifiable_design_aspects.png)
+
 
 ## Case study: Designing a document editor
 
 We want to design a WYSIWYG document editor called Lexi. The user interface has a representation of the document, which can mix text and graphics freely in different formatting styles. It's surrounded by pull-down menus, scroll bars, and a some page icons for jumping to particular pages.
+
+This will serve to learn about different design patterns: Composite, Strategy, Decorator.
 
 ### Design problems
 
@@ -322,17 +326,164 @@ We want to design a WYSIWYG document editor called Lexi. The user interface has 
 
 ### Document structure
 
+A document is an arrangement of basic graphical elements (characters, lines, polygons, and other shapes). An author often views them in terms of the document's physical structure (lines, columns, figures, tables, and other substructures). These structures have substructures of their own, and so on.
+
+Lexi's user interface should let users manipulate these substructures directly (tables, diagrams...). The internal representation should support:
+
+- Maintaining document's physical structure (i.e., arrangement of text and graphics into lines, columns, tables...).
+- Generating and presenting the document visually.
+- Mapping positions on the display to elements in the internal representation (useful when the user points to something).
+
+Constraints:
+
+- Text and graphics should be treated uniformly. The application's interface lets the user embed text within graphics freely and vice versa.
+- Simple and complex elements should be treated uniformly. Our implementation shouldn't have to distinguish between single elements and groups of elements in the internal representation. However, when analysing text (for spelling errors, hyphenation points...), we do care about what the object is (we don't check the spelling of a polygon).
+
+#### Recursive composition
+
+**Recursive composition**: Common technique for representing hierarchically structured information. Increasingly complex elements are built out of simpler ones.
+
+We can compose a document out of simple graphical elements. We can tile a set of characters and graphics from left to right to form a line, multiple lines can be arranged to form a column, multiple columns form a page, and so on.
+
+- Composite (column)
+  - Composite (row)
+    - char R
+    - char e
+    - char d
+    - space
+    - car picture
+  - Composite (row)
+    - …
+
+We can devote an object to each important element (characters, graphics, lines, columns...). The object structure mimics the document's physical structure, providing flexibility and extensibility. This implies that the objects need classes, and these classes need compatible interfaces, which is done through inheritance.
+
+We define a **Glyph** abstract class for all objects that can appear in a document structure. Its subclasses define both primitive graphical (characters, images...) and structural elements (rows, columns...)
+
+<br>![recursive composition](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/recursive_composition.png)
+
+<br>![glyph structure](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/glyph.png)
+
+Glyphs have 3 basic responsibilities: they know how to draw themselves, what space they occupy, and their children and parent
+
+- `Draw(Window*)` operation: Glyph subclasses redefine it to render themselves onto a window. The `Window` class defines graphics operations for rendering text and basic shapes in a window on the screen. A `Rectangle` subclass of `Glyph` might redefine `Draw` as:
+
+```
+void Rectangle::Draw(Window *w) {
+  w->DrawRect(_x0, _y0, _x1, _y1);
+}
+```
+
+- `Bounds(Rect&)` operation: Glyph subclasses redefine it to return the rectangular area the glyph occupies. A parent glyph often needs to know how much space a child glyph occupies (for example, to arrange it with others in a line without overlapping).
+
+- `Intersects(const Point&)` operation: It returns whether a specified point intersects the glyph. Used by Lexi to determined over which glyph or glyph structure the user clicked. The `Rectangle` class redefines it.
+
+Glyphs have children (example: a `Row`'s children are the glyphs it arranges into a row), so we need a common interface to add (`Insert(Glyph *g, int index)`), remove (`Remove(Glyph *g)`), and access (`Child(int index)`) those children.
+
+- `Child(int index)` operation returns the child, if any, at the given index. Glyphs like `Row` that have children should use `Child` internally instead of accessing the child data structure directly, so you won't have to modify operations like `Draw` that iterate through the children when you change the data structure used.
+
+- `Parent` provides a standard interface to the glyph's parent, if any. Glyphs in Lexi store a reference to their parent, and their `Parent` operation simply returns this reference.
+
+#### Composite pattern
+
+Recursive composition is good for representing any potentially complex, hierarchical structure. The **Composite** pattern captures the essence of recursive composition in object-oriented terms.
+
+### Formatting
+
+Let's find out how to construct a physical structure for a properly formatted document. We will consider "formatting" as breaking a collection of glyphs into lines (linebreaking), but the next techniques apply equally well to breaking lines into columns, and columns into pages.
+
+#### Encapsulating the formatting algorithm
+
+There're many approaches to the formatting process, and there're many formatting algorithms (FAs) with different strengths and weaknesses. Since Lexi is a WYSIWYG editor, an important trade-off to consider is the balance between formatting quality and formatting speed. Another trade-off balances formatting speed and storage requirements (formatting time could be decreased by caching more information).
+
+Because FAs tend to be complex, we could keep them independent of the document structure. Ideally, we could
+
+- add new kinds of `Glyph` subclasses without regard to the FA.
+- add new formatting algorithms without requiring to modify existing glyphs.
+- easily change the FA at least at compile-time, if not at run-time as well.
+
+We can get this by isolating the FA in an object. We will define a separate class hierarchy for objects that encapsulate FAs, where the hierarchy's root will define an interface supporting a wide range of FAs, and each subclass will implement the interface to carry out a particular algorithm. Then a Glyph subclass will structure its children automatically using a given algorithm object.
+
+#### Compositor and Composition
+
+A **Compositor** class will encapsulate a FA. The interface lets the compositor know what glyphs to format and when to do the formatting. The glyphs it formats are the children of a special `Glyph` subclass called **Composition**, which gets an instance of a Compositor subclass when it's created and tells it to `Compose` its glyphs when necessary. Each compositor subclass can implement a different FA.
+
+<br>![compositor and composition](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/compositor_and_composition.png)
+
+An unformatted Composition object (composite) contains only the visible glyphs, but doesn't contain glyphs that determine the document's physical structure (Row, Column...). When the composition needs formatting, it calls its compositor's `Compose` operation, which iterates through the composition's children and inserts new Row and Column glyphs according to the its FA. 
+
+The Compositor-Composition class split ensures strong separation between code for the physical structure and code for different FAs. We can add new Compositor subclasses without touching the glyph classes, and vice versa. We can even change the FA at run-time by adding a single `SetCompositor` operation to Composition's basic glyph interface.
+
+<br>![compositor generated glyphs](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/compositor.png)
+
+#### Strategy pattern
+
+The intent of the **Strategy pattern** is to encapsulate an algorithm in an object. The key participants in the pattern are **strategy objects** (they encapsulate different algorithms) (compositors are strategies), and the **context** in which they operate (composition is the context). The interfaces for the strategy and its context should be general enough to support a range of algorithms. You shouldn't have to change their interfaces to support a new algorithm.
+
+In our example, the basic `Glyph` interface supports child access, insertion, and removal, which are operations general enough for Compositor to change the document's physical structure regardless of the FA used. Likewise, Compositor's interface gives Compositions whatever they need to initiate formatting.
+
+### Embellishing the user interface
+
+We consider 2 embellishments for Lexi's user interface (UI): a border around the text editing area, and a scroll bar for viewing different part of the page. To make it easy to add and remove them (especially at run-time), we shouldn't use inheritance to add them to the UI. We get the most flexibility if other UI objects don't know the embellishments are there.
+
+#### Transparent enclosure
+
+Embellishing the UI involves extending existing code. Using inheritance prevents us from rearranging embellishments at run-time, and also may result in an explosion of classes. We could add a border to Composition by subclassing it to yield a BorderedComposition class. Or maybe we want a ScrollableComposition. Or a BorderedScrollableComposition. We may end up with a class for every possible combination of embellishments, which becomes unworkable as the variety of embellishments grows.
+
+Object composition offers a potentially more workable and flexible extension mechanism. We can make the embellishment itself an object (`Border`, `Scroll`...), not a subclass of Glyph. We can make the border contain the glyph, so the border-drawing code is kept entirely in the Border class, leaving other classes alone. Also, clients shouldn't care whether glyphs have borders or not, they should treat glyphs uniformly. Clients shouldn't have to treat the border containing the glyph any differently. They just tell it to draw itself as they told the plain glyph before. This implies that Border interface matches Glyph interface, so we subclass Border from Glyph to guarantee this relationship.
+
+**Transparent enclosure**: It combines the notions of single-child (or single-component) composition and compatible interfaces. Clients generally cannot tell whether they're dealing with the component or its enclosure (i.e., the child's parent), especially if the enclosure simply delegates all its operations to its component. The enclosure can also augment the component's behaviour by doing work of its own before and/or after delegating an operation, and can also add state to the component.
+
+#### Monoglyph
+
+We can apply the concept of transparent enclosure to all glyphs that embellish other glyphs. We define a subclass of Glyph called **MonoGlyph** to serve as an abstract class for "embellishment glyphs". It stores a reference to a component and forwards all requests to it. It makes MonoGlyph totally transparent to clients by default. MonoGlyph subclasses reimplement `Draw`, which draws the glyph and then the embellishment.
+
+<br>![MonoGlyph](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/monoglyph.png)
+
+```
+void MonoGlyph::Draw(Window* w) {
+  _component->Draw(w);
+}
+```
+
+```
+void Border::Draw(Window* w) {
+  MonoGlyph::Draw(w);
+  DrawBorder(w);
+}
+```
+
+`Border::Draw` extends the parent class operation to draw the border.
+
+`Scroller` is a MonoGlyph that draws its component in different locations based on the positions of two scroll bars (embellishments). When it draws its component, it tells the graphics system to clip to its bounds. 
+
+To add a border and a scrolling interface we compose the Composition instance in a Scroller instance, and compose this in a Border instance.
+
+<br>![Embellished object structure](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/embellished_object_structure.png)
+
+Reversing the order of composition, putting the bordered composition into the Scroller instance, would make the border be scrolled along with the text. Transparent enclosure makes it easy to experiment and keeps clients free of embellishment code. 
+
+The border composes one glyph, not many, unlike compositions where parent objects can have arbitrarily many children. Putting a border around something means that "something" is singular. Keeping embellishment independent of other kinds of composition simplifies the embellishment classes, reduces their number, and prevents replicating existing composition functionality.
+
+#### Decorator pattern
+
+**Embellishment**: In the Decorator pattern, this refers to anything that adds responsibilities to an object.
+
+**Decorator pattern**: It captures class and object relationships that support embellishment by transparent enclosure. Examples:
+
+- Embellishing an abstract syntax tree with semantic actions.
+- Finite state automaton with new transitions.
+- Network of persistent objects with attribute tags.
+
+
+### Supporting multiple look-and-feel standards
+
+We want Lexi to be portable across hardware and software platforms. We should make porting as easy as possible. One obstacle is the diversity of **look-and-feel standards** (guidelines for how applications appear and react to the user, intended to enforce uniformity between applications). An application running on many platforms must conform to the UI style guide on each platform. We want Lexi to conform to multiple existing look-and-feel standards, make it easy to add new ones as they emerge, and support changing look-and-feel at run-time.
+
+#### Abstracting object creation
 
 
 
 
+64/378
 
-
-
-
-
-
-
-
-
-53/378
+<br>![glyph structure](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/software_development/resources/glyph.png)

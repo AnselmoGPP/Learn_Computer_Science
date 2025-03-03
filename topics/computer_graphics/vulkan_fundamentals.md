@@ -1,3 +1,7 @@
+
+Model matrix for Normals: Normals are passed to fragment shader in world coordinates, so they have to be multiplied by the model matrix (MM) first (this MM should not include the translation part, so we just take the upper-left 3x3 part). However, non-uniform scaling can distort normals, so we have to create a specific MM especially tailored for normal vectors: mat3(transpose(inverse(model))) * aNormal.
+
+
 # Vulkan API fundamentals
 
 <br>![computer graphics image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/resources/computer_graphics.jpg)
@@ -324,15 +328,16 @@ Obj
 
 ## Synchronization
 
+
 ### Introduction
 
 The **CPU** has multiple cores, each one with multiple threads, which let us run multithreaded applications, which requires synchronization. The **GPU** is a much more complex multithreaded device that executes a lot of different stages and threads, so it needs a much more explicit synchronization. Consider the GPU a separate thread of execution. We submit commands to a certain **queue** (graphics, transfer, compute...), and it provides them to the GPU. Multiple queues can be executed, each one being like a separate "thread". Every submitted command (draw calls, copy commands, compute dispatches...) goes through a set of [stages](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineStageFlagBits.html) (pipeline stages). We can synchronize work happening in these pipeline stages as a whole, not individual commands of work.
 
-Everything submitted to a queue is simply a linear stream of commands. Any synchronization applies globally to a `VkQueue`, not just to a single command buffer. All commands in a queue execute out of order (unles you add synchronization yourself), no matter the command buffer or `vkQueueSubmits` (exception: frame buffer operations inside a render pass happen in API-order).
+Everything submitted to a queue is simply a linear stream of commands. Any synchronization applies globally to a `VkQueue`, not just to a single command buffer. All commands in a queue execute out of order (unless you add synchronization yourself), no matter the command buffer or `vkQueueSubmits` (exception: frame buffer operations inside a render pass happen in API-order).
 
 You can allocate memory on the GPU. Consider it as shared (don't free or write to it when it's being used).
 
-**Stages:**
+**Stages:** Every submitted command goes through a set of stages.
 
 - **COMPUTE** pipeline stages:
   - TOP_OF_PIPE
@@ -418,6 +423,8 @@ TLModule::generateMipmaps
 TLModule::copyBufferToImage
 TLModule::copyBuffer
 
+**Barrier:** It's just another command passed down the queue. Given a pipeline stage and all the types of memory we care about, it makes sure we're finished with those writes before accessing this type of memory at these other stages.
+
 - Memory barriers
   - Execution barriers
   - Events
@@ -444,6 +451,10 @@ There are different types (explained later):
 - `VkImageMemoryBarrier`: Passed as argument to `vkCmdPipelineBarrier`.
 
 ### Execution barriers (`vkCmdPipelineBarrier` with no arguments)
+
+Use: Wait for the commands submitted previously to finish stage X before starting stage Y on the next commands.
+
+It's a `vkCmdPipelineBarrier` with no arguments (i.e. no memory barriers: `VkMemoryBarrier`, `VkBufferMemoryBarrier`, `VkImageMemoryBarrier`). It allows enforcing an ordering between commands in a command buffer (instructions submitted prior to the execution barrier occur before instructions submitted after).
 
 <pre>
 void vkCmdPipelineBarrier(
@@ -481,11 +492,48 @@ Example 2: When using dstStagemask to create blocks of stages, the dependencies 
 6. vkCmdDispatch
 7. vkCmdDispatch
 
+Example 3: To wait for draw command to finish before calling the compute command, we can call `vkCmdPipelineBarrier` with srcStageMask = `VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT` and dstStageMask = `VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT`, and no memory barriers at all.
 
-### Events
+Example 4: Consider a sequence of 3 draw calls for drawing 3 transparent objects that overlap one another. We need here a back-to-front drawing (Painter's algorithm) with blending. We can guarantee that the draw calls will execute in the same submission order by injecting a memory barrier between each draw call.
+
+### VkEvent (split barrier)
+
+It's like an execution barrier, but allowing some unrelated commands in-between the set A (before) and B (after). To do so, it's splitted in 2 parts: one emits a signal (`vkCmdSetEvent`), the other waits for the signal (`vkCmdWaitEvent`) with the appropriate masks to indicate which pipeline stages need to flush what memory.
+
+<pre>
+void vkCmdSetEvent(
+  VkCommandBuffer commandBuffer,
+  VkEvent event,
+  VkPipelineStageFlags stageMask );
+</pre>
+
+Example 1: In the submitted commands we have set A (1, 2) and B (6, 7). The in-between commands (4) is not affected by any synchronization
+
+1. vkCmdDispatch
+2. vkCmdDispatch
+3. vkCmdSetEvent(event, srcStageMask = COMPUTE)
+4. vkCmdDispatch
+5. vkCmdWaitEvent(event, dstStageMask = COMPUTE)
+6. vkCmdDispatch
+7. vkCmdDispatch
+
+Example 2: We want to submit commands A, B, and C, where C is dependent on A; and A and B were recorded on a separate thread into a secondary command buffer. We can synchronize A and C by inserting a pipeline barrier between B and C to flush the memory written by A. But, if B also writes memory in this pipeline stage, you'll end up waiting longer to flush more than you might have otherwise. You like recording A/B and C independently on 2 separate threads on the host CPU, but you don't like that the barrier between B and C synchronizes too much. Alternatively, putting a barrier between A and B may prevent parallelism between A and B since they don't technically have any hard dependency between them. The solution is the `VkEvent` which is more granular. The thread recording A and B can insert an event signal using `vkCmdEventSignal` between A and B, while the thread recording C can insert a `vkCmdEventWaits` just before C.
+
+Events are powerful, but it's recommended first leveraging the render pass and subpass abstractions first, since they map well to hardware. Additionally, fine grained events can occasionally perform worse than a single barrier, so consider a simpler architecture at first. 
+
 
 
 ### VkMemoryBarrier
+
+Memory barriers are passed (optionally) to `vkCmdPipelineBarrier` as arguments. Different types (explained later):
+
+- `VkMemoryBarrier`
+- `VkBufferMemoryBarrier`
+- `VkImageMemoryBarrier`
+
+Memory barriers are configured via pipeline masks (`VkPipelineStageFlags`) and access masks (`VkAccessFlags`). Prior to certain types of memory access from certain stages, we require that certain types of memory writes from certain stages were made visible or flushed.
+
+Use: Wait for the commands submitted to the queue previously to finish operation A in stage X before starting operation B in stage Y on the next commands.
 
 <pre>
 VkMemoryBarrier {
@@ -496,6 +544,7 @@ VkMemoryBarrier {
 };
 </pre>
 
+Passed as argument to `VkCmdPipelineBarrier`. This barrier applies to submissions that occur on the same queue. It applies to all commands submitted prior to the same command buffer and to a different buffer earlier on the same queue.
 Example 1:
 
 <pre>
@@ -527,17 +576,84 @@ This means that, before trying to read vertex attribute memory (`eVertexAttribut
 This barrier applies to submissions that occur on the same queue. So, this applies to all commands submitted prior to the same command buffer, and all commands submitted in a different buffer earlier on the same queue.
 
 
-### VkBufferMemoryBarrier
+### VkBufferMemoryBarrier & VkImageMemoryBarrier
 
-### VkImageMemoryBarrier
+<pre>
+struct VkBufferMemoryBarrier {
+  VkStructureType sType,
+  const void* pNext,
+  VkAccessFlags srcAccessMask,
+  VkAccessFlags dstAccessMask,
+  uint32_t srcQueueFamilyIndex,
+  uint32_t dstQueueFamilyIndex,
+  VkBuffer buffer,
+  VkDeviceSize offset,
+  VkDeviceSize size };
+</pre>
 
-### Semaphores
+<pre>
+struct VkImageMemoryBarrier {
+  VkStructureType sType,
+  const void* pNext,
+  VkAccessFlags srcAccessMask,
+  VkAccessFlags dstAccessMask,
+  VkImageLayout oldLayout,
+  VkImageLayout newLayout,
+  uint32_t srcQueueFamilyIndex,
+  uint32_t dstQueueFamilyIndex,
+  VkImage image,
+  VkImageSubresourceRange subresourceRange };
+</pre>
 
-### Fences
+GPUs have multiple queue types (graphics, compute, transfer...), and 0 or more queues of each type. Submitting to multiple queues means dealing with parallel submission. There're two ways of synchronizing work between queues:
+- `VkSemaphore`
+- `VkBufferMemoryBarrier` & `VkImageMemoryBarrier`
 
-### VkSubpassDependency
+Both, `VkBufferMemoryBarrier` and `VkImageMemoryBarrier`, encode the source and destination queue families. 
+- Example 1: transfer job to submit buffers or images to the GPU that get consumed later by the graphics queue. 
+- Example 2: Interdependencies between the graphics queue and the compute queue or vice-versa. 
+They can be used in a single queue since they let you encode a barrier on a sub-region of either the buffer or image, or an image format transition in addition to everything else in the case of an image barrier. When used to describe a queue transfer however, these barriers need to be submitted to both queues with the source and destination queue reversed. Depending on the queue they are submitted to, the barriers define a release or consume dependency between the queues. When these barriers are used to describe a queue ownership transfer, when a __release__ is defined, `dstStageMask` is ignored (after all, commands submitted afterwards in the same queue don't care about the barrier). Similarly, the `srcStageMask` is ignored in the consume operation on the other side for an analogous reason.
 
-### Waits
+If we submit only a memory barrier, a command submitted earlier may slip past the memory barrier, or viceversa. Therefore, we need to submit together both the memory barrier and execution barrier. The API considered this and allows memory barriers to be passed as arguments to the pipeline barrier. However, there a few use cases where we want to submit a pipeline barrier whithout memory barriers: when we submit a command that simply reads a resource that must later be modified (WAR: Write-After-Read).
+
+### VkSemaphore
+
+GPUs have multiple queue types (graphics, compute, transfer...), and 0 or more queues of each type. Submitting to multiple queues means dealing with parallel submission. There're two ways of synchronizing work between queues:
+- `VkSemaphore`
+- `VkBufferMemoryBarrier` & `VkImageMemoryBarrier`
+
+Semaphores to be signaled are submitted to one queue at submission time, and semaphores are submitted to a different queue to be waited on (also at submission time). It blocks all execution on the second queue until all operations on the first queue finish. This can be useful for finishing all rendering on a graphics queue before attempting to send the framebuffer to the presentation queue.
+
+GPU-to-GPU synchronization. Example: managing the rendering frame and its presentation on a different queue (if the graphics and present queues are different). A `VkSemaphore` works similarly to a `VkFence`. It's submitted to the queue as part of the `VkSubmitInfo` struct, but instead of waiting for it on the CPU, it's waited on by a different queue (specified in a different part of the `VkSubmitInfo` struct).
+
+
+### VkFence
+
+GPU to CPU synchronization. Fences can be submitted along with a command buffer as part of the `VkQueueSubmit()` function, and this fence will later be signaled on the CPU in a way that is visible and waitable via `vkWaitForFences`.
+
+
+### VkSubpassDependency (External subpass dependency)
+
+At the start of every subpass and render pass there's an image barrier that ensures that all relevant memory modified prior to the start of the pass is visible. Once entering the pass, the draws sequence is guaranteed not to violate the render-pipeline order. Then, the render pass executes the store command on its render targets, discards temporary buffers/memory, and prepares framebuffers for the next render pass.
+
+`VkSubpassDependency` is a memory barrier, but with better syntaxis for applications that use multiple render targets. You can pass some [flag bits](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDependencyFlagBits.html) such as `VK_DEPENDENCY_BY_REGION_BIT`.
+
+`VK_DEPENDENCY_BY_REGION_BIT`: Often, we issue draw calls and don't want to violate pipeline order (e.g. when blending), but a full barrier per pipeline stage of the entire framebuffer is too much. This flag allows modern GPU architectures that do tiled-rendering optimize this process (useful when the usage of the framebuffer is localized), preventing most intermediate render-targets to be fully synchronized and flushed for each draw.
+
+The purpose of a external subpass dependency is to deal with initialLayout and finalLayout of an attachment reference. If initialLayout != layout used in the first subpass, the render pass is forced to perform a layout transition. It you don't specify anything, that layout will wait for nothing before it performs the transition. Or rather, the driver will inject a dummy subpass dependency for you with srcStageMask = TOP_OF_PIPE_BIT, which you don't want since it may be a race condition. You can set up a subpass dependency with the appropriate srcStageMask and srcAccessMass. The external subpass dependency is basically just a vkCmdPipelineBarrier injected for you by the driver. In theory, it may be better to do it this way because the driver has more information.
+
+If finalLayout differs from the last use in a subpass, driver will transition into the final layout automatically. Here you get to change dstStageMask/dstAccessMask. If you do nothing here, you get BOTTOM_OF_PIPE/0, which can be fine. A prime use case here is swapchain images which have finalLayout = PRESENT_SRC_KHR.
+
+You can ignore external subpass dependencies (their complexity give little gain). Also, render pass compatibility rules imply that if you change even minor things (like which stages to wait for), you need to create new pipelines (which is dumb and will hopefully be fixed). However, ESDs may have some use cases:
+
+- Automatically transitioning TRANSIENT_ATTACHMENT images: On mobile, you should use transient images if possible. When using these attachments in a render pass, we could have them as initialLayout = UNDEFINED. Since these images can only ever be used in COLOR_ATTACHMENT_OUTPUT or EARLY/LATE_FRAGMENT_TEST stages depending on their image format, the external subpass dependency writes itself, and we can just use transient attachments without having to think too hard about how to synchronize them (we could just inject a pipeline barrier for this purpose, but it's more boilerplate).
+- Automatically transitioning swapchain images: Typically, swapchain images are always used once per frame, and we can deal with all synchronization using ESDs where initialLayout = UNDEFINED and finalLayout = PRESENT_SRC_KHR. The srcStageMask is COLOR_ATTACHMENT_OUTPUT, which lets us link up with the swapchain acquire semaphore. For this case we need an ESD. For the finalLayout transition after the render pass, we are fine with BOTTOM_OF_PIPE being used. We're using semaphores here anyways.
+
+
+### Wait
+
+GPU to CPU synchronization. A wait command waits until the queue you submitted the commands to is idle (you'll often see this in tutorial code). But this is not a good way: waiting for a queue to be idle means you cannot submit more work to that queue in the meantime. A better way of dealing with GPU-to-CPU synchronization is with a **fence**. 
+
 
 ### External synchronization
 

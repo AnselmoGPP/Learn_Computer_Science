@@ -49,8 +49,9 @@ Teach yourself Computer Science for free (equivalent to a Bachelor Degree in CS)
 
 ## Computer graphics
 
-- [**Computer graphics**]()
-- [**Vulkan API fundamentals**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_graphics/vulkan_fundamentals.md)
+- [**Computer graphics**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_graphics/computer_graphics.md)
+- [**Vulkan API**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_graphics/vulkan.md)
+- [**Blender**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/computer_graphics/blender.md)
 
 ## Machine learning
 
