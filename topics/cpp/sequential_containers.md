@@ -24,8 +24,12 @@
 
 **Types of sequential containers**
 
-- **Non-linked lists**: They provide efficient and flexible memory management. It’s fast to compute the address of an element from its index. But adding or removing elements in the middle takes time (elements must be moved to maintain contiguity).
+- **Non-linked lists**: They provide efficient and flexible memory management. Lookup is fast (using an index), but adding or removing elements in the middle takes time (elements must be moved to maintain contiguity).
 
+  - **`std::array`**: Fixed-size array. Size fixed at compile-time, like C-style arrays. Safer and easier-to-use alternative to built-in arrays.
+    - Fast random access
+    - Cannot add or remove elements
+    - Contiguous elements
   - **`std::vector`**: Flexible-size array. 
     - Fast random access
     - Fast insert/delete at the back
@@ -34,13 +38,16 @@
     - Fast random access
     - Fast insert/delete at front or back
     - No contiguous elements
-  - **`std::array`**: Fixed-size array. Size fixed at compile-time, like C-style arrays. Safer and easier-to-use alternative to built-in arrays.
-    - Fast random access
-    - Cannot add or remove elements
-    - Contiguous elements
   - **`std::string`**: Similar to vector, but containing characters.
     - Fast random access
     - Fast insert/delete at the back
+  - **Adaptors**: Container wrappers that provide a restricted interface.
+    - `std::stack`: LIFO stack. Wraps `std::deque` by default (alternatives: `std::vector`, `std::list`).
+    - `std::queue`: FIFO queue. Wraps `std::deque` by default (alternative: `std::list`).
+    - `std::priority_queue`: Max-heap (or min-heap) queue. Wraps `std::vector` by default (alternative: `std::deque`). Elements are sorted based on priority (by default, largest value first). `push` inserts element while maintaining order. `pop` removes the highest-priority one. A max-heap is a binary tree, usually stored in an array, that keeps the largest element always at the top (a min-heap keeps the smallest).
+
+- **Linked lists**: 
+
   - **`std::list`**: Doubly-linked list.
     - Fast insert/delete at any point in the list (`std::list`)
     - No random access. Forward and reverse traversal.

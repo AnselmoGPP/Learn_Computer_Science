@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
 }
 ```
 
-##Index
+## Index
 
 - [Basics](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/cpp/basics.md)
 - [Functions](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/cpp/functions.md)
