@@ -44,7 +44,7 @@
   - **Adaptors**: Container wrappers that provide a restricted interface.
     - `std::stack`: LIFO stack. Wraps `std::deque` by default (alternatives: `std::vector`, `std::list`).
     - `std::queue`: FIFO queue. Wraps `std::deque` by default (alternative: `std::list`).
-    - `std::priority_queue`: Max-heap (or min-heap) queue. Wraps `std::vector` by default (alternative: `std::deque`). Elements are sorted based on priority (by default, largest value first). `push` inserts element while maintaining order. `pop` removes the highest-priority one. A max-heap is a binary tree, usually stored in an array, that keeps the largest element always at the top (a min-heap keeps the smallest).
+    - `std::priority_queue`: Max-heap queue by default (alternative: min-heap). Wraps `std::vector` by default (alternative: `std::deque`). Elements are sorted based on priority (by default, largest value first). `push` inserts element while maintaining order. `pop` removes the highest-priority one. A max-heap is a binary tree, usually stored in an array, that keeps the largest element always at the top (a min-heap keeps the smallest).
 
 - **Linked lists**: Dynamically allocated nodes linked together. Slow random access (O(n)). Fast insertion/deletion (O(1)).
 
