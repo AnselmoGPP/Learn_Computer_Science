@@ -24,7 +24,7 @@
 
 **Types of sequential containers**
 
-- **Non-linked lists**: They provide efficient and flexible memory management. Lookup is fast (using an index), but adding or removing elements in the middle takes time (elements must be moved to maintain contiguity).
+- **Non-linked lists**: Contiguous memory allocation. Efficient and flexible memory management. Fast random access (O(1)). Slow insertion/deletion (O(n)) (elements must be moved to maintain contiguity), except at the end.
 
   - **`std::array`**: Fixed-size array. Size fixed at compile-time, like C-style arrays. Safer and easier-to-use alternative to built-in arrays.
     - Fast random access
@@ -46,7 +46,7 @@
     - `std::queue`: FIFO queue. Wraps `std::deque` by default (alternative: `std::list`).
     - `std::priority_queue`: Max-heap (or min-heap) queue. Wraps `std::vector` by default (alternative: `std::deque`). Elements are sorted based on priority (by default, largest value first). `push` inserts element while maintaining order. `pop` removes the highest-priority one. A max-heap is a binary tree, usually stored in an array, that keeps the largest element always at the top (a min-heap keeps the smallest).
 
-- **Linked lists**: 
+- **Linked lists**: Dynamically allocated nodes linked together. Slow random access (O(n)). Fast insertion/deletion (O(1)).
 
   - **`std::list`**: Doubly-linked list.
     - Fast insert/delete at any point in the list (`std::list`)
