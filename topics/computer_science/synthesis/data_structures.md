@@ -104,8 +104,8 @@ Visitor gives control to the tree. Composite gives control to the nodes. Strateg
 
 **Set** (${a,b,c}$): Collection of distinguishable **members** or **elements** with no order. Set ${a,b,c,c}$ is indistinguishable from ${a,b,c}$. Members are typically drawn from a larger population (**base type**: integer, double, bool...). Each set member is a **primitive element** of the base type or a set itself. There're no duplications in a set. Each value from the base type is either in the set or not in the set.
 
-- ${1, 2, 4}$: Set with 3 members
-- ${x|x is a positive integer}$: Set of all positive integers
+- ${{1, 2, 4}}$: Set with 3 members
+- ${{x|x is a positive integer}}$: Set of all positive integers
 - $x \in P$: x is member of set P
 - $x \not\in P$: x is not member of set P
 - $\emptyset$: Null/empty set
