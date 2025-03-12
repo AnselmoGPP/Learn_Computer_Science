@@ -102,10 +102,12 @@ Visitor gives control to the tree. Composite gives control to the nodes. Strateg
 
 ## Mathematical preliminaries
 
+### Sets and relations
+
 **Set** (${a,b,c}$): Collection of distinguishable **members** or **elements** with no order. Set ${a,b,c,c}$ is indistinguishable from ${a,b,c}$. Members are typically drawn from a larger population (**base type**: integer, double, bool...). Each set member is a **primitive element** of the base type or a set itself. There're no duplications in a set. Each value from the base type is either in the set or not in the set.
 
-- ${{1, 2, 4}}$: Set with 3 members
-- ${{x|x is a positive integer}}$: Set of all positive integers
+- $\{1, 2, 4\}$: Set with 3 members
+- $\{x|x is a positive integer\}$: Set of all positive integers
 - $x \in P$: x is member of set P
 - $x \not\in P$: x is not member of set P
 - $\emptyset$: Null/empty set
@@ -118,28 +120,61 @@ Visitor gives control to the tree. Composite gives control to the nodes. Strateg
 
 **Bag**: Collection of elements with no order, like a set, but with duplicate-valued elements. Bag $[a,b,c,c]$ is distinguishable from $[a,b,c]$, but indistinguishable from $[c,a,b,c]$..
 
-**Sequence** (tuple, vector): Collection of elements with an order, and may contain duplicate-valued elements.
+**Sequence** (tuple, vector): Collection of elements with an order, and may contain duplicate-valued elements. Each element has a position (0th, 1st, 2nd...). Sequence $\<3,4,5,4\>$ is distinct from $\<3,5,4,4\>$.
 
+**Relation** over a set S: Set of ordered pairs from S. Each pair is a sequence. Given set $\<a,b,c\>$, one relation is $\{\<a,c\>,\<b,c\>,\<c,c\>\}$. Infix notation: $xRy$ means that tuple $\<x,y\>$ is in relation R. Properties of relations (given a binary relation R over set S):
 
+- R is __reflexive__ if $aRa$ for all $a \in S$.
+- R is __symmetric__ if whenever $aRb$, then $bRa$, for all $a,b \in S$.
+- R is __antisymmetric__ if whenever $aRb$ and $bRa$, then $a = b$, for all $a,b \in S$.
+- R is __transitive__ if whenever $aRb$ and $bRc$, then $aRc$, for all $a,b,c \in S$.
 
+**Equivalence relation** of S: Relation that is reflexive, symmetric, and transitive. If 2 elements a and b are equivalent, we write $a &equiv; b$.
 
+**Partition** of set S: Collection of subsets disjoint from each other and whose union is S. An equivalence relation on set S partitions the set into subsets whose elements are equivalent.
 
+**Partial order**: Binary relation that is antisymmetric and transitive. The set on which it's defined is called a **partially ordered set** (or poset). Elements x and y of a set are **comparable** under a given relation if either $xRy$ or $yRx$. If every pair of distinct elements in a partial order are comparable, then the order is called **total order** or **linear order**.
 
+### Notations
 
+**Units of measure**:
 
+- b: bits
+- B: bytes
+- KB: kilobytes (2<sup>10</sup> = 1024 bytes)
+- MB: megabytes (2<sup>20</sup> bytes)
+- GB: gigabytes (2<sup>30</sup> bytes)
+- ms: milliseconds (1/1000 seconds)
 
+Spaces between the number and the unit abbreviation are:
 
+- __not placed__ when a power of 2 is intended (25GB when a gigabyte is intended as 2<sup>30</sup> bytes).
+- __placed__ when a decimal value is intended (2000 bits would be written "2 Kb" while "2Kb" represents 2048 bits) (2000 milliseconds is written as 2000 ms).
 
+**Factorial function** ($n!$): Product of the integers between 1 and n, inclusive ($5! = 1·2·3·4·5 = 120$). Special case: $0! = 1$. It grows quickly as n becomes larger, slower than n<sup>n<\sup>, but faster than c<sup>n</sup> (where c is any positive integer constant). Stirling's approximation states that $√(2πn)(n/e)<sup>n</sup>$ (where $e ≈ 2.71828$).
 
+**Permutation** of a sequence S: Members of S arranged in some order. A sequence containing n distinct members have n! different permutations.
 
+**Boolean** variable: Variable that takes one of two values: `true` or `false` (often associated with values `1` and `0`).
 
+**Logic notation**:
 
+- A→B: A implies B (or if A then B)
+- A↔B: A if and only if B (or A is equivalent to B)
+- A∨B: A or B
+- A∧B: A and B
+- ~A (or ¬A): not A (where A is boolean)
+- ∀: for all (universal quantifier) (`∀x P(x)`)
+- ∃: there exists (existential quantifier) (`∃x P(x)`)
 
+**Floor and ceiling**:
 
+- **Floor** (⌊x⌋): Greatest integer ≤ x (`⌊3.4⌋ = 3`) (`⌊-3.4⌋ = -4`)
+- **Ceiling** (⌈x⌉): Least integer ≥ x (`⌈3.4⌉ = 4`) (`⌈-3.4⌉ = -3`)
 
+**Modulus operator** (mod, %): Returns the remainder of an integers division. The result of $n mod m$ is in the range [0, m-1]. Examples: `5 mod 3 = 2`, `-3 mod 5 = 2`.
 
-
-
+**Logarithm** of base b for value y ($log<sub>b</sub>y=x$): Power to which b is raised to get y ($b<sup>x</sup> = y = b<sup>log<sub>b</sub>y</sup>$).
 
 
 
