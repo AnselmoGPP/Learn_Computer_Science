@@ -22,6 +22,7 @@
 
 - Clifford A. Shaffer (2013) _**Data structures & Algorithm analysis**_. Department of Computer Science, Virginia Tech University. Retrieved from [here](https://people.cs.vt.edu/shaffer/Book/).
 - Granville Barnett, Luca Del Tongo (2008) _**Data Structures and Algorithms: Annotated Reference with Examples**_ Dot.NetSlackers. Retrieved from [here](https://archive.org/details/pdfy-A-5D_dQU-sNJJHOB).
+- [How to do problems](https://www.quora.com/When-should-I-start-doing-LeetCode-problems-I-haven-t-learned-data-structures-and-algorithms)
 
 
 ## Data Structures and Algorithms
@@ -347,13 +348,22 @@ For an input of size n = 1023, an algorithm with running time T(n) = n<sup>2</su
 
 ### Asymptotic analysis
 
-- Logarithmic: More than quadratic algorithms, but less than linear ones.
+The curve $10n$ is crossed by $2n<sup>2</sup>$ at $n=5$. For $20n$, it's crossed at $n=10$. The two curves always cross at some point. Changing the constant factor only shift where the 2 curves cross. For a faster computer or compiler, the new problem size that can be run in a given amount of time for a given growth rate is larger by the same factor, regardless of the constant. The time curves for two algorithms with different growth rates still cross, regardless of their running-time equation constants. That's why we usually ignore the constants when estimating the growth rate for the running time or other resource requirement of an algorithm (asymptotic analysis). 
 
+**Asymptotic algorithm analysis**: Study of an algorithm as the input size gets big or reaches a limit (Calculus limit). It provides a simplified model (estimation) of the algorithm resource consumption (running time or other resource). It helps understand the behaviour of an algorithm.
 
+However, it's not always reasonable to ignore constants. When comparing algorithms meant to run on small values of n, the constant can have a large effect. Or when the constants between the two algorithms differ by a factor of 1000 or more.
 
+**Upper bounds**: Highest growth rate that the algorithm can have. It's represented with **big-Oh** notation. Example: if the upper bound for an algorithm's growth rate (for, say, the worst case), is $f(n)$, then this algorithm is in O(f(n)) in the worst case ($n<sup>2</sup>$ is in $O(n<sup>2</sup>)$ in the worst case. 
 
+- Mathematical definition: Given an algorithm, its true running time (T(n)) and some expression for the upper bound (f(n)), for T(n) a non-negatively valued function, T(n) is in set O(f(n)) if there exist 2 possible constants c and n<sub>0</sub> such that T(n) ≤ cf(n) for all n > n<sub>0</sub>. Constant n<sub>0</sub> (it's usually small) is the smallest value of n for which the claim of an upper bound holds true. The value of c is irrelevant.
+- Another definition: For all inputs of the type in question (such as the worst case for all inputs of size n) that are large enough (i.e., n > n<sub>0</sub>, the algorithm always executes in less than cf(n) steps for some constant c.
 
+Example: Consider the sequential search algorithm for finding a specified value in an array of integers. Visiting an examining one value in the array requires c<sub>s</sub> steps. If the value we search for has equal probability to appearing in any position in the array, then in the average case T(n) = c<sub>s</sub>n/2. For all values n > 1, c<sub>s</sub>n/2 ≤ c<sub>s</sub>n. Thus, T(n) is in O(n) for n<sub>0</sub>=1 and c=c<sub>s</sub>.
 
+An algorithm has a growth rate for each case (best, average, worst). Any statement about the upper bound of an algorithm must be in the context of some class of inputs of size n. We say that "this algorithm has an upper bound to its growth rate of n<sup>2</sup> in the average case". Saying only that something is in O(f(n)) only says how bad things can be. But perhaps things are not nearly so bad.
+
+Because sequential search is in O(n) in the worst case, it's also true that it is in O(n<sup>2</sup>). O(n) is in O(n<sup>2</sup>), but O(n<sup>2</sup>) is not it O(n). However, we always seek to define the running time of an algorithm with the tightest (lowest) possible upper bound. So we prefer to say that sequential search is in O(n)
 
 
 
@@ -366,3 +376,5 @@ Symbols used: ≤, ≥, ≠, ≈, √, →, ↔, ∨, ∧, ~, ¬, ∀, ∃, ⌊�
 ## File Processing and External sorting
 ## Searching
 ## Indexing
+
+## R
