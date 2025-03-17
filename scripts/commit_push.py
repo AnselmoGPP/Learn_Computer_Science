@@ -11,11 +11,11 @@ def run_command(command):
         exit(1)
 
 def main():
-    os.chdir("..")
     message = input("Enter commit description: ")
+    os.chdir("..")
     run_command(f'git status')
     run_command(f'git add --all')
-    run_command(f'git commit -m"update"')
+    run_command(f'git commit -m"{message}"')
     run_command(f'git push')
     run_command(f'git status')
     input()
