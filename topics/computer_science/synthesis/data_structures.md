@@ -102,6 +102,8 @@ Visitor gives control to the tree. Composite gives control to the nodes. Strateg
 
 ## Mathematical preliminaries
 
+Symbols used: ≤, ≥, ≠, ≈, √, →, ↔, ∨, ∧, ~, ¬, ∀, ∃, ⌊⌋, ⌈⌉, <sub>i</sub>, <sup>i</sup>, ∞
+
 ### Sets and relations
 
 **Set** (${a,b,c}$): Collection of distinguishable **members** or **elements** with no order. Set ${a,b,c,c}$ is indistinguishable from ${a,b,c}$. Members are typically drawn from a larger population (**base type**: integer, double, bool...). Each set member is a **primitive element** of the base type or a set itself. There're no duplications in a set. Each value from the base type is either in the set or not in the set.
@@ -151,7 +153,7 @@ Spaces between the number and the unit abbreviation are:
 - __not placed__ when a power of 2 is intended (25GB when a gigabyte is intended as 2<sup>30</sup> bytes).
 - __placed__ when a decimal value is intended (2000 bits would be written "2 Kb" while "2Kb" represents 2048 bits) (2000 milliseconds is written as 2000 ms).
 
-**Factorial function** ($n!$): Product of the integers between 1 and n, inclusive ($5! = 1·2·3·4·5 = 120$). Special case: $0! = 1$. It grows quickly as n becomes larger, slower than n<sup>n<\sup>, but faster than c<sup>n</sup> (where c is any positive integer constant). Stirling's approximation states that $√(2πn)(n/e)<sup>n</sup>$ (where $e ≈ 2.71828$).
+**Factorial function** ($n!$): Product of the integers between 1 and n, inclusive ($5! = 1·2·3·4·5 = 120$). Special case: $0! = 1$. It grows quickly as n becomes larger, slower than n<sup>n</sup>, but faster than c<sup>n</sup> (where c is any positive integer constant). Stirling's approximation states that √(2πn)(n/e)<sup>n</sup> (where $e ≈ 2.71828$).
 
 **Permutation** of a sequence S: Members of S arranged in some order. A sequence containing n distinct members have n! different permutations.
 
@@ -174,11 +176,189 @@ Spaces between the number and the unit abbreviation are:
 
 **Modulus operator** (mod, %): Returns the remainder of an integers division. The result of $n mod m$ is in the range [0, m-1]. Examples: `5 mod 3 = 2`, `-3 mod 5 = 2`.
 
-**Logarithm** of base b for value y ($log<sub>b</sub>y=x$): Power to which b is raised to get y ($b<sup>x</sup> = y = b<sup>log<sub>b</sub>y</sup>$).
+**Logarithm** of base b for value y (log<sub>b</sub>y=x): Power to which b is raised to get y (b<sup>x</sup> = y = b<sup>log<sub>b</sub>y</sup>). In computer science, most logarithms have base 2 (data structures and algorithms most often divide things in half, or store codes with binary bits). Here, "log n" means either "log<sub>2</sub>n" or it's used asymptotically (so base doesn't matter).
 
+Logarithm properties (for positive values m, n, r, and positive integers a, b):
+
+- log(nm) = log n + log m
+- log(n/m) = log n - log m
+- log(n<sup>r</sup>) = r log n
+- log<sub>a</sub>n = log<sub>b</sub>n/log<sub>b</sub>a
+
+Additional logarithm representations:
+
+- Square of a logarithm: (log n)<sup>2</sup> or log<sup>2</sup>n.
+- Logarithm of a logarithm: log log n.
+- Times we have to take the log of a number before reaching a value ≤ 1: log* n (example: log* 1024 = 4, because log 1024 = 10, log 10 ≈ 3.33, log 3.33 ≈ 1.74, log 1.74 < 1)
+
+### Summations and Recurrences
+
+**Summation**: Sum of costs for some function applied to a range of parameter values (∑<sup>n</sup><sub>i=1</sub> f(i) = f(1) + f(2) + ... + f(n)). Solving the summation results in a closed-form solution (algebraic equation with the same value as the summation). Examples (summations and closed-form solutions):
+
+- ∑<sup>n</sup><sub>i=1</sub> i = (n(n+1)) / 2
+- ∑<sup>n</sup><sub>i=1</sub> i<sup>2</sup> = (2n<sup>3</sup> + 3n<sup>2</sup> + n) / 6 = (n(2n+1)(n+1)) / 6
+- ∑<sup>log n</sup><sub>i=1</sub> n = n log n
+- ∑<sup>∞</sup><sub>i=0</sub> a<sup>i</sup> = 1 / (1-a) for 0<a<1
+- ∑<sup>n</sup><sub>i=0</sub> a<sup>i</sup> = (a<sup>n+1</sup>-1) / (a-1) for a≠1
+- ∑<sup>n</sup><sub>i=1</sub> 1 / 2<sup>i</sup> = 1 - 1 / 2<sup>n</sup>
+- ∑<sup>n</sup><sub>i=0</sub> 2<sup>i</sup> = 2<sup>n+1</sup> - 1
+- ∑<sup>log n</sup><sub>i=0</sub> 2<sup>i</sup> = 2<sup>log n+1</sup> - 1 = 2n - 1
+- ∑<sup>n</sup><sub>i=1</sub> i / 2<sup>i</sup> = 2 - (n+2) / 2<sup>n</sup>
+
+**Recurrence relation**: Expression that includes one or more (smaller) instances of itself. Examples:
+
+- Factorial function: n! = (n-1)!·n   for n>1;   1!=0!=1
+- Fibonacci sequence: Fib(n) = Fib(n-1) + Fib(n-2)   for n>2;   Fib(1) = Fib(2) = 1   (1, 1, 3, 3, 5, 8, 13...)
+
+### Recursion
+
+An algorithm is **recursive** if it calls itself to do part of its work. It has 2 parts: **base case** (simple input that can be solved without a recursive call) and recursive part (one or more recursive calls where, the more calls, the "closer" the parameters are to the base case). The base case prevents recursion from going on forever.
+
+Start by writing the base cases, and then solve the problem by combining the results of one or more smaller subproblems. Don't worry about how the recursive call solves the subproblem, but simply accept that it will solve it correctly, and use this result to in turn correctly solve the original problem. Train yourself to stop analysing the recursive process beyond the recursive call. Just worry about base cases and how to recombine subproblems.
+
+- __Factorial__:
+
+```
+long fact(int n) {
+  if(n <= 1) return 1;
+  return n * fact(n-1);
+}
+```
+
+- __Towers of Hanoi puzzle__: There're 3 poles and n rings. All rings start on pole 1. Each ring has a different size, and are stacked in decreasing size order (largest ring at the bottom). The problem is to move the rings from pole 1 to pole 3 in a series of steps. At each step the top ring on a pole is moved to another pole. A ring can never be moved on top of a smaller ring. How to solve this?
+
+  - We first need to move the largest (bottom) ring to pole 3, which requires all the other rings (n-1) to be stacked up in order on pole 2.
+  - Don't worry about how subproblem is solved. Rely on the algorithm to do this work for you.
+  - Provide a base case: what to do if there's only one ring.
+  - The recursive call can only be used to solve a smaller problem, and then only one of the proper form.
+
+```
+void TOH(int n, Pole start, Pole goal, Pole temp)
+{
+  if(n == 0) return;
+  TOH(n-1, start, temp, goal);      // 1. Move n-1 disks from start to temp
+  move(start, goal);      // 2. Move largest disk to goal
+  TOH(n-1, temp, goal, start);      // 2. Move n-1 disks from temp to goal
+}
+```
+
+Recursive algorithms usually don't yield the most efficient solution (function calls are more expensive than other alternatives such as a while-loop). Many data structures are naturally recursive (they have self-similar parts, like in tree structures). Many searching and sorting algorithms are based on a divide-and-conquer strategy (break a problem into smaller similar subproblems, solve them, and combine the solutions), often implemented using recursion.
+
+### Mathematical proof techniques
+
+Solving a **problem** has 2 parts: **investigation** (engaging the problem and working through until you find a solution) and **argument** (describe the solution clearly and succinctly). Three commonly used proof techniques are: direct proof (deduction), proof by contradiction, and proof by mathematical induction.
+
+#### Direct proof
+
+It's a logical explanation, a deduction, an argument in terms of logic (P → Q). Example: if we want to prove that P and Q are equivalent, we can first prove P → Q and then Q → P. In some domain, proofs are a series of state changes from a start state to an end state (like symbolic manipulations to solve integration problems, or some geometry proofs).
+
+#### Proof by contradiction
+
+We assume that the theorem is false. Then we find a logical contradiction stemming from this assumption. If there's a contradiction, we have to recognize that theorem is not false, i.e. it's true.
+
+Example: _There is no largest integer_. We assume that B is the largest integer. However, if we consider C = B + 1, where C is an integer, we find a contradiction because C > B, so B is not the largest integer. Thus, the theorem is correct.
+
+A related proof technique is proving the contrapositive. We can prove that P→Q by proving (not Q)→(not P).
+
+#### Proof by mathematical induction
+
+We assume that a theorem holds for certain parameter values (induction hypothesis). If this is demonstrated, then it must hold for any other value.
+
+Let T be a theorem to prove, and express it in terms of a positive integer parameter n. Mathematical induction states that T is true for any value of parameter n (for n ≥ c, where c is some constant) if the following 2 conditions are true:
+
+1. **Base case**: T holds for n = c.
+2. **Induction step**: Two options:
+  - __Induction step__: If T holds for n-1, the T holds for n.
+  - __Strong induction step__: If T holds for all k, c ≤ k ≤ n, then T holds for n.
+
+Recursion and induction have similarities. Both are anchored on one or more base cases. Recursive function rely on calling itself to solve subproblems, while induction proofs rely on the induction hypothesis to prove the theorem. The induction hypothesis is true if and only if the theorem itself is true. Using the induction hypothesis to do work is exactly the same as using a recursive call to do work.
+
+### Estimation
+
+Estimation is no substitute for rigorous, detailed analysis of a problem, but it can serve to indicate when a rigorous analysis is warranted: If the initial estimate indicates that the solution is unworkable, then further analysis is probably unnecessary. Estimation steps:
+
+1. Determine major parameters that affect the problem.
+2. Derive an equation that relates the parameters to the problem.
+3. Select values for the parameters and apply the equation to yield an estimated solution.
+
+A good way to reassure yourself that the estimate is reasonable is to do it in 2 different ways. If both approaches (independently) give similar answers, then this should build confidence in the estimate.
+
+When calculating, ensure that your units match (don't add feet and pounds). The output of a calculation is only as good as its input. Before calculating, you should decide on acceptable error bounds (one order of magnitude, a factor of two, 25%...) and not try to get a more precise estimate than necessary for your purpose.
 
 
 ## Algorithm Analysis
+
+### Introduction
+
+Comparing two algorithms empirically (implementing them as computer programs, running them on a range of inputs, and measuring how much resources each uses) is often unsatisfactory because:
+
+- Programming and testing two algorithms when you want to keep only one involve additional effort.
+- One algorithm could be "better written" than the other, representing badly the relative quality of the underlying algorithms.
+- The choice of test cases might unfairly favour one algorithm.
+- Even the better algorithm could not fall within your resource budget, forcing to begin the entire process again. Or maybe no implementation can possibly be within budget.
+
+**Asymptotic analysis**: Estimating technique that measures the efficiency of an algorithm, or its implementation, as the input size becomes large. This analysis is useful for determining if a particular algorithm is worth considering for implementation.
+
+The main resources for a program are its running **time** and the **space** required (main memory and disk space). Typically you analyse the time required for an algorithm, and the space required for a data structure.
+
+Many factors affect the running time of a program such as CPU speed, bus speed, peripheral hardware speed, users competition for computer or network resources, programming language, compiler, coding efficiency, etc. Yet, none of these factors address the differences between two algorithms or data structures. When estimating an algorithm's performance, we have to consider the number of **basic operations** required to process an input of a certain **size**. The time to complete such operations must not depend on the particular values of its operands (correct: adding or comparing 2 integers) (wrong: summing contents of an array containing n integers).
+
+**Growth rate**: Rate at which the cost of the algorithm grows as the size of its input grows. It can be __linear__ (as n grows, the running time of the algorithm grows in the same proportion), __quadratic__ (the running time equation has a highest-order term containing a factor of n<sup>2</sup>), __exponential__ (like 2<sup>n</sup>, because n appears in the exponent) (n! also grows exponentially), etc.
+
+<br>![growth rates](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/topics/computer_science/synthesis/growth_rates_1.png)
+
+<br>![growth rates](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/topics/computer_science/synthesis/growth_rates_2.png)
+
+### Best, worst, and average cases
+
+For some algorithms, different inputs of a given size require different amounts of time. Consider the problem of searching an array containing n elements to find one with value K:
+
+- A **sequential search** algorithm begins at the first position and looks at each value in turn until K is found, and it stops when K is found.
+  - __Best case__: The first integer in the array is K. Running time is short because only one element is examined.
+  - __Worst case__: The last position in the array is K. Running time is relatively long because n elements are examined.
+  - __Average case__: We expect the algorithm to examine ~n/2 values on average (if it runs many times for different n-size arrays or search for different K values).
+- A **largest-value sequential search** algorithm however examines every array value.
+  - __Best case__ = __Worst case__ = __Average case__ = n (all elements are always examined)
+
+The **best case** is normally not interesting because it rarely happens and it too optimistic. It's not representative of the behavior of the algorithm, unless the best case has high probability of occurring.
+
+The **worst case** is interesting because the algorithm must perform at least that well. It's especially important for real-time applications.  
+
+The **average case** shows the typical behavior of the algorithm in inputs of size n. It's useful when we wish to aggregate the cost of running the program many times on many different inputs. However, average-case analysis is not always possible: it requires to understand how the inputs and their costs are distributed with respect to the set of all possible inputs to the program (example: the sequential search algorithm on average doesn't examine n/2 array values if K is not equally likely to appear in any position in the array). Data distribution have significant effect on many search algorithm (search based on hashing, search trees...). Unusual data distributions can also be used to advantage.
+
+### Faster computer or faster algorithm
+
+If an algorithm has a too long running time, getting a faster computer could make the algorithm run faster. However, most people who get a faster computer don't run the same problem faster, but they run a bigger problem.
+
+If your algorithm's growth rate is linear, then you can use a 10 times faster machine to solve a 10 times bigger problem (example: to examine 10.000 records in the old machine would take the same time as 100.000 records in the new one). Algorithms with bigger growth rate (example: n<sup>2</sup>) get less improvement. The bigger the algorithm's growth rate, the less relative improvement (speedup) it can get from a faster machine. Thus, as computers get faster, the disparity in problem sizes becomes ever greater. Also, the slower growth rate of an algorithm, the greater benefit it gets from a new computer in terms of larger problem size that it can run in a certain time. 
+
+<br>![growth rates](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/topics/computer_science/synthesis/improvements.png)
+
+Operations that an algorithm can do in a 10 times faster machine:
+
+- Linear (`cn`): n·10
+- Logarithmic (`log n`): More than quadratic algorithms, but less than linear ones.
+- Quadratic (`n<sup>2</sup>`): n·√10 ≈ n·3.16
+- Exponential (`2<sup>n</sup>`): n + log<sub>2</sub>10 = n + 3
+
+Note that constant factors never affect the relative improvement in problem size gained by a faster computer.
+
+For an input of size n = 1023, an algorithm with running time T(n) = n<sup>2</sup> requires 1.048.576 (1024 x 1024) time steps, but a running time T(n) = n log n only requires 10.240 (1024 x 10).
+
+### Asymptotic analysis
+
+- Logarithmic: More than quadratic algorithms, but less than linear ones.
+
+
+
+
+
+
+
+
+
+Symbols used: ≤, ≥, ≠, ≈, √, →, ↔, ∨, ∧, ~, ¬, ∀, ∃, ⌊⌋, ⌈⌉, <sub>i</sub>, <sup>i</sup>, ∞
+
 ## Lists, Stacks, Queues
 ## Binary trees
 ## Non-binary Trees

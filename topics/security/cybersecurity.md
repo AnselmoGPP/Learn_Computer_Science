@@ -24,7 +24,7 @@
         + [Proxy servers](#proxy-servers)
     + [Network intrusions](#network-intrusions)
         + [Attacks](#attacks)
-        + [Network protocol analyzer](#network-protocol-analyzer)
+        + [Network protocol analyser](#network-protocol-analyzer)
     + [Security hardening](#security-hardening)
         + [Security hardening](#security-hardening)
         + [OS hardening](#os-hardening)
@@ -52,7 +52,10 @@
     + [Incident investigation and response](#incident-investigation-and-response)
     + [Network traffic and logs using IDS and SIEM tools](#network-traffic-and-logs-using-ids-and-siem-tools)
 + [Python automation](#python-automation)
++ [AI in cybersecurity](#ai-in-cybersecurity)
 + [Cybersecurity job](#cybersecurity-job)
+
+Reference: [GCPC](https://www.coursera.org/professional-certificates/google-cybersecurity)
 
 
 ## Foundations
@@ -3281,6 +3284,48 @@ print(text)
 - **Print statements**: Strategically incorporated, they can help identify the error source.
 
 
+## AI in cybersecurity
+
+**AI** (Artificial Intelligence): Computer programs that can complete cognitive tasks typically associated with human intelligence. AI tools can augment and automate general work tasks (drafting emails and documents, summarizing information, helping analyse data...). AI helps us be more efficient. However, cybercriminals can leverage AI to launch more sophisticated attacks, evade detection, and exploit system weaknesses.
+
+**Generative AI** (gen AI) ([ChatGPT](https://chat.openai.com/), [Gemini](http://gemini.google.com/), [Microsoft Copilot](https://www.microsoft.com/en-us/microsoft-copilot/), [Claude](https://claude.ai/login?returnTo=%2F%3F)...): AI that can generate new content (text, images, or other media). The user enters a prompt (input that provides instructions) and the AI generates. AI tools can help complete practical and creative tasks (create content, analyze information quickly, answer questions, simplify day-to-day work...). 
+
+**Prompt**: Input you provide to the AI model to elicit a specific response. It should be clear and specific. A good prompt follows the TCREI framework ("Thoughtfully Create Really Excellent Inputs"):
+
+- __Task__: What we want the model to do. Two parts:
+  - __Persona__: What expertise you want the Gen AI tool to draw from (what role will the AI play, or to what audience will it talk).
+  - __Format__: How you want an output to appear (bulleted list, short sentences, table...).
+- __Context__: Necessary details to help the Gen AI tool to understand what you need from it ("Give me som ideas for a birthday present **under $30 for a teenager**").
+- __References__: You can provide examples of what you want.
+- __Evaluate__: Check if the input gave you the output that you needed.
+- __Iterate__: If the output is not what you needed, you can try again by editing your prompt or adding more information.
+
+The order of your prompt is less important than the substance of the prompt itself. 
+
+**Human-in-the-loop approach**: AI works best when uses as a complement to our skills and abilities. AI requires human involvement, it has no depth of experience, practical knowledge, and interactive skill that we do. Machine and human combined can train, use, verify, and refine AI results. Be mindful of what you put into an AI tool and always evaluate and verify what comes out.
+
+Consult your organization rules and policies before using confidential or sensitive information with an AI tool. You should avoid using personal or confidential information.
+
+Gen AIs can help us on different topics:
+
+- **Security frameworks**: They're guidelines for building plans to help mitigate risks and threats to data privacy. They provide a structured approach to implementing a security lifecycle. Security frameworks can be overwhelming sometimes (example: the NIST Special Publication 800-53 has 492 pages). AI can help understand, navigate, and adopt complex security frameworks.
+
+- **Identify bugs**: AI can scan code for common errors, vulnerabilities, and potential performance bottlenecks. Ask for help and copy-paste the code in the prompt. Providing too much context (code) for debugging code may be counterproductive (too much detail may distract the AI), so try to provide enough context to understand the problem but without excessive details.
+
+- **Refine code**: AI can make suggestions to update and improve existing code, and even write a program from scratch.
+
+- **Understand system vulnerabilities**: Every asset that needs our protection has many vulnerabilities or weaknesses that can be exploited by a threat. The amount of information about these vulnerabilities can be overwhelming. AI can describe common security vulnerabilities, how critical they are, assess their potential impact, and how to mitigate them.
+
+- **Prioritize alerts**: Networks are monitored to identify anomalies and suspicious network traffic patterns. These anomalies generate alerts, and when security analysts receive alerts, they work to investigate the alerts by reviewing logs. AI can assist with key detection and response tasks, such as investigating alerts. It can act as troubleshooting assistant to help with detection and incident response (ask for help and copy-paste the alerts in the prompt). AI can be useful for incidents that are not in your Incident response plan (document that outlines the procedures to take in each step of incident response).
+
+Resources:
+
+- [Introducing Google's SAIF (Secure AI Framework)](https://blog.google/technology/safety-security/introducing-googles-secure-ai-framework/)
+- [Science & tech spotlight: Generative AI](https://www.gao.gov/products/gao-23-106782)
+- [There's more to AI bias than biased data, NIST report highlights](https://www.nist.gov/news-events/news/2022/03/theres-more-ai-bias-biased-data-nist-report-highlights#:~:text=Bias%20in%20AI%20systems%20is,systemic%2C%20institutional%20biases%20as%20well.)
+- [Course: Google AI essentials](https://www.coursera.org/learn/google-ai-essentials?utm_medium=sem&utm_source=gg&utm_campaign=B2C_NAMER_google-ai-essentials_google_FTCOF_learn_country-US-country-CA&campaignid=21236345441&adgroupid=164614892067&device=c&keyword=google%20ai%20essentials%20course&matchtype=b&network=g&devicemodel=&adposition=&creativeid=697863018869&hide_mobile_promo&gad_source=1&gclid=Cj0KCQjw0_WyBhDMARIsAL1Vz8s1l186GIRMCcSWV4KKLmoSqHw94e76-8710eny44cBQQxAabTrf7EaAi8BEALw_wcB)
+
+
 ## Cybersecurity job
 
 ### Data and assets
@@ -3294,16 +3339,16 @@ A security professional's role is to ensure a company’s data and assets are pr
 - **Public**: Data accessible to the public. It poses minimal risk to the organization if viewed/shared by others. It requires basic security measures to protect it. Example: marketing material, job descriptions, press releases.
 - **Private**: Data kept from the public. Unauthorized access to it poses a potential serious risk. Examples: email addresses, employees ids, research data.
 - **Sensitive**: Protected from everyone without authorized access. Unauthorized access can cause significant damage to an organization's finances and reputation. This includes PII (Personally Identifiable Information), SPII (Sensitive Personally Identifiable Information), PHI (Protected Health Information). Examples: banking account numbers, passwords, medical information. 
-- **Confidential**: Important information for an organization's ongoing business operations. Often, limited people has access to it and NDAs (Non-Disclosure Agreements) are signed. Example: trade secrets, financial records, govenment data.  
+- **Confidential**: Important information for an organization's ongoing business operations. Often, limited people has access to it and NDAs (Non-Disclosure Agreements) are signed. Example: trade secrets, financial records, government data.  
 
-**Asset classification**: Labeling assets based on sensitivity and importance to an organization. Asset levels range from low to high level.
+**Asset classification**: Labelling assets based on sensitivity and importance to an organization. Asset levels range from low to high level.
 
 - **Low**: Public data. Available to the public. No negative impact if compromised.
 - **High**: Sensitive and confidential data. It can have significant negative impact if leaked publicly (loss of competitive edge, reputation, and customer trust).
 
 ### Data protection
 
-When a security event results in a data breach, it is called a security incident.
+A __security incident__ is a security event that results in a data breach.
 
 Security teams steps to protect an organization:
 
@@ -3358,5 +3403,241 @@ Team members who are a part of the incident escalation process:
 - **Data custodian**: Assigns and removes access to software or hardware. Responsible for implementing security controls for the data they are responsible for, granting and revoking access to that data, creating policies regarding how that data is stored and transmitted, advising on potential threats to that data, and monitoring the data. He's notified when data security controls need to be strengthened or have been compromised.
 - **Data protection officer (DPO)**: Responsible for monitoring the internal compliance of an organization’s data protection procedures. He advises the security team on the obligations required by the organization's data protection standards and procedures. He conducts assessments to determine whether or not the security measures in place are properly protecting the data as necessary. He's notified when set standards or protocols have been violated.  
 
+A simple incident can lead to a much larger issue, if not escalated properly (example: you consider it not important and forget to escalate it). Initially, an incident may be escalated with a certain level of criticality if the analyst has not enough information about the damage caused, but later it can be increased or decreased by a more experienced incident handler. High-level security incidents should be escalated immediately. The best way to determine the urgency of a security incident is to consider the asset/s that the incident affects (example: the impact of an attacker gaining unauthorized access to a manufacturing application or PII is far greater than a forgotten password).
 
+**Incident escalation procedure**: There's no standard procedure for escalating incidents. Every organization (or security team) has its own processes and procedures for handling incidents.
 
+- __Escalation policy__: Set of action that outline who should be notified when an incident alert occurs and how that incident should be handled.
+- __Attention to detail__: It can determine if an incident is escalated to the right or wrong person. It can also help to prioritize which incidents need to be escalated with more or less urgency.
+- __Your decisions matter__: Security analysts make decisions about which security event to escalate before they become major security incidents.
+- __Trust your instincts and ask questions__: You have to be confident in your decision-making. Learn about the organization's escalation policy. Ask questions when necessary.
+- __All security events are not equal__: Recognize which assets and data are the most important (read onboarding materials, ask supervisors, review company's security policies...). Identify the incident type (malware infection, unauthorized access, improper usage...). Incidents that impact assets essential for business operations should take priority over those that don't. 
+
+### Communication with stakeholders
+
+**Stakeholder**: Individual or group that has an interest in the decisions or activities of an organization. A security analyst has to report his findings to them. Some types of stakeholders:
+
+- **CEO** (Chief Executive Officer): Highest ranking person in an organization. Responsibilities:
+
+  - Financial an managerial decisions
+  - Report to stakeholders
+  - Manage operations
+
+- **CFO** (Chief Financial Officer): Senior executive. Responsibilities:
+
+  - Manage financial operations
+  - Interested in the costs of tools and strategies necessary to combat security incidents
+
+- **CISO** (Chief Information Security Officer): High-level executive. Responsibilities:
+
+  - Develop an organization's security architecture
+  - Conduct risk analysis and system audits
+  - Create security and business continuity plans
+
+- **Risk managers**: Responsible for leading efforts to identify, assess, and mitigate security risks within an organization. Responsibilities:
+
+  - Identify risks
+  - Manage the response to security incidents
+  - Notify the legal department
+  - Inform the organization's public relations team
+
+- **Operation managers**: Leads teams related to the development and implementation of security strategies that protect an organization from cyber threats. Responsibilities:
+
+  - Oversee security professionals
+  - Work directly with analysts
+  - Daily maintenance of security operations
+
+It's unlikely that a security analyst communicates directly with the Risk manager, CEO, CFO, or CISO. However, the Operations manager will likely ask the analyst to create communications to share with those individuals. You might have to communicate with the operations manager about security issues (threats, risks, vulnerabilities, or incidents), and then he will determine next steps and coordinate other team members to remediate or resolve the issue. Operations managers and risk managers rely on analysts and other team members to keep them informed of security events in day-to-day operations. They commonly report back to the CISO and CFO to give them an organization's overall security picture. Information communicated to stakeholders is sensitive.
+
+When communicating with stakeholders, be mindful of what you communicate and who you communicate to (different stakeholders need to be communicated about different issues). Stakeholders are busy people and have roles and responsibilities that are time sensitive and impact the business. Effective communication involves relying only the information that is most relevant to stakeholders. Communications must be clear, concise, precise (specific, focused), avoid unnecessary technical terms, and have a clear purpose. These communications have to specify what the security challenge is, how it impacts the organization, and possible solutions to the issue, and may include related data (reports of key findings, list of issues that need immediate attention, ...). Some communication methods are: send email, instant messaging, video calling, phone call, share document, share visual representation (graphs, charts, videos, dashboard, infographics...), or using incident management or ticketing systems.
+
+Stakeholders are often busy, and may miss a communication (email, document...) or fail to respond in a timely manner. In this instances, direct communication (quick phone call, instant message...) can help move the situation forward, instead of waiting days or weeks for a response about an issue that requires immediate attention. If you don't receive a timely response from a stakeholder, following up shows initiative.
+
+**Visual dashboard**: Way of displaying various types of data quickly in one place. It can be simple (like a single chart) or complex (like multiple detailed charts, graphs, and tables) depending on the information you're communicating. Some programs to create dashboards are Google Sheets and Apache OpenOffice.
+
+### Cybersecurity community
+
+**OWASP Top 10**: Globally recognized standard awareness document that lists the top 10 most critical security risks to web applications. It's updated every 3 or 4 years.
+
+**Security websites and blogs**:
+
+- [CSO Online](https://www.csoonline.com/): News, analysis, and research on various security and risk management topics. Useful for getting tips and ideas.
+- [Krebs on Security](https://krebsonsecurity.com/): Security news and investigations into various cyber attacks. Useful for staying up-to-date on the latest security news.
+- [Dark Reading](https://www.darkreading.com/): Information about various security topics (analytics, application security, mobile and cloud security, IoTs...)
+
+**[LinkedIn](www.linkedin.com)**: Social media platform that focuses on connecting professionals with each other.
+
+**Security organizations and conferences**: Joining them let you gain knowledge from seasoned professionals who are constantly seeking to improve their security strategies and techniques. 
+
+- Which organization or conference to join depends on your specific interest in security (incident response, incident prevention, forensic security, data logging, become a CISO...).
+- You can find those that are in your area through a web search or in social media (LinkedIn). In social media, beware of social engineering (hackers use social media to trick users into giving up private information).
+- Cybersecurity __.ailing lists__: They send out information periodically on various security topics. Sign up for some of them help to stay connected with the security industry. The CISA (Cybersecurity & Infrastructure Security Agency) offers 2 cybersecurity mailing lists:
+  - List providing security threat information, cybersecurity best practices, and analysis from CISA’s domestic and international security partners.
+  - List providing weekly summaries of new vulnerabilities regarding an organization’s network.
+
+**Connect with other professionals**:
+
+- **Social media** (LinkedIn) is useful for connecting with other security professionals. You can follow security industry leaders (like CISOs), read their posts/articles, and listen to their interviews. You can do a web search for the name of the CISO of a certain organization, and then look for them in social media. You can also use social media to find other security analysts currently employed in the field and send them a connection request. In social media, you can filter searches by people, people who talk about #cybersecurity, events, and groups.
+- **Security associations**: There're many, so do some research to find the best ones for you.
+
+### Find a cybersecurity job
+
+#### Find a job
+
+Create an account in different job sites (ZipRecruiter, Indeed, Monster Jobs...) and search for cybersecurity positions.
+
+Some cybersecurity industry roles are:
+
+- **Security analyst**: It's typically an entry-level role.
+  - It focuses on:
+    - Monitoring networks for security breaches
+    - Developing strategies to help secure an organization
+    - Researching IT security trends
+  - Should know about:
+    - Log monitoring
+    - SIEM tools
+
+- **Information security analyst**:
+  - It focuses on:
+    - Creating plans
+    - Implementing security measures
+  - Should know about:
+    - Controls and frameworks that can be used to develop security plans and procedures
+    - How to use SIEM tools and packet sniffers to identify risks
+
+- **Security Operations Center (SOC) analyst**: 
+  - It focuses on:
+    - Ensuring security incidents are handled rapidly and efficiently by following established policies and procedures
+  - Should know about:
+    - Playbooks (they're unique for each organization) and how to follow the processes they outline to respond to security events or incidents
+
+**Career identity**: It's the unique value that you bring to the workforce based on who you are and what you have to offer professionally, now or in the future. It's informed by all of your life an work experiences, and shaped by your strengths, motivations, and values. It's something you cultivate, based on your direction and goals. The more you know about this, the better equipped you are to choose a path that aligns with your strengths, values, and goals; and employers and colleagues will have a better understanding of what you have to offer. Strong career identity leads to positive outcomes (improved job performance, greater commitment to a meaningful career, enhanced well-being and health...). Explore your career identity by writing your **career identity statement**:
+
+1. Key components:
+
+- __Strengths__: Tasks and activities that you do well (and make you feel stronger, capable, and energized). Skills, knowledge, and talents gained throughout your life and work experiences (detail-oriented, good at building relationships, patience, empathy, problem-solving, writing...), 
+- __Motivations__: They stem from your passions and purpose. It's what fuels you, what keep you going (storytelling, help others.
+- __Values__: They reflect what's most important to you (integrity, responsibility, kindness, efficiency, service to others...). They guide your approach to decision-making, developing relationships, and overcoming challenges. 
+
+2. To learn more about your skills, strengths, preferences, and values, you can do __assessments__ (many are available online and consist of multiple choice questions) or interview some of your __peers__ (trusted, honest, and thoughtful people who know you well)
+
+3. Write your career identity statement. It should be 3 or 4 sentences that describe your qualifications, passions, and purpose. Example:
+
+```
+I am a <role/s> with <number> years of experience doing <accomplishment>. My greatest strength is <strength>, and I have a talent for <strength>. I am passionate about <motivation>, and I value <value>.
+```
+
+Your statement is a work in progress (revisit and refine it as you gain new experience and insights about yourself). Your statement adds clarity and energy to all the other career development tools you carry with you. You can incorporate parts of it into your resume, LinkedIn profile, cover letters, and elevator pitch. This will help you clearly and consistently communicate what's important to you and help you stand out from others in the same field. It can also guide you to be more intentional and purposeful when searching for a job or choosing a career path. The more you know about yourself and what you want, the better choices you'll make for your career.
+
+**Resume** (CV, Curriculum Vitae): It's typically 2 pages long. Avoid spelling or grammatical errors. It can be created using word processing applications (Google Docs, OpenOffice...), or templates (find them online: [Enhancv](https://app.enhancv.com/industry-examples), [Big interview](https://googlecerts.biginterview.com/), [Google docs](https://docs.google.com/document/u/0/?ftv=1&tgif=c), [Microsoft word](https://templates.office.com/)...). Additional help: [Google applied digital skills: Start a resume](https://applieddigitalskills.withgoogle.com/c/college-and-continuing-education/en/start-a-resume/overview.html).
+
+- Start with your name at the top followed by your professional title.
+- Contact information (phone number, email...).
+- Summary statement: Brief (1 or 2 sentences). Tell your strengths and relevant skills. Include specific words from the responsibility section of the job description.
+- Skills: Bulleted list of skills.
+- Work experience: List of your work history (last 10 years or less). Each job entry contains the date range, company name, location, and a list of skills and responsibilities you performed.
+- Education and certifications: Include date and organization name. List subjects you studied related to the job you're applying for.
+
+Include earlier job experiences that provided you with knowledge and skills transferable to a security role (detail oriented, collaborative, written and verbal communication skills...). Include programming languages (Python, SQL, Linux line-command...), what you understand by security mindset, standard frameworks and controls (NIST CSF, CIA Triad...), SIEM tools, packet sniffers, etc.
+
+Sites for applying for jobs: They help connect job seekers with available roles in their industry. Upload your resume and specify geographical and work preferences. Employers might also reach out you directly.
+
+- [ZipRecruiter](https://www.ziprecruiter.ie/)
+- [Indeed](https://www.indeed.com/)
+- [Monster](https://www.monster.com/)
+- [LinkedIn](www.linkedin.com) (this is also a social networking site)
+
+#### Interview
+
+**Interview**: After submitting your resume to several job postings, a recruiter may contact you and ask to schedule an interview.
+
+1. **Preliminary interview** (phone screening, pre-screening phone call, introductory call): It's typically a 15-minute conversation with a hiring manager or recruiter who will ensure that you are who the resume says you are and that you meet the minimum requirements for the job. He will talk about yourself, your experience, your motivations, and why you'd be a good fit. He may ask for your salary expectations. Research the company.
+
+2. **In-person interview**: Either on-site or online. There might be multiple rounds of interviews. It could be a panel interview with a few members of the team that your would be working with or a one-on-one interview. They want to know what you can offer, your knowledge. Review the material for your introductory call and your accomplishments. Two parts:
+
+  - Background interview: Questions about your education, work experience, skills, and abilities. Ask questions to decide if the team and company culture are a good match for you.
+  - Technical interview: Questions about technical skill related to the role (about how you respond to a specific situation, or how you explain a technical concept).
+
+3. **Job offer**: The company might decide to give you an initial offer. Decide whether to accept, do not accept, or negotiate it. You may ask for a day or two to make your decision. However, if you didn't get the job, take a moment to process your emotions, let them know you are interested in future roles, and ask for feedback.
+
+Prepare for an interview:
+
+- Review the job description and your resume
+- Practice speaking about experiences and skills
+- Dress professionally and feel comfortable
+- Take a few deep breaths
+- Remind yourself of all the preparation you've done
+- For an online interview:
+  - Prepare a home location that is quiet, tidy, professional, and well lit
+  - Test your internet connection, video software, video and audio settings, camera, and microphone
+  - Limit background noise (use a headset, if possible)
+  - Dress appropriately
+  - Look at the interviewer when speaking (shows engagement, focus, respect, and punctuality)
+  - Sign in early 
+
+Prepare for technical interview:
+
+- __Python__ programming language.
+- __General techniques__: Various general security concepts such as security frameworks (NIST, CSF...), network security, etc. Write the entire question down on paper before answering (sometimes people rush to answer but don't fully cover everything the question asks).
+- __Possible technical interview questions__: What is the OSI model? What are SIEM tools and what are they used for?...
+- [__All things pwned!__](https://allthingspwned.com/): Tips, information, and practice scenarios on preparing for cybersecurity technical interviews.
+
+Pre-interview research: Before the interview, do some research about the organization. Check (in the job description or organization's website) the organization's mission, vision, core values, and company culture. Find out if it matches your values. Emphasize the qualities that set you apart from other candidates (skills, experience, work ethic, goals). If you lack experience, talk about your work ethic (quick learner based on feedback, good communication and collaboration with others...). 
+
+**Rapport**: Friendly relationship in which the people involved understand each other's ideas and communicate well with each other.
+
+- Engage in friendly conversation during the interview.
+  - First interaction you have with the company's staff: Use a professional tone of voice, while being polite and friendly, when you express interest in the job.
+  - Initial phone screen: You can use a friendly, conversational tone. Have some questions prepared (you will look engaged in the conversation, interested in the company and position, confident, and that you want to make sure that you're a good match).
+- Emails:
+  - Write friendly but professional emails before and after the interview.
+  - It's nice to send a follow-up email 1 or 2 days after your in-person interview thanking for the opportunity to meet with them and learn more about the organization. Also mention something about your interview. This shows that you're engaged in the conversation, will set you apart from other candidates, and reminds the interviewer of your discussion.
+
+#### Answer interview questions
+
+**STAR method**: Technique used to answer behavioural and situational interview questions. It helps understand each interview question and provide a thoughtful and thorough response. It helps share your success stories effectively and strategically. It enables you to describe potential challenges you faced in previous roles and gives you the opportunity to show how you thoughtfully approached solving those problems. It's typically used to answer open-ended questions.
+
+- **Situation**: Project you worked on or a challenge that you had to overcome. Fully describe the situation so the interviewer can clearly understand the challenge.
+- **Task**: Key responsibilities or role your played in solving the challenge. It provides clarity about your objective.
+- **Action**: Steps you took to resolve the challenge. It shows what choices you made to achieve your desired outcome. Employers want employees who can think fast and make decisions that help solve problems. 
+- **Result**: Sharing the result of the challenge shows how the situation was resolved as a direct result of your actions. Ensure that all your STAR examples end in a positive result. It demonstrates ability to successfully resolve issues. If an employer asks about a situation with no positive outcome, focus on what you learned from it and how this experience helped you become a better employee.
+
+Example: "Tell me about a time when you encountered a challenge on the job".
+
+- __Situation__: Two people needed to stay home from work due to illness, and I was the only person available to assist customers.
+- __Task__: I needed to answer phone calls from customers, while assisting shoppers in the store.
+- __Action__: I came up with a strategy that allowed me to assist customers as they entered the store while also ensuring that customers who called were helped or politely placed on hold until I was able to address their needs.
+- __Result__: I managed the in-store operations for the day without many mistakes, and my manager complimented me during the next team meeting.
+
+Carefully consider each question before responding. Respond them with confidence, even by admitting when you don't know something.
+
+- If they ask you to discuss a skill you don't have, you can admit that you don't have it, but that you're a quick learner and eager to develop that skill. Emphasizing your ability to adapt and learn on the job shows confidence.
+- Take the time to fully understand a problem or question to provide the best solution/answer possible. If needed, ask for the interviewer for a moment to think about your answer. It shows that you're willing to take the time needed to understand the question and provide a meaningful and relevant response.
+
+Useful resources:
+
+- [__Google interview warmup__](https://grow.google/certificates/interview-warmup/)
+- [__Interview tips from Google__](https://careers.google.com/interview-tips/?src=Online%2FSocial%2FNewYearNewJob&utm_campaign=&utm_medium=Social&utm_source=Online)
+- [__Interviewing techniques for persons with disabilities__](https://askjan.org/publications/consultants-corner/vol01iss13.cfm)
+
+**Ask questions**, especially when the interviewer offers you to do so. Research the company, so you can ask questions. They show you're curious, passionate, and want to help the company. They can help you determine if it's a good match for you. 
+
+#### Elevator pitch
+
+**Elevator pitch**: Brief summary of your experience, skills, and background. It quickly shows who you are. It's useful at interviews, job fairs, expos, professional conferences, social media jobsites, etc. Characteristics:
+
+- __Short__: It should be 1 minute or less long.
+- __Persuasive__.
+- No need to list al your previous experience. Instead, explain __who__ you are and __why__ you care about being a security professional.
+- __Qualifications__
+- __Skills__: Soft skills (critical thinking, problem-solving, communication, collaborative...) and technical skills (SIEM tools, programming languages...).
+- __Avoid__ rambling (irrelevant details), sounding ingenuine or robotic, or speaking too quickly. Speak naturally, with confidence and conviction, and at a normal pace.
+
+Tips:
+
+- __Provide an introduction__: Introduce yourself and your professional background (roles, years of work experience, industries, skills).
+- __Career interests and transferable skills__: Clarify that this is your desired career. Highlight those transferable skills you have and how they might apply to your goals.
+- __Express your excitement__: Share your passion for the field, why you want to work in the industry, and talk about your goals.
+- __Communicate your interest in the company__: Communicating why you are interested in the company (not just the role) can show that you are knowledgeable about the company, helps establish a rapport with the interviewer, and shows that you’ve done your due diligence before the interview. 
+
+**Impostor syndrome**: Ensure you stay flexible and fungible, and always learn. It's ok to take time and ask questions. Connecting with others in cybersecurity associations, or reflecting on your career, are good ways to combat it.
