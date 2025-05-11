@@ -425,7 +425,22 @@ __Forget__, __go on__, __regret__, __remember__, __stop__, __try__.
 - They __installed__ the central heating yesterday
 - The central heating __was__ __installed__ yesterday
 
-<br>![flow image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/english_grammar/resources/passive_voice.png)
+|Verbal tense|Active|Pasive|
+|:-----------|:-----|:-----|
+|Present simple|writes/write|is/are written|
+|Present continuous|is/are writing|is/are being written|
+|Past simple|wrote|was/were written|
+|Past continuous|was/were writing|was/were being written|
+|Present perfect|has/have written|has/have been written|
+|Past perfect|had written|had been written|
+|Future simple|will write|will be written|
+|Future perfect|will have written|will have been written|
+|Conditional present|would write|would be written|
+|Conditional perfect|would have written|would have been written|
+|Infinitive present|to write|to be written|
+|Infinitive perfect|to have written|to have been written|
+|Participle present/gerund|writing|being written|
+|Participle perfect|having written|having been written|
 
 Used for talking about somebody/something affected by some action, with emphasis on the action and its object (_The food was cooked quickly_).
 
