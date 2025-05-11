@@ -7,7 +7,7 @@
 
 + [Grammar](#grammar)
   + [Verb tenses](#verb-tenses)
-  + [Gerund & infinitives](#gerund-&-infinitives)
+  + [Gerund & infinitives](#gerund--infinitives)
   + [Passive voice](#passive-voice)
   + [Conditional sentences](#conditional-sentences)
   + [Relative clauses](#relative-clauses)
@@ -21,10 +21,10 @@
   + [Forming adverbs](#forming-adverbs)
   + [Compound words](#compound-words)
   + [Adjectives order](#adjectives-order)
-  + [Acronyms and abbreviations](#acronyms-and-abbreviations)
+  + [Acronyms & abbreviations](#acronyms--abbreviations)
   + [Prepositions](#prepositions)
   + [Phrasal verbs](#phrasal-verbs)
-  + [Make/Do](#make/do)
+  + [Make/Do](#makedo)
   + [Opposites](#opposites)
   + [Idiomatic comparisons](#idiomatic-comparisons)
 + [Irregular verbs](#irregular-verbs)
@@ -38,12 +38,12 @@
 ### Verb tenses
 
 - Present simple
-- Present continuous
-- Present perfect
+- Present continuous/gerund
+- Present perfect (pretérito perfecto)
 - Present perfect continuous
 - Past simple
 - Past continuous
-- Past perfect
+- Past perfect (pretérito pluscuamperfecto)
 - Future
 - Future perfect
 - Exclamations
