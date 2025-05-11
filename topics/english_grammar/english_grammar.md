@@ -1690,7 +1690,6 @@ Often, the negative meaning to adjectives, nouns, and verbs is given by some neg
 
 ### Same three forms
 
-|------------|-------------|-----------------|---------|
 | Infinitive | Past simple | Past participle | Spanish |
 |:-----------|:------------|:----------------|:--------|
 |bet|bet|bet|apostar|
@@ -1698,24 +1697,135 @@ Often, the negative meaning to adjectives, nouns, and verbs is given by some neg
 |cut|cut|cut|cortar|
 |hit|hit|hit|golpear, pegar|
 |hurt|hurt|hurt|herir, hacer daño|
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
+|let|let|let|dejar, permitir, alquilar|
+|put|put|put|poner|
+|read|read|read|leer|
+|set|set|set|poner, colocar|
+|shut|shut|shut|cerrar|
+|split|split|split|dividir en dos|
+|spread|spread|spread|extender, untar|
+|thrust|thrust|thrust|empujar, clavar|
+|upset|upset|upset|volcar, afectar, disgustar|
 
 ### Same infinitive and participle
 
+| Infinitive | Past simple | Past participle | Spanish |
+|:-----------|:------------|:----------------|:--------|
+|become|became|become|convertirse en|
+|come|came|come|venir|
+|run|ran|run|correr|
+
 ### Same past simple and participle
 
+| Infinitive | Past simple | Past participle | Spanish |
+|:-----------|:------------|:----------------|:--------|
+|bend|bent|bent|doblar|
+|bleed|bled|bled|sangrar|
+|bring|brought|brought|traer|
+|build|built|built|construir|
+|burn|burnt/burned|burnt/burned|quemar|
+|buy|bought|bought|comprar|
+|catch|caught|caught|coger|
+|deal|dealt|dealt|tratar|
+|dig|dug|dug|cavar|
+|dream|dreamt/dreamed|dreamt/dreamed|soñar|
+|feed|fed|fed|alimentar, dar de comer|
+|feel|felt|felt|sentir|
+|fight|fought|fought|luchar|
+|find|found|found|encontrar|
+|get|got|got|conseguir|
+|hang|hung|hung|colgar|
+|have|had|had|tener|
+|hear|heard|heard|oír|
+|hold|held|held|sostener|
+|keep|kept|kept|guardar, conservar|
+|kneel|knelt|knelt|arrodillarse|
+|lay|laid|laid|poner horizontalmente|
+|lead|led|led|llevar, guiar|
+|lean|leant/leaned|leant/leaned|inclinarse, apoyarse|
+|leap|leapt|leapt|saltar|
+|learn|learnt/learned|learnt/learned|aprender|
+|leave|left|left|dejar, abandonar|
+|lend|lent|lent|prestar|
+|light|lit/lighted|lit/lighted|encender|
+|lose|lost|lost|perder|
+|make|made|made|hacer, fabricar|
+|mean|meant|meant|significar, querer decir|
+|meet|met|met|conocer, reunirse|
+|pay|paid|paid|pagar|
+|say|said|said|decir|
+|sell|sold|sold|vender|
+|send|sent|sent|enviar|
+|shine|shone|shone|brillar|
+|shoot|shot|shot|disparar|
+|sit|sat|sat|sentarse|
+|sleep|slept|slept|dormir|
+|slide|slid|slid|deslizarse|
+|smell|smelt/smelled|smelt/smelled|oler|
+|spell|spelt/spelled|spelt/spelled|deletrear|
+|spend|spent|spent|gastar, pasar tiempo|
+|spill|spilt/spilled|spilt/spilled|derramar|
+|spit|spat|spat|escupir|
+|spoil|spoilt/spoiled|spoilt/spoiled|echar a perder|
+|stand|stood|stood|estar de pie|
+|stick|stuck|stuck|clavar|
+|strike|struck|struck|golpear|
+|sweep|swept|swept|barrer|
+|swing|swung|swung|balancear, mecer|
+|teach|taught|taught|enseñar|
+|tell|told|told|decir, contar|
+|think|thought|thought|pensar, opinar|
+|understand|understood|understood|entender, comprender|
+|weep|wept|wept|llorar|
+|win|won|won|ganar|
+
 ### Different three forms
+
+| Infinitive | Past simple | Past participle | Spanish |
+|:-----------|:------------|:----------------|:--------|
+|arise|arose|arisen|surgir|
+|awake|awoke|awoken|despertarse|
+|be|was/were|been|ser, estar|
+|begin|began|begun|empezar|
+|bite|bit|bitten|morder, picar|
+|blow|blew|blown|soplar|
+|break|broke|broken|romper|
+|choose|chose|chosen|elegir|
+|do|did|done|hacer|
+|draw|drew|drawn|dibujar|
+|drink|drank|drunk|beber|
+|drive|drove|driven|conducir|
+|eat|ate|eaten|comer|
+|fall|fell|fallen|caerse|
+|fly|flew|flown|volar|
+|forbid|forbade|forbidden|prohibir|
+|forget|forgot|forgotten|olvidar|
+|forgive|forgave|forgiven|perdonar|
+|freeze|froze|frozen|helar(se)|
+|give|gave|given|dar|
+|go|went|gone|ir|
+|grow|grew|grown|crecer, cultivar|
+|hide|hid|hidden|esconder|
+|know|knew|known|saber, conocer|
+|lie|lay|lain|yacer, estar tumbado|
+|ride|rode|ridden|montar (a caballo, en bicicleta, en moto)|
+|ring|rang|rung|llamar, sonar|
+|rise|rose|risen|levantarse|
+|see|saw|seen|ver|
+|shake|shook|shaken|batir, temblar, agitar|
+|show|showed|showed/shown|mostrar, enseñar|
+|sing|sang|sung|cantar|
+|sink|sank|sunk|hundir|
+|speak|spoke|spoken|hablar|
+|steal|stole|stolen|robar|
+|swear|swore|sworn|jurar|
+|swim|swam|swum|nadar|
+|take|took|taken|coger, llevar|
+|tear|tore|torn|romper, rasgar|
+|throw|threw|thrown|lanzar, echar|
+|wake|woke|woken|despertar|
+|wear|wore|worn|llevar (prendas de vestir)|
+|write|wrote|written|escribir|
 
 
 ## Cambridge C2
