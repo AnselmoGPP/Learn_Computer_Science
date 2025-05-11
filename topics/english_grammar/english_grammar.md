@@ -1690,8 +1690,8 @@ Often, the negative meaning to adjectives, nouns, and verbs is given by some neg
 
 ### Same three forms
 
-| Infinitive | Past simple | Past participle | Spanish |
-|:-----------|:------------|:----------------|:--------|
+|Infinitive|Past simple|Past participle|Spanish|
+|:---------|:----------|:--------------|:------|
 |bet|bet|bet|apostar|
 |cost|cost|cost|costar, valer|
 |cut|cut|cut|cortar|
@@ -1709,16 +1709,16 @@ Often, the negative meaning to adjectives, nouns, and verbs is given by some neg
 
 ### Same infinitive and participle
 
-| Infinitive | Past simple | Past participle | Spanish |
-|:-----------|:------------|:----------------|:--------|
+|Infinitive|Past simple|Past participle|Spanish|
+|:---------|:----------|:--------------|:------|
 |become|became|become|convertirse en|
 |come|came|come|venir|
 |run|ran|run|correr|
 
 ### Same past simple and participle
 
-| Infinitive | Past simple | Past participle | Spanish |
-|:-----------|:------------|:----------------|:--------|
+|Infinitive|Past simple|Past participle|Spanish|
+|:---------|:----------|:--------------|:------|
 |bend|bent|bent|doblar|
 |bleed|bled|bled|sangrar|
 |bring|brought|brought|traer|
@@ -1781,8 +1781,8 @@ Often, the negative meaning to adjectives, nouns, and verbs is given by some neg
 
 ### Different three forms
 
-|**Infinitive**|**Past simple**|**Past participle**|**Spanish**|
-|:-----------|:------------|:----------------|:--------|
+|Infinitive|Past simple|Past participle|Spanish|
+|:---------|:----------|:--------------|:------|
 |arise|arose|arisen|surgir|
 |awake|awoke|awoken|despertarse|
 |be|was/were|been|ser, estar|
