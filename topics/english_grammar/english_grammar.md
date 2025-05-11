@@ -24,7 +24,7 @@
   + [Acronyms & abbreviations](#acronyms--abbreviations)
   + [Prepositions](#prepositions)
   + [Phrasal verbs](#phrasal-verbs)
-  + [Make/Do](#makedo)
+  + [Make/Do](#make-do)
   + [Opposites](#opposites)
   + [Idiomatic comparisons](#idiomatic-comparisons)
 + [Irregular verbs](#irregular-verbs)
