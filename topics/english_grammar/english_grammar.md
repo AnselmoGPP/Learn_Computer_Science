@@ -1781,7 +1781,7 @@ Often, the negative meaning to adjectives, nouns, and verbs is given by some neg
 
 ### Different three forms
 
-| Infinitive | Past simple | Past participle | Spanish |
+|**Infinitive**|**Past simple**|**Past participle**|**Spanish**|
 |:-----------|:------------|:----------------|:--------|
 |arise|arose|arisen|surgir|
 |awake|awoke|awoken|despertarse|
