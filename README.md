@@ -7,7 +7,7 @@ Teach yourself Computer Science for free (equivalent to a Bachelor Degree in CS)
 ## Table of Contents
 + [Computer Science](#computer-science)
 + [Economics and business](#economics-and-business)
-+ [C++ language](#cpp-language)
++ [Languages](#languages)
 + [Computer graphics](#computer-graphics)
 + [Machine learning](#machine-learning)
 + [Security](#security)
@@ -43,9 +43,10 @@ Teach yourself Computer Science for free (equivalent to a Bachelor Degree in CS)
   - Personal finance
   - Entrepreneurship
 
-## Cpp language
+## Languages
 
 - [**C++ language**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/cpp/cpp_language.md)
+- [**English grammar**](https://github.com/AnselmoGPP/Learn_Computer_Science/blob/master/topics/english_grammar/english_grammar.md)
 
 ## Computer graphics
 
