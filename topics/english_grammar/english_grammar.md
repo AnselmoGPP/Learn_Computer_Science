@@ -27,7 +27,7 @@
   + [Make/Do](#make/do)
   + [Opposites](#opposites)
   + [Idiomatic comparisons](#idiomatic-comparisons)
-+ [Irregular verbs](#irregular verbs)
++ [Irregular verbs](#irregular-verbs)
 + [Cambridge C2](#cambridge-c2)
 + [References](#references)
 
@@ -1690,6 +1690,7 @@ Often, the negative meaning to adjectives, nouns, and verbs is given by some neg
 
 ### Same three forms
 
+|------------|-------------|-----------------|---------|
 | Infinitive | Past simple | Past participle | Spanish |
 |:-----------|:------------|:----------------|:--------|
 |bet|bet|bet|apostar|
