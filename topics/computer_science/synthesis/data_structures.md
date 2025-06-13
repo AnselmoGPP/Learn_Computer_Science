@@ -1081,7 +1081,7 @@ while(dict.size() > 0)
 **Keys comparison** methods:
 
 - Using operators `==`, `<=`, `>=`. Depending on the type, the user may need to overload them.
-- Using a **comparator** (preferred option). It's a class provided by the user that does comparison and makes those operations be template parameters (strategy pattern). In some cases, it makes sense for the comparator to extract the key from the record type (alternative to storing key-value pairs).
+- Using a **comparator** (most general and preferred option). It's a class provided by the user that does comparison and makes those operations be template parameters (strategy pattern). In some cases, it makes sense for the comparator to extract the key from the record type (alternative to storing key-value pairs).
 
 #### Unsorted array dictionary
 
@@ -1095,9 +1095,8 @@ It internally uses an unsorted array. Operations costs:
 
 It internally uses a sorted array. Operations costs:
 
-- `insert` is Θ(log n) (binary search is used).
+- `insert` and `remove` are Θ(n) (binary search can be used, but all subsequent elements still have to be shifted next).
 - `find` is Θ(log n) (binary search is used).
-- `remove` is Θ(n) (binary search can be used, but all subsequent elements still have to be shifted next).
 - `removeAny` is Θ(1).
 
 Whether a sorted list is more or less efficient than an unsorted list depends on the relative number of `insert` and `find` operations.
@@ -1112,15 +1111,11 @@ Operations costs: `insert` is Θ(1), `find` is Θ(n), `remove` is Θ(n), `remove
 
 
 
+TODO: sorted list must accept a single type. Comparater is passed too.
 
 
-2
- 1
-  0
- move
- 1
-  0 
-
+// copy constructors > use object slicing, if necessary
+// copyFrom > use pointer arguments
 
 
 <<< Complexity

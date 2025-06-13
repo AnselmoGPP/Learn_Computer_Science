@@ -601,7 +601,7 @@ while(getline(ifile, line))
 ifile.close();
 ```
 
-- `>>` operator: Read strings and formatted text data. You must know the order of tokens in the file (example: if the next token is a double, you must read it into a doble, or an error will occur).
+- `>>` operator: Read strings and formatted text data. You must know the order of tokens in the file (example: if the next token is a double, you must read it into a doble, or an error will occur). It skips whitespaces by default.
 
 ```
 int a, b;

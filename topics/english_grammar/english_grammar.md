@@ -7,7 +7,7 @@
 
 + [Grammar](#grammar)
   + [Verb tenses](#verb-tenses)
-  + [Gerund & infinitives](#gerund--infinitives)
+  + [Gerund and infinitives](#gerund-and-infinitives)
   + [Passive voice](#passive-voice)
   + [Conditional sentences](#conditional-sentences)
   + [Relative clauses](#relative-clauses)
@@ -21,10 +21,10 @@
   + [Forming adverbs](#forming-adverbs)
   + [Compound words](#compound-words)
   + [Adjectives order](#adjectives-order)
-  + [Acronyms & abbreviations](#acronyms--abbreviations)
+  + [Acronyms and abbreviations](#acronyms-and-abbreviations)
   + [Prepositions](#prepositions)
   + [Phrasal verbs](#phrasal-verbs)
-  + [Make/Do](#make-do)
+  + [Make and do](#make-and-do)
   + [Opposites](#opposites)
   + [Idiomatic comparisons](#idiomatic-comparisons)
 + [Irregular verbs](#irregular-verbs)
@@ -181,7 +181,7 @@ Not usually used with the following verbs: know, like, want, hate, love, need, b
     - Note: in these 2 examples, _was_ can be replaced with _were_ in a more formal context
 
 
-### Gerund & infinitives
+### Gerund and infinitives
 
 Gerunds (cooking) and infinitives (to cook) are used when we want to link two actions.
 
@@ -1592,7 +1592,7 @@ Some verbs change meaning when we add prepositions (prepositional verb) or adver
   - think over (pensar detenidamente)
 
 
-### Make/Do
+### Make and do
 
 #### Make usage
 
