@@ -685,7 +685,7 @@ A data structure’s primary purpose is to store data in a way that allows effic
 
 **List** (or sequence): Finite, ordered sequence of data items (<a<sub>0</sub>, a<sub>1</sub>, ... a<sub>n-1</sub>>). Each data item is an **element**. "Ordered" here means that each element has a **position** in the list (first, second...), not that it's sorted by value. Each element has a data type. Usually, the same for all elements. The operations defined as part of the list ADT don't depend on the elemental data type. An **empty** list contains no elements (<>). The **length** of the list is the number of elements currently stored. The beginning is the **head**, the end is the **tail**. **Sorted lists** have their elements positioned in ascending order of value, **unsorted lists** have no particular relationship between element values and their positions. Standard approaches to implementing a list: **Array-based list** and **Linked list**.
 
-**Abstract class**: Class whose member functions are pure virtual (`=0`). It doesn't define operations, just declare them. 
+**Abstract class**: Class whose member functions are pure virtual (`=0`). It doesn't defines operations, just declares them. 
 
 Steps for implementing a list:
 
@@ -791,7 +791,7 @@ General member variables: `head` (first node), `tail` (last node), `curr` (node 
 
 - **Dynamic array**: Similar to SA, but with dynamic size.
 
-- **Singly/Double/XOR linked-list**:
+- **Linked-list (Singly/Double/XOR)**:
   - Random access: Slow (Θ(n) time in average and worst cases).
   - Insertion/removal: Fast (Θ(1) time).
   - Size: Dynamic.
@@ -825,7 +825,7 @@ General member variables: `head` (first node), `tail` (last node), `curr` (node 
 
 #### Abstract stack
 
-It's a list-like structure where elements can only be inserted or removed from one end. It's less flexible than lists, but efficient and easy to implement. It follows a **LIFO** (Last-In, First-Out) policy: Elements are removed in rever order of their arrival. We can both **push** (insert) an element onto the stack, and **pop** (remove) the **top** element (accessible element) from the stack. Standard approaches to implementing a stack: **array stack** and **linked stack**.
+It's a list-like structure where elements can only be inserted or removed from one end. It's less flexible than lists, but efficient and easy to implement. It follows a **LIFO** (Last-In, First-Out) policy: Elements are removed in reversed order of their arrival. We can both **push** (insert) an element onto the stack, and **pop** (remove) the **top** element (accessible element) from the stack. Standard approaches to implementing a stack: **array stack** and **linked stack**.
 
 ```
 // Stack ADT
@@ -1083,6 +1083,34 @@ while(dict.size() > 0)
 - Using operators `==`, `<=`, `>=`. Depending on the type, the user may need to overload them.
 - Using a **comparator** (most general and preferred option). It's a class provided by the user that does comparison and makes those operations be template parameters (strategy pattern). In some cases, it makes sense for the comparator to extract the key from the record type (alternative to storing key-value pairs).
 
+```
+class Compare_int : public Comparator
+{
+public:
+  static bool lt(int x, int y) { return x < y; }
+  static bool eq(int x, int y) { return x == y; }
+  static bool gt(int x, int y) { return x > y; }
+};
+```
+
+**Comparators in the standard library** (`std`): Some template containers (`std::map`, `std::multimap`, `std::set`, `std::multiset`, `std::priority_queue`) that internally keep their elements sorted use a comparator, which is passed as a functor as a template parameter.
+
+```
+template<typename T>
+struct LessThan
+{
+  bool operator()(const T& a, const T& b) const { return a < b; }
+};
+
+template <typename T, typename Compare = LessThan<T>>
+class MyClass {...};
+
+int main
+{
+  MyClass<int, LessThan<int>> obj;
+}
+```
+
 #### Unsorted array dictionary
 
 It internally uses an unsorted array. Operations costs:
@@ -1103,30 +1131,265 @@ Whether a sorted list is more or less efficient than an unsorted list depends on
 
 A sorted list is different than an unsorted list since it cannot permit the user to control where the elements get inserted (`insert`, `append`). Thus, a sorted list cannot be implemented with simple inheritance from the `List` ADT. Solution: We can create a `SortedList` that inherits from `protected List`, so all `List` members are hidden from the user. Then, we can expose all `List` members except `insert` and `append`, and redefine `insert` (so it stores elements in sorted order).
 
+In a sorted list, random access takes O(1); lookup takes O(log n) time; and insert/remove take O(n). Append is not allowed. 
+
 #### Linked dictionary
 
-It internally uses a linked list. The operations costs should be asymptotically the same as those of an unsorted array dictionary.
+It internally uses a linked list. The operations costs should be asymptotically the same as those of an unsorted array dictionary, but space cost is bigger, so an UAD is preferred.
 
-Operations costs: `insert` is Θ(1), `find` is Θ(n), `remove` is Θ(n), `removeAny` is Θ(1).
+- `insert` and `removeAny` are Θ(1)
+- `find` and `remove` are Θ(n)
 
+### Synthesis
 
+Algorithms (operations) have time and space cost (complexity), which can be measured via asymptotic analysis or amortized analysis.
 
-TODO: sorted list must accept a single type. Comparater is passed too.
+Basic operations:
 
+- Insert/remove (I/R): Add/delete element (assume position is already accessible). 
+- Append (Ap): Insertion at tail (ApT) or head (ApH).
+- Random access (RA): Access an element.
+- Lookup (LU): Search for an element. Optimized in sorted structures.
 
-// copy constructors > use object slicing, if necessary
-// copyFrom > use pointer arguments
+Data structures:
 
+- **List:** Finite sequence of elements. Each element has a position.
 
-<<< Complexity
-<<< Particular member variables
+  - **Array (A):** Elements stored in contiguous cells. Time complexity: RA and ApT take Θ(1) time, but I/R takes Θ(n) time.
+    - __Static__ (SA): Fixed capacity. Capacity (max. size) cannot change.
+    - __Dynamic__ (DA): Dynamic capacity. Capacity can change (example: double capacity when full, cut in half when 1/4 full). Sometimes, resizing is more expensive by a constant factor.
+    - **Sorted array (SA):** Elements are inserted in sorted order. Static or dynamic. Complexity: RA takes O(1); LU takes O(log n) time; and I/R take O(n). Ap is not allowed.
 
-<<< Make DLL::curr point to current element
-<<< Implement algorithms: TOH_recursive, TOH_stack, fact_recursive, fact_iterative, fact_stack
+  - **Linked-list (LL):** Nodes linked to one another one-by-one. Complexity: I/R take O(1), but RA take O(n). A sorted linked-list is non-sense since lookup still takes O(n).
+    - __Singly__ (SLL): Nodes point to next node. Complexity: Prev takes O(n), Next takes O(1).
+    - __Double__ (DLL): Nodes point to previous and next node. Complexity: Prev and Next takes O(1).
+    - __XOR__ (XLL): Like DLL, but using same space as a SLL. Slower by constant time (space-time tradeoff).
+    - Additional features:
+      - __Freelist__: Object pool for unused nodes (linked stack). Also, regular size adjustment can reduce space overhead; otherwise, it will have the largest size reached by the list.
+
+  - __Space efficiency__: Space required by:
+    - As = (Max. number of elements) · (Element size) 
+    - LLs = (Number of elements) · (Element size + Pointer/s size)
+
+- **Stack:** Insert (push) and remove (pop) at one end (LIFO). Complexity: push and pop take O(1).
+
+  - **Array based**:
+    - **Static array stack:** Fixed capacity
+    - **Double static array stack:** Fixed capacity. Single array that stores 2 stacks. Each one grows inward from each end. Used when space requirements of both stacks are inversely correlated.
+
+  - **Linked stack:** Dynamic capacity, but space overhead. 
+
+- **Queue:** Insert (enqueue) at back, remove (dequeue) from front (FIFO). Complexity: 
+
+  - **Array queue (linear array):** Enqueue takes O(1), but dequeue takes O(n).
+  - **Array queue (circular array):** Enqueue and dequeue takes O(1).
+  - **Linked queue:** Enqueue and dequeue takes O(1).
+
+- **Dictionaries:** Each stored element is associated to a unique key (each key maps to a value), used for lookup. Main operations: lookup, insert, remove.
+
+  - __Key extraction methods__:
+    - Record returns key
+    - External gets key from record.
+    - Key-value pairs (most general and preferred)
+
+  - __Key comparison methods__:
+    - Using operators `==`, `<=`, `>=`. Depending on the type, the user may need to overload them.
+    - Using a **comparator** (most general and preferred). Class provided by the user for comparing. Those operations are template parameters (strategy pattern). In the SL, comparator is passed as functor as template parameter.
+
+  - **Unsorted array dictionary (UAD):** Insert takes O(1), but remove and lookup take O(n).
+
+  - **Sorted array dictionary (SAD):** Lookup takes O(log n), but insert and remove take O(n).
+
+  - **Linked dictionary (LD):** Same cost as UAD.
+
+**Resume:**
+
+- **List:** Static/dynamic, sorted/unsorted, linear/circular.
+  - __Array__: Single, double
+  - __Linked list__ (LL): Singly/double/XOR, with/without freelist.
+- **Stack:**
+  - __Array__: SA, double SA
+  - __Linked list__
+- **Queue:**
+  - __Array__: linear, circular
+  - __Linked list__
+- **Dictionaries:** Unique/multi key.
+  - __Array__: sorted/unsorted, static/dynamic
+  - __Linked list__
 
 Symbols used: ≤, ≥, ≠, ≈, √, ∑, →, ↔, ∨, ∧, ~, ¬, ∀, ∃, ⌊⌋, ⌈⌉, <sub>i</sub>, <sup>i</sup>, ∞, Ω, Θ
 
+
 ## Binary trees
+
+### Introduction
+
+Linear lists main limitation is that either search or insert can be made efficient, but not both. Trees permit both efficient search and insertion.
+
+A **binary tree** (BT) is made of a number of **nodes**. It's either empty or made of one node (**root**). Each node (**parent**) links to another 2 trees (**children**), the left and right **subtrees**, which are disjoint from each other and the root (i.e., they have no nodes in common). There is an **edge** from a node to each of its children.
+
+- **Path**: Sequence of connected nodes one-to-one in ascending order (n<sub>1</sub>, n<sub>2</sub>, ..., n<sub>k</sub>). Its **length** is k-1. Given a path from node A to node C, then A is an **ancestor** of C, and C is a **descendant** of A.
+- **Depth** of node A: Length of the path from root to A.
+- **Height** of a tree = 1 + depth of the deepest node.
+- **Level**: All nodes of depth n are at level n. Root is the only one at level 0, and has depth 0.
+- **Leaf** node: Node with 2 empty children.
+- **Internal** node: Node with at least one non-empty child.
+
+Special BTs:
+
+- **Full BT (FBT)**: Each node is either an internal node with 2 non-empty children, or a leaf.
+- **Complete BT (CBT)**: It has a restricted shape obtained by starting at the root and filling the tree by levels from left to right. Example: a complete BT of height d has all levels full except possibly level d-1, which is filled from the left side.
+
+<br>![code image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/computer_science/synthesis/binary_tree_1.png)
+
+Theorems: Useful for analyzing space requirements (some BT implementations store data only at leaf nodes, using internal nodes just to provide structure).
+
+- **Full binary tree theorem:** The number of leaves in a non-empty full binary tree is one more than the number of internal nodes.
+- **Extension:** The number of empty subtrees in a non-empty binary tree is one more than the number of nodes in the tree. 
+
+### Binary tree traversals
+
+**Traversal:** Process of visiting all the nodes in some order. An **enumeration** of the tree's nodes is any traversal that lists every node in the tree exactly once.u
+
+- **Preorder traversal:** Visit any given node before we visit its children.
+- **Postorder traversal:** Visit each node only after we visit its children (and their subtrees). Useful for getting all the nodes to free store (children should be deleted before the node itself).
+- **Inorder traversal:** Visit first the left child (including its entire subtree), then visit the node, and then the right child (including its entire subtree).
+
+<br>![code image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/computer_science/synthesis/binary_tree_2.png)
+
+```
+template <typename E>
+void **preorder**(BinNode<E>* root)
+{
+  if (root == nullptr) return;
+  visit(root);
+  preorder(root->left());
+  preorder(root->right());
+}
+
+template <typename E>
+void **inorder**(BinNode<E>* root)
+{
+  if (root == nullptr) return;
+  inorder(root->left());
+  visit(root);
+  inorder(root->right());
+}
+
+template <typename E>
+void **postorder**(BinNode<E>* root)
+{
+  if (root == nullptr) return;
+  postorder(root->left());
+  postorder(root->right());
+  visit(root);
+}
+```
+
+**Visitor design pattern:** The tree class should supply a generic traversal function which takes the visitor as either a template parameter or a function parameter. A major constraint of this is that the **signature** of all visitor functions (i.e., return type and parameters) must be fixed in advance by the designer of the generic traversal function.
+
+Count number of nodes in a tree:
+
+```
+template<typename E>
+int count(BinNode<E>* root)
+{
+  if (root == nullptr) return 0;
+  return 1 + count(root->left()) + count(root->right());
+}
+```
+
+Determine if, for every node A, all nodes in A's left subtree have less value than A, and all nodes in A's right subtree have greater value than A. 
+
+```
+template <typename Key, typename E>
+bool checkBST(BSTNode<Key, E>* root, Key low, Key high)
+{
+  if (root == nullptr) return true;
+  Key rootKey = root->key();
+  if ((rootKey < low) || (rootKey > high))
+    return false;   // out of range
+  if (!checkBST<Key, E>(root->left(), low, rootKey))
+    return false;   // left side failed
+  return checkBST<Key, E>(root->right(), rootKey, high);
+}
+```
+
+### Binary tree node implementations
+
+#### Binary tree node ADT
+
+Only the tree class should have access to the `BinNode` class.
+
+````
+// Binary tree node abstract class
+template<typename E> class BinNode
+{
+public:
+  virtual ~BinNode() { }
+  virtual E& element() = 0;
+  virtual void setElement(const E&) = 0;
+  virtual BinNode* left() const = 0;
+  virtual void setLeft(BinNode*) = 0;
+  virtual BinNode* right() const = 0;
+  virtual void setRight(BinNode*) = 0;
+  virtual bool isLeaf() = 0;
+}
+```
+
+#### Pointer-based nodes
+
+Usually, a node contains a value field and pointers to its two children. To support search structures (like BST), an additional field is included to store a key value, with corresponding access methods. Overloaded `new` and `delete` operators could be added to support a **freelist**. Some programmers add a pointer to the parent, but this is not recommended (it's almost always unnecessary, adds space overhead, and denotes improper understanding of recursion).
+
+Node implementation for leaves and internal nodes:
+
+- __Same for both__: Simplifies the implementation.
+- __Different__: Saves space by using it efficiently.
+  - Data value: Only leaves have data value. Or both have, but of different type.
+  - Child pointers: Only needed in internal nodes.
+
+Example: An expression tree (represents an algebraic expression composed of binary operators) stores different information at internal nodes (operators and child pointers) and leaves (operands).
+
+<br>![code image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/computer_science/synthesis/expression_tree.png)
+
+Two main ways to represent separate leaf and internal nodes:
+
+- __Class inheritance__: A base class (`VariableBinNode`) provides a general definition, and a subclass (`LeafNode`, `InternalNode`) modifies it to add more detail. The overridden method `isLeaf` indicates the node's subclass, and the other methods for the subclasses are accessed by type-casting the base-class pointer as appropriate. Function `traversal` traverses the tree.
+  - Advantages:
+    - Node classes doesn't need to know about the `traverse` function.
+    - It's easy to add new methods to the tree class that do other traversals or operations on nodes.
+  - Disadvantages:
+    - Adding a new node subclass would require modifications to the `traverse` function (it's not familiar with each node subclass).
+
+- __Composite design pattern__: There is a base class and a subclass for each node's type. Each subclass implements method `traverse`, which implement its own behaviour for its role in a traversal. Traversal is done by calling `traverse` on the root node, which invokes `traverse` on its children.
+  - Advantages:
+    - Function `traverse` doesn't need to know anything about the distinct abilities of the node subclasses (traversal is responsability of the subclasses).
+    - Function `traverse` doesn't need to explicitly enumerate all the different node subclasses.
+    - Implementing each node type's functionality might be easier (you focus only on the information passing and behaviour needed by the node to do its job).
+  - Disadvantages:
+    - Any new operation on the tree requiring a traversal has to be implemented in the node subclasses.
+    - Function `traverse` must not be called on a `nullptr` pointer. This can be avoided by using a flyweight to implement empty nodes.
+
+__Inherited nodes__ are preferred if `traverse` is a method of the tree class, and if node subclasses are hidden from users of the tree class. __Composite nodes__ are preferred if the nodes are objects that have meaning to users of the tree class separate from their existence as nodes in the tree (hiding the internal behavior of the nodes becomes more important).
+
+#### Space requirements
+
+**Overhead:** Amount of space necessary to maintain the data structure. Any space not used to store data records.
+
+
+
+
+
+
+#### Array-based tree (complete binary tree)
+
+### Binary Search Trees (BST)
+
+### Heaps and Priority queues
+
+### Huffman coding trees
+
+
 ## Non-binary Trees
 ## Internal Sorting
 ## File Processing and External sorting

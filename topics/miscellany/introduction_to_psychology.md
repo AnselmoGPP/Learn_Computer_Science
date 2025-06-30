@@ -1,4 +1,4 @@
-# Introduction to psychology
+# Introduction to Psychology
 
 
 ## Table of Contents
