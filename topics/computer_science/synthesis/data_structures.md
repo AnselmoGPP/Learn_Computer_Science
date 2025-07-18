@@ -25,6 +25,16 @@
 - Granville Barnett, Luca Del Tongo (2008) _**Data Structures and Algorithms: Annotated Reference with Examples**_ Dot.NetSlackers. Retrieved from [here](https://archive.org/details/pdfy-A-5D_dQU-sNJJHOB).
 - [How to do problems](https://www.quora.com/When-should-I-start-doing-LeetCode-problems-I-haven-t-learned-data-structures-and-algorithms)
 
+Further learning:
+
+- [LeetCode](https://leetcode.com/)
+- Gayle Laakmann McDowell (2015) _**Cracking the coding interview**_, 6th ed. CareerCup.
+- Adnan Aziz, Tsung-Hsien Lee, Amit Prakash (2012) _**Elements of programming interviews C++**_. 2nd ed. CreateSpace Independent Publishing Platform.
+- Adnan Aziz, Tsung-Hsien Lee, Amit Prakash (2016) _**Elements of programming interviews Python**_. CreateSpace Independent Publishing Platform.
+- [Grokking the modern system design interview](https://www.educative.io/courses/grokking-the-system-design-interview)
+- Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides (1994) _**Design patterns. Elements of object-oriented software**_. Addison-Wesley.
+- STAR method: Check [this](https://capd.mit.edu/resources/the-star-method-for-behavioral-interviews/) and [this](https://www.vawizard.org/wiz-pdf/STAR_Method_Interviews.pdf).
+
 Symbols used: ≤, ≥, ≠, ≈, √, ∑, →, ↔, ∨, ∧, ~, ¬, ∀, ∃, ⌊⌋, ⌈⌉, <sub>i</sub>, <sup>i</sup>, ∞, Ω, Θ
 
 
@@ -1140,6 +1150,8 @@ It internally uses a linked list. The operations costs should be asymptotically 
 - `insert` and `removeAny` are Θ(1)
 - `find` and `remove` are Θ(n)
 
+A sorted linked list offers no benefit (no lookup speedup).
+
 ### Synthesis
 
 Algorithms (operations) have time and space cost (complexity), which can be measured via asymptotic analysis or amortized analysis.
@@ -1238,22 +1250,22 @@ A **binary tree** (BT) is made of a number of **nodes**. It's either empty or ma
 Special BTs:
 
 - **Full BT (FBT)**: Each node is either an internal node with 2 non-empty children, or a leaf.
-- **Complete BT (CBT)**: It has a restricted shape obtained by starting at the root and filling the tree by levels from left to right. Example: a complete BT of height d has all levels full except possibly level d-1, which is filled from the left side.
+- **Complete BT (CBT)**: It has a restricted shape obtained by starting at the root and filling the tree by levels from left to right. Example: a CBT of height d has all levels full except possibly level d-1, which is filled from the left side. A CBT of n nodes has only one possible shape.
 
 <br>![code image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/computer_science/synthesis/binary_tree_1.png)
 
 Theorems: Useful for analyzing space requirements (some BT implementations store data only at leaf nodes, using internal nodes just to provide structure).
 
-- **Full binary tree theorem:** The number of leaves in a non-empty full binary tree is one more than the number of internal nodes.
-- **Extension:** The number of empty subtrees in a non-empty binary tree is one more than the number of nodes in the tree. 
+- **Full binary tree theorem:** The number of leaves in a non-empty FBT is one more than the number of internal nodes.
+  - **Empty subtrees theorem** (extension): The number of empty subtrees in a non-empty binary tree is one more than the number of nodes in the tree. 
 
 ### Binary tree traversals
 
-**Traversal:** Process of visiting all the nodes in some order. An **enumeration** of the tree's nodes is any traversal that lists every node in the tree exactly once.u
+**Traversal:** Process of visiting all the nodes in some order. An **enumeration** of the tree's nodes is any traversal that lists every node in the tree exactly once.
 
 - **Preorder traversal:** Visit any given node before we visit its children.
 - **Postorder traversal:** Visit each node only after we visit its children (and their subtrees). Useful for getting all the nodes to free store (children should be deleted before the node itself).
-- **Inorder traversal:** Visit first the left child (including its entire subtree), then visit the node, and then the right child (including its entire subtree).
+- **Inorder traversal:** Visit first the left child (including its entire subtree), then visit the node, and then the right child (including its entire subtree). Useful for enumerating nodes from a BST in sorted order from lowest to highest.
 
 <br>![code image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/computer_science/synthesis/binary_tree_2.png)
 
@@ -1354,14 +1366,14 @@ Example: An expression tree (represents an algebraic expression composed of bina
 
 Two main ways to represent separate leaf and internal nodes:
 
-- __Class inheritance__: A base class (`VariableBinNode`) provides a general definition, and a subclass (`LeafNode`, `InternalNode`) modifies it to add more detail. The overridden method `isLeaf` indicates the node's subclass, and the other methods for the subclasses are accessed by type-casting the base-class pointer as appropriate. Function `traversal` traverses the tree.
+- __Class inheritance__: A base class (`VariableBinNode`) provides a general definition, and a subclass (`LeafNode`, `InternalNode`) modifies it to add more detail. The overridden method `isLeaf` indicates the node's subclass, and the other methods for the subclasses are accessed by type-casting the base-class pointer as appropriate. Given a root, function `traversal` traverses the tree.
   - Advantages:
-    - Node classes doesn't need to know about the `traverse` function.
+    - Node classes doesn't need to know about the `traverse` function (traversal is responsability of the traversal function).
     - It's easy to add new methods to the tree class that do other traversals or operations on nodes.
   - Disadvantages:
-    - Adding a new node subclass would require modifications to the `traverse` function (it's not familiar with each node subclass).
+    - Adding a new node subclass would require to modify the `traverse` function.
 
-- __Composite design pattern__: There is a base class and a subclass for each node's type. Each subclass implements method `traverse`, which implement its own behaviour for its role in a traversal. Traversal is done by calling `traverse` on the root node, which invokes `traverse` on its children.
+- __Composite design pattern__: Similar to "class inheritance" type, but each subclass implements method `traverse`, which implement its own behaviour for its role in a traversal. Traversal is done by calling `traverse` on the root node, which invokes `traverse` on its children.
   - Advantages:
     - Function `traverse` doesn't need to know anything about the distinct abilities of the node subclasses (traversal is responsability of the subclasses).
     - Function `traverse` doesn't need to explicitly enumerate all the different node subclasses.
@@ -1370,27 +1382,226 @@ Two main ways to represent separate leaf and internal nodes:
     - Any new operation on the tree requiring a traversal has to be implemented in the node subclasses.
     - Function `traverse` must not be called on a `nullptr` pointer. This can be avoided by using a flyweight to implement empty nodes.
 
-__Inherited nodes__ are preferred if `traverse` is a method of the tree class, and if node subclasses are hidden from users of the tree class. __Composite nodes__ are preferred if the nodes are objects that have meaning to users of the tree class separate from their existence as nodes in the tree (hiding the internal behavior of the nodes becomes more important).
+__Inherited nodes__ are preferred if `traverse` is a method of the tree class, and if node subclasses are hidden from users of the tree class. __Composite nodes__ are preferred if the nodes have meaning to users of the tree class separate from their existence as nodes in the tree (hiding the internal behavior of the nodes becomes more important).
 
 #### Space requirements
 
-**Overhead:** Amount of space necessary to maintain the data structure. Any space not used to store data records.
+**Overhead:** Amount of space necessary to maintain the data structure. Any space not used to store data records. It depends on several factors (which nodes store data values, whether leaves store child pointers, whether tree is a FBT...).
 
+Legend:
 
+- P: Amount of space required by a pointer
+- D: Amount of space required by a data value
+- n: Number of nodes
 
+In a simple binary tree of n nodes using simple pointer-based implementation:
 
+- Space:
+  - Total space = **n(2P + D)**
+  - Overhead = **2Pn**
+  - Overhead fraction = **2P/(2P + D)**
+- Thus, assuming P=D, a FBT has 2/3 of its total space taken up in overhead. Furthermore, the empty subtrees theorem says that about half of the pointers are "wasted" `nullptr` values.
+- If data is not stored in a node, but rather a pointer to the data record, then the overhead fraction = **3P/(3P + D)**.
+- If only leaves store data value, then the overhead fraction depends on whether the tree is a FBT:
+  - Not FBT: Overhead can be an arbitrarily high percentage (it's possible to have one leaf and many internal nodes). The closer to full, the less overhead fraction.
+  - FBT: About half of the nodes are internal.
 
+In a FBT:
 
-#### Array-based tree (complete binary tree)
+- Removing pointers from leaf nodes make the overhead fraction approximately (n/2)(2P)/((n/2)(2P) + Dn) = **P/(P + D)**. If P=D, the overhead drops to about one half of the total space.
+- If only leaf nodes store useful information, it's 3/4 of the total space.
+- If internal nodes only have 2 pointers (and no data), and leaves only a pointer to data, it's required **(n/2)2P + (n/2)(P + D)** units of space. If P=D, the overhead is (3P)/(3P + D) = **3/4**.
+
+#### Array implementation for Complete Binary Trees
+
+Since a CBT of n nodes has only one possible shape, a CBT can be efficiently compacted in an array. Data values are stored in the array level by level, from left to right. Given the index of a node, simple formulas can give us the indices of each relative. Since no pointers are needed, there's no overhead, unless the array is bigger than n (number of nodes). The index (i) of a node is in range [0, n-1].
+
+- Parent(i) = **⌊(i-1)/2⌋**   if i ≠ 0
+- LeftChild(i) = **2i + 1**   if (2i + 1) < n
+- RightChild(i) = **2i + 2**   if (2i + 2) < n
+- LeftSibling(i) = **i - 1**   if i is even
+- RightSibling(i) = **i + 1**   if i is odd and (i + 1) < n
 
 ### Binary Search Trees (BST)
 
+Linear lists main limitation is that either search or insert can be made efficient, but not both.
+
+- Unsorted list: Insert is Θ(1) but lookup is Θ(n).
+- Sorted list: Insert is Θ(n), but lookup is Θ(log n).
+- Linked list: Insert is Θ(1) but lookup is Θ(n), and there's no benefit from sorting.
+
+**Binary Search Tree** (BST): It permits both efficient search and insertion. BST property:
+
+- All nodes stored in the left subtree of a node with key value K have key values less than (<) K.
+- All nodes stored in the right subtree of a node with key value K have key values greater than or equal (≥) to K.
+
+Printing the BST nodes using an __inorder traversal__ will enumerate them in sorted order from lowest to highest.
+
+The shape of a BST depends on the order in which elements are inserted. Any new addition can potentially increase the tree's depth. Inserting elements in sorted order would result in a chain of nodes (tree of n nodes and height n). Keeping the BST as shallow as possible keeps the average cost of BST operations low.
+
+Implementing a **BST-based dictionary**:
+
+- There are various ways to deal with keys and comparing records (as we saw when studying lists).
+- Searching a record with key value K: Begin at root and follow the nodes closer to the record until you find it or reach a leaf node. This follows a single path.
+- The `find` operation is most easily implemented as a recursive function that takes a subtree root and the search key as parameters.
+- Inserting a record with key value k requires to find where it should be (leaf node or internal node) and add a new node.
+- If no nodes with same keys are allowed, insertion should be treated as error (or ignored). If allowed, by convention we could insert it in the right subtree.
+
+__Removing nodes__:
+
+- __Removing smallest node__: Move down the left link until the last node S (it has no left child), and remove it by having its parent to change its pointer to point to the right child of S.
+- __Removing any node__: Find the node and remove it. Different possibilities:
+  - __No children__: Its parent has its pointer set to `nullptr`.
+  - __One child__: Its parent has its pointer set to that child.
+  - __Two children__:
+    - Approach 1 (expensive): Set parent to point to one subtree, and then reinsert the remaining subtree's nodes one by one.
+    - Approach 2 (recommended): Find a value in one subtree that can replace the value in the removed node. Two options: the least key value ≥ the one removed, or else the greatest key value < the one being removed. When duplicate node values don't appear in the tree, it doesn't matter which option is chosen; but if duplicates are allowed, we must select the replacement from the right subtree (otherwise, it will result in a tree with equal values to the left of the node).
+
+<br>![code image](https://raw.githubusercontent.com/AnselmoGPP/Learn_Computer_Science/master/topics/computer_science/synthesis/remove_node.png)
+
+The cost of `find` and `insert` is the depth of the target node. For `remove`, it's the same, or the depth of the smallest node in its right subtree. This is why it's recommended to keep the BST **balanced** (i.e., with least possible height).
+
+- The height of a balanced binary tree of n nodes is approximately log n, and operations in the average case will cost Θ(log n). Inserting nodes randomly is likely to cost on average Θ(log n), for a total cost of Θ(n log n).
+- The height of a completely unbalanced BT (chain of nodes) can be as great as n, and operations in the worst case will cost Θ(n). Inserting nodes in order of increasing value will result in a chain of nodes of height n, and the cost of inserting a node will be Θ(n), with a total cost of Θ(n<sup>2</sup>).
+
+There're techniques for organizing a BST to guarantee good performance (AVL tree, Splay tree...). Other search trees are guaranteed to remain balanced (2-3 tree...).
+
+Traversing a BST costs Θ(n) regardless of the tree shape.
+
+- Postorder traversal: Useful for clearing the tree, since children of a node must be freed before the node itself.
+- Inorder traversal: Useful for printing the node values in ascending order.
+
 ### Heaps and Priority queues
+
+Sometimes we wish to choose the next "most important" element from a collection. Example: When different programs are scheduled for execution (jobs), the next job is the one with the highest priority (value associated with the job).
+
+**Priority queue**: Collection of objects organized by importance (priority). Lists are not good for implementing it (lookup in a static array takes Θ(n) time; and insert and remove take Θ(n) in a list, sorted or not). A BST is good for implementing it (insert and remove take Θ(log n) time in the average case), but an unbalanced BST leads to bad performance.
+
+**Heap**: CBT (thus, nearly always implemented using an array) whose stored values are partially ordered (note: the term "heap" is sometimes used to refer to a memory pool). A heap is a natural implementation for the priority queue. Two heap variants:
+
+- **Max-heap**: Every node's value ≥ values of his children. Thus, the root stores the maximum value of the tree. Use case: Heapsort.
+- **Min-heap**: Every node's value ≤ values of his children. Thus, the root stores the minimum value of the tree. Use case: Replacement selection algorithm.
+
+Since it's a CBT, its height is the minimum possible (n nodes have a height of log(n+1)). The _i_th level has 2<sup>i</sup> nodes. The sum of the first i levels is 2<sup>i+1</sup>-1.
+
+There's no necessary relationship between a node's value and that of its sibling in either the min-heap or max-heap. Example: all nodes in the left subtree of root can be greater than any node of the right subtree.
+
+BSTs define a **total order** on its nodes (given any two nodes, the left one has a smaller key than the right one). Heaps implement **partial order** (given the positions of two nodes, we can determine the relative order for their keys only if one is a descendant of the other).
+
+A heap class implementation could be a template with 2 parameters: `E` and `Comp` (comparison class for comparing 2 elements). This class can implement either a min-heap or max-heap by changing the definition of `Comp`, which defines method `prior` that returns `true` if first parameter should come before the second in the heap.  
+
+An array-based implementation for a heap indicates nodes by their position in the array rather than by a pointer to the node. Furthermore, the constructor takes as input a pointer to an array to be used, its initial size (number of elements initially loaded), and its maximum size (capacity). 
+
+Heap's **insert** operation is different than on a BST because the heap has to maintain the shape of a CBT. Also, if the heap takes up the first n positions of its array prior to calling `insert`, it must take up the first n+1 positions after it. `Insert` takes Θ(log n) time in the worst case. It first places the element E at position n of the array, which is unlikely to be the correct position. Then, E is moved to the right place:
+
+- If E's value ≤ its parent's value, it's in the correct place.
+- If E's value > its parent's value, both elements swap positions.
+- Repeat until E reaches the correct position.
+
+Inserting n elements will take Θ(n log n). But having all them available at construction, the heap can be built faster (Θ(n) time in the worst case) by making a series of exchanges between a node and one of its children. The heap for any given set of numbers is not unique, and some rearranging algorithms require fewer exchanges. This is also faster than building a BST (Θ(n log n) average-case time and Θ(n<sup>2</sup>) worst-case time). One good algorithm (`buildHeap`) stems from induction:
+
+- Suppose left and right subtrees of root R are already heaps.
+- If R ≥ its two children, construction is complete.
+- If R < one or both of its two children, R should be exchanged with the greater child.
+- Repeat the process with R and its new children until R cannot be pushed down any more (`siftdown`).
+- Since subtrees are assumed to be heaps, children of a node should be visited before the node itself. We can start in the middle (no need to visit leaves), with the first internal node, and continue from high to low array index.
+
+Removing the maximum value (root) (`removeMax`) from a heap containing n elements requires to maintain the CBT shape, and that the remaining n-1 nodes conform to the heap property. This can be done by moving the element in the last position in the heap (last element in the array) to the root position, and using `siftdown` to reorder the heap. Since the heap is log n levels deep, removing root costs Θ(log n) in the average and worst cases. `removeMax` can be called whenever a new job is to be executed.
+
+Changing priority of an element: This might require to update the object's position, but a max-heap is not efficient when searching for an arbitrary value, it's only good for finding the maximum value. But, if we already know the object's index, updating its priority is simple. A typical implementation for priority queues requiring updating priorities will need to use an auxiliary DS that supports efficient object search (such as BST), where records will store the object's heap index, so that the object can be deleted from the heap and reinserted with its new priority.
 
 ### Huffman coding trees
 
+We often represent a set of items in a computer program by assigning a unique code to each item. Example: the standard ASCII coding scheme assigns a unique 8-bit value to each character. It takes 7 bits (log 128) to represent the 128 symbols of the ASCII character set (the 8th bit is used for transmission error or extending the set). This is a **fixed-length** coding scheme (all codes have the same length), which is the most space efficient method when all characters are used equally often (ASCII characters aren't).
+
+**Variable-length** codes save space by assigning shorter codes to common items, and longer codes to those that rarely appear. This is used in file compression.
+
+**Huffman coding**: It's an approach to assigning variable-length codes. Its simplest form is not commonly used for file compression (there're better methods), but it gives the flavour of such coding schemes. It assigns codes to characters such that the length of the code depends on the relative frequency (weight) of the corresponding character.
+
+**Huffman coding tree**: FBT from where the Huffman code for each letter is derived. Each leaf corresponds to a letter. The weight of the leaf is the weight (frequency) of its associated letter. The higher the weight of a letter, the lower its depth. The **weighted path length** of a leaf is its weight x its depth. The goal is to build a tree with the **minimum external path weight**, which is the one with the minimum sum of weighted path lengths for the given set of leaves.
+
+**Building** a Huffman tree: 
+
+- Create a collection of n initial Huffman trees, each of which is a single leaf node containing one of the letters.
+- Put all them onto a priority queue (implemented as heap for efficiency) organized by weight (frequency).
+- Remove the first 2 trees (those with lowest weight) from the priority queue.
+- Join both trees together to create a new tree. Its root has both as children, and its weight is the sum of the children weights.
+- Put this new tree back into the priority queue.
+- Repeat until all trees have been combined into one.
+
+This building is an example of a **greedy algorithm**: Each step, the algorithm makes a "greedy" decision to merge the 2 subtrees with least weight.
+
+Since internal and leaf nodes in a Huffman tree contain different information, two different types of nodes with the same parent (variable node) can be used.
+
+Using a Huffman tree to **assign codes** to individual letters: We assign 0 or 1 to each edge in the tree. We assign 0 to edges connecting a node to its left child, and 1 to edges connecting a node to its right child. The Huffman code for a letter is a binary number determined by the path from the root to the leaf.
+
+**Encoding a message**: Given codes for the letters, we can replace each letter in a string with its binary code.
+
+**Decoding a message**: Look at the bits in the coded string from left to right until a letter is decoded. This can be done using the Huffman tree in a reverse process from that used to generate codes. Begin at the root and take branches depending on the bit value (left for 0, right for 1) until reaching a leaf node. Then, repeat the process for the next bit.
+
+**Prefix property**: No code in a set is the prefix of another. This guarantees no ambiguity in how a bit string is decoded. Huffman codes have this property.
+
+Huffman coding **efficiency**: In theory, it's an optimal coding method whenever the true frequencies are known, and the frequency of a letter is independent of the context of that letter in the message. In practice, the letters frequencies change depending on context (example: in English documents, E is the most commonly used letter, but T is more common as the first letter of a word). For compression, techniques that take advantage of the context for the letters is preferred, instead of Huffman coding. Moreover, in general, Huffman coding does better when there is large variation in the frequencies of letters. In general, Huffman coding of a typical text file will save ~40% over ASCII coding (8-bit per character). Huffman coding for a binary file would have a very different set of distribution frequencies, so it would have different space savings. Most commercial compression programs use 2 or 3 coding schemes to adjust to different types of files.
+
+**Search** in Huffman trees: When searching for a letter, whose key value is its Huffman code, we follow a path through the tree dictated by the bits in the code string (0 bit indicates a left branch, 1 bit indicates a right branch). This is a type of search tree (**trie**) different than a BST, based on their key-space splitting behaviour:
+
+- **BST**: It splits the key space based on the key values as they are encountered when going down the tree. Data determines the splitting points. In BSTs, records with key value less than the root value are stored in the left branch, and those greater are in the right branch.
+
+- **Trie**: It splits the key space based on predetermined points. In Huffman trees, all letters with codes beginning with 0 are stored in the left branch, and those beginning with 1 are in the right branch.
+
+### Synthesis
+
+**Special BTs**: Full and Complete.
+
+- **FBT**: Each node has either 2 non-empty children or is leaf.
+- **CBT**: Tree filled by levels from root, and from left to right (last level may not be full).
+
+**BT traversals**:
+
+- **Preorder:** Visit any given node before we visit its children.
+- **Postorder:** Visit each node only after we visit its children. Useful for freeing all nodes.
+- **Inorder:** Visit first the left child (and its subtree), then visit the node, then the right child (and its subtree). Useful for getting nodes from a BST in sorted order from lowest to highest.
+
+**Visitor design pattern:** The tree class should supply a generic traversal function which takes the visitor as either a template parameter or a function parameter. A major constraint of this is that the **signature** of all visitor functions (i.e., return type and parameters) must be fixed in advance by the designer of the generic traversal function.
+
+**Pointer-based nodes**:
+
+- __Components__: value (element), pointers to children (left, right), key (to support search structures), overloaded new and delete (to support freelist).
+- __Variable nodes__: Save space by using different implementation for internal and leaf nodes. Two ways to implement it:
+
+  - __Class inheritance__: Base class (general definition) and subclasses (detail). Method `isLeaf` determines the subclass type. General functions (`traverse`, `copyTree`...) need to know all subclasses (they use `isLeaf` and casting). Preferred if general functions are methods of the tree class, and nodes are hidden to users.
+  - __Composite design pattern__: Similar to class inheritance, but each subclass implements the general functions. General function doesn't need to know all subclasses. Preferred if nodes are visible to users.
+
+**Overhead:** Amount of space not used to store data records.
+
+**Array CBT**: No overhead, unless the array size > n
+
+**BST**: Allows both efficient search and insertion (lists cannot). Given a node with key K, its left subtree node < K, and its right ≥ K. Inorder traversal traverses elements in sorted order from lowest to highest. The shape of a BST depends on the order in which elements are inserted (inserting in sorted order results in a chain of nodes). Keep it balanced (least possible height) to keep the average cost of BST operations low (min. Θ(log n), max. Θ(n)). Like lists, there different ways to deal with keys and comparing records.
+
+Some techniques organize a BST to guarantee good performance (AVL tree, Splay tree...). Other search trees are guaranteed to remain balanced (2-3 tree...).
+
+**Priority queue**: Collection of objects organized by importance (priority). A BST is good for implementing it, but leads to bad performance if it's unbalanced. A heap is a natural implementation.
+
+**Heap**: CBT (nearly always implemented using an array) whose stored values are partially ordered. Given the positions of two nodes, we can determine the relative order for their keys only if one is a descendant of the other. Two heap variants (the `comp` parameter determines the type of heap):
+
+- **Max-heap**: Every node's value ≥ its children's values (root stores max. value). Use case: Heapsort.
+- **Min-heap**: Every node's value ≤ its children's values (root stores min. value). Use case: Replacement selection algorithm.
+
+Insertion (Θ(log n)) is made at position n and then the element is moved to the correct position. Having all elements available at construction let us build the heap faster (Θ(n)) than inserting them Θ(n log n), or than building a BST (Θ(n log n) average-case time and Θ(n<sup>2</sup>) worst-case time). Removing root (Θ(log n)) can be done by moving the last element to root position and using `siftdown` to reorder the heap.
+
+Heaps are not efficient when searching for arbitrary values, only for finding the max. value. Priority queues requiring updating priorities will need to use an auxiliary DS that supports efficient object search (such as BST), where records will store the object's heap index, so that the object can be deleted from the heap and reinserted with its new priority.
+
+**Huffman coding tree**: FBT used for assigning variable-length codes to characters depending on their frequency (weight). Shorter codes are assigned to common items, longer codes to unusual ones. Useful in file compression. Each leaf corresponds to a letter. The weight of a leaf is the weight/frequency of a letter. The higher the letter's weight, the lower its depth. Variable nodes can be used (leaf and internal nodes are different). No code in a set is the prefix of another (prefix property). This is trie, since the key space is splitted based on predetermined points.
+
+- __Building__: Put all nodes in a priority queue. Take them 2 by 2 and merge them in a tree (subtree's weight = sum of children's weights). Put the resulting tree in the queue. Repeat.
+- __Assign codes__: Assign 0 or 1 to each edge in the tree (0 to left, 1 to right). The path from root to leaf determines the Huffman code of a letter.
+- __Decode message__: Look at bits in the message until a letter is decoded. Begin at root and take branches depending on the bit value until a leaf is reached. Repeat for next bit.
+
 
 ## Non-binary Trees
+
+222
+
 ## Internal Sorting
 ## File Processing and External sorting
 ## Searching
@@ -1398,3 +1609,13 @@ __Inherited nodes__ are preferred if `traverse` is a method of the tree class, a
 ## Graphs
 
 ## R
+
+Symbols used: ≤, ≥, ≠, ≈, √, ∑, →, ↔, ∨, ∧, ~, ¬, ∀, ∃, ⌊⌋, ⌈⌉, <sub>i</sub>, <sup>i</sup>, ∞, Ω, Θ
+
+
+Good practices:
+
+- Inside a class, method `copyFrom` and `cleanup` can be used in copy constructor, destructor, and copy-assignment.
+
+
+
