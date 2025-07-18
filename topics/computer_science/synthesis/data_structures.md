@@ -1333,7 +1333,7 @@ bool checkBST(BSTNode<Key, E>* root, Key low, Key high)
 
 Only the tree class should have access to the `BinNode` class.
 
-````
+```
 // Binary tree node abstract class
 template<typename E> class BinNode
 {
